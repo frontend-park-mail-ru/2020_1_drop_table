@@ -1,5 +1,4 @@
 'use strict';
-import {renderHeader} from "../header/header.js";
 
 function getCookie(name) {
     var cookieValue = null;
@@ -37,33 +36,6 @@ function showError(whereToInsert, inWitchElement, message) {
     error.className = "error";
     error.textContent = message;
     whereToInsert.insertBefore(error, inWitchElement.parentNode)
-
-}
-
-
-function validateForm(form) {
-    let errors = form.querySelectorAll('.error');
-    for (let err of errors) {
-        err.outerHTML = "";                     //Очистка старых ошибок
-    }
-    const email = form.elements["email"];
-    const repeatedPassword = form.elements["re-password"];
-    const password = form.elements["password"];
-    let isCorrect = true;
-
-    if (!email.validity.valid || email.value === "") {
-        showError(form, email, "Некорректный email");
-        isCorrect = false
-    }
-    if (password.value !== repeatedPassword.value) {
-        showError(form, repeatedPassword, "Пароли не совпадают");
-        isCorrect = false
-    }
-    if (password.value === "") {
-        showError(form, password, "Некорректный пароль");
-        isCorrect = false;
-    }
-    return isCorrect;
 
 }
 
@@ -114,7 +86,6 @@ export function renderLogin() {
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        validateForm(form.firstChild);
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
         //const name = form.elements["full-name"].value; //TODO раскоментить в зависимости от API
