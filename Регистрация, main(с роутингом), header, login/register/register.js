@@ -1,6 +1,5 @@
 'use strict';
-import {renderHeader} from "../header/header.js";
-import {renderLogin} from "../login/login.js"
+
 
 
 function getCookie(name) {
@@ -70,7 +69,7 @@ function validateForm(form) {
 }
 
 
-function renderRegister() {
+export function renderRegister() {
 
 
     let registerContainer = document.createElement('div');
@@ -144,9 +143,9 @@ function renderRegister() {
 console.log("kek");
 
 
-renderHeader();
-//renderRegister();
-renderLogin()
+// renderHeader();
+// //renderRegister();
+// renderLogin()
 
 
 
