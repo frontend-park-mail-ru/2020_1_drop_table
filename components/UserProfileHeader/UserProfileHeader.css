@@ -1,0 +1,48 @@
+.UserProfileHeader{
+    height: 30%;
+    width: 100%;
+}
+
+.UserProfileHeader .UserProfileLogoField{
+    width: 10rem;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+    float: left;
+    font-family: Montserrat;
+    text-decoration: underline;
+}
+
+.UserProfileHeader .UserProfileLogoField img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+}
+
+.UserProfileHeader-right{
+    float: right;
+    top:0;
+    height: 100%;
+}
+.UserProfileHeader-right .exitButton{
+
+    float: right;
+    padding-right: 4%;
+    padding-bottom: 10%;
+    top:0;
+    right: 0;
+}
+
+.UserProfileHeader-right .exitButton h4{
+    font-family: Montserrat;
+}
+
+.UserProfileHeader-right .lastUpdate{
+    float: left;
+    padding-right: 10%;
+}
+.UserProfileHeader-right .lastUpdate span {
+    font-family: Montserrat;
+    color: #333333;
+}

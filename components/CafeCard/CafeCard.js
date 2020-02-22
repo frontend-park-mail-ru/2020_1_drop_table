@@ -1,0 +1,22 @@
+import './CafeCard.css'
+import CafeCard from '../CafeCard/CafeCard.hbs';
+
+export class CafeCardComponent {
+    constructor({
+                    el = document.body,
+                    imgSrc = "https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg",
+                    cafeName = "Кафе"
+                } = {}) {
+        this._el = el;
+        this._imgSrc = imgSrc;
+        this._cafeName = cafeName;
+    }
+
+    _renderTemplate() {
+        this._el.innerHTML += CafeCard({cafeImageSrc:this._imgSrc,cafeName:this._cafeName}) ;
+    }
+
+    render() {
+        return this._renderTemplate()
+    }
+}

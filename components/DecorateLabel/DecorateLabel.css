@@ -1,0 +1,23 @@
+.UserProfileDecorate{
+    width: 30%;
+    height: 100%;
+    margin-left: 10rem;
+    padding-bottom: 0;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 3rem;
+    white-space: nowrap ;
+}
+.myProfileLabelDecorate{
+    position: absolute;
+    top: 25%;
+    transform: translateY(-25%);
+}
+.strip{
+    width:15rem;
+    height: 0.5rem;
+    background-color: #A32704;
+    position: absolute;
+    top: 32%;
+    transform: translateY(-32%);
+}
