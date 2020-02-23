@@ -1,6 +1,6 @@
-import {renderHeader} from "../header/header.js";
-import {renderLogin} from "../login/login.js"
-import {renderRegister} from "../register/register.js"
+import {renderHeader} from "../components/header/header.js";
+import {renderLogin} from "../components/login/login.js"
+import {renderRegister} from "../components/register/register.js"
 
 const app = document.getElementById('app');
 
