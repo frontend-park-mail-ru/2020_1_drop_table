@@ -1,11 +1,11 @@
 // import cssCard from './CafeCard/CafeCard.css'
 // import cssCardContainer from './CafesContainer/CafesContainer.css'
 
-import {CafesContainerComponent} from "./components/CafesContainer/CafesContainer.js";
-import {HeaderComponent} from "./components/Header/Header";
-import {UserProfileHeaderComponent} from "./components/UserProfileHeader/UserProfileHeader";
-import {DecorateLabelComponent} from "./components/DecorateLabel/DecorateLabel";
-import {UserProfileFormComponent} from "./components/UserProfileForm/UserProfileForm";
+import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
+import {HeaderComponent} from "../components/Header/Header";
+import {UserProfileHeaderComponent} from "../components/UserProfileHeader/UserProfileHeader";
+import {DecorateLabelComponent} from "../components/DecorateLabel/DecorateLabel";
+import {UserProfileFormComponent} from "../components/UserProfileForm/UserProfileForm";
 
 
 
@@ -154,8 +154,49 @@ function createUserProfilePage(userData){
 }
 
 
-//createUserProfilePage(userData);
+
+let routes = [
+    {
+        url: '', callback: function () {
+            application.innerHTML = "Тут будет стартовая страница";
+        }
+    }
+];
 
 
+function getUrl(href) {
+    const url = href.split('/');
+    return url[url.length - 1]
+}
 
-createMyCafesPage(cafesList);
+function Routing() {
+    let href = window.location.href;
+    console.log(href);
+    let url = getUrl(href);
+    let route = routes[0];
+    routes.forEach(item => {
+        if (url === item.url) {
+            route = item
+        }
+    });
+    route.callback();
+}
+
+
+window.addEventListener('popstate', Routing);
+
+setTimeout(Routing, 0);
+
+routes.push({
+    url: "myCafes", callback: () => {
+        console.log("hello");
+        application.innerHTML = "";
+        createMyCafesPage(cafesList)
+    }
+});
+routes.push({
+    url: "userProfile", callback: () => {
+        application.innerHTML = "";
+        createUserProfilePage(userData)
+    }
+});
