@@ -5,11 +5,11 @@ export class UserProfileFormComponent {
     constructor({
                     el = document.body,
                     email = "samplemail@mail.ru",
-                    username = "Сэмпл Сэмплов"
+                    name = "Сэмпл Сэмплов"
                 } = {}) {
         this._el = el;
         this._email = email;
-        this._username = username;
+        this._name = name;
     }
 
     get data() {
@@ -21,7 +21,7 @@ export class UserProfileFormComponent {
     }
 
     _renderTemplate() {
-        this._el.innerHTML += UserProfileForm({username: this._username, email:this._email});
+        this._el.innerHTML += UserProfileForm({name: this._name, email:this._email});
 
     }
     render() {

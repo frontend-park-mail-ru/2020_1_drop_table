@@ -56,6 +56,30 @@
                 method: 'POST',
             });
         }
+
+         ajaxAuth(route, body, callback) {
+            let formData = new FormData();
+            formData.append("jsonData", JSON.stringify(body));
+            let req = new Request(route, {
+                method: 'POST',
+                mode: 'cors',
+                body: formData
+            });
+            fetch(req)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('BAD HTTP stuff');
+                    }
+                })
+                .then((formData) => {
+                    callback(formData);
+                })
+                .catch((err) => {
+                    console.log('ERROR:', err.message);
+                });
+        }
     }
 
     window.AjaxModule = new AjaxModule();

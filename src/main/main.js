@@ -7,6 +7,10 @@ import {UserProfileHeaderComponent} from "../components/UserProfileHeader/UserPr
 import {DecorateLabelComponent} from "../components/DecorateLabel/DecorateLabel";
 import {UserProfileFormComponent} from "../components/UserProfileForm/UserProfileForm";
 
+import {renderHeader} from "../components/headerDG/header";
+import {renderRegister} from "../components/register/register";
+import {renderLogin} from "../components/login/login";
+
 
 
 const {AjaxModule} = window;
@@ -16,40 +20,17 @@ const application = document.getElementById('application');
 const header = document.getElementById('header');
 
 
-const cafes = {
-    'cafe1': {
-        imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-        cafeName: 'Приветики'
-    },
-    'cafe2': {
-        imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-        cafeName: 'Кафешка'
-    },
-    'cafe3': {
-        imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-        cafeName: 'Димочка'
-    },
-    'cafe4': {
-        imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-        cafeName: 'Сашечка'
-    },
-    'cafe5': {
-        imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-        cafeName: 'Димочка'
-    },
-    'cafe6': {
-        imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-        cafeName: 'Сережечка'
-    },
-};
 
-const cafesList = Object.values(cafes)
-    .map(cafe => {
-        return {
-            imageSrc: cafe.imageSrc,
-            cafeName: cafe.cafeName
-        }
-    });
+const userData = {
+    imageSrc: "https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1",
+    name: "Антон Лапенко",
+    email: "alapenko@boldin.ru",
+    lastChange: "45 минут"
+}
+
+
+
+
 
 
 function createCafes(cafes) {
@@ -88,7 +69,8 @@ function createHeader() {
 
 
 
-function createMyCafesPage(cafesList) {
+export function createMyCafesPage(cafesList) {
+    application.innerHTML = '';
     createCafes(cafesList);
     createHeader();
 }
@@ -122,20 +104,17 @@ function createUserProfileForm(userData){
     const UserProfileFormDiv = document.createElement('div');
     const headerComponent = new UserProfileFormComponent({
         el: UserProfileFormDiv,
+        email: userData['email'],
+        name: userData['name'],
 
     });
     headerComponent.render();
     application.appendChild(UserProfileFormDiv);
 }
 
-const userData = {
-    imageSrc: "https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1",
-    username: "Антон Лапенко",
-    email: "alapenko@boldin.ru",
-    lastChange: "45 минут"
-}
 
-function createUserProfilePage(userData){
+export function createUserProfilePage(userData){
+    application.innerHTML = '';
     if(userData){
         createUserProfileHeader(userData);
         createDecorateLabel("Мой профиль");
@@ -186,6 +165,25 @@ function Routing() {
 window.addEventListener('popstate', Routing);
 
 setTimeout(Routing, 0);
+
+
+routes.push({
+
+    url: "reg", callback: () => {
+        application.innerHTML = "";
+        application.appendChild(renderHeader());
+        application.appendChild(renderRegister());
+    }
+});
+routes.push({
+    url: "login", callback: () => {
+        application.innerHTML = "";
+        application.appendChild(renderHeader());
+        application.appendChild(renderLogin());
+
+    }
+});
+
 
 routes.push({
     url: "myCafes", callback: () => {

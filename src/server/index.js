@@ -96,44 +96,43 @@ app.get('/cafes', function (req, res) {
 	res.json(cafesList);
 });
 
-// app.get('/me', function (req, res) {
-// 	const cafesList = Object.values(cafes)
-// 		.map(cafe => {
-// 			return {
-// 				imageSrc: cafe.imageSrc,
-// 				cafeName: cafe.cafeName
-// 			}
-// 		});
-//
-// 	res.json(cafesList);
-// });
+app.get('/me', function (req, res) {
+	const cafesList = Object.values(cafes)
+		.map(cafe => {
+			return {
+				imageSrc: cafe.imageSrc,
+				cafeName: cafe.cafeName
+			}
+		});
 
-//
-// app.post('/api/v1/owner', function (req, res) {
-// 	// const password = req.body.password;
-// 	// const email = req.body.email;
-// 	// if (!password || !email) {
-// 	//     return res.status(400).json({error: 'Не указан E-Mail или пароль'});
-// 	// }
-// 	// if (!users[email] || users[email].password !== password) {
-// 	//     return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
-// 	// }
-// 	//
-// 	// const id = uuid();
-// 	// ids[id] = email;
-// 	//
-// 	// res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-// 	// res.status(200).json({id});
-// 	res.setHeader('Access-Control-Allow-Origin', '*');
-// 	res.setHeader('Access-Control-Allow-Methods', 'POST')
-// 	res.setHeader('Acces-Control-Allow-Headers', 'Accept, Authorization, Content-Type, Origin, X-Requested-With')
-// 	console.log(req.body)
-// 	res.status(200).json({test: 'test', body: req.body})
-// });
+	res.json(cafesList);
+});
 
+
+app.post('/api/v1/owner', function (req, res) {
+	// res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+	// res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'POST');
+	res.setHeader('Access-Control-Allow-Headers', 'Accept, Authorization, Content-Type, Origin, X-Requested-With');
+
+	console.log(req.body.toString());
+	console.log("hello");
+	res.status(200).json({test: 'test1', body: req.body});
+});
+
+app.get('/', function(request, response){
+	response.sendFile('../src/main/index.html');
+});
 
 const port = process.env.PORT || 3000;
+
 
 app.listen(port, function () {
 	console.log(`Server listening port ${port}`);
 });
+
+
+
+
