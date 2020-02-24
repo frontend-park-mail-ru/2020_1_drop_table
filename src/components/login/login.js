@@ -60,8 +60,12 @@ export function renderLogin() {
         ajax('http://localhost:8080/api/v1/owner/login',
         {"email":  email.toString(),  "password":  password.toString()}
         , (response) => {
-                console.log("RESPONSE:",response);
-                createMyCafesPage(cafesList);
+                console.log("RESPONSE:",response.errors);
+                if (response.errors === null) {
+                    createMyCafesPage(cafesList);
+                } else{
+                    alert(response.errors[0].message)
+                }
             }) //TODO ajax
 
         //const name = form.elements["full-name"].value; //TODO раскоментить в зависимости от API

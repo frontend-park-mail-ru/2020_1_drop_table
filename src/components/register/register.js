@@ -95,13 +95,18 @@ export function renderRegister() {
         ajax('http://localhost:8080/api/v1/owner',
             {"name": name.toString(), "email":  email.toString(),  "password":  password.toString()}
             , (response) => {
-                console.log(response);
-                createUserProfilePage({
-                    imageSrc: 'https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1',
-                    name: response.data['name'],
-                    email: response.data['email'],
-                    lastChange: '45 минут'
-                });
+
+                console.log("RESPONSE",response.errors[0].message);
+                if (response.errors === null) {
+                    createUserProfilePage({
+                        imageSrc: 'https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1',
+                        name: response.data['name'],
+                        email: response.data['email'],
+                        lastChange: '45 минут'
+                    });
+                } else{
+                    alert(response.errors[0].message)
+                }
             });
     });
     return registerContainer
