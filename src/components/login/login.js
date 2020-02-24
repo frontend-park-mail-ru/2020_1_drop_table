@@ -8,13 +8,12 @@ function ajax(route, body, callback) {
 
     let h = new Headers();
     h.append('Accept', 'application/json');
-    h.append('Content-type', 'application/json;charset=UTF-8'); //Если убрать будет пустой запрос но будет работать
+    // h.append('Content-type', 'application/json;charset=UTF-8'); //Если убрать будет пустой запрос но будет работать
     let req = new Request(route, {
         method: 'POST',
         headers: h,
         mode: 'cors',
-
-        body: JSON.stringify(body)
+        body: 'asd'
     });
 
     fetch(req)
@@ -63,7 +62,7 @@ export function renderLogin() {
         e.preventDefault();
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
-        ajax('http://127.0.0.1:3100/api/v1/owner', {
+        ajax('http://127.0.0.1:60000/api/v1/owner', {
             email: "asd",
             password: "lskajdlkas"
         }, (response) => console.log(response)) //TODO ajax

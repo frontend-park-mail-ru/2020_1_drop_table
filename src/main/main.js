@@ -9,20 +9,20 @@ const app = document.body;
 let routes = [
     {
         url: '', callback: function () {
-            app.innerHTML = "Тут должна быть главная страница. /reg - регистрация /login- логин";
+            app.innerHTML = "тут типа будет главная страница /reg /login\n" +
+                "<a href=\"#login\">login</a>\n" +
+                "<a href=\"#reg\">reg</a>";
         }
     }
 ];
 
 
-function getUrl(href) {
-    const url = href.split('/');
-    return url[url.length - 1]
+function getUrl() {
+    return window.location.hash.substr(1)
 }
 
 function Routing() {
-    let href = window.location.href;
-    let url = getUrl(href);
+    let url = getUrl();
     let route = routes[0];
     routes.forEach(item => {
         if (url === item.url) {
@@ -50,8 +50,9 @@ routes.push({
         app.innerHTML = "";
         app.appendChild(renderHeader());
         app.appendChild(renderLogin())
-
     }
+
+
 });
 
 
