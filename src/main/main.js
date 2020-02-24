@@ -29,10 +29,6 @@ const userData = {
 }
 
 
-
-
-
-
 function createCafes(cafes) {
     const cafesContainerDiv = document.createElement('div');
 
@@ -137,7 +133,7 @@ export function createUserProfilePage(userData){
 let routes = [
     {
         url: '', callback: function () {
-            application.innerHTML = "Тут будет стартовая страница";
+            application.innerHTML = "Тут будет стартовая страница /reg - регистрация /login - авторизация";
         }
     }
 ];
