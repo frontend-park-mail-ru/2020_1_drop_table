@@ -10,7 +10,7 @@ const app = express();
 
 
 app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static('./src/main/server'));
 app.use(body.json());
 app.use(cookie());
 

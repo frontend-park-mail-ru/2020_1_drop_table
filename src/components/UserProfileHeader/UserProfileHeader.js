@@ -13,12 +13,14 @@ export class UserProfileHeaderComponent {
     }
 
     get data() {
-        return this._data;
+        return this._imageSrc;
     }
 
-    set data(d) {
-        this._data = d;
+    set data(src) {
+        this._imageSrc = src;
     }
+
+
 
     _renderTemplate() {
         this._el.innerHTML = UserProfileHeader(
@@ -27,10 +29,18 @@ export class UserProfileHeaderComponent {
                 lastChange: this._lastChange,
             });
 
+        let span = this._el.getElementsByTagName('span').item(0);
+        console.log(span);
+        span.addEventListener('click',(e)=>{
+            alert("hello moto")
+            }
+        );
+
     }
 
     render() {
         return this._renderTemplate();
     }
-
 }
+
+

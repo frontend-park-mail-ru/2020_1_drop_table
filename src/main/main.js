@@ -21,12 +21,45 @@ const header = document.getElementById('header');
 
 
 
+function ajax(route, body, callback) {
+
+    let h = new Headers();
+    h.append('Accept', '*/*');
+    h.append('Content-Type', 'text/plain; charset=utf-8');
+    let req = new Request(route, {
+        method: 'GET',
+        headers: h,
+        credentials: 'include',
+    });
+
+    fetch(req)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('BAD HTTP stuff');
+            }
+
+        })
+        .then((response) => {
+            callback(response);
+            console.log('RESPONSE:', response);
+        })
+        .catch((err) => {
+            console.log('ERROR:', err.message);
+        });
+}
+
+
+
 const userData = {
     imageSrc: "https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1",
     name: "Антон Лапенко",
     email: "alapenko@boldin.ru",
     lastChange: "45 минут"
 }
+
+
 
 
 function createCafes(cafes) {
@@ -36,17 +69,23 @@ function createCafes(cafes) {
         const cafesContainerComp = new CafesContainerComponent({
             el: cafesContainerDiv,
         });
+        console.log('data', JSON.parse(JSON.stringify(cafes)));
+
+
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
         cafesContainerComp.render();
     } else {
-        AjaxModule.Get({
-            callback(xhr) {
-                const cafes = JSON.parse(xhr.responseText);
-                application.innerHTML = '';
-                createCafes(cafes);
-            },
-            path: '/cafes',
-        });
+        console.log('COOKIE   ');
+        console.log('COOKIE   ',document.cookie);
+        ajax('http://localhost:8080/api/v1/cafe',
+            {}, (response) => {
+                console.log("RESPONSE1", response);
+                if (response.errors === null) {
+                    createCafes(response.data)
+                } else {
+                    alert(response.errors[0].message)
+                }
+            });
     }
     application.appendChild(cafesContainerDiv);
 }
@@ -65,9 +104,10 @@ function createHeader() {
 
 
 
-export function createMyCafesPage(cafesList) {
+export function createMyCafesPage() {
+
     application.innerHTML = '';
-    createCafes(cafesList);
+    createCafes();
     createHeader();
 }
 
@@ -130,6 +170,7 @@ export function createUserProfilePage(userData){
 
 
 
+
 let routes = [
     {
         url: '', callback: function () {
@@ -180,14 +221,14 @@ routes.push({
     }
 });
 
-
 routes.push({
     url: "myCafes", callback: () => {
         console.log("hello");
         application.innerHTML = "";
-        createMyCafesPage(cafesList)
+        createMyCafesPage()
     }
 });
+
 routes.push({
     url: "userProfile", callback: () => {
         application.innerHTML = "";

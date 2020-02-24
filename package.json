@@ -1,0 +1,33 @@
+{
+  "name": "2020_1_drop_table",
+  "version": "1.0.0",
+  "description": "Веб сервис, предоставляющий владельцам кафе возможность  быстро создать свою систему лояльности и распространить её среди клиентов",
+  "main": "webpack.config.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "css-loader": "^3.4.2",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.3",
+    "handlebars-loader": "^1.7.1",
+    "morgan": "^1.9.1",
+    "styles-loader": "^1.0.2",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "uuid": "^3.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2020_1_drop_table.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2020_1_drop_table/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2020_1_drop_table#readme"
+}

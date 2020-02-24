@@ -93,10 +93,10 @@ export function renderRegister() {
         const password = form.elements["password"].value;
         const name = form.elements["full-name"].value;
         ajax('http://localhost:8080/api/v1/owner',
-            {"name": name.toString(), "email":  email.toString(),  "password":  password.toString()}
+            {"name": name.toString(), "email": email.toString(), "password": password.toString()}
             , (response) => {
 
-                console.log("RESPONSE",response.errors[0].message);
+                console.log("RESPONSE", response);
                 if (response.errors === null) {
                     createUserProfilePage({
                         imageSrc: 'https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1',
@@ -104,7 +104,7 @@ export function renderRegister() {
                         email: response.data['email'],
                         lastChange: '45 минут'
                     });
-                } else{
+                } else {
                     alert(response.errors[0].message)
                 }
             });
