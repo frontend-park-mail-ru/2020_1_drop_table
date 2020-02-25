@@ -37,9 +37,8 @@ export function renderLogin() {
                 } else {
                     alert(response.errors[0].message)
                 }
-            }) //TODO ajax
+            })
 
-        //const name = form.elements["full-name"].value; //TODO раскоментить в зависимости от API
     });
     return loginContainer
 
