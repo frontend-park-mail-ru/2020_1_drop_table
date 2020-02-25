@@ -132,7 +132,12 @@ function createCafes(cafes) {
             {}, (response) => {
                 console.log("RESPONSE1", response);
                 if (response.errors === null) {
-                    createCafes(response.data)
+                    if(response.data !== null){
+                        createCafes(response.data)
+                    } else{
+                        createNewCafePage()
+                    }
+
                 } else {
                     alert(response.errors[0].message)
                 }

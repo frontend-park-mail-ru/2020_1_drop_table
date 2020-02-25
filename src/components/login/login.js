@@ -69,10 +69,7 @@ export function renderLogin() {
         , (response) => {
                 console.log("RESPONSE:",response.errors);
                 if (response.errors === null) {
-                    if(response.data !== null){
-                        createMyCafesPage();
-                    }
-                    createNewCafePage();
+                    createMyCafesPage();
                 } else{
                     alert(response.errors[0].message)
                 }
