@@ -64,7 +64,7 @@ export function renderLogin() {
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
 
-        ajax('http://localhost:8080/api/v1/owner/login',
+        ajax('http://80.93.177.185/api/v1/owner/login',
         {"email":  email.toString(),  "password":  password.toString()}
         , (response) => {
                 console.log("RESPONSE:",response.errors);
