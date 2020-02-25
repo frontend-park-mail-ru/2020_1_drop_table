@@ -8,6 +8,31 @@ import {ajax} from "../../modules/ajax";
 import {createNewCafePage} from "../../main/main";
 
 
+
+function ajax2(route, body, callback) {
+    let formData = new FormData();
+    formData.append("jsonData", JSON.stringify(body));
+    let req = new Request(route, {
+        method: 'POST',
+        mode: 'cors',
+        body: formData
+    });
+    fetch(req)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('BAD HTTP stuff');
+            }
+        })
+        .then((formData) => {
+            callback(formData);
+        })
+        .catch((err) => {
+            console.log('ERROR:', err.message);
+        });
+}
+
 export function renderRegister() {
 
     let registerContainer = document.createElement('div');
@@ -35,7 +60,7 @@ export function renderRegister() {
         const name = form.elements["full-name"].value;
         console.log(email)
         console.log(name)
-        ajax('POST', 'http://80.93.177.185/api/v1/owner',
+        ajax2('http://80.93.177.185/api/v1/owner',
             {"name": name.toString(), "email": email.toString(), "password": password.toString()}
             , (response) => {
                 console.log("RESPONSE", response);
