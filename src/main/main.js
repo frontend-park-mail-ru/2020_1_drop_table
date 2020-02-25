@@ -1,15 +1,20 @@
+
+
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
+import {DecorateLabelComponent} from "../components/DecorateLabel/DecorateLabel";
+
 
 import {renderHeader} from "../components/headerDG/header";
 import {renderRegister} from "../components/register/register";
 import {renderLogin} from "../components/login/login";
 
 
-//Компоненты Сани
 import CafeComponent from "../componentsAI/cafe/cafe";
+
 import HeaderComponent from "../componentsAI/header/header"
 import ProfileComponent from "../componentsAI/profile/profile";
 
+const {AjaxModule} = window;
 const application = document.getElementById('application');
 const headerContainer = document.getElementById('headerContainer');
 
@@ -120,7 +125,7 @@ function createCafes(cafes) {
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ',document.cookie);
-        ajax('http://80.93.177.185/api/v1/cafe',
+        ajax('http://localhost:8080/api/v1/cafe',
             {}, (response) => {
                 console.log("RESPONSE1", response);
                 if (response.errors === null) {
@@ -142,6 +147,7 @@ function createCafes(cafes) {
 export function createMyCafesPage() {
     application.innerHTML = '';
     headerContainer.innerHTML = '';
+
     const headerElement = document.createElement('div');
     headerElement.className = "header";
     headerContainer.appendChild(headerElement);
@@ -151,49 +157,64 @@ export function createMyCafesPage() {
 }
 
 
-//здесь сделаю аякс запрос и подставлю нужные данные
+function changeUserProfile(e){
+    e.preventDefault()
+
+}
 export function createUserProfilePage(){
-let profile = {
-    imgSrc:"https://justwoman.club/wp-content/uploads/2017/12/photo.jpg",
-    event:{
-        type: 'change',
-        listener: handleImageUpload
-    },
-    form: {
-        formFields:[
-            {
-                type:"text",
-                id:"id",
-                data:"",
-            },
-            {
-                type:"email",
-                id:"id",
-                data:"",
-            },
-            {
-                type:"password",
-                id:"id",
-                data:"",
-            },
-            {
-                type:"password",
-                id:"id",
-                data:"",
-            },
-        ],
-        submitValue: "Готово",
+    let profile = {
+        imgSrc:"https://justwoman.club/wp-content/uploads/2017/12/photo.jpg",
         event:{
-            type: 'click',
-            listener: listen
+            type: 'change',
+            listener: handleImageUpload
         },
-    },
-};
+        form: {
+            formFields:[
+                {
+                    type:"text",
+                    id:"name",
+                    data:"Имя",
+                },
+                {
+                    type:"email",
+                    id:"email",
+                    data:"email",
+                },
+                {
+                    type:"password",
+                    id:"password1",
+                    data:"Пароль",
+                },
+                {
+                    type:"password",
+                    id:"password2",
+                    data:"Повторите пароль",
+                },
+            ],
+            submitValue: "Готово",
+            event:{
+                type: 'submit',
+                listener: changeUserProfile
+            },
+        },
+    };
     (new ProfileComponent).render(profile);
 }
 
+function createDecorateLabel(labelText){
+    const decorateLabelDiv = document.createElement('div');
 
-//лисенер для загрузки изображения
+    const headerComponent = new DecorateLabelComponent({
+        el: decorateLabelDiv,
+        labelText: labelText,
+    });
+    headerComponent.render();
+
+    application.appendChild(decorateLabelDiv);
+}
+
+
+
 function handleImageUpload() {
     let image = document.getElementById("upload").files[0];
     let reader = new FileReader();
@@ -205,16 +226,54 @@ function handleImageUpload() {
     reader.readAsDataURL(image);
 
 }
+
 function listen(tts){
     alert('tts')
 }
 
-function addCafe(){
+
+function ajaxAddCafe(route, body, callback) {
+    let formData = new FormData();
+    formData.append("jsonData", JSON.stringify(body));
+    let req = new Request(route, {
+        method: 'POST',
+        mode: 'cors',
+        body: formData,
+        credentials: 'include',
+    });
+    fetch(req)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('BAD HTTP stuff');
+            }
+        })
+        .then((formData) => {
+            callback(formData);
+        })
+        .catch((err) => {
+            console.log('ERROR:', err.message);
+        });
+}
+
+function addCafe(e){
+    e.preventDefault()
     const form = document.getElementsByClassName('cafeFormField').item(0);
-    const email = form.elements["email"].value;
-    const password = form.elements["password"].value;
-    const name = form.elements["full-name"].value;
-    alert(email);
+    const name = form.elements["name"].value;
+    const address = form.elements["address"].value;
+    const description = form.elements["description"].value;
+    alert(name);
+    ajaxAddCafe('http://localhost:8080/api/v1/cafe',
+        {"name": name.toString(), "address": address.toString(), "description": description.toString()}
+        , (response) => {
+            console.log("RESPONSE add cafe", response);
+            if (response.errors === null) {
+                alert('ok')
+            } else {
+                alert(response.errors[0].message)
+            }
+        });
 }
 
 
@@ -232,24 +291,24 @@ export function createNewCafePage(){
             formFields:[
                 {
                     type:"text",
-                    id:"id",
+                    id:"name",
                     data:"Название",
                 },
                 {
                     type:"text",
-                    id:"id",
+                    id:"address",
                     data:"Адрес",
                 },
                 {
                     type:"text",
-                    id:"id",
+                    id:"description",
                     data:"Описание",
                 },
             ],
             submitValue: "Готово",
             event:{
-                type: 'click',
-                listener: listen
+                type: 'submit',
+                listener: addCafe
             },
         },
     };
@@ -295,6 +354,8 @@ function Routing() {
 window.addEventListener('popstate', Routing);
 
 setTimeout(Routing, 0);
+
+
 routes.push({
 
     url: "reg", callback: () => {

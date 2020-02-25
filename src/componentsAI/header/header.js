@@ -7,7 +7,6 @@ import HeaderTemplate from '../header/header.hbs';
 export default class HeaderComponent {
 
     constructor(parent = document.body) {
-        console.log('parent1', parent);
         this._parent = parent;
         this._menu = new MenuComponent;
     }

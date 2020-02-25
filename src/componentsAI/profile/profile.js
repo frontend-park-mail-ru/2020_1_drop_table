@@ -14,6 +14,7 @@ export default class ProfileComponent {
     _addListener(context){
         const element = document.getElementById('upload');
         element.addEventListener(
+
             context['event']['type'],
             context['event']['listener']
         );

@@ -10,8 +10,7 @@ export default class FormComponent {
     }
 
     _addListener(context){
-        const element = document.getElementById('submit');
-        element.addEventListener(
+        this._parent.addEventListener(
             context['event']['type'],
             context['event']['listener']
         );
