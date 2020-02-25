@@ -28,8 +28,7 @@ export function renderRegister() {
     registerContainer.appendChild(form);
     form = form.firstElementChild
     form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        validateForm(form);
+        e.preventDefault()
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
         const name = form.elements["full-name"].value;

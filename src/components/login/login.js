@@ -7,6 +7,7 @@ import {ajax} from "../../modules/ajax";
 
 
 export function renderLogin() {
+
     let loginContainer = document.createElement('div');
     loginContainer.className = "loginContainer";
     let topBar = document.createElement("div");
@@ -21,18 +22,24 @@ export function renderLogin() {
     form = form.firstElementChild;
 
     form.addEventListener('submit', function (e) {
-        validateForm()
         e.preventDefault();
+        //validateForm()
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
-        ajax('POST', 'http://80.93.177.185/api/v1/owner', {
-            email: email,
-            password: password
-        }, (response) => console.log(response)) //TODO ajax
+
+        ajax('POST','http://80.93.177.185/api/v1/owner/login',
+            {"email": email.toString(), "password": password.toString()}
+            , (response) => {
+                console.log("RESPONSE:", response.errors);
+                if (response.errors === null) {
+                    console.log("all OK")
+
+                } else {
+                    alert(response.errors[0].message)
+                }
+            }) //TODO ajax
 
         //const name = form.elements["full-name"].value; //TODO раскоментить в зависимости от API
-
-
     });
     return loginContainer
 
