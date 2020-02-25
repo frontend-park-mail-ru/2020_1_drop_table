@@ -1,0 +1,168 @@
+.body{
+    min-width: 100px;
+}
+.UserProfileHeader{
+    height: 30%;
+    width: 100%;
+}
+.UserProfileForm{
+    width: 100%;
+    height: 50%
+}
+
+.UserProfileHeader .UserProfileLogoField{
+    width: 10rem;
+    height: 100%;
+    object-fit: cover;
+    text-align: center;
+    float: left;
+    font-family: Montserrat;
+    text-decoration: underline;
+}
+
+.UserProfileHeader .UserProfileLogoField img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+}
+
+.UserProfileHeader-right{
+    float: right;
+    top:0;
+    height: 100%;
+}
+.UserProfileHeader-right .exitButton{
+
+    float: right;
+    padding-right: 4%;
+    padding-bottom: 10%;
+    top:0;
+    right: 0;
+}
+
+.UserProfileHeader-right .exitButton h4{
+    font-family: Montserrat;
+}
+
+.UserProfileHeader-right .lastUpdate{
+    float: left;
+    padding-right: 10%;
+}
+.UserProfileHeader-right .lastUpdate span {
+    font-family: Montserrat;
+    color: #333333;
+}
+
+.UserProfileDecorate{
+    width: 30%;
+    height: 100%;
+    margin-left: 10rem;
+    padding-bottom: 0;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 3rem;
+    white-space: nowrap ;
+}
+.myProfileLabelDecorate{
+    position: absolute;
+    top: 25%;
+    transform: translateY(-25%);
+}
+.strip{
+    width:15rem;
+    height: 0.5rem;
+    background-color: #A32704;
+    position: absolute;
+    top: 32%;
+    transform: translateY(-32%);
+}
+
+
+.formField{
+    font-family: 'FuturaBookCTT Normal', arial;
+    margin: auto 30%;
+    padding-top: 15rem;
+    bottom: 20%;
+}
+@media (max-width: 700px) {
+    .formField{
+        font-family: 'FuturaBookCTT Normal', arial;
+        margin: auto 15%;
+        padding-top: 15rem;
+        bottom: 20%;
+    }
+}
+
+
+input {
+    background: none;
+    color: #000000;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 1rem;
+
+}
+
+input:focus, input:active {
+    outline: none;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    border: none;
+    border-bottom: solid 2px #000000;
+    width: 100%;
+
+}
+
+input[type="submit"] {
+    font-weight: 500;
+    color: white;
+    background-color: #A32704;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+}
+
+input[type="submit"]:active {
+    color: white;
+    background: #A32704;
+
+}
+
+.InputField{
+
+    margin-top: 8%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+
+
+}
+
+.InputField input {
+    padding-top: 2%;
+}
+
+.InputField label {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: rgb(0, 0, 0);
+    pointer-events: none;
+    -webkit-transition: all 0.15s ease-out 0s;
+    transition: all 0.15s ease-out 0s;
+}
+
+.InputField input:focus + label,
+.InputField input.has-value + label {
+    top: -1rem;
+    font-size: 1rem;
+    color: rgb(0, 0, 0);
+}

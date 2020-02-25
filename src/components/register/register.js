@@ -3,13 +3,12 @@
 import registerTemplate from './registerTopBar.hbs'
 import './styles.css'
 import registerFormTemplate from './registerForm.hbs'
-import {validateForm} from "../../modules/formValidator";
+import {showError, validateForm} from "../../modules/formValidator";
 import {ajax} from "../../modules/ajax";
 import {createNewCafePage} from "../../main/main";
 
 
-
-function ajax2(route, body, callback) {
+function ajaxForReg(route, body, callback) {
     let formData = new FormData();
     formData.append("jsonData", JSON.stringify(body));
     let req = new Request(route, {
@@ -54,22 +53,27 @@ export function renderRegister() {
     form = form.firstElementChild;
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        //validateForm(form);
-        const email = form.elements["email"].value;
-        const password = form.elements["password"].value;
-        const name = form.elements["full-name"].value;
-        console.log(email)
-        console.log(name)
-        ajax2('http://80.93.177.185/api/v1/owner',
-            {"name": name.toString(), "email": email.toString(), "password": password.toString()}
-            , (response) => {
-                console.log("RESPONSE", response);
-                if (response.errors === null) {
-                    console.log("all Ok")
-                } else {
-                    alert(response.errors[0].message)
-                }
-            });
+        if (validateForm(form)) {
+            const email = form.elements["email"]
+            const password = form.elements["password"]
+            const name = form.elements["full-name"]
+
+
+            ajaxForReg('http://80.93.177.185/api/v1/owner',
+                {"name": name.value.toString(), "email": email.value.toString(), "password": password.value.toString()}
+                , (response) => {
+                    console.log("RESPONSE", response);
+                    if (response.errors === null) {
+                        console.log("all Ok")
+                    } else {
+                        if (response.errors[0].message[0] === "P") {
+                            showError(form, password.parentNode, response.errors[0].message)
+                        } else {
+                            showError(form, email.parentNode, response.errors[0].message)
+                        }
+                    }
+                });
+        }
     });
     return registerContainer
 

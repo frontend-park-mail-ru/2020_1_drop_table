@@ -1,0 +1,160 @@
+.header {
+    overflow: hidden;
+    background-color: #ffffff;
+    padding: 20px 10px;
+    height: 7rem;
+    width: 100%;
+    float: right;
+    z-index: 3;
+}
+
+
+.header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 2rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    background-color: white;
+}
+
+.header > img {
+    height: 100%;
+    overflow: auto;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+
+.header-right {
+    height: 100%;
+    float: right;
+    text-align: center;
+    padding: 0 2rem 0 0;
+    /*display: inline-block;*/
+    /*vertical-align: middle;*/
+
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.header .loginField {
+    height: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+
+.header ul {
+    margin: 0;
+    padding-top: 0;
+    padding-right: 0;
+    z-index: 3;
+    list-style: none;
+    overflow: hidden;
+    height: 200%;
+    background-color: #fff;
+    float: right;
+    font-family: Montserrat;
+
+}
+
+.header li a {
+    display: block;
+    padding: 0 0.5rem;
+    text-decoration: none;
+
+}
+
+.header li a:hover,
+.header .menu-btn:hover {
+    background-color: #f4f4f4;
+}
+
+
+/* menu */
+
+.header .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+}
+
+/* menu icon */
+
+.header .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding: 28px 20px;
+    position: relative;
+    user-select: none;
+}
+
+.header .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+}
+
+.header .menu-icon .navicon:before,
+.header .menu-icon .navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.header .menu-icon .navicon:before {
+    top: 5px;
+}
+
+.header .menu-icon .navicon:after {
+    top: -5px;
+}
+
+/* menu btn */
+.header .menu-btn {
+    display: none;
+}
+
+.header .menu-btn:checked ~ .menu {
+    max-height: 240px;
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+}
+
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+.decorateContainer {
+    width: 100%;
+    margin-top: -2rem;
+}
+
+.formContainer {
+    width: 100%;
+}
