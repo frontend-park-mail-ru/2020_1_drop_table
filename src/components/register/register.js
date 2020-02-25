@@ -4,7 +4,7 @@ import registerTemplate from './registerTopBar.hbs'
 import './styles.css'
 import registerFormTemplate from './registerForm.hbs'
 
-import {createUserProfilePage} from '../../main/main'
+import {createNewCafePage} from '../../main/main'
 
 function ajax(route, body, callback) {
     let formData = new FormData();
@@ -95,15 +95,9 @@ export function renderRegister() {
         ajax('http://localhost:8080/api/v1/owner',
             {"name": name.toString(), "email": email.toString(), "password": password.toString()}
             , (response) => {
-
                 console.log("RESPONSE", response);
                 if (response.errors === null) {
-                    createUserProfilePage({
-                        imageSrc: 'https://sun9-14.userapi.com/c206524/v206524266/45665/yFWB9faNIvU.jpg?ava=1',
-                        name: response.data['name'],
-                        email: response.data['email'],
-                        lastChange: '45 минут'
-                    });
+                    createNewCafePage();
                 } else {
                     alert(response.errors[0].message)
                 }

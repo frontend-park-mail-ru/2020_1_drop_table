@@ -2,7 +2,7 @@
 import './login.css'
 import loginTemplate from '../register/registerTopBar.hbs'
 import loginForm from './loginBottomBar.hbs'
-import {createMyCafesPage} from '../../main/main'
+import {createMyCafesPage, createNewCafePage} from '../../main/main'
 
 
 
@@ -69,7 +69,10 @@ export function renderLogin() {
         , (response) => {
                 console.log("RESPONSE:",response.errors);
                 if (response.errors === null) {
-                    createMyCafesPage();
+                    if(response.data !== null){
+                        createMyCafesPage();
+                    }
+                    createNewCafePage();
                 } else{
                     alert(response.errors[0].message)
                 }
