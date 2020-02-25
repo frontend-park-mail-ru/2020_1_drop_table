@@ -1,23 +1,15 @@
-// import cssCard from './CafeCard/CafeCard.css'
-// import cssCardContainer from './CafesContainer/CafesContainer.css'
-
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
-// import {HeaderComponent} from "../components/MyHeader/Header";
-import {UserProfileHeaderComponent} from "../components/UserProfileHeader/UserProfileHeader";
-import {DecorateLabelComponent} from "../components/DecorateLabel/DecorateLabel";
-import {UserProfileFormComponent} from "../components/UserProfileForm/UserProfileForm";
 
 import {renderHeader} from "../components/headerDG/header";
 import {renderRegister} from "../components/register/register";
 import {renderLogin} from "../components/login/login";
 
 
+//Компоненты Сани
 import CafeComponent from "../componentsAI/cafe/cafe";
-
 import HeaderComponent from "../componentsAI/header/header"
 import ProfileComponent from "../componentsAI/profile/profile";
 
-const {AjaxModule} = window;
 const application = document.getElementById('application');
 const headerContainer = document.getElementById('headerContainer');
 
@@ -150,7 +142,6 @@ function createCafes(cafes) {
 export function createMyCafesPage() {
     application.innerHTML = '';
     headerContainer.innerHTML = '';
-
     const headerElement = document.createElement('div');
     headerElement.className = "header";
     headerContainer.appendChild(headerElement);
@@ -159,6 +150,8 @@ export function createMyCafesPage() {
     createCafes();
 }
 
+
+//здесь сделаю аякс запрос и подставлю нужные данные
 export function createUserProfilePage(){
 let profile = {
     imgSrc:"https://justwoman.club/wp-content/uploads/2017/12/photo.jpg",
@@ -199,45 +192,8 @@ let profile = {
     (new ProfileComponent).render(profile);
 }
 
-// function createUserProfileHeader(userData){
-//     const headerDiv = document.createElement('div');
-//
-//     const headerComponent = new UserProfileHeaderComponent({
-//         el: headerDiv,
-//         imageSrc: userData.imageSrc,
-//         lastChange: userData.lastChange
-//     });
-//     headerComponent.render();
-//
-//     header.appendChild(headerDiv);
-// }
 
-function createDecorateLabel(labelText){
-    const decorateLabelDiv = document.createElement('div');
-
-    const headerComponent = new DecorateLabelComponent({
-        el: decorateLabelDiv,
-        labelText: labelText,
-    });
-    headerComponent.render();
-
-    application.appendChild(decorateLabelDiv);
-}
-
-// function createUserProfileForm(userData){
-//
-//     const UserProfileFormDiv = document.createElement('div');
-//     const headerComponent = new UserProfileFormComponent({
-//         el: UserProfileFormDiv,
-//         email: userData['email'],
-//         name: userData['name'],
-//
-//     });
-//     headerComponent.render();
-//     application.appendChild(UserProfileFormDiv);
-// }
-
-
+//лисенер для загрузки изображения
 function handleImageUpload() {
     let image = document.getElementById("upload").files[0];
     let reader = new FileReader();
@@ -249,7 +205,6 @@ function handleImageUpload() {
     reader.readAsDataURL(image);
 
 }
-
 function listen(tts){
     alert('tts')
 }
@@ -340,8 +295,6 @@ function Routing() {
 window.addEventListener('popstate', Routing);
 
 setTimeout(Routing, 0);
-
-
 routes.push({
 
     url: "reg", callback: () => {
