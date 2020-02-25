@@ -28,7 +28,9 @@
     "uuid": "^3.4.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",

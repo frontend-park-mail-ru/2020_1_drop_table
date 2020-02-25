@@ -128,7 +128,7 @@ function createCafes(cafes) {
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ',document.cookie);
-        ajax('http://localhost:8080/api/v1/cafe',
+        ajax('http://80.93.177.185/api/v1/cafe',
             {}, (response) => {
                 console.log("RESPONSE1", response);
                 if (response.errors === null) {
