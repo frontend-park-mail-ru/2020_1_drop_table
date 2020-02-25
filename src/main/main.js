@@ -2,7 +2,7 @@
 // import cssCardContainer from './CafesContainer/CafesContainer.css'
 
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
-import {HeaderComponent} from "../components/Header/Header";
+import {HeaderComponent} from "../components/MyHeader/Header";
 import {UserProfileHeaderComponent} from "../components/UserProfileHeader/UserProfileHeader";
 import {DecorateLabelComponent} from "../components/DecorateLabel/DecorateLabel";
 import {UserProfileFormComponent} from "../components/UserProfileForm/UserProfileForm";
