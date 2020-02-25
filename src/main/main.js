@@ -52,7 +52,6 @@ routes.push({
         app.appendChild(renderLogin())
     }
 
-
 });
 
 

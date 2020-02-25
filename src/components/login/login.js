@@ -2,49 +2,11 @@
 import './login.css'
 import loginTemplate from '../register/registerTopBar.hbs'
 import loginForm from './loginBottomBar.hbs'
-
-function ajax(route, body, callback) {
-
-
-    let h = new Headers();
-    h.append('Accept', 'application/json');
-    // h.append('Content-type', 'application/json;charset=UTF-8'); //Если убрать будет пустой запрос но будет работать
-    let req = new Request(route, {
-        method: 'POST',
-        headers: h,
-        mode: 'cors',
-        body: 'asd'
-    });
-
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((jsonData) => {
-            callback(jsonData);
-        })
-        .catch((err) => {
-            console.log('ERROR:', err.message);
-        });
-}
-
-
-function showError(whereToInsert, inWitchElement, message) {
-    const error = document.createElement('div');
-    error.className = "error";
-    error.textContent = message;
-    whereToInsert.insertBefore(error, inWitchElement.parentNode)
-
-}
+import {validateForm} from "../../modules/formValidator";
+import {ajax} from "../../modules/ajax";
 
 
 export function renderLogin() {
-
-
     let loginContainer = document.createElement('div');
     loginContainer.className = "loginContainer";
     let topBar = document.createElement("div");
