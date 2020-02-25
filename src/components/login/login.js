@@ -24,9 +24,9 @@ export function renderLogin() {
         e.preventDefault();
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
-        ajax('POST','http://127.0.0.1:60000/api/v1/owner', {
-            email: "asd",
-            password: "lskajdlkas"
+        ajax('POST', 'http://80.93.177.185/api/v1/owner', {
+            email: email,
+            password: password
         }, (response) => console.log(response)) //TODO ajax
 
         //const name = form.elements["full-name"].value; //TODO раскоментить в зависимости от API
