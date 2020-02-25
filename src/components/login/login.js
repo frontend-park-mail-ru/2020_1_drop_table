@@ -21,6 +21,7 @@ export function renderLogin() {
     form = form.firstElementChild;
 
     form.addEventListener('submit', function (e) {
+        validateForm()
         e.preventDefault();
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;

@@ -1,14 +1,15 @@
-export function ajax(method,route, body,callback) {
+export function ajax(method,route, body, callback) {
 
     let h = new Headers();
     h.append('Accept', '*/*');
-    h.append('Content-Type', 'text/plain; charset=utf-8');
+    h.append('Content-type', 'application/json')
+
     let req = new Request(route, {
         method: method,
-        headers: h,
+        mode: 'cors',
+        body: JSON.stringify(body),
         credentials: 'include',
     });
-
     fetch(req)
         .then((response) => {
             if (response.ok) {
@@ -16,11 +17,9 @@ export function ajax(method,route, body,callback) {
             } else {
                 throw new Error('BAD HTTP stuff');
             }
-
         })
-        .then((response) => {
-            callback(response);
-            console.log('RESPONSE:', response);
+        .then((formData) => {
+            callback(formData);
         })
         .catch((err) => {
             console.log('ERROR:', err.message);
