@@ -1,11 +1,28 @@
-export function ajax(route, body, callback) {
-    fetch(
-        route, {
-            method: 'POST',
-            body: JSON.stringify(body),
-            credentials: 'include',
-        }
-    )
-        .then(response => callback(response.json()))
-        .catch(error => console.log(error))
+export function ajax(method,route, body,callback) {
+
+    let h = new Headers();
+    h.append('Accept', '*/*');
+    h.append('Content-Type', 'text/plain; charset=utf-8');
+    let req = new Request(route, {
+        method: method,
+        headers: h,
+        credentials: 'include',
+    });
+
+    fetch(req)
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('BAD HTTP stuff');
+            }
+
+        })
+        .then((response) => {
+            callback(response);
+            console.log('RESPONSE:', response);
+        })
+        .catch((err) => {
+            console.log('ERROR:', err.message);
+        });
 }

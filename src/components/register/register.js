@@ -33,7 +33,7 @@ export function renderRegister() {
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
         const name = form.elements["full-name"].value;
-        ajax('/api/v1/owner', {name, email, password}, (response) => console.log(response)) //TODO ajax
+        ajax('POST', '/api/v1/owner', {name, email, password}, (response) => console.log(response)) //TODO ajax
 
 
     });

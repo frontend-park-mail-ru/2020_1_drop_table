@@ -24,7 +24,7 @@ export function renderLogin() {
         e.preventDefault();
         const email = form.elements["email"].value;
         const password = form.elements["password"].value;
-        ajax('http://127.0.0.1:60000/api/v1/owner', {
+        ajax('POST','http://127.0.0.1:60000/api/v1/owner', {
             email: "asd",
             password: "lskajdlkas"
         }, (response) => console.log(response)) //TODO ajax
