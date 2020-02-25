@@ -7,7 +7,6 @@ import {CafesContainerComponent} from "../components/CafesContainer/CafesContain
 const app = document.body;
 
 
-
 function createCafes(cafes) {
     const cafesContainerDiv = document.createElement('div');
     if (cafes) {
@@ -17,7 +16,8 @@ function createCafes(cafes) {
         console.log('data', JSON.parse(JSON.stringify(cafes)));
 
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
-        cafesContainerComp.render();
+        let data = cafesContainerComp.render();
+        app.appendChild(data)
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ', document.cookie);
@@ -36,7 +36,6 @@ function createCafes(cafes) {
                 }
             });
     }
-    return cafesContainerDiv;
 }
 
 
@@ -119,10 +118,10 @@ routes.push({
 });
 
 routes.push({
-    url: "createCaf", callback: () => {
+    url: "myCafe", callback: () => {
         app.innerHTML = "";
         app.appendChild(renderHeader())
-        app.appendChild(createCafes())
+        createCafes()
     }
 
 });
