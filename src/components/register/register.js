@@ -4,9 +4,7 @@ import registerTemplate from './registerTopBar.hbs'
 import './styles.css'
 import registerFormTemplate from './registerForm.hbs'
 import {showError, validateForm} from "../../modules/formValidator";
-import {ajax} from "../../modules/ajax";
-import {createNewCafePage} from "../../main/main";
-import {doLogin} from "../login/login";
+
 
 
 function ajaxForReg(route, body, callback) {
@@ -15,6 +13,7 @@ function ajaxForReg(route, body, callback) {
     let req = new Request(route, {
         method: 'POST',
         mode: 'cors',
+        credentials: 'include',
         body: formData
     });
     fetch(req)
@@ -49,15 +48,15 @@ export function renderRegister() {
         email: 'Почта',
         password: 'Пароль',
         repeatedPassword: 'Повторите пароль',
-    })
+    });
     registerContainer.appendChild(form);
     form = form.firstElementChild;
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         if (validateForm(form)) {
-            const email = form.elements["email"]
-            const password = form.elements["password"]
-            const name = form.elements["full-name"]
+            const email = form.elements["email"];
+            const password = form.elements["password"];
+            const name = form.elements["full-name"];
 
 
             ajaxForReg('http://80.93.177.185:8080/api/v1/owner',
@@ -65,7 +64,7 @@ export function renderRegister() {
                 , (response) => {
                     console.log("RESPONSE", response);
                     if (response.errors === null) {
-                        doLogin(email.value,password.value)
+                        console.log("reg done")
                     } else {
                         if (response.errors[0].message[0] === "P") {
                             showError(form, password, response.errors[0].message)

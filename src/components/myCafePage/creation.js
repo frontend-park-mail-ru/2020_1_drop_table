@@ -3,7 +3,7 @@ import {CafesContainerComponent} from "../CafesContainer/CafesContainer";
 
 const app=document.body
 
-function ajaxCreateCafe(route, body, callback) {
+export function ajaxCreateCafe(route, body, callback) {
 
     let h = new Headers();
     h.append('Accept', '*/*');

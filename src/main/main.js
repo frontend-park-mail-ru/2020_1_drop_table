@@ -3,7 +3,7 @@ import {renderHeader} from "../components/header/header";
 import {renderLogin} from "../components/login/login";
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
 import ProfileComponent from '../componentsAI/profile/profile';
-import {createCafes} from "../components/myCafePage/creation";
+import {ajaxCreateCafe, createCafes} from "../components/myCafePage/creation";
 
 
 const app = document.body;
