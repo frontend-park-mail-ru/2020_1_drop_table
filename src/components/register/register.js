@@ -59,7 +59,7 @@ export function renderRegister() {
             const name = form.elements["full-name"]
 
 
-            ajaxForReg('http://80.93.177.185/api/v1/owner',
+            ajaxForReg('http://80.93.177.185:8080/api/v1/owner',
                 {"name": name.value.toString(), "email": email.value.toString(), "password": password.value.toString()}
                 , (response) => {
                     console.log("RESPONSE", response);
