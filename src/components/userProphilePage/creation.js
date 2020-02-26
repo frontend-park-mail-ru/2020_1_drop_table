@@ -1,6 +1,7 @@
 import {ajaxCreateCafe} from "../myCafePage/creation";
 import ProfileComponent from "../../componentsAI/profile/profile";
 import {handleImageUpload} from "../../modules/imageUpload";
+import {validateForm} from "../../modules/formValidator";
 
 
 
@@ -41,9 +42,9 @@ function changeUserProfile(e) {
     const id = form.elements['userId'].value;
     const name = form.elements['name'].value;
     const email = form.elements['email'].value;
-    const password1 = form.elements['password1'].value;
-    const password2 = form.elements['password2'].value;
-    if (password1 === password2) {
+    const password1 = form.elements['password'].value;
+    const password2 = form.elements['re-password'].value;
+    if (validateForm(form)) {
         let route = `http://80.93.177.185:8080/api/v1/owner/${id}`;
         alert(route + '\n' + document.cookie);
         ajaxChangeUserData(route,
@@ -56,8 +57,6 @@ function changeUserProfile(e) {
                     alert(response.errors[0].message);
                 }
             });
-    } else {
-        alert('Пароли не совпадают');
     }
 
 
@@ -96,12 +95,12 @@ export function createUserProfilePage(app) {
                             },
                             {
                                 type: 'password',
-                                id: 'password1',
+                                id: 'password',
                                 data: response.data['password'],
                             },
                             {
                                 type: 'password',
-                                id: 'password2',
+                                id: 're-password',
                                 data: response.data['password'],
                             },
                         ],
