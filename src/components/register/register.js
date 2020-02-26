@@ -67,9 +67,9 @@ export function renderRegister() {
                         console.log("all Ok")
                     } else {
                         if (response.errors[0].message[0] === "P") {
-                            showError(form, password.parentNode, response.errors[0].message)
+                            showError(form, password, response.errors[0].message)
                         } else {
-                            showError(form, email.parentNode, response.errors[0].message)
+                            showError(form, email, response.errors[0].message)
                         }
                     }
                 });
