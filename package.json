@@ -18,19 +18,19 @@
   "devDependencies": {
     "cookie-parser": "^1.4.4",
     "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.3",
     "handlebars-loader": "^1.7.1",
     "morgan": "^1.9.1",
     "styles-loader": "^1.0.2",
+    "uuid": "^3.4.0",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "uuid": "^3.4.0"
+    "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack -p",
-    "watch": "webpack --watch"
+    "build": "rm -rf dist && webpack --mode development",
+    "start": "node ./src/server"
   },
   "repository": {
     "type": "git",

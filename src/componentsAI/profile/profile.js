@@ -1,45 +1,45 @@
 'use strict';
 
-import './profile.css'
-import ProfileTemplate from "./profile.hbs";
+import './profile.css';
+import ProfileTemplate from './profile.hbs';
 import Form from '../form/form.js';
-import {createMyCafesPage, createNewCafePage} from '../../main/main'
+import {createMyCafesPage, createNewCafePage} from '../../main/main';
 
 export default class ProfileComponent {
 
-    constructor(parent = document.body) {
-        this._parent = parent;
-        this._form = new Form;
-    }
+	constructor(parent = document.body) {
+		this._parent = parent;
+		this._form = new Form;
+	}
 
-    _addListener(context){
-        const element = document.getElementById('upload');
-        element.addEventListener(
+	_addListener(context){
+		const element = document.getElementById('upload');
+		element.addEventListener(
 
-            context['event']['type'],
-            context['event']['listener']
-        );
-    }
+			context['event']['type'],
+			context['event']['listener']
+		);
+	}
 
-    renderProfile(context){
-        this._parent.innerHTML += ProfileTemplate(context);
-        let formCollection = document.getElementsByClassName('formField');
-        this._form = new Form(formCollection.item(0));
-        // const exit = document.getElementById('exitButton');
-        // exit.addEventListener('click',(e)=>{
-        //     e.preventDefault();
-        //     alert('click');
-        //     // createMyCafesPage();
-        // })
-    }
+	renderProfile(context){
+		this._parent.innerHTML += ProfileTemplate(context);
+		let formCollection = document.getElementsByClassName('formField');
+		this._form = new Form(formCollection.item(0));
+		// const exit = document.getElementById('exitButton');
+		// exit.addEventListener('click',(e)=>{
+		//     e.preventDefault();
+		//     alert('click');
+		//     // createMyCafesPage();
+		// })
+	}
 
-    renderForm(context){
-        this._form.render(context)
-    }
+	renderForm(context){
+		this._form.render(context);
+	}
 
-    render(context) {
-        this.renderProfile(context);
-        this._addListener(context);
-        this.renderForm(context["form"]);
-    }
+	render(context) {
+		this.renderProfile(context);
+		this._addListener(context);
+		this.renderForm(context['form']);
+	}
 }
