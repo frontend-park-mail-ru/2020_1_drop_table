@@ -4,16 +4,19 @@
   "description": "Веб сервис, предоставляющий владельцам кафе возможность  быстро создать свою систему лояльности и распространить её среди клиентов",
   "main": "webpack.config.js",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
     "cookie-parser": "^1.4.4",
     "css-loader": "^3.4.2",
+    "eslint-loader": "^3.0.3",
     "express": "^4.17.1",
     "handlebars": "^4.7.3",
     "handlebars-loader": "^1.7.1",
     "morgan": "^1.9.1",
     "styles-loader": "^1.0.2",
+    "uuid": "^3.4.0",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11",
-    "uuid": "^3.4.0"
+    "webpack-cli": "^3.3.11"
   },
   "devDependencies": {
     "cookie-parser": "^1.4.4",
@@ -29,8 +32,11 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "build": "rm -rf dist && webpack --mode development",
-    "start": "node ./src/server"
+    "start": "webpack && node server.js",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "eslint": "eslint --fix src/ server.js",
+    "start:dev": "webpack-dev-server --hot"
   },
   "repository": {
     "type": "git",
