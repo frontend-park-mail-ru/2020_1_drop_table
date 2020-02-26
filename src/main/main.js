@@ -19,6 +19,7 @@ function createCafes(cafes) {
 
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
         cafesContainerComp.render();
+        app.appendChild(cafesContainerDiv)
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ', document.cookie);
@@ -249,10 +250,10 @@ routes.push({
 });
 
 routes.push({
-    url: "createCaf", callback: () => {
+    url: "myCafe", callback: () => {
         app.innerHTML = "";
         app.appendChild(renderHeader())
-        app.appendChild(createCafes())
+        createCafes()
     }
 
 });
