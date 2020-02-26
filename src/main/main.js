@@ -20,6 +20,36 @@ function ajax(route, body, callback) {
 	let req = new Request(route, {
 		method: 'GET',
 		headers: h,
+		mode:'cors',
+		credentials: 'include',
+	});
+
+	fetch(req)
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				throw new Error('BAD HTTP stuff');
+			}
+
+		})
+		.then((response) => {
+			callback(response);
+			console.log('RESPONSE:', response);
+		})
+		.catch((err) => {
+			console.log('ERROR:', err.message);
+		});
+}
+
+function ajaxGetOwner(route, body, callback) {
+
+	let h = new Headers();
+	h.append('Accept', '*/*');
+	let req = new Request(route, {
+		method: 'GET',
+		headers: h,
+		mode:'cors',
 		credentials: 'include',
 	});
 
@@ -191,6 +221,7 @@ function createCafes(cafes) {
 
 
 export function createMyCafesPage() {
+	console.log('Cookie in createMyCafesPage'+document.cookie);
 	application.innerHTML = '';
 	headerContainer.innerHTML = '';
 	const headerElement = document.createElement('div');
@@ -205,19 +236,22 @@ function ajaxChangeUserData(route, body, callback) {
 	let h = new Headers();
 	h.append('Accept', '*/*');
 	h.append('Content-type', 'multipart/form-data');
+	h.append('Access-Control-Allow-Origin','*');
 	let formData = new FormData();
 	formData.append('jsonData', JSON.stringify(body));
+	// formData.append('photo', '');
 	let req = new Request(route, {
 		method: 'PUT',
-		mode: 'cors',
+		// mode: 'cors',
 		body: formData,
 		headers: h,
 		credentials: 'include',
 	});
 	fetch(req)
 		.then((response) => {
+			console.log('response '+response)
 			if (response.ok) {
-				return response.json();
+				return null;
 			} else {
 				throw new Error('BAD HTTP stuff');
 			}
@@ -226,13 +260,16 @@ function ajaxChangeUserData(route, body, callback) {
 			callback(formData);
 		})
 		.catch((err) => {
+			console.log('no response ')
 			console.log('ERROR:', err.message);
 		});
+
 }
 
 
 function changeUserProfile(e) {
 	e.preventDefault();
+	console.log('Cookie in changeUserProfile'+document.cookie);
 	const form = document.getElementsByClassName('formField').item(0);
 	const id = form.elements['userId'].value;
 	const name = form.elements['name'].value;
@@ -240,9 +277,7 @@ function changeUserProfile(e) {
 	const password1 = form.elements['password1'].value;
 	const password2 = form.elements['password2'].value;
 	if (password1 === password2) {
-		let route = `http://localhost:8080/api/v1/owner/${id}`;
-		alert(route + '\n' + document.cookie);
-		ajaxChangeUserData(route,
+		ajaxChangeUserData('http://localhost:8080/api/v1/owner/'+id,
 			{'name': name.toString(), 'email': email.toString(), 'password': password1.toString()}
 			, (response) => {
 				console.log('RESPONSE change user', response);
@@ -261,8 +296,8 @@ function changeUserProfile(e) {
 
 export function createUserProfilePage() {
 	application.innerHTML = '';
-
-	ajax('http://localhost:8080/api/v1/getCurrentOwner/',
+	console.log('Cookie in createUPP'+document.cookie);
+	ajaxGetOwner('http://localhost:8080/api/v1/getCurrentOwner/',
 		{}, (response) => {
 			console.log('RESPONSE1', response);
 			if (response.errors === null) {
@@ -428,83 +463,91 @@ export function createNewCafePage() {
 
 }
 
-let routes = [
-	{
-		url: '', callback: function () {
-			// eslint-disable-next-line no-mixed-spaces-and-tabs
-			//application.innerHTML = 'Тут будет стартовая страница /reg - регистрация /login - авторизация';
-		}
-	}
-];
+// let routes = [
+// 	{
+// 		url: '', callback: function () {
+// 			// eslint-disable-next-line no-mixed-spaces-and-tabs
+// 			//application.innerHTML = 'Тут будет стартовая страница /reg - регистрация /login - авторизация';
+// 		}
+// 	}
+// ];
 
 
-function getUrl(href) {
-	const url = href.split('/');
-	return url[url.length - 1];
-}
+// function getUrl(href) {
+// 	const url = href.split('/');
+// 	return url[url.length - 1];
+// }
 
-function Routing() {
-	let href = window.location.href;
-	console.log(href);
-	let url = getUrl(href);
-	let route = routes[0];
-	routes.forEach(item => {
-		if (url === item.url) {
-			route = item;
-		}
-	});
-	route.callback();
-}
+// function Routing() {
+// 	let href = window.location.href;
+// 	console.log(href);
+// 	let url = getUrl(href);
+// 	let route = routes[0];
+// 	routes.forEach(item => {
+// 		if (url === item.url) {
+// 			route = item;
+// 		}
+// 	});
+// 	route.callback();
+// }
+
+application.innerHTML = '';
+headerContainer.innerHTML = '';
+const headerElement = document.createElement('div');
+headerElement.className = 'header';
+headerContainer.appendChild(headerElement);
+(new HeaderComponent(headerElement)).render(loginHeaderData);
+application.appendChild(renderLogin());
 
 
-window.addEventListener('popstate', Routing);
-
-setTimeout(Routing, 0);
-
-
-routes.push({
-
-	url: 'reg', callback: () => {
-		application.innerHTML = '';
-		headerContainer.innerHTML = '';
-		const headerElement = document.createElement('div');
-		headerElement.className = 'header';
-		headerContainer.appendChild(headerElement);
-		(new HeaderComponent(headerElement)).render(regHeaderData);
-		application.appendChild(renderRegister());
-	}
-});
-routes.push({
-	url: 'login', callback: () => {
-		application.innerHTML = '';
-		headerContainer.innerHTML = '';
-		const headerElement = document.createElement('div');
-		headerElement.className = 'header';
-		headerContainer.appendChild(headerElement);
-		(new HeaderComponent(headerElement)).render(loginHeaderData);
-		application.appendChild(renderLogin());
-
-	}
-});
-
-routes.push({
-	url: 'myCafes', callback: () => {
-		console.log('hello');
-		application.innerHTML = '';
-		createMyCafesPage();
-	}
-});
-
-routes.push({
-	url: 'myProfile', callback: () => {
-		application.innerHTML = '';
-		createUserProfilePage();
-	}
-});
-routes.push({
-	url: 'newCafe', callback: () => {
-		application.innerHTML = '';
-		createNewCafePage();
-	}
-});
-
+// window.addEventListener('popstate', Routing);
+//
+// setTimeout(Routing, 0);
+//
+//
+// routes.push({
+//
+// 	url: 'reg', callback: () => {
+// 		application.innerHTML = '';
+// 		headerContainer.innerHTML = '';
+// 		const headerElement = document.createElement('div');
+// 		headerElement.className = 'header';
+// 		headerContainer.appendChild(headerElement);
+// 		(new HeaderComponent(headerElement)).render(regHeaderData);
+// 		application.appendChild(renderRegister());
+// 	}
+// });
+// routes.push({
+// 	url: 'login', callback: () => {
+// 		application.innerHTML = '';
+// 		headerContainer.innerHTML = '';
+// 		const headerElement = document.createElement('div');
+// 		headerElement.className = 'header';
+// 		headerContainer.appendChild(headerElement);
+// 		(new HeaderComponent(headerElement)).render(loginHeaderData);
+// 		application.appendChild(renderLogin());
+//
+// 	}
+// });
+//
+// routes.push({
+// 	url: 'myCafes', callback: () => {
+// 		console.log('hello');
+// 		application.innerHTML = '';
+// 		createMyCafesPage();
+// 	}
+// });
+//
+// routes.push({
+// 	url: 'myProfile', callback: () => {
+// 		application.innerHTML = '';
+// 		createUserProfilePage();
+// 	}
+// });
+// routes.push({
+// 	url: 'newCafe', callback: () => {
+// 		application.innerHTML = '';
+// 		createNewCafePage();
+// 	}
+// });
+//
