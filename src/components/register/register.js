@@ -65,6 +65,8 @@ export function renderRegister() {
                     } else {
                         if (response.errors[0].message[0] === "P") {
                             showError(form, password, response.errors[0].message)
+                        } else if (response.errors[0].message[0] === "N") {
+                            showError(form, name, response.errors[0].message)
                         } else {
                             showError(form, email, response.errors[0].message)
                         }
