@@ -20,9 +20,6 @@ export function renderHeader() {
         "        <li><a href=\"#stat\">статистика</a></li>\n" +
         "    </ul>\n" +
         "    </div>\n" +
-        "    <div class = \"userPicDiv\">\n" +
-        "        <img src=\"https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg\">\n" +
-        "    </div>\n" +
         "</div>\n"
 
 

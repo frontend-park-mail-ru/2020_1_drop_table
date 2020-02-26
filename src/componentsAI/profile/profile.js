@@ -3,6 +3,7 @@
 import './profile.css'
 import ProfileTemplate from "./profile.hbs";
 import Form from '../form/form.js';
+import {createMyCafesPage, createNewCafePage} from '../../main/main'
 
 export default class ProfileComponent {
 
@@ -21,10 +22,15 @@ export default class ProfileComponent {
     }
 
     renderProfile(context){
-        this._parent.innerHTML = ProfileTemplate(context);
-
+        this._parent.innerHTML += ProfileTemplate(context);
         let formCollection = document.getElementsByClassName('formField');
         this._form = new Form(formCollection.item(0));
+        // const exit = document.getElementById('exitButton');
+        // exit.addEventListener('click',(e)=>{
+        //     e.preventDefault();
+        //     alert('click');
+        //     // createMyCafesPage();
+        // })
     }
 
     renderForm(context){

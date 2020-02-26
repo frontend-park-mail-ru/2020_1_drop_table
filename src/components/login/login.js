@@ -50,9 +50,8 @@ export function renderLogin() {
     loginContainer.className = "loginContainer";
     let topBar = document.createElement("div");
     topBar.className = "decorateContainer";
-    topBar.innerHTML = loginTemplate({name: 'Привет, сладкий петушок'});
+    topBar.innerHTML = loginTemplate({name: 'Авторизация'});
     loginContainer.appendChild(topBar);
-
     let form = document.createElement('div');
     form.className = 'formContainer';
     form.innerHTML = loginForm({email: 'Почта', password: 'Пароль'});
@@ -84,40 +83,6 @@ export function renderLogin() {
     return loginContainer
 
 }
-
-// const cafes = {
-//     'cafe1': {
-//         imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-//         cafeName: 'Приветики'
-//     },
-//     'cafe2': {
-//         imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-//         cafeName: 'Кафешка'
-//     },
-//     'cafe3': {
-//         imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-//         cafeName: 'Димочка'
-//     },
-//     'cafe4': {
-//         imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-//         cafeName: 'Сашечка'
-//     },
-//     'cafe5': {
-//         imageSrc: 'https://kaliningrad.kurort-pro.ru/images/cms/thumbs/b519f8343a09f6bafd2a195ede722a6309b555ea/veterok-e1457018920107_425_260_jpg_5_95.jpg',
-//         cafeName: 'Димочка'
-//     },
-//     'cafe6': {
-//         imageSrc: 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-//         cafeName: 'Сережечка'
-//     },
-// };
-// const cafesList = Object.values(cafes)
-//     .map(cafe => {
-//         return {
-//             imageSrc: cafe.imageSrc,
-//             cafeName: cafe.cafeName
-//         }
-//     });
 
 
 
