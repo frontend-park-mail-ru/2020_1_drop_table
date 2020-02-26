@@ -44,10 +44,8 @@ function changeUserProfile(e) {
     const name = form.elements['name'].value;
     const email = form.elements['email'].value;
     const password1 = form.elements['password'].value;
-    const password2 = form.elements['re-password'].value;
     const photo = photoInput.files[0];
-    console.log(photo);
-    if (password1 === password2) {
+    if (validateForm(form)) {
         let formData = new FormData();
         formData.append('jsonData', JSON.stringify({
             'name': name.toString(),
@@ -67,8 +65,6 @@ function changeUserProfile(e) {
                     alert(response.errors[0].message);
                 }
             });
-    } else {
-        alert('Пароли не совпадают');
     }
 
 
