@@ -20,7 +20,7 @@ function ajax(route, body, callback) {
 	let req = new Request(route, {
 		method: 'GET',
 		headers: h,
-		mode:'cors',
+		mode: 'cors',
 		credentials: 'include',
 	});
 
@@ -49,7 +49,7 @@ function ajaxGetOwner(route, body, callback) {
 	let req = new Request(route, {
 		method: 'GET',
 		headers: h,
-		mode:'cors',
+		mode: 'cors',
 		credentials: 'include',
 	});
 
@@ -221,7 +221,7 @@ function createCafes(cafes) {
 
 
 export function createMyCafesPage() {
-	console.log('Cookie in createMyCafesPage'+document.cookie);
+	console.log('Cookie in createMyCafesPage' + document.cookie);
 	application.innerHTML = '';
 	headerContainer.innerHTML = '';
 	const headerElement = document.createElement('div');
@@ -232,24 +232,21 @@ export function createMyCafesPage() {
 }
 
 
-function ajaxChangeUserData(route, body, callback) {
+function ajaxChangeUserData(route, formData, callback) {
 	let h = new Headers();
 	h.append('Accept', '*/*');
 	h.append('Content-type', 'multipart/form-data');
-	h.append('Access-Control-Allow-Origin','*');
-	let formData = new FormData();
-	formData.append('jsonData', JSON.stringify(body));
-	// formData.append('photo', '');
+	h.append('Access-Control-Allow-Origin', '*');
 	let req = new Request(route, {
 		method: 'PUT',
-		// mode: 'cors',
+		mode: 'cors',
 		body: formData,
-		headers: h,
+		// headers: h,
 		credentials: 'include',
 	});
 	fetch(req)
 		.then((response) => {
-			console.log('response '+response)
+			console.log('response ' + response);
 			if (response.ok) {
 				return null;
 			} else {
@@ -260,7 +257,7 @@ function ajaxChangeUserData(route, body, callback) {
 			callback(formData);
 		})
 		.catch((err) => {
-			console.log('no response ')
+			console.log('no response ');
 			console.log('ERROR:', err.message);
 		});
 
@@ -269,19 +266,36 @@ function ajaxChangeUserData(route, body, callback) {
 
 function changeUserProfile(e) {
 	e.preventDefault();
-	console.log('Cookie in changeUserProfile'+document.cookie);
+	console.log('Cookie in changeUserProfile' + document.cookie);
 	const form = document.getElementsByClassName('formField').item(0);
+	const photoInput = document.getElementById('upload');
+
 	const id = form.elements['userId'].value;
 	const name = form.elements['name'].value;
 	const email = form.elements['email'].value;
 	const password1 = form.elements['password1'].value;
 	const password2 = form.elements['password2'].value;
+	const photo = photoInput.files[0];
+
+	console.log(photo);
+
 	if (password1 === password2) {
-		ajaxChangeUserData('http://localhost:8080/api/v1/owner/'+id,
-			{'name': name.toString(), 'email': email.toString(), 'password': password1.toString()}
+		let formData = new FormData();
+		formData.append('jsonData', JSON.stringify({
+			'name': name.toString(),
+			'email': email.toString(),
+			'password': password1.toString()
+		}));
+
+		if (photo) {
+			formData.append('photo', photo);
+		}
+
+		ajaxChangeUserData('http://localhost:8080/api/v1/owner/' + id,
+			formData
 			, (response) => {
 				console.log('RESPONSE change user', response);
-				if (response.errors === null) {
+				if (response === null) {
 					alert('Данные изменены');
 				} else {
 					alert(response.errors[0].message);
@@ -296,14 +310,14 @@ function changeUserProfile(e) {
 
 export function createUserProfilePage() {
 	application.innerHTML = '';
-	console.log('Cookie in createUPP'+document.cookie);
+	console.log('Cookie in createUPP' + document.cookie);
 	ajaxGetOwner('http://localhost:8080/api/v1/getCurrentOwner/',
 		{}, (response) => {
 			console.log('RESPONSE1', response);
 			if (response.errors === null) {
 
 				let profile = {
-					imgSrc: 'https://justwoman.club/wp-content/uploads/2017/12/photo.jpg',
+					imgSrc: response.data['photo'],
 					event: {
 						type: 'change',
 						listener: handleImageUpload
@@ -370,9 +384,8 @@ function listen() {
 }
 
 
-function ajaxAddCafe(route, body, callback) {
-	let formData = new FormData();
-	formData.append('jsonData', JSON.stringify(body));
+function ajaxAddCafe(route, formData, callback) {
+
 	let req = new Request(route, {
 		method: 'POST',
 		mode: 'cors',
@@ -398,11 +411,27 @@ function ajaxAddCafe(route, body, callback) {
 function addCafe(e) {
 	e.preventDefault();
 	const form = document.getElementsByClassName('cafeFormField').item(0);
+	const photoInput = document.getElementById('upload');
+
 	const name = form.elements['name'].value;
 	const address = form.elements['address'].value;
 	const description = form.elements['description'].value;
+
+	const photo = photoInput.files[0];
+
+	let formData = new FormData();
+	formData.append('jsonData', JSON.stringify({
+		'name': name.toString(),
+		'address': address.toString(),
+		'description': description.toString()
+	}));
+
+	if ( photo ){
+		formData.append('photo', photo);
+	}
+
 	ajaxAddCafe('http://localhost:8080/api/v1/cafe',
-		{'name': name.toString(), 'address': address.toString(), 'description': description.toString()}
+		formData
 		, (response) => {
 			console.log('RESPONSE add cafe', response);
 			if (response.errors === null) {
