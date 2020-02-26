@@ -6,6 +6,7 @@ import registerFormTemplate from './registerForm.hbs'
 import {showError, validateForm} from "../../modules/formValidator";
 import {ajax} from "../../modules/ajax";
 import {createNewCafePage} from "../../main/main";
+import {doLogin} from "../login/login";
 
 
 function ajaxForReg(route, body, callback) {
@@ -64,7 +65,7 @@ export function renderRegister() {
                 , (response) => {
                     console.log("RESPONSE", response);
                     if (response.errors === null) {
-                        console.log("all Ok")
+                        doLogin(email.value,password.value)
                     } else {
                         if (response.errors[0].message[0] === "P") {
                             showError(form, password, response.errors[0].message)
@@ -73,6 +74,7 @@ export function renderRegister() {
                         }
                     }
                 });
+
         }
     });
     return registerContainer
