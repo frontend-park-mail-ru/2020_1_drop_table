@@ -8,6 +8,7 @@ import ProfileComponent from '../componentsAI/profile/profile';
 const app = document.body;
 
 
+
 function createCafes(cafes) {
     const cafesContainerDiv = document.createElement('div');
     if (cafes) {
@@ -17,8 +18,7 @@ function createCafes(cafes) {
         console.log('data', JSON.parse(JSON.stringify(cafes)));
 
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
-        let data = cafesContainerComp.render();
-        app.appendChild(data)
+        cafesContainerComp.render();
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ', document.cookie);
@@ -37,6 +37,7 @@ function createCafes(cafes) {
                 }
             });
     }
+    return cafesContainerDiv;
 }
 
 
@@ -248,10 +249,10 @@ routes.push({
 });
 
 routes.push({
-    url: "myCafe", callback: () => {
+    url: "createCaf", callback: () => {
         app.innerHTML = "";
         app.appendChild(renderHeader())
-        createCafes()
+        app.appendChild(createCafes())
     }
 
 });
