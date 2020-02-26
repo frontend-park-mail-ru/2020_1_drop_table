@@ -2,9 +2,6 @@ export function showError(whereToInsert, inWitchElement, message) {
     const error = document.createElement('div');
     error.className = "error";
     error.textContent = message;
-    console.log(inWitchElement)
-    console.log(inWitchElement.nextSibling)
-    console.log(whereToInsert)
     whereToInsert.insertBefore(error, inWitchElement.parentNode.nextSibling)
 
 }
