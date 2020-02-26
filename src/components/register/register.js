@@ -6,7 +6,6 @@ import registerFormTemplate from './registerForm.hbs'
 import {showError, validateForm} from "../../modules/formValidator";
 
 
-
 function ajaxForReg(route, body, callback) {
     let formData = new FormData();
     formData.append("jsonData", JSON.stringify(body));
@@ -57,8 +56,6 @@ export function renderRegister() {
             const email = form.elements["email"];
             const password = form.elements["password"];
             const name = form.elements["full-name"];
-
-
             ajaxForReg('http://80.93.177.185:8080/api/v1/owner',
                 {"name": name.value.toString(), "email": email.value.toString(), "password": password.value.toString()}
                 , (response) => {

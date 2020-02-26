@@ -14,10 +14,12 @@ export function renderHeader() {
         "    <input class=\"menu-btn\" type=\"checkbox\" id=\"menu-btn\" />\n" +
         "    <label class=\"menu-icon\" for=\"menu-btn\"><span class=\"navicon\"></span></label>\n" +
         "    <ul class=\"menu\">\n" +
-        "        <li><a href=\"#myCafe\">мои кафе</a></li>\n" +
-        "        <li><a href=\"#staff\">работники</a></li>\n" +
-        "        <li><a href=\"#add\">добавить</a></li>\n" +
-        "        <li><a href=\"#stat\">статистика</a></li>\n" +
+        "        <li><a href=\"#myCafe\">Мои кафе</a></li>\n" +
+        "        <li><a href=\"#staff\">Работники</a></li>\n" +
+        "        <li><a href=\"#createCafe\">Добавить</a></li>\n" +
+        "        <li><a href=\"#login\">Войти</a></li>\n" +
+        "        <li><a href=\"#reg\">Зарегистрироваться</a></li>\n" +
+        "        <li><a href=\"#stat\">Статистика</a></li>\n" +
         "    </ul>\n" +
         "    </div>\n" +
         "    <div class = \"userPicDiv\">\n" +
