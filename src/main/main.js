@@ -42,8 +42,6 @@ function ajax(route, body, callback) {
 }
 
 
-
-
 let headerData = {
 	// userPic:'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg',
 	logo: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
@@ -98,7 +96,7 @@ let headerData = {
 	}
 };
 
-function createRegister(e){
+function createRegister(e) {
 	e.preventDefault();
 	application.innerHTML = '';
 	headerContainer.innerHTML = '';
@@ -109,7 +107,8 @@ function createRegister(e){
 	application.appendChild(renderRegister());
 
 }
-function createLogin(e){
+
+function createLogin(e) {
 	e.preventDefault();
 	application.innerHTML = '';
 	headerContainer.innerHTML = '';
@@ -202,17 +201,17 @@ export function createMyCafesPage() {
 }
 
 
-
-function ajaxChangeUserData(route, body, callback){
+function ajaxChangeUserData(route, body, callback) {
 	let h = new Headers();
 	h.append('Accept', '*/*');
-	h.append('Content-type', 'application/json');
+	h.append('Content-type', 'multipart/form-data');
 	let formData = new FormData();
 	formData.append('jsonData', JSON.stringify(body));
 	let req = new Request(route, {
 		method: 'PUT',
 		mode: 'cors',
 		body: formData,
+		headers: h,
 		credentials: 'include',
 	});
 	fetch(req)
@@ -242,7 +241,7 @@ function changeUserProfile(e) {
 	const password2 = form.elements['password2'].value;
 	if (password1 === password2) {
 		let route = `http://localhost:8080/api/v1/owner/${id}`;
-		alert(route);
+		alert(route + '\n' + document.cookie);
 		ajaxChangeUserData(route,
 			{'name': name.toString(), 'email': email.toString(), 'password': password1.toString()}
 			, (response) => {
@@ -262,49 +261,60 @@ function changeUserProfile(e) {
 
 export function createUserProfilePage() {
 	application.innerHTML = '';
-	let profile = {
-		imgSrc: 'https://justwoman.club/wp-content/uploads/2017/12/photo.jpg',
-		event: {
-			type: 'change',
-			listener: handleImageUpload
-		},
-		form: {
-			formFields: [
-				{
-					type: 'text',
-					id: 'userId',
-					data: 'Ваш уникальный идендефикатор',
-				},
-				{
-					type: 'text',
-					id: 'name',
-					data: 'Имя',
-				},
-				{
-					type: 'email',
-					id: 'email',
-					data: 'email',
-				},
-				{
-					type: 'password',
-					id: 'password1',
-					data: 'Пароль',
-				},
-				{
-					type: 'password',
-					id: 'password2',
-					data: 'Повторите пароль',
-				},
-			],
-			submitValue: 'Готово',
-			event: {
-				type: 'submit',
-				listener: changeUserProfile
-			},
-		},
-	};
 
-	(new ProfileComponent(application)).render(profile);
+	ajax('http://localhost:8080/api/v1/getCurrentOwner/',
+		{}, (response) => {
+			console.log('RESPONSE1', response);
+			if (response.errors === null) {
+
+				let profile = {
+					imgSrc: 'https://justwoman.club/wp-content/uploads/2017/12/photo.jpg',
+					event: {
+						type: 'change',
+						listener: handleImageUpload
+					},
+					form: {
+						formFields: [
+							{
+								type: 'text',
+								id: 'userId',
+								data: response.data['id'],
+							},
+							{
+								type: 'text',
+								id: 'name',
+								data: response.data['name'],
+							},
+							{
+								type: 'email',
+								id: 'email',
+								data: response.data['email'],
+							},
+							{
+								type: 'password',
+								id: 'password1',
+								data: response.data['password'],
+							},
+							{
+								type: 'password',
+								id: 'password2',
+								data: response.data['password'],
+							},
+						],
+						submitValue: 'Готово',
+						event: {
+							type: 'submit',
+							listener: changeUserProfile
+						},
+					},
+				};
+				(new ProfileComponent(application)).render(profile);
+			} else {
+				alert(response.errors[0].message);
+			}
+		});
+
+
 }
 
 
@@ -422,7 +432,7 @@ let routes = [
 	{
 		url: '', callback: function () {
 			// eslint-disable-next-line no-mixed-spaces-and-tabs
-		    application.innerHTML = 'Тут будет стартовая страница /reg - регистрация /login - авторизация';
+			//application.innerHTML = 'Тут будет стартовая страница /reg - регистрация /login - авторизация';
 		}
 	}
 ];
