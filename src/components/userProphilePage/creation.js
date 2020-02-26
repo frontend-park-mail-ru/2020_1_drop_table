@@ -4,26 +4,23 @@ import {handleImageUpload} from "../../modules/imageUpload";
 import {validateForm} from "../../modules/formValidator";
 
 
-
-
-
-function ajaxChangeUserData(route, body, callback) {
+function ajaxChangeUserData(route, formData, callback) {
     let h = new Headers();
     h.append('Accept', '*/*');
     h.append('Content-type', 'multipart/form-data');
-    let formData = new FormData();
-    formData.append('jsonData', JSON.stringify(body));
+    h.append('Access-Control-Allow-Origin', '*');
     let req = new Request(route, {
         method: 'PUT',
         mode: 'cors',
         body: formData,
-        headers: h,
+// headers: h,
         credentials: 'include',
     });
     fetch(req)
         .then((response) => {
+            console.log('response ' + response);
             if (response.ok) {
-                return response.json();
+                return null;
             } else {
                 throw new Error('BAD HTTP stuff');
             }
@@ -32,31 +29,46 @@ function ajaxChangeUserData(route, body, callback) {
             callback(formData);
         })
         .catch((err) => {
+            console.log('no response ');
             console.log('ERROR:', err.message);
         });
+
 }
 
 function changeUserProfile(e) {
     e.preventDefault();
+    console.log('Cookie in changeUserProfile' + document.cookie);
     const form = document.getElementsByClassName('formField').item(0);
+    const photoInput = document.getElementById('upload');
     const id = form.elements['userId'].value;
     const name = form.elements['name'].value;
     const email = form.elements['email'].value;
     const password1 = form.elements['password'].value;
     const password2 = form.elements['re-password'].value;
-    if (validateForm(form)) {
-        let route = `http://80.93.177.185:8080/api/v1/owner/${id}`;
-        alert(route + '\n' + document.cookie);
-        ajaxChangeUserData(route,
-            {'name': name.toString(), 'email': email.toString(), 'password': password1.toString()}
+    const photo = photoInput.files[0];
+    console.log(photo);
+    if (password1 === password2) {
+        let formData = new FormData();
+        formData.append('jsonData', JSON.stringify({
+            'name': name.toString(),
+            'email': email.toString(),
+            'password': password1.toString()
+        }));
+        if (photo) {
+            formData.append('photo', photo);
+        }
+        ajaxChangeUserData('http://80.93.177.185:8080/api/v1/owner/' + id,
+            formData
             , (response) => {
                 console.log('RESPONSE change user', response);
-                if (response.errors === null) {
+                if (response === null) {
                     alert('Данные изменены');
                 } else {
                     alert(response.errors[0].message);
                 }
             });
+    } else {
+        alert('Пароли не совпадают');
     }
 
 
@@ -71,7 +83,7 @@ export function createUserProfilePage(app) {
             if (response.errors === null) {
 
                 let profile = {
-                    imgSrc: 'https://justwoman.club/wp-content/uploads/2017/12/photo.jpg',
+                    imgSrc: response.data['photo'],
                     event: {
                         type: 'change',
                         listener: handleImageUpload

@@ -4,9 +4,7 @@ import CafeComponent from '../../componentsAI/cafe/cafe';
 
 let app = document.body
 
-function ajaxAddCafe(route, body, callback) {
-    let formData = new FormData();
-    formData.append('jsonData', JSON.stringify(body));
+function ajaxAddCafe(route, formData, callback) {
     let req = new Request(route, {
         method: 'POST',
         mode: 'cors',
@@ -32,11 +30,27 @@ function ajaxAddCafe(route, body, callback) {
 function addCafe(e) {
     e.preventDefault();
     const form = document.getElementsByClassName('cafeFormField').item(0);
+    const photoInput = document.getElementById('upload');
+
     const name = form.elements['name'].value;
     const address = form.elements['address'].value;
     const description = form.elements['description'].value;
+
+    const photo = photoInput.files[0];
+
+    let formData = new FormData();
+    formData.append('jsonData', JSON.stringify({
+        'name': name.toString(),
+        'address': address.toString(),
+        'description': description.toString()
+    }));
+
+    if (photo) {
+        formData.append('photo', photo);
+    }
+
     ajaxAddCafe('http://80.93.177.185:8080/api/v1/cafe',
-        {'name': name.toString(), 'address': address.toString(), 'description': description.toString()}
+        formData
         , (response) => {
             console.log('RESPONSE add cafe', response);
             if (response.errors === null) {

@@ -11,6 +11,7 @@ export function ajaxCreateCafe(route, body, callback) {
     let req = new Request(route, {
         method: 'GET',
         headers: h,
+        mode:'cors',
         credentials: 'include',
     });
 
