@@ -1,7 +1,7 @@
 import {CafesContainerComponent} from "../CafesContainer/CafesContainer";
 
 
-const app=document.body
+const app = document.body;
 
 export function ajaxCreateCafe(route, body, callback) {
 
@@ -11,7 +11,7 @@ export function ajaxCreateCafe(route, body, callback) {
     let req = new Request(route, {
         method: 'GET',
         headers: h,
-        mode:'cors',
+        mode: 'cors',
         credentials: 'include',
     });
 
@@ -54,7 +54,8 @@ export function createCafes(cafes) {
                     if (response.data !== null) {
                         createCafes(response.data)
                     } else {
-                        console.log("Dolzhen create")
+                        alert("У вас нет кафе");
+                        window.location.hash = "#createCafe";
                     }
 
                 } else {

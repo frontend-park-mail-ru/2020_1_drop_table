@@ -1,5 +1,5 @@
 import {renderRegister} from '../components/register/register';
-import {renderHeader} from "../components/header/header";
+import {renderBlankHeader, renderHeader} from "../components/header/header";
 import {renderLogin} from "../components/login/login";
 import {createCafes} from "../components/myCafePage/creation";
 import {createUserProfilePage} from "../components/userProphilePage/creation";
@@ -13,7 +13,7 @@ let routes = [
     {
         url: '', callback: function () {
             app.innerHTML = '';
-            app.appendChild(renderHeader());
+            app.appendChild(renderBlankHeader());
             let mainPage = document.createElement('div');
             mainPage.innerHTML = "тут типа будет главная страница /reg /login\n" +
                 "<a href=\"#login\">login</a>\n" +
@@ -48,7 +48,7 @@ routes.push({
 
     url: "reg", callback: () => {
         app.innerHTML = "";
-        app.appendChild(renderHeader());
+        app.appendChild(renderBlankHeader());
         app.appendChild(renderRegister())
 
     }
@@ -56,7 +56,7 @@ routes.push({
 routes.push({
     url: "login", callback: () => {
         app.innerHTML = "";
-        app.appendChild(renderHeader());
+        app.appendChild(renderBlankHeader());
         app.appendChild(renderLogin())
     }
 
