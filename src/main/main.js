@@ -1,9 +1,7 @@
 import {renderRegister} from '../components/register/register';
 import {renderHeader} from "../components/header/header";
 import {renderLogin} from "../components/login/login";
-import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer.js";
-import ProfileComponent from '../componentsAI/profile/profile';
-import {ajaxCreateCafe, createCafes} from "../components/myCafePage/creation";
+import {createCafes} from "../components/myCafePage/creation";
 import {createUserProfilePage} from "../components/userProphilePage/creation";
 import {createNewCafePage} from "../components/AddCafePage/creation";
 
@@ -14,8 +12,9 @@ const app = document.body;
 let routes = [
     {
         url: '', callback: function () {
-            app.appendChild(renderHeader())
-            let mainPage = document.createElement('div')
+            app.innerHTML = '';
+            app.appendChild(renderHeader());
+            let mainPage = document.createElement('div');
             mainPage.innerHTML = "тут типа будет главная страница /reg /login\n" +
                 "<a href=\"#login\">login</a>\n" +
                 "<a href=\"#reg\">reg</a>";
@@ -49,8 +48,9 @@ routes.push({
 
     url: "reg", callback: () => {
         app.innerHTML = "";
-        app.appendChild(renderHeader())
+        app.appendChild(renderHeader());
         app.appendChild(renderRegister())
+
     }
 });
 routes.push({
@@ -65,7 +65,7 @@ routes.push({
 routes.push({
     url: "myCafe", callback: () => {
         app.innerHTML = "";
-        app.appendChild(renderHeader())
+        app.appendChild(renderHeader());
         createCafes()
     }
 
@@ -74,6 +74,7 @@ routes.push({
 routes.push({
     url: "profile", callback: () => {
         app.innerHTML = "";
+        app.appendChild(renderHeader());
         createUserProfilePage(app)
     }
 
@@ -83,7 +84,7 @@ routes.push({
 routes.push({
     url: "createCafe", callback: () => {
         app.innerHTML = "";
-        app.appendChild(renderHeader())
+        app.appendChild(renderHeader());
         createNewCafePage()
     }
 

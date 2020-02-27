@@ -1,8 +1,7 @@
-import HeaderComponent from "../../componentsAI/header/header";
 import {handleImageUpload} from "../../modules/imageUpload";
 import CafeComponent from '../../componentsAI/cafe/cafe';
 
-let app = document.body
+let app = document.body;
 
 function ajaxAddCafe(route, formData, callback) {
     let req = new Request(route, {

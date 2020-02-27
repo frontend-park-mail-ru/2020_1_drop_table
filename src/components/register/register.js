@@ -5,7 +5,7 @@ import './styles.css'
 import registerFormTemplate from './registerForm.hbs'
 import {showError, validateForm} from "../../modules/formValidator";
 
-
+const app = document.body;
 function ajaxForReg(route, body, callback) {
     let formData = new FormData();
     formData.append("jsonData", JSON.stringify(body));
@@ -30,6 +30,7 @@ function ajaxForReg(route, body, callback) {
             console.log('ERROR:', err.message);
         });
 }
+
 
 export function renderRegister() {
 
@@ -61,6 +62,7 @@ export function renderRegister() {
                 , (response) => {
                     console.log("RESPONSE", response);
                     if (response.errors === null) {
+                        window.location.hash = "myCafes";
                         console.log("reg done")
                     } else {
                         if (response.errors[0].message[0] === "P") {
