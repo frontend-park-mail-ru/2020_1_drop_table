@@ -1,9 +1,9 @@
 import {renderRegister} from '../components/register/register';
-import {renderBlankHeader, renderHeader} from "../components/header/header";
-import {renderLogin} from "../components/login/login";
-import {createCafes} from "../components/myCafePage/creation";
-import {createUserProfilePage} from "../components/userProphilePage/creation";
-import {createNewCafePage} from "../components/AddCafePage/creation";
+import {renderBlankHeader, renderHeader} from '../components/header/header';
+import {renderLogin} from '../components/login/login';
+import {createCafes} from '../components/myCafePage/creation';
+import {createUserProfilePage} from '../components/userProphilePage/creation';
+import {createNewCafePage} from '../components/AddCafePage/creation';
 
 
 const app = document.body;
@@ -15,17 +15,17 @@ let routes = [
             app.innerHTML = '';
             app.appendChild(renderBlankHeader());
             let mainPage = document.createElement('div');
-            mainPage.innerHTML = "тут типа будет главная страница /reg /login\n" +
-                "<a href=\"#login\">login</a>\n" +
-                "<a href=\"#reg\">reg</a>";
-            app.appendChild(mainPage)
+            mainPage.innerHTML = 'тут типа будет главная страница /reg /login\n' +
+                '<a href="#login">login</a>\n' +
+                '<a href="#reg">reg</a>';
+            app.appendChild(mainPage);
         }
     }
 ];
 
 
 function getUrl() {
-    return window.location.hash.substr(1)
+    return window.location.hash.substr(1);
 }
 
 function Routing() {
@@ -33,7 +33,7 @@ function Routing() {
     let route = routes[0];
     routes.forEach(item => {
         if (url === item.url) {
-            route = item
+            route = item;
         }
     });
     route.callback();
@@ -42,52 +42,54 @@ function Routing() {
 
 window.addEventListener('popstate', Routing);
 
+
 setTimeout(Routing, 0);
 
+
 routes.push({
 
-    url: "reg", callback: () => {
-        app.innerHTML = "";
+    url: 'reg', callback: () => {
+        app.innerHTML = '';
         app.appendChild(renderBlankHeader());
-        app.appendChild(renderRegister())
+        app.appendChild(renderRegister());
 
     }
 });
 routes.push({
-    url: "login", callback: () => {
-        app.innerHTML = "";
+    url: 'login', callback: () => {
+        app.innerHTML = '';
         app.appendChild(renderBlankHeader());
-        app.appendChild(renderLogin())
+        app.appendChild(renderLogin());
     }
 
 });
 
 routes.push({
-    url: "myCafe", callback: () => {
-        app.innerHTML = "";
+    url: 'myCafe', callback: () => {
+        app.innerHTML = '';
         app.appendChild(renderHeader());
-        createCafes()
+        createCafes();
     }
 
 });
 
 routes.push({
-    url: "profile", callback: () => {
-        app.innerHTML = "";
+    url: 'profile', callback: () => {
+        app.innerHTML = '';
         let kek = document.createElement('div');
         createUserProfilePage(kek);
         app.appendChild(renderHeader());
-        app.appendChild(kek)
+        app.appendChild(kek);
     }
 
 });
 
 
 routes.push({
-    url: "createCafe", callback: () => {
-        app.innerHTML = "";
+    url: 'createCafe', callback: () => {
+        app.innerHTML = '';
         app.appendChild(renderHeader());
-        createNewCafePage()
+        createNewCafePage();
     }
 
 });

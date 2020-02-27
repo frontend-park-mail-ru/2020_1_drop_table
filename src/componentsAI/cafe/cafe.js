@@ -1,7 +1,7 @@
 'use strict';
 
-import './cafe.css'
-import CaffeTemplate from "./cafe.hbs";
+import './cafe.css';
+import CaffeTemplate from './cafe.hbs';
 import Form from '../form/form.js';
 
 export default class CaffeComponent {
@@ -11,7 +11,7 @@ export default class CaffeComponent {
         this._form = new Form;
     }
 
-    _addListener(context){
+    _addListener(context) {
         const element = document.getElementById('upload');
         element.addEventListener(
             context['event']['type'],
@@ -27,12 +27,12 @@ export default class CaffeComponent {
     }
 
     renderForm(context){
-        this._form.render(context)
+        this._form.render(context);
     }
 
     render(context) {
         this.renderProfile(context);
         this._addListener(context);
-        this.renderForm(context["form"]);
+        this.renderForm(context['form']);
     }
 }

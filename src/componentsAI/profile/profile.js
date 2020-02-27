@@ -1,7 +1,7 @@
 'use strict';
 
-import './profile.css'
-import ProfileTemplate from "./profile.hbs";
+import './profile.css';
+import ProfileTemplate from './profile.hbs';
 import Form from '../form/form.js';
 
 export default class ProfileComponent {
@@ -11,7 +11,7 @@ export default class ProfileComponent {
         this._form = new Form;
     }
 
-    _addListener(context){
+    _addListener(context) {
         const element = document.getElementById('upload');
         element.addEventListener(
 
@@ -28,12 +28,12 @@ export default class ProfileComponent {
     }
 
     renderForm(context){
-        this._form.render(context)
+        this._form.render(context);
     }
 
     render(context) {
         this.renderProfile(context);
         this._addListener(context);
-        this.renderForm(context["form"]);
+        this.renderForm(context['form']);
     }
 }

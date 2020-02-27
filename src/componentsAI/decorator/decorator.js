@@ -10,7 +10,7 @@ export default class DecoratorComponent {
     }
 
     render(context) {
-        console.log("decorator");
+        console.log('decorator');
         this._parent.innerHTML = DecoratorTemplate(context);
     }
 }

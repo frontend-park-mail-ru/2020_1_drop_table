@@ -1,4 +1,4 @@
-import {CafesContainerComponent} from "../CafesContainer/CafesContainer";
+import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
 
 
 const app = document.body;
@@ -43,23 +43,23 @@ export function createCafes(cafes) {
 
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
         cafesContainerComp.render();
-        app.appendChild(cafesContainerDiv)
+        app.appendChild(cafesContainerDiv);
     } else {
         console.log('COOKIE   ');
         console.log('COOKIE   ', document.cookie);
         ajaxCreateCafe('http://80.93.177.185:8080/api/v1/cafe',
             {}, (response) => {
-                console.log("RESPONSE1", response);
+                console.log('RESPONSE1', response);
                 if (response.errors === null) {
                     if (response.data !== null) {
-                        createCafes(response.data)
+                        createCafes(response.data);
                     } else {
-                        alert("У вас нет кафе");
-                        window.location.hash = "#createCafe";
+                        alert('У вас нет кафе');
+                        window.location.hash = '#createCafe';
                     }
 
                 } else {
-                    alert(response.errors[0].message)
+                    alert(response.errors[0].message);
                 }
             });
     }
