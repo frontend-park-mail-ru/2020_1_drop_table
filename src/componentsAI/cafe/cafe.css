@@ -161,14 +161,17 @@
     .header li {
         float: right;
     }
+
     .header li a {
         padding: 20px 30px;
     }
+
     .header .menu {
         clear: none;
         float: right;
         max-height: none;
     }
+
     .header .menu-icon {
         display: none;
     }
@@ -213,18 +216,15 @@
 }
 
 
-
-
-
 /*Форма*/
 
 .formContainer {
     width: 100%;
 }
 
-.cafeFormField{
+.cafeFormField {
     font-family: 'FuturaBookCTT Normal', arial;
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
     padding-bottom: 5%;
 }
@@ -267,7 +267,7 @@ input[type="submit"]:active {
 
 }
 
-.InputField{
+.InputField {
 
     margin-top: 8%;
     margin-left: auto;
@@ -308,27 +308,33 @@ input[type="submit"]:active {
 }
 
 /*контейнер с фоткой кафе*/
-.newCafeImageContainer{
+.newCafeImageContainer {
     display: flex;
     justify-content: space-between;
     padding-bottom: 2rem;
 
 }
-.photoContainer{
+
+.photoContainer {
     text-align: center;
-}
-.photoContainer img{
-    width: 75%;
+    padding-right: 20%;
 
 }
 
-.photoContainer input{
+.photoContainer img {
+    width: 100%;
+    display: block;
+    max-width: 54rem;
+    max-height: 108rem;
+}
+
+.photoContainer input {
     display: block;
     font-family: 'FuturaBookCTT Normal', arial, serif;
 }
 
 @media only screen and (max-width: 680px) {
-    .newCafeImageContainer{
+    .newCafeImageContainer {
         display: table;
         justify-content: space-between;
         padding-bottom: 2rem;
@@ -336,7 +342,35 @@ input[type="submit"]:active {
 
 }
 
+.subcontent-outer, .subcontent {
+    float: left;
+}
 
+.subcontent {
+    height: 50%;
+    width: 50%;
+}
+
+input[type=file] {
+    outline: 0;
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+.imagePicker {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+    transition: border 300ms ease;
+    cursor: pointer;
+    text-align: center;
+
+}
+.titleImagePicker {
+    color: black;
+}
 
 
 

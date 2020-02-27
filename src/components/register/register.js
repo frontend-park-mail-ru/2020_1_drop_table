@@ -4,8 +4,10 @@ import registerTemplate from './registerTopBar.hbs';
 import './styles.css';
 import registerFormTemplate from './registerForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
+import {constants} from "../../utils/constants";
 
 const app = document.body;
+
 
 function ajaxForReg(route, body, callback) {
     let formData = new FormData();
@@ -57,7 +59,7 @@ export function renderRegister() {
             const email = form.elements['email'];
             const password = form.elements['password'];
             const name = form.elements['full-name'];
-            ajaxForReg('http://80.93.177.185:8080/api/v1/owner',
+            ajaxForReg(constants.PATH + '/api/v1/owner',
                 {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()}
                 , (response) => {
                     if (response.errors === null) {

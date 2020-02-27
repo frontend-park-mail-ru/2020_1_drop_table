@@ -1,5 +1,6 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
+import {constants} from "../../utils/constants";
 
 let app = document.body;
 
@@ -48,7 +49,7 @@ function addCafe(e) {
         formData.append('photo', photo);
     }
 
-    ajaxAddCafe('http://80.93.177.185:8080/api/v1/cafe',
+    ajaxAddCafe(constants.PATH+'/api/v1/cafe',
         formData
         , (response) => {
             if (response.errors === null) {
@@ -62,7 +63,7 @@ function addCafe(e) {
 export function createNewCafePage() {
     let cafe = {
         cafeName: 'Новое кафе',
-        imgSrc: 'https://justwoman.club/wp-content/uploads/2017/12/photo.jpg',
+        imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',
         event: {
             type: 'change',
             listener: handleImageUpload
@@ -72,17 +73,23 @@ export function createNewCafePage() {
                 {
                     type: 'text',
                     id: 'name',
-                    data: 'Название',
+                    data: ' ',
+                    labelData: 'Название',
+                    inputOption:'required',
                 },
                 {
                     type: 'text',
                     id: 'address',
-                    data: 'Адрес',
+                    data: ' ',
+                    labelData: 'Адрес',
+                    inputOption:'required',
                 },
                 {
                     type: 'text',
                     id: 'description',
-                    data: 'Описание',
+                    data: ' ',
+                    labelData: 'Описание',
+                    inputOption:'required',
                 },
             ],
             submitValue: 'Готово',

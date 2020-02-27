@@ -84,7 +84,6 @@ routes.push({
 
 });
 
-
 routes.push({
     url: 'createCafe', callback: () => {
         app.innerHTML = '';

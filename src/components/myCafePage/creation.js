@@ -1,4 +1,5 @@
 import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
+import {constants} from "../../utils/constants";
 
 
 const app = document.body;
@@ -43,7 +44,7 @@ export function createCafes(cafes) {
         cafesContainerComp.render();
         app.appendChild(cafesContainerDiv);
     } else {
-        ajaxCreateCafe('http://80.93.177.185:8080/api/v1/cafe',
+        ajaxCreateCafe(constants.PATH+'/api/v1/cafe',
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {

@@ -1,10 +1,10 @@
 'use strict';
 
 import './cafe.css';
-import CaffeTemplate from './cafe.hbs';
+import CafeTemplate from './cafe.hbs';
 import Form from '../form/form.js';
 
-export default class CaffeComponent {
+export default class CafeComponent {
 
     constructor(parent = document.body) {
         this._parent = parent;
@@ -20,7 +20,7 @@ export default class CaffeComponent {
     }
 
     renderProfile(context){
-        this._parent.innerHTML = CaffeTemplate(context);
+        this._parent.innerHTML = CafeTemplate(context);
 
         let formCollection = document.getElementsByClassName('cafeFormField');
         this._form = new Form(formCollection.item(0));

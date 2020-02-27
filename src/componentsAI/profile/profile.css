@@ -6,18 +6,22 @@
     width: 100%;
 }
 .UserProfileForm{
+    padding-top: 25%;
     width: 100%;
     height: 50%
 }
 
 .UserProfileHeader .UserProfileLogoField{
+
     width: 10rem;
-    height: 100%;
+    height: 10rem;
     object-fit: cover;
     text-align: center;
     float: left;
     font-family: Montserrat;
     text-decoration: underline;
+
+
 }
 
 .UserProfileHeader .UserProfileLogoField img{
@@ -32,33 +36,11 @@
     top:0;
     height: 100%;
 }
-.UserProfileHeader-right .exitButton{
-
-    float: right;
-    padding-right: 4%;
-    padding-bottom: 10%;
-    top:0;
-    right: 0;
-}
-
-.UserProfileHeader-right .exitButton h4{
-    font-family: Montserrat;
-}
-
-.UserProfileHeader-right .lastUpdate{
-    float: left;
-    padding-right: 10%;
-}
-.UserProfileHeader-right .lastUpdate span {
-    font-family: Montserrat;
-    color: #333333;
-}
 
 .UserProfileDecorate{
     width: 30%;
     height: 100%;
-    margin-left: 10rem;
-    padding-bottom: 0;
+    margin-left: 30%;
     font-family: Montserrat;
     font-weight: bold;
     font-size: 3rem;
@@ -68,20 +50,21 @@
     position: absolute;
     top: 25%;
     transform: translateY(-25%);
+    padding-bottom: 5rem;
 }
 .strip{
     width:15rem;
     height: 0.5rem;
     background-color: #A32704;
     position: absolute;
-    top: 32%;
-    transform: translateY(-32%);
+    top: 35%;
+    transform: translateY(-35%);
 }
 
 
 .formField{
     font-family: 'FuturaBookCTT Normal', arial;
-    margin: auto 30%;
+    margin: 50% 30%;
     bottom: 20%;
 }
 @media (max-width: 700px) {
@@ -158,4 +141,31 @@ input[type="submit"]:active {
     top: -0.5rem;
     font-size: 1rem;
 }
+
+input[type=file] {
+    outline: 0;
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+.userProfileImagePicker {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+}
+.titleUserProfileImagePicker {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    color: black;
+}
+
+
+
+
 

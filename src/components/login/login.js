@@ -3,9 +3,11 @@ import './login.css';
 import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
+import {constants} from "../../utils/constants";
+
 
 export function doLogin(email, password) {
-    ajax('POST', 'http://80.93.177.185:8080/api/v1/owner/login',
+    ajax('POST', constants.PATH+'/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
