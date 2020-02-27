@@ -35,13 +35,13 @@ function ajax(route, body, callback) {
 }
 
 
-function showError(whereToInsert, inWitchElement, message) {
-	const error = document.createElement('div');
-	error.className = 'error';
-	error.textContent = message;
-	whereToInsert.insertBefore(error, inWitchElement.parentNode);
-
-}
+// function showError(whereToInsert, inWitchElement, message) {
+// 	const error = document.createElement('div');
+// 	error.className = 'error';
+// 	error.textContent = message;
+// 	whereToInsert.insertBefore(error, inWitchElement.parentNode);
+//
+// }
 
 
 export function renderLogin() {
@@ -63,7 +63,7 @@ export function renderLogin() {
 		const email = form.elements['email'].value;
 		const password = form.elements['password'].value;
 
-		ajax('http://localhost:8080/api/v1/owner/login',
+		ajax('http://80.93.177.185:8080/api/v1/owner/login',
 			{'email':  email.toString(),  'password':  password.toString()}
 			, (response) => {
 				console.log('RESPONSE:',response.errors);

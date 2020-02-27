@@ -1,17 +1,27 @@
-const express = require('express');
-const cookie = require('cookie-parser');
-const app = express();
+const http = require('http');
+const fs = require('fs');
 
-app.use(cookie());
-app.use(express.static('dist'));
-app.use(express.static(__dirname + '/src/main'));
+const server = http.createServer((req, res) => {
+	let { url } = req;
+	if (/\/$/.test(url)) {
+		url = `${url}index.html`;
+	}
 
-const port = 3009;
+	let body;
+	try {
+		body = fs.readFileSync(`./src/main${url}`);
+	} catch (e) {
+		console.log(e);
+		res.statusCode = 404;
+		res.write('404')
+		res.end();
+		return;
+	}
+	console.log(url);
 
-app.all('*', function(req, res) {
-	res.sendFile(__dirname + '/src/main/index.html');
+	res.write(body);
+
+	res.end();
 });
 
-app.listen(port, function() {
-	console.log(`Server listening port ${port}`);
-});
+server.listen(3000);

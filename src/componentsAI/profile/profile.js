@@ -3,7 +3,6 @@
 import './profile.css';
 import ProfileTemplate from './profile.hbs';
 import Form from '../form/form.js';
-import {createMyCafesPage, createNewCafePage} from '../../main/main';
 
 export default class ProfileComponent {
 

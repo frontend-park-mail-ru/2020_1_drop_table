@@ -201,7 +201,7 @@ function createCafes(cafes) {
 	} else {
 		console.log('COOKIE   ');
 		console.log('COOKIE   ', document.cookie);
-		ajax('http://localhost:8080/api/v1/cafe',
+		ajax('http://80.93.177.185:8080/api/v1/cafe',
 			{}, (response) => {
 				console.log('RESPONSE1', response);
 				if (response.errors === null) {
@@ -291,7 +291,7 @@ function changeUserProfile(e) {
 			formData.append('photo', photo);
 		}
 
-		ajaxChangeUserData('http://localhost:8080/api/v1/owner/' + id,
+		ajaxChangeUserData('http://80.93.177.185:8080/api/v1/owner/' + id,
 			formData
 			, (response) => {
 				console.log('RESPONSE change user', response);
@@ -311,7 +311,7 @@ function changeUserProfile(e) {
 export function createUserProfilePage() {
 	application.innerHTML = '';
 	console.log('Cookie in createUPP' + document.cookie);
-	ajaxGetOwner('http://localhost:8080/api/v1/getCurrentOwner/',
+	ajaxGetOwner('http://80.93.177.185:8080/api/v1/getCurrentOwner/',
 		{}, (response) => {
 			console.log('RESPONSE1', response);
 			if (response.errors === null) {
@@ -430,7 +430,7 @@ function addCafe(e) {
 		formData.append('photo', photo);
 	}
 
-	ajaxAddCafe('http://localhost:8080/api/v1/cafe',
+	ajaxAddCafe('http://80.93.177.185:8080/api/v1/cafe',
 		formData
 		, (response) => {
 			console.log('RESPONSE add cafe', response);
