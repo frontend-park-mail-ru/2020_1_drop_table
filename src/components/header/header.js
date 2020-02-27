@@ -1,7 +1,6 @@
 import './headerStyles.css';
 
 export function renderHeader() {
-    console.log('kek');
     var head = document.createElement('div');
     head.className = 'header';
     head.innerHTML = '<div class = "logoDiv">\n' +
@@ -31,7 +30,6 @@ export function renderHeader() {
 
 
 export function renderBlankHeader() {
-    console.log('kek');
     var head = document.createElement('div');
     head.className = 'header';
     head.innerHTML = '<div class = "logoDiv">\n' +

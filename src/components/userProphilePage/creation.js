@@ -18,7 +18,6 @@ function ajaxChangeUserData(route, formData, callback) {
     });
     fetch(req)
         .then((response) => {
-            console.log('response ' + response);
             if (response.ok) {
                 return null;
             } else {
@@ -29,7 +28,6 @@ function ajaxChangeUserData(route, formData, callback) {
             callback(formData);
         })
         .catch((err) => {
-            console.log('no response ');
             console.log('ERROR:', err.message);
         });
 
@@ -37,7 +35,6 @@ function ajaxChangeUserData(route, formData, callback) {
 
 function changeUserProfile(e) {
     e.preventDefault();
-    console.log('Cookie in changeUserProfile' + document.cookie);
     const form = document.getElementsByClassName('formField').item(0);
     const photoInput = document.getElementById('upload');
     const id = form.elements['userId'].value;
@@ -58,11 +55,10 @@ function changeUserProfile(e) {
         ajaxChangeUserData('http://80.93.177.185:8080/api/v1/owner/' + id,
             formData
             , (response) => {
-                console.log('RESPONSE change user', response);
                 if (response === null) {
                     alert('Данные изменены');
                 } else {
-                    alert(response.errors[0].message);
+                    alert(response.errors[0].message); //TODO showError
                 }
             });
     }
@@ -75,7 +71,7 @@ export function createUserProfilePage(app) {
 
     ajaxCreateCafe('http://80.93.177.185:8080/api/v1/getCurrentOwner/',
         {}, (response) => {
-            console.log('RESPONSE1', response);
+
             if (response.errors === null) {
 
                 let profile = {
@@ -121,7 +117,7 @@ export function createUserProfilePage(app) {
                 };
                 (new ProfileComponent(app)).render(profile);
             } else {
-                alert(response.errors[0].message);
+                alert(response.errors[0].message); //TODO showError
             }
         });
 

@@ -8,12 +8,10 @@ export function doLogin(email, password) {
     ajax('POST', 'http://80.93.177.185:8080/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
-            console.log('RESPONSE:', response.errors);
             if (response.errors === null) {
                 window.location.hash = 'myCafe';
-                console.log('all OK'); //TODO что-то делатьё
             } else {
-                alert(response.errors[0].message);
+                alert(response.errors[0].message); //TODO showError
             }
         });
 

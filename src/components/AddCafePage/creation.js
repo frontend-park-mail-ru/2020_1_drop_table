@@ -1,4 +1,4 @@
-import {handleImageUpload} from "../../modules/imageUpload";
+import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
 
 let app = document.body;
@@ -22,7 +22,7 @@ function ajaxAddCafe(route, formData, callback) {
             callback(formData);
         })
         .catch((err) => {
-            console.log('ERROR:', err.message);
+            console.log(err);
         });
 }
 
@@ -51,11 +51,10 @@ function addCafe(e) {
     ajaxAddCafe('http://80.93.177.185:8080/api/v1/cafe',
         formData
         , (response) => {
-            console.log('RESPONSE add cafe', response);
             if (response.errors === null) {
-                alert('Кафе добавлено');
+                window.location.href = '#myCafe';
             } else {
-                alert(response.errors[0].message);
+                alert(response.errors[0].message); //TODO showError
             }
         });
 }

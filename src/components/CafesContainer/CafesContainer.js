@@ -24,7 +24,6 @@ export class CafesContainerComponent {
     }
 
     _renderTemplate() {
-        console.log(this._firstColumn);
         //затычка изображения
         //let src = 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg';
         let fc = this._firstColumn.map(({photo = photo, name = name, id = id} = {}) => {
@@ -33,7 +32,6 @@ export class CafesContainerComponent {
         let sc = this._secondColumn.map(({photo = photo, name = name, id = id} = {}) => {
             return CafeCard({cafeImageSrc: photo, name: name, id: id});
         });
-        console.log('COLUMN ', this._firstColumn);
 
         this._el.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 

@@ -28,7 +28,6 @@ function ajaxForReg(route, body, callback) {
             callback(formData);
         })
         .catch((err) => {
-            console.log('ERROR:', err.message);
         });
 }
 
@@ -61,10 +60,8 @@ export function renderRegister() {
             ajaxForReg('http://80.93.177.185:8080/api/v1/owner',
                 {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()}
                 , (response) => {
-                    console.log('RESPONSE', response);
                     if (response.errors === null) {
                         window.location.hash = 'myCafe';
-                        console.log('reg done');
                     } else {
                         if (response.errors[0].message[0] === 'P') {
                             showError(form, password, response.errors[0].message);
