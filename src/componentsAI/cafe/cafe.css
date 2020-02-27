@@ -281,23 +281,17 @@ input[type="submit"]:active {
 
 .InputField label {
     position: absolute;
-    top: 50%;
     left: 0;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 1.2rem;
     color: rgb(0, 0, 0);
     pointer-events: none;
     -webkit-transition: all 0.15s ease-out 0s;
     transition: all 0.15s ease-out 0s;
+    top: -0.5rem;
+    font-size: 1rem;
 }
 
-.InputField input:focus + label,
-.InputField input.has-value + label {
-    top: -1rem;
-    font-size: 1rem;
-    color: rgb(0, 0, 0);
-}
 
 @media only screen and (max-width: 680px) {
 
@@ -310,13 +304,6 @@ input[type="submit"]:active {
         padding-bottom: 10%;
     }
 
-
-    .InputField input:focus + label,
-    .InputField input.has-value + label {
-        top: -0.5rem;
-        font-size: 1rem;
-        color: rgb(0, 0, 0);
-    }
 
 }
 
