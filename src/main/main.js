@@ -74,8 +74,10 @@ routes.push({
 routes.push({
     url: "profile", callback: () => {
         app.innerHTML = "";
+        let kek = document.createElement('div');
+        createUserProfilePage(kek);
         app.appendChild(renderHeader());
-        createUserProfilePage(app)
+        app.appendChild(kek)
     }
 
 });

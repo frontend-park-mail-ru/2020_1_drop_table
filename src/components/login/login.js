@@ -11,7 +11,7 @@ export function doLogin(email, password) {
         , (response) => {
             console.log("RESPONSE:", response.errors);
             if (response.errors === null) {
-                window.location.hash = "myCafes";
+                window.location.hash = "myCafe";
                 console.log("all OK") //TODO что-то делатьё
             } else {
                 alert(response.errors[0].message)

@@ -62,7 +62,7 @@ export function renderRegister() {
                 , (response) => {
                     console.log("RESPONSE", response);
                     if (response.errors === null) {
-                        window.location.hash = "myCafes";
+                        window.location.hash = "myCafe";
                         console.log("reg done")
                     } else {
                         if (response.errors[0].message[0] === "P") {
