@@ -1,7 +1,7 @@
 import './headerStyles.css';
 
 export function renderHeader() {
-    var head = document.createElement('div');
+    let head = document.createElement('div');
     head.className = 'header';
     head.innerHTML = '<div class = "logoDiv">\n' +
         '        <img src="https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg" class="logo">\n' +
@@ -25,7 +25,7 @@ export function renderHeader() {
 
 
 export function renderBlankHeader() {
-    var head = document.createElement('div');
+    let head = document.createElement('div');
     head.className = 'header';
     head.innerHTML = '<div class = "logoDiv">\n' +
         '        <img src="https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg" class="logo">\n' +

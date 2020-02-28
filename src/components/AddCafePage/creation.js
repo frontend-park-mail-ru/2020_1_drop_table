@@ -31,23 +31,35 @@ function addCafe(e) {
     e.preventDefault();
     const form = document.getElementsByClassName('cafeFormField').item(0);
     const photoInput = document.getElementById('upload');
-
+    const image = document.getElementById('image').getAttribute('src');
     const name = form.elements['name'].value;
     const address = form.elements['address'].value;
     const description = form.elements['description'].value;
-
     const photo = photoInput.files[0];
 
     let formData = new FormData();
-    formData.append('jsonData', JSON.stringify({
+
+    let data = {
         'name': name.toString(),
         'address': address.toString(),
         'description': description.toString()
-    }));
-
+    };
     if (photo) {
         formData.append('photo', photo);
+    } else {
+        data = {
+            'name': name.toString(),
+            'address': address.toString(),
+            'description': description.toString(),
+            'photo':image
+        };
     }
+
+
+
+    formData.append('jsonData', JSON.stringify(data));
+
+
 
     ajaxAddCafe(constants.PATH+'/api/v1/cafe',
         formData

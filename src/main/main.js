@@ -14,11 +14,6 @@ let routes = [
         url: '', callback: function () {
             app.innerHTML = '';
             app.appendChild(renderBlankHeader());
-            let mainPage = document.createElement('div');
-            mainPage.innerHTML = 'тут типа будет главная страница /reg /login\n' +
-                '<a href="#login">login</a>\n' +
-                '<a href="#reg">reg</a>';
-            app.appendChild(mainPage);
         }
     }
 ];
@@ -76,10 +71,10 @@ routes.push({
 routes.push({
     url: 'profile', callback: () => {
         app.innerHTML = '';
-        let kek = document.createElement('div');
-        createUserProfilePage(kek);
+        let up = document.createElement('div');
+        createUserProfilePage(up);
         app.appendChild(renderHeader());
-        app.appendChild(kek);
+        app.appendChild(up);
     }
 
 });
