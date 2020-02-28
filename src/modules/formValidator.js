@@ -16,7 +16,8 @@ export function validateForm(form) {
     const repeatedPassword = form.elements['re-password'];
     const password = form.elements['password'];
     let isCorrect = true;
-    if (!email.validity.valid || email.value === '' || email.value.split('.').length !== 2) {
+    const splitedEmail = email.value.split('.')
+    if (!email.validity.valid || email.value === '' || splitedEmail[splitedEmail.length - 1] === "" || splitedEmail.length <= 1) {
         showError(form, email, 'Некорректный email');
         isCorrect = false;
     }

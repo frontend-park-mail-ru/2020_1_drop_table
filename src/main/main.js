@@ -13,7 +13,8 @@ let routes = [
     {
         url: '', callback: function () {
             app.innerHTML = '';
-            app.appendChild(renderBlankHeader());
+            app.appendChild(renderHeader());
+            createCafes();
         }
     }
 ];

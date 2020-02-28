@@ -44,7 +44,7 @@ export function createCafes(cafes) {
         cafesContainerComp.render();
         app.appendChild(cafesContainerDiv);
     } else {
-        ajaxCreateCafe(constants.PATH+'/api/v1/cafe',
+        ajaxCreateCafe(constants.PATH + '/api/v1/cafe',
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {
@@ -52,9 +52,10 @@ export function createCafes(cafes) {
                     } else {
                         window.location.hash = '#createCafe';
                     }
-
                 } else {
-                    alert(response.errors[0].message); //TODO showError
+                    if (response.errors[0].message === "no permissions") {
+                        window.location.hash = '#reg'
+                    }
                 }
             });
     }
