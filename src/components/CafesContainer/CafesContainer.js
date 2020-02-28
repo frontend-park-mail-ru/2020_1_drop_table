@@ -16,7 +16,6 @@ export class CafesContainerComponent {
     }
 
     set data(d) {
-
         this._data = d;
         let center = d.length / 2;
         this._firstColumn = d.slice(0, center);

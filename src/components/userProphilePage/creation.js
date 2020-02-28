@@ -80,9 +80,9 @@ export function createUserProfilePage(app) {
         {}, (response) => {
 
             if (response.errors === null) {
-
                 let profile = {
-                    imgSrc: response.data['photo'],
+                    imgSrc: (response.data['photo']!=='')
+                        ? response.data['photo']:'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
                     event: {
                         type: 'change',
                         listener: handleImageUpload

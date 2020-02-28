@@ -1,9 +1,5 @@
 export function ajax(method,route, body, callback) {
 
-    let h = new Headers();
-    h.append('Accept', '*/*');
-    h.append('Content-type', 'application/json')
-
     let req = new Request(route, {
         method: method,
         mode: 'cors',
