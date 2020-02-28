@@ -1,15 +1,19 @@
-import {ajaxCreateCafe} from "../myCafePage/creation";
-import ProfileComponent from "../../componentsAI/profile/profile";
-import {handleImageUpload} from "../../modules/imageUpload";
-import {validateForm} from "../../modules/formValidator";
-import {constants} from "../../utils/constants";
+import {ajaxCreateCafe} from '../myCafePage/creation';
+import ProfileComponent from '../../componentsAI/profile/profile';
+import {handleImageUpload} from '../../modules/imageUpload';
+import {validateForm} from '../../modules/formValidator';
 
 
 function ajaxChangeUserData(route, formData, callback) {
+    let h = new Headers();
+    h.append('Accept', '*/*');
+    h.append('Content-type', 'multipart/form-data');
+    h.append('Access-Control-Allow-Origin', '*');
     let req = new Request(route, {
         method: 'PUT',
         mode: 'cors',
         body: formData,
+// headers: h,
         credentials: 'include',
     });
     fetch(req)
@@ -32,8 +36,8 @@ function ajaxChangeUserData(route, formData, callback) {
 function changeUserProfile(e) {
     e.preventDefault();
     const form = document.getElementsByClassName('formField').item(0);
+    const image = document.getElementById('image');
     const photoInput = document.getElementById('upload');
-    const userImage = document.getElementById('image').getAttribute('src');
     const id = form.elements['userId'].value;
     const name = form.elements['name'].value;
     const email = form.elements['email'].value;
@@ -41,30 +45,31 @@ function changeUserProfile(e) {
     const photo = photoInput.files[0];
     if (validateForm(form)) {
         let formData = new FormData();
-
         let data = {
             'name': name.toString(),
             'email': email.toString(),
             'password': password1.toString()
         };
-
         if (photo) {
             formData.append('photo', photo);
-        } else{
+        }
+        else{
             data = {
                 'name': name.toString(),
                 'email': email.toString(),
                 'password': password1.toString(),
-                'photo': userImage.toString()
+                'photo': image.getAttribute('src').toString()
             };
         }
 
         formData.append('jsonData', JSON.stringify(data));
 
-        ajaxChangeUserData(constants.PATH+'/api/v1/owner/' + id,
+        ajaxChangeUserData('http://80.93.177.185:8080/api/v1/owner/' + id,
             formData
             , (response) => {
-                if (response !== null) {
+                if (response === null) {
+                    alert('Данные изменены');
+                } else {
                     alert(response.errors[0].message); //TODO showError
                 }
             });
@@ -76,7 +81,7 @@ function changeUserProfile(e) {
 
 export function createUserProfilePage(app) {
 
-    ajaxCreateCafe(constants.PATH+'/api/v1/getCurrentOwner/',
+    ajaxCreateCafe('http://80.93.177.185:8080/api/v1/getCurrentOwner/',
         {}, (response) => {
 
             if (response.errors === null) {
@@ -90,39 +95,29 @@ export function createUserProfilePage(app) {
                     form: {
                         formFields: [
                             {
-                                type: 'hidden',
+                                type: 'text',
                                 id: 'userId',
                                 data: response.data['id'],
-                                labelData:'',
-                                inputOption:'readonly',
                             },
                             {
                                 type: 'text',
                                 id: 'name',
                                 data: response.data['name'],
-                                labelData:'Имя',
-                                inputOption:'required',
                             },
                             {
                                 type: 'email',
                                 id: 'email',
                                 data: response.data['email'],
-                                labelData:'Почта',
-                                inputOption:'required',
                             },
                             {
                                 type: 'password',
                                 id: 'password',
                                 data: response.data['password'],
-                                labelData:'Пароль',
-                                inputOption:'required'
                             },
                             {
                                 type: 'password',
                                 id: 're-password',
                                 data: response.data['password'],
-                                labelData:'Повторите пароль',
-                                inputOption:'required'
                             },
                         ],
                         submitValue: 'Готово',
