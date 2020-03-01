@@ -19,11 +19,19 @@ let routes = [
     }
 ];
 
-
+/**
+ * Получает то, на что оканчивается url
+ * @returns {string}
+ */
 function getUrl() {
     return window.location.hash.substr(1);
 }
 
+/**
+ * При изменении url вызывается эта функция, она проходит по списку маршрутов и если подходящий роут найден,
+ * вызывает его callback( какие функции нужно вызвать для рендеритнга страничкит)
+ * @constructor
+ */
 function Routing() {
     let url = getUrl();
     let route = routes[0];

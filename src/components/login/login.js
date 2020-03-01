@@ -5,7 +5,11 @@ import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
 
-
+/**
+ * Логинит пользователя по логину и паролю
+ * @param email Значение почты
+ * @param password Значение пароль
+ */
 export function doLogin(email, password) {
     ajax('POST', constants.PATH+'/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
@@ -19,6 +23,11 @@ export function doLogin(email, password) {
 
 }
 
+
+/**
+ * Функция рендерит форму логина
+ * @returns {HTMLDivElement} Отредеренную форму для логина
+ */
 export function renderLogin() {
 
     let loginContainer = document.createElement('div');

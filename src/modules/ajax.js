@@ -1,3 +1,10 @@
+/**
+ * AJAX запрос используемый при логине
+ * @param method POST,GET,PUT и т.д
+ * @param route По какому роуту отправлять реквест
+ * @param body Тело запроса
+ * @param callback Функция принимающая результат ответа
+ */
 export function ajax(method,route, body, callback) {
 
     let req = new Request(route, {

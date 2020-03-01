@@ -324,8 +324,9 @@ input[type="submit"]:active {
 .photoContainer img {
     width: 100%;
     display: block;
+    object-fit: cover;
     max-width: 800px;
-    max-height: 300px;
+    max-height:300px;
 }
 
 .photoContainer input {
@@ -357,7 +358,6 @@ input[type=file] {
     opacity: 0;
     pointer-events: none;
     user-select: none;
-    display: none;
 }
 
 
@@ -372,7 +372,4 @@ input[type=file] {
 }
 .titleImagePicker {
     color: black;
-    margin: 10px 0 0 0;
-    padding: 5px 0 5px 0;
-    border: 1px solid black;
 }

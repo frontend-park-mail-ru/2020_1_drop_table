@@ -1,6 +1,10 @@
 import './headerStyles.css';
 import headerTemplate from "./HeaderTemplate.hbs"
 
+/**
+ * Рендерит хедер для залогиненного пользотвателя
+ * @returns {HTMLDivElement} Отредеренный хедер
+ */
 export function renderHeader() {
     let head = document.createElement('div');
     head.className = 'header';
@@ -14,7 +18,10 @@ export function renderHeader() {
     return head;
 }
 
-
+/**
+ * Рендерит хедер не для залогиненного пользователя
+ * @returns {HTMLDivElement} Отредеренный хедер
+ */
 export function renderBlankHeader() {
     let head = document.createElement('div');
     head.className = 'header';

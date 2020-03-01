@@ -1,3 +1,9 @@
+/**
+ * Функция выводящая на экран ошибку после элемента
+ * @param whereToInsert В каком элементе произошла ошибка (к примеру в форме)
+ * @param inWitchElement В каком элементе этого элемента произошла ошибка (поле формы)
+ * @param message Текст ошибки
+ */
 export function showError(whereToInsert, inWitchElement, message) {
     const error = document.createElement('div');
     error.className = 'error';
@@ -6,7 +12,11 @@ export function showError(whereToInsert, inWitchElement, message) {
 
 }
 
-
+/**
+ * Проверка корректности формы
+ * @param form Форма
+ * @returns {boolean} Корректна ли форма
+ */
 export function validateForm(form) {
     let errors = form.querySelectorAll('.error');
     for (let err of errors) {
@@ -16,7 +26,7 @@ export function validateForm(form) {
     const repeatedPassword = form.elements['re-password'];
     const password = form.elements['password'];
     let isCorrect = true;
-    const splitedEmail = email.value.split('.')
+    const splitedEmail = email.value.split('.');
     if (!email.validity.valid || email.value === '' || splitedEmail[splitedEmail.length - 1] === "" || splitedEmail.length <= 1) {
         showError(form, email, 'Некорректный email');
         isCorrect = false;

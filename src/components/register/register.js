@@ -8,7 +8,12 @@ import {constants} from "../../utils/constants";
 
 const app = document.body;
 
-
+/**
+ * AJAX запрос для регистрации
+ * @param route Путь для запроса
+ * @param body Отправляемый данные
+ * @param callback Обработчик результатов запроса
+ */
 function ajaxForReg(route, body, callback) {
     let formData = new FormData();
     formData.append('jsonData', JSON.stringify(body));
@@ -33,7 +38,10 @@ function ajaxForReg(route, body, callback) {
         });
 }
 
-
+/**
+ * Создает форма регистрации
+ * @returns {HTMLDivElement} Отредоренная форма регистрации
+ */
 export function renderRegister() {
 
     let registerContainer = document.createElement('div');

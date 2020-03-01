@@ -52,6 +52,7 @@ export function createCafes(cafes) {
                     } else {
                         window.location.hash = '#createCafe';
                     }
+
                 } else {
                     if (response.errors[0].message === "no permissions") {
                         window.location.hash = '#reg'
