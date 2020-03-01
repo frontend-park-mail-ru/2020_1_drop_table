@@ -39,6 +39,7 @@ export function renderRegister() {
             const password = form.elements['password'];
             const name = form.elements['full-name'];
             ajax(constants.PATH + '/api/v1/owner',
+                'POST',
                 {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()},
                 (response) => {
                     if (response.errors === null) {
@@ -52,8 +53,7 @@ export function renderRegister() {
                             showError(form, email, response.errors[0].message);
                         }
                     }
-                },
-                'POST'
+                }
             );
         }
     });

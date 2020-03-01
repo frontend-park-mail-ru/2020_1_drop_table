@@ -2,10 +2,17 @@
 
 import {ajaxForm} from './ajaxForm.js'
 
-export function ajax(route, data, callback, method) {
+/**
+ * Ajax с телом obj
+ * @param {string} route - адресс
+ * @param {string} method - метод запроса
+ * @param {object} data - данные
+ * @param {function} callback - функция, которая будет вызвана после запроса
+ */
+export function ajax(method, route, data, callback) {
     const formData = new FormData();
     if (method !== 'GET' && method !== 'HEAD') {
         formData.append('jsonData', JSON.stringify(data));
     }
-    ajaxForm(route, formData, callback, method);
+    ajaxForm(method, route, formData, callback);
 }

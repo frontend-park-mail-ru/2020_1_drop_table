@@ -36,6 +36,7 @@ function addCafe(e) {
     formData.append('jsonData', JSON.stringify(data));
 
     ajaxForm(constants.PATH+'/api/v1/cafe',
+        'POST',
         formData,
         (response) => {
             if (response.errors === null) {
@@ -43,8 +44,7 @@ function addCafe(e) {
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
-        },
-        'POST'
+        }
     );
 }
 

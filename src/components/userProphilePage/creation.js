@@ -38,13 +38,13 @@ function changeUserProfile(e) {
         formData.append('jsonData', JSON.stringify(data));
 
         ajaxForm(constants.PATH+'/api/v1/owner/' + id,
+            'PUT',
             formData,
             (response) => {
                 if (response !== null) {
                     alert(response.errors[0].message); //TODO showError
                 }
-            },
-            'PUT'
+            }
         );
     }
 
@@ -54,6 +54,7 @@ function changeUserProfile(e) {
 
 export function createUserProfilePage(app) {
     ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+        'GET',
         {}, (response) => {
 
             if (response.errors === null) {
@@ -113,7 +114,6 @@ export function createUserProfilePage(app) {
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
-        },
-        'GET'
+        }
     );
 }

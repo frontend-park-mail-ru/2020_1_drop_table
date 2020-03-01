@@ -16,6 +16,7 @@ export function createCafes(cafes) {
         app.appendChild(cafesContainerDiv);
     } else {
         ajax(constants.PATH + '/api/v1/cafe',
+            'GET',
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {
@@ -29,8 +30,7 @@ export function createCafes(cafes) {
                         window.location.hash = '#reg'
                     }
                 }
-            },
-            'GET'
+            }
         )
     }
     return cafesContainerDiv;
