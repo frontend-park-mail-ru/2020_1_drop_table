@@ -1,31 +1,9 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
-import {constants} from "../../utils/constants";
+import {constants} from '../../utils/constants';
+import {ajaxForm} from '../../utils/ajaxForm';
 
 let app = document.body;
-
-function ajaxAddCafe(route, formData, callback) {
-    let req = new Request(route, {
-        method: 'POST',
-        mode: 'cors',
-        body: formData,
-        credentials: 'include',
-    });
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((formData) => {
-            callback(formData);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
 
 function addCafe(e) {
     e.preventDefault();
@@ -55,21 +33,19 @@ function addCafe(e) {
         };
     }
 
-
-
     formData.append('jsonData', JSON.stringify(data));
 
-
-
-    ajaxAddCafe(constants.PATH+'/api/v1/cafe',
-        formData
-        , (response) => {
+    ajaxForm(constants.PATH+'/api/v1/cafe',
+        formData,
+        (response) => {
             if (response.errors === null) {
                 window.location.href = '#myCafe';
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
-        });
+        },
+        'POST'
+    );
 }
 
 export function createNewCafePage() {
