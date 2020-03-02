@@ -32,7 +32,7 @@ function getUrl() {
  * вызывает его callback( какие функции нужно вызвать для рендеритнга страничкит)
  * @constructor
  */
-function Routing() {
+function Routing() { //Добавить в параметры e и вызывать e.preventDefault
     let url = getUrl();
     let route = routes[0];
     routes.forEach(item => {
