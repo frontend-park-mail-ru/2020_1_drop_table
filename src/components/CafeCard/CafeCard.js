@@ -16,7 +16,6 @@ export class CafeCardComponent {
 
     _renderTemplate() {
         this._el.innerHTML += CafeCard({cafeImageSrc:this._imgSrc,name:this._name, id:this._id});
-
     }
 
     render() {

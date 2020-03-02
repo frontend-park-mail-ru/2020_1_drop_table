@@ -1,5 +1,8 @@
 import {renderRegister} from '../components/register/register';
-import {renderBlankHeader, renderHeader} from '../components/header/header';
+// import {renderBlankHeader, renderHeader} from '../components/header/header';
+
+import {renderBlankHeader, renderHeader} from '../components/mainHeader/header';
+
 import {renderLogin} from '../components/login/login';
 import {createCafes} from '../components/myCafePage/creation';
 import {createUserProfilePage} from '../components/userProphilePage/creation';
@@ -54,7 +57,7 @@ routes.push({
 
     url: 'reg', callback: () => {
         app.innerHTML = '';
-        app.appendChild(renderBlankHeader());
+        app.appendChild(renderHeader('auth'));
         app.appendChild(renderRegister());
 
     }
@@ -62,7 +65,7 @@ routes.push({
 routes.push({
     url: 'login', callback: () => {
         app.innerHTML = '';
-        app.appendChild(renderBlankHeader());
+        app.appendChild(renderHeader('auth'));
         app.appendChild(renderLogin());
     }
 
@@ -82,7 +85,7 @@ routes.push({
         app.innerHTML = '';
         let up = document.createElement('div');
         createUserProfilePage(up);
-        app.appendChild(renderHeader());
+        app.appendChild(renderHeader('profile'));
         app.appendChild(up);
     }
 
@@ -91,8 +94,10 @@ routes.push({
 routes.push({
     url: 'createCafe', callback: () => {
         app.innerHTML = '';
+        let up = document.createElement('div');
         app.appendChild(renderHeader());
-        createNewCafePage();
+        createNewCafePage(app);
+        // app.appendChild(up);
     }
 
 });

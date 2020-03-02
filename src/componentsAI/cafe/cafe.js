@@ -21,7 +21,6 @@ export default class CafeComponent {
 
     renderProfile(context){
         this._parent.innerHTML = CafeTemplate(context);
-
         let formCollection = document.getElementsByClassName('cafeFormField');
         this._form = new Form(formCollection.item(0));
     }
@@ -32,7 +31,9 @@ export default class CafeComponent {
 
     render(context) {
         this.renderProfile(context);
+        console.log('render profile');
         this._addListener(context);
+        console.log('add l');
         this.renderForm(context['form']);
     }
 }

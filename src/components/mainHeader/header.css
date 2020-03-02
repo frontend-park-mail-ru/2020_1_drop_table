@@ -1,0 +1,54 @@
+header {
+    font-family: Montserrat;
+    font-size: 1.5rem;
+    align-items: center;
+    display: flex;
+    max-height: 5%;
+    margin-top: 1.5em;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+.headerNav {
+    flex: 1;
+}
+
+.headerNav .headerMenu {
+    margin-top: 0.5em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.headerNav .headerList {
+    padding-left: 1em;
+    padding-right: 1em;
+    white-space:nowrap;
+    list-style: none;
+}
+
+span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.logoContainer > img{
+    margin-top: 1.5em;
+    max-height: 100px;
+    max-width: 100px;
+    object-fit: cover;
+}
+
+.avatarContainer > img{
+    margin-top: 0.5em;
+    max-height: 50px;
+    max-width: 50px;
+    object-fit: cover;
+}
+.exitProfile{
+    margin-top: 1em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.exitProfile:hover{
+  text-decoration: underline;
+}

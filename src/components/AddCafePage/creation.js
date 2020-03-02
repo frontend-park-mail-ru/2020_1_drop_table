@@ -2,7 +2,7 @@ import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
 import {constants} from "../../utils/constants";
 
-let app = document.body;
+
 
 function ajaxAddCafe(route, formData, callback) {
     let req = new Request(route, {
@@ -72,7 +72,7 @@ function addCafe(e) {
         });
 }
 
-export function createNewCafePage() {
+export function createNewCafePage(app) {
     let cafe = {
         cafeName: 'Новое кафе',
         imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',

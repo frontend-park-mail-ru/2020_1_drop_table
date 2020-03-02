@@ -1,0 +1,24 @@
+<header>
+    <div class="logoContainer">
+        <img src="{{logoImageSrc}}"/>
+    </div>
+
+    <nav class="headerNav">
+        <ul class="headerMenu">
+            {{#each menuList}}
+            <li class="headerList"> <a href={{href}}> <span>{{text}}</span> </a> </li>
+            {{/each}}
+        </ul>
+    </nav>
+
+    {{#if hasAvatar}}
+        <div class="avatarContainer">
+            <img src="{{avatarImageSrc}}">
+        </div>
+    {{/if}}
+
+    {{#if hasExit}}
+        <h4 class="exitProfile">Выйти</h4>
+    {{/if}}
+
+</header>
