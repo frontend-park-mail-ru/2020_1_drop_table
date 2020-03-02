@@ -4,20 +4,22 @@ import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
+import {showError} from "../../modules/formValidator";
 
 /**
  * Логинит пользователя по логину и паролю
  * @param email Значение почты
  * @param password Значение пароль
+ * @param form передаю форму для обработки ошибки
  */
-export function doLogin(email, password) {
-    ajax('POST', constants.PATH+'/api/v1/owner/login',
+export function doLogin(email, password, form) {
+    ajax('POST', constants.PATH + '/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
                 window.location.hash = 'myCafe';
             } else {
-                alert(response.errors[0].message); //TODO showError
+                showError(form, form.elements['email'], response.errors[0].message) // TODO проверить работу вызова ошибки при некорректном пользователе
             }
         });
 
@@ -48,7 +50,7 @@ export function renderLogin() {
         //validateForm()
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
-        doLogin(email, password);
+        doLogin(email, password, form);
 
     });
     return loginContainer;
