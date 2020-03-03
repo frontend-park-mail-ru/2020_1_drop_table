@@ -59,14 +59,14 @@ export function renderHeader(page) {
     head.innerHTML = headerTemplate(headerData);
 
     if( _hasAvatar ) {
-        let avatar = head.getElementsByClassName('avatarContainer').item(0);
+        let avatar = head.getElementsByClassName('page-header__avatar').item(0);
         avatar.addEventListener('click', function () {
             window.location.hash = '#profile';
         });
     }
 
     if ( _hasExit){
-        let avatar = head.getElementsByClassName('exitProfile').item(0);
+        let avatar = head.getElementsByClassName('page-header__h4').item(0);
         avatar.addEventListener('click', function () {
             alert('exit');
         });

@@ -1,24 +1,28 @@
-<header>
-    <div class="logoContainer">
-        <img src="{{logoImageSrc}}"/>
+<header class="page-header">
+    <div class="page-header__logo-container">
+        <img class="page-header__logo-container_img" src="{{logoImageSrc}}"/>
     </div>
 
-    <nav class="headerNav">
-        <ul class="headerMenu">
+    <nav class="page-header__nav">
+        <ul class="page-header__nav__menu">
             {{#each menuList}}
-            <li class="headerList"> <a href={{href}}> <span>{{text}}</span> </a> </li>
+            <li class="page-header__nav__menu_list">
+                <a class="page-header__nav__menu_list_a" href={{href}}>
+                    <span class="page-header__nav__menu_list_span">{{text}}</span>
+                </a>
+            </li>
             {{/each}}
         </ul>
     </nav>
 
     {{#if hasAvatar}}
-        <div class="avatarContainer">
-            <img src="{{avatarImageSrc}}">
+        <div class="page-header__avatar">
+            <img class="page-header__avatar_img" src="{{avatarImageSrc}}">
         </div>
     {{/if}}
 
     {{#if hasExit}}
-        <h4 class="exitProfile">Выйти</h4>
+        <h4 class="page-header__h4">Выйти</h4>
     {{/if}}
 
 </header>

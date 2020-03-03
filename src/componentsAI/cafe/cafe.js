@@ -21,7 +21,7 @@ export default class CafeComponent {
 
     renderProfile(context){
         this._parent.innerHTML = CafeTemplate(context);
-        let formCollection = document.getElementsByClassName('cafeFormField');
+        let formCollection = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field');
         this._form = new Form(formCollection.item(0));
     }
 

@@ -23,6 +23,7 @@ export class CafesContainerComponent {
     }
 
     _renderTemplate() {
+
         let fc = this._firstColumn.map(({photo = photo, name = name, id = id} = {}) => {
             return CafeCard({cafeImageSrc: photo, name: name, id: id});
         });
@@ -32,7 +33,14 @@ export class CafesContainerComponent {
 
         this._el.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 
+        for(let i = 0; i< this.data.length; i++){
+            let card = this._el.getElementsByClassName('cafe-card-container').item(i);
+            card.addEventListener('click',function (e) {
+                alert(card.getAttribute('id'));
+                window.location.href = '#cafe';
 
+            })
+        }
     }
 
     render() {

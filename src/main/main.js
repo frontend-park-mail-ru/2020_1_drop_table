@@ -8,6 +8,8 @@ import {createCafes} from '../components/myCafePage/creation';
 import {createUserProfilePage} from '../components/userProphilePage/creation';
 import {createNewCafePage} from '../components/AddCafePage/creation';
 
+import {CreateCafePage} from '../components/CafePage/CafePage'
+
 
 const app = document.body;
 
@@ -94,10 +96,18 @@ routes.push({
 routes.push({
     url: 'createCafe', callback: () => {
         app.innerHTML = '';
-        let up = document.createElement('div');
         app.appendChild(renderHeader());
         createNewCafePage(app);
-        // app.appendChild(up);
+    }
+
+});
+
+routes.push({
+    url: 'cafe', callback: () => {
+        app.innerHTML = '';
+        let up = document.createElement('div');
+        app.appendChild(renderHeader());
+        CreateCafePage(app, 5);
     }
 
 });

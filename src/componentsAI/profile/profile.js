@@ -21,7 +21,7 @@ export default class ProfileComponent {
 
     renderProfile(context){
         this._parent.innerHTML = ProfileTemplate(context);
-        let formCollection = document.getElementsByClassName('formField');
+        let formCollection = document.getElementsByClassName('user-profile__form-container__form-field');
         this._form = new Form(formCollection.item(0));
     }
     renderForm(context){
