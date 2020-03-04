@@ -3,6 +3,7 @@ import CafeComponent from '../../componentsAI/cafe/cafe';
 import {constants} from '../../utils/constants';
 import {ajaxForm} from '../../utils/ajaxForm';
 
+
 let app = document.body;
 
 function addCafe(e) {
