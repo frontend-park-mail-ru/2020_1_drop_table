@@ -1,8 +1,3 @@
-.error{
-    color: #A32704;
-}
-
-
 .labelField {
     display: inline-block;
     vertical-align: center;
@@ -134,8 +129,8 @@ input[type="submit"]:hover {
 input[type="submit"]:active {
     color: white;
     background: #A32704;
-
 }
+
 
 .InputField {
 
@@ -216,10 +211,6 @@ input[type="submit"]:active {
         padding-top: 10%;
         padding-bottom: 10%;
     }
-
-    /*top: -0.5rem;*/
-    /*font-size: 1rem;*/
-    /*color: rgb(0, 0, 0);*/
     .decorateCircle {
         left: 40%;
     }
@@ -233,9 +224,4 @@ input[type="submit"]:active {
 
 }
 
-
-@media (max-width: 850px) {
-
-
-}
 

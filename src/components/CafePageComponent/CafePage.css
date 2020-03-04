@@ -5,16 +5,16 @@
     padding: 0 10% 10% 10%;
     justify-content: space-around;
     font-family: Montserrat;
-    min-width: 1080px;
-    min-height: 750px;
+    min-width: 972px;
+    min-height: 675px;
 }
 .cafe-page__cafe-info{
-    min-width: 1080px;
-    min-height: 750px;
+    min-width: 972px;
+    min-height: 675px;
     /*height: 100%;*/
     /*width: 100%;*/
-    width: 1080px;
-    height: 750px;
+    width: 972px;
+    height: 675px;
     position: relative;
     /*border: 2px solid black;*/
 }
@@ -23,7 +23,7 @@
 
 .cafe-page__cafe-info__image-container{
     z-index: 2;
-    top:5%;
+    top:4%;
     left:0;
     height: 71%;
     width: 68%;
@@ -51,14 +51,16 @@
 }
 
 .cafe-page__cafe-info__description-container_h4{
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
+    padding: 0 10% 0 10%;
 }
 
 .cafe-page__cafe-info__description-container_p{
     font-size: 1rem;
-    font-weight: lighter;
-    position: relative;
+    font-weight: normal;
+    height: 100%;
+    padding: 0 10% 0 10%;
 }
 
 .cafe-page__cafe-info__name-container{
@@ -69,39 +71,48 @@
     height:29%;
     width:43%;
     background-color: #1e768f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 .cafe-page__cafe-info__name-container_span{
-    position: absolute;
+    /*position: absolute;*/
     color: white;
-    top: 50%;
+    /*top: 50%;*/
     transform: translateY(-50%);
-    right:5%;
+    /*right:5%;*/
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 3rem;
 }
 .cafe-page__cafe-info__time-container{
     position: absolute;
-    left:10%;
+    left:5%;
     bottom: 0;
-    height: 30%;
+    height: 25%;
     width:20%;
     background-color: #ffffff;
-    font-size: 3rem;
+    font-size: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 
 }
 .cafe-page__cafe-info__time-container__time{
-
-
-
+    /*border: 1px solid black;*/
+    height: 100%;
+    padding-top:0;
 }
 
 .cafe-page__cafe-info__time-container__time__strip{
-    height: 0.3rem;
-    width:50%;
+    height: 0.2rem;
+    width:80%;
+    padding: 0 10% 0 10%;
     background-color: black;
 }
-.cafe-page__cafe-info__time-container__time__h4{
+.cafe-page__cafe-info__time-container__time__span{
+
 }
 
 

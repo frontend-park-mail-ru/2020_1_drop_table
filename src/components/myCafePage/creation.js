@@ -48,6 +48,7 @@ export function createCafes(cafes) {
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {
+                        console.log('create cafes')
                         createCafes(response.data);
                     } else {
                         window.location.hash = '#createCafe';

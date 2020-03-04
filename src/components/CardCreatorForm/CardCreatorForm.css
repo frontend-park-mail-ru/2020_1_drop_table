@@ -3,7 +3,7 @@
     font-family: 'FuturaBookCTT Normal', arial;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 5%;
+    padding-bottom: 2%;
 }
 
 .cr-form-container__card-redactor-form{
@@ -17,11 +17,9 @@
 .cr-form-container__card-redactor-form__input-field{
     background: none;
     color: #000000;
-    margin-bottom: 3rem;
     font-size: 0.75rem;
-    border: solid 1px #000000;
     width: 50%;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 }
 
 .cr-form-container__card-redactor-form__input-field:focus
@@ -29,6 +27,9 @@
     outline: none;
 }
 
+.cr-form-container__card-redactor-form__input-field_input{
+    border: 1px solid black;
+}
 .cr-form-container__card-redactor-form__input-field[id="logoText"] [id="headerLabel"] [id="mainLabel"] {
     height: 4rem;
 }
@@ -36,6 +37,8 @@
 .cr-form-container__card-redactor-form__input-field[id="secondaryField"] [id="auxiliaryField"] {
     height: 5rem;
 }
+
+
 
 .cr-form-container__card-redactor-form_input[type="submit"] {
     font-weight: bolder;
@@ -57,10 +60,8 @@
 
 }
 
-
-
 .cr-form-container__card-redactor-form__input-field_label {
-    top: -2rem;
+    top: 2rem;
     font-size: 1.5rem;
     font-weight: bold;
     color: black;

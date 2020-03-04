@@ -107,7 +107,7 @@ routes.push({
         app.innerHTML = '';
         let up = document.createElement('div');
         app.appendChild(renderHeader());
-        CreateCafePage(app, 5);
+        CreateCafePage(app, 2);
     }
 
 });

@@ -28,8 +28,10 @@ function ajaxAddCafe(route, formData, callback) {
 }
 
 function addCafe(e) {
+    console.log('calling addCafe in creation');
     e.preventDefault();
-    const form = document.getElementsByClassName('cafeFormField').item(0);
+    console.log('calling addCafe in creation after preventdefalult');
+    const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
     const photoInput = document.getElementById('upload');
     const image = document.getElementById('image').getAttribute('src');
     const name = form.elements['name'].value;
@@ -115,6 +117,8 @@ export function createNewCafePage(app) {
 
     const cafeElement = document.createElement('div');
     app.appendChild(cafeElement);
+    console.log('cafecomm before');
     (new CafeComponent(cafeElement)).render(cafe);
+    console.log('cafecomm after');
 
 }

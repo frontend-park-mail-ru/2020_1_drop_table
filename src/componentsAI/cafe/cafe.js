@@ -12,7 +12,12 @@ export default class CafeComponent {
     }
 
     _addListener(context) {
-        const element = document.getElementById('upload');
+        console.log('add listener');
+        //const element = document.getElementById('upload');
+        const element =
+            document.getElementsByClassName(
+                'new-cafe-page__outer__sub__image-container__photo-container__image-picker_input').item(0);
+        console.log(element);
         element.addEventListener(
             context['event']['type'],
             context['event']['listener']

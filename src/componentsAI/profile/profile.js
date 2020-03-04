@@ -12,7 +12,7 @@ export default class ProfileComponent {
     }
 
     _addListener(context) {
-        const element = document.getElementById('upload');
+        const element = document.getElementsByClassName('user-profile__header__logo-container_image-picker_input').item(0);
         element.addEventListener(
             context['event']['type'],
             context['event']['listener']

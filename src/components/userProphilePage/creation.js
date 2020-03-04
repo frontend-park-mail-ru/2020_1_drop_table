@@ -31,7 +31,9 @@ function ajaxChangeUserData(route, formData, callback) {
 
 function changeUserProfile(e) {
     e.preventDefault();
-    const form = document.getElementsByClassName('formField').item(0);
+    const form = document.getElementsByClassName('user-profile__form-container__form-field').item(0);
+    console.log('form in cup');
+    console.log(form);
     const photoInput = document.getElementById('upload');
     const userImage = document.getElementById('image').getAttribute('src');
     const id = form.elements['userId'].value;

@@ -13,6 +13,7 @@
     height: 10rem;
     object-fit: cover;
     text-align: center;
+    padding-left: 10%;
     float: left;
     font-family: Montserrat;
     text-decoration: underline;
@@ -43,8 +44,8 @@
 .user-profile__decorate-container{
     width: 30%;
     height: 100%;
-    margin-left: 20%;
-    margin-top: 10%;
+    margin-left: 35%;
+    /*margin-top: 10%;*/
     font-family: Montserrat;
     font-weight: bold;
     font-size: 3rem;
@@ -56,6 +57,7 @@
 .user-profile__decorate-container__strip{
     width:15rem;
     height: 0.5rem;
+    padding-left: 10%;
     background-color: #A32704;
 
 }
@@ -69,7 +71,7 @@
 @media (max-width: 700px) {
     .user-profile__form-container__form-field{
         font-family: 'FuturaBookCTT Normal', arial;
-        margin: 10% 15%;
+        margin: 0% 15%;
         padding-top: 15rem;
         bottom: 20%;
     }
