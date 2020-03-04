@@ -9,10 +9,10 @@ export function renderHeader() {
     let head = document.createElement('div');
     head.className = 'header';
     let headerData = {
-        menuList: [{href: "#myCafe", text: "Мои кафе"}, {
-            href: "#createCafe",
+        menuList: [{href: "myCafe", text: "Мои кафе"}, {
+            href: "createCafe",
             text: "Добавить"
-        }, {href: "#profile", text: "Профиль"}]
+        }, {href: "profile", text: "Профиль"}]
     };
     head.innerHTML = headerTemplate(headerData);
     return head;
@@ -26,8 +26,8 @@ export function renderBlankHeader() {
     let head = document.createElement('div');
     head.className = 'header';
     let headerData = {
-        menuList: [{href: "#login", text: "Войти"}, {
-            href: "#reg",
+        menuList: [{href: "login", text: "Войти"}, {
+            href: "reg",
             text: "Зарегистрироваться"
         }]
     };
