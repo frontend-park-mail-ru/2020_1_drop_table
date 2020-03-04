@@ -1,6 +1,7 @@
 import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
 import {constants} from '../../utils/constants';
 import {ajax} from '../../utils/ajax.js';
+import {Router} from "../../modules/Router";
 
 const app = document.body;
 
@@ -22,12 +23,12 @@ export function createCafes(cafes) {
                     if (response.data !== null) {
                         createCafes(response.data);
                     } else {
-                        window.location.hash = '#createCafe';
+                        Router.redirect('/createCafe')
                     }
 
                 } else {
                     if (response.errors[0].message === "no permissions") {
-                        window.location.hash = '#reg'
+                        Router.redirect('/reg')
                     }
                 }
             }
