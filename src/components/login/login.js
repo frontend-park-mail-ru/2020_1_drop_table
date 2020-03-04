@@ -5,6 +5,7 @@ import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
 import {showError} from "../../modules/formValidator";
+import {Router} from "../../modules/Router";
 
 /**
  * Логинит пользователя по логину и паролю
@@ -17,7 +18,7 @@ export function doLogin(email, password, form) {
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
-                window.location.hash = 'myCafe';
+                Router.redirect('/myCafe')
             } else {
                 showError(form, form.elements['email'], response.errors[0].message) // TODO проверить работу вызова ошибки при некорректном пользователе
             }

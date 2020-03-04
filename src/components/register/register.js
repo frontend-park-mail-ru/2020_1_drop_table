@@ -6,6 +6,7 @@ import registerFormTemplate from './registerForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
 import {constants} from '../../utils/constants';
 import {ajax} from '../../utils/ajax.js';
+import {Router} from "../../modules/Router";
 
 const app = document.body;
 
@@ -43,7 +44,7 @@ export function renderRegister() {
                 {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()},
                 (response) => {
                     if (response.errors === null) {
-                        window.location.hash = 'myCafe';
+                        Router.redirect('/myCafe')
                     } else {
                         if (response.errors[0].message[0] === 'P') {
                             showError(form, password, response.errors[0].message);

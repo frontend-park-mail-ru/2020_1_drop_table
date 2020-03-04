@@ -4,91 +4,44 @@ import {renderLogin} from '../components/login/login';
 import {createCafes} from '../components/myCafePage/creation';
 import {createUserProfilePage} from '../components/userProphilePage/creation';
 import {createNewCafePage} from '../components/AddCafePage/creation';
+import {Router} from "../modules/Router";
 
+let app = document.body;
 
-class Router{
+function initBaseRoutes(router) {
+    router.addRoute('/reg', () => {
+        app.innerHTML = '';
+        app.appendChild(renderBlankHeader());
+        app.appendChild(renderRegister());
+    });
 
-    constructor() {
-        this._routes = [];
-        this._app = document.body;
+    router.addRoute('/login', () => {
+        app.innerHTML = '';
+        app.appendChild(renderBlankHeader());
+        app.appendChild(renderLogin());
+    });
 
-        this._initRoutes();
-        window.addEventListener('popstate', this._routing.bind(this));
-        setTimeout(this._routing.bind(this), 0);
-    }
+    router.addRoute('/myCafe', () => {
+        app.innerHTML = '';
+        app.appendChild(renderHeader());
+        createCafes();
+    });
 
-    _getUrl() {
-        return window.location.hash.substr(1);
-    }
+    router.addRoute('/profile', () => {
+        app.innerHTML = '';
+        const up = document.createElement('div');
+        createUserProfilePage(up);
+        app.appendChild(renderHeader());
+        app.appendChild(up);
+    });
 
-    _routing() {
-        console.log(this);
-        const url = this._getUrl();
-        let route = this._routes[0];
-        this._routes.forEach(item => {
-            if (url === item.url) {
-                route = item;
-            }
-        });
+    router.addRoute('/createCafe', () => {
+        app.innerHTML = '';
+        app.appendChild(renderHeader());
+        createNewCafePage();
+    })
 
-        route.callback();
-    }
-
-    _initRoutes(){
-        this._routes.push({
-            url: '', callback: () => {
-                this._app.innerHTML = '';
-                this._app.appendChild(renderBlankHeader());
-            }
-        });
-
-        this._routes.push({
-            url: 'reg', callback: () => {
-                this._app.innerHTML = '';
-                this._app.appendChild(renderBlankHeader());
-                this._app.appendChild(renderRegister());
-
-            }
-        });
-
-        this._routes.push({
-            url: 'login', callback: () => {
-                this._app.innerHTML = '';
-                this._app.appendChild(renderBlankHeader());
-                this._app.appendChild(renderLogin());
-            }
-
-        });
-
-        this._routes.push({
-            url: 'myCafe', callback: () => {
-                this._app.innerHTML = '';
-                this._app.appendChild(renderHeader());
-                createCafes();
-            }
-
-        });
-
-        this._routes.push({
-            url: 'profile', callback: () => {
-                this._app.innerHTML = '';
-                const up = document.createElement('div');
-                createUserProfilePage(up);
-                this._app.appendChild(renderHeader());
-                this._app.appendChild(up);
-            }
-
-        });
-
-        this._routes.push({
-            url: 'createCafe', callback: () => {
-                this._app.innerHTML = '';
-                this._app.appendChild(renderHeader());
-                createNewCafePage();
-            }
-
-        });
-    }
 }
 
 let router = new Router;
+initBaseRoutes(router);
