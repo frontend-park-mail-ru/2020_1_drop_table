@@ -43,6 +43,22 @@
     height:27.5%;
     width:100%;
     background-color: #333333;
+    /*background-image: url("https://sun9-12.userapi.com/c853624/v853624246/1f694a/E7zRrtbvTc0.jpg");*/
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+.card__header__fields__primary{
+    display: flex;
+    flex-direction: column;
+}
+.card__header__fields__primary_spanValue{
+    font-size: 4rem;
+}
+.card__header__fields__primary_spanLabel{
+    font-size: 2rem;
 }
 .card__strip_img{
     height: 100%;
@@ -50,10 +66,38 @@
     object-fit: cover;
 }
 .card__header__fields{
-    /*background-color:rebeccapurple;*/
+    overflow: hidden;
     height: 10%;
     width: 100%;
     padding-bottom: 7.5%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card__header__fields__secondary{
+    display: flex;
+    flex-direction: column;
+}
+
+.card__header__fields__secondary_spanLabel{
+font-size: 1rem;
+}
+.card__header__fields__secondary_spanValue{
+    font-size: 1.5rem;
+}
+
+.card__header__fields__auxiliary{
+    display: flex;
+    flex-direction: column;
+ }
+
+.card__header__fields__auxiliary_spanLabel{
+    font-size: 0.9rem;
+}
+
+.card__header__fields__auxiliary_spanValue{
+    font-size: 1.4rem;
 }
 
 .card__footer {

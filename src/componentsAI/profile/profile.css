@@ -58,7 +58,7 @@
     width:15rem;
     height: 0.5rem;
     padding-left: 10%;
-    background-color: #A32704;
+    background-color: #1e768f;
 
 }
 
@@ -78,11 +78,11 @@
 }
 
 
-input {
-    background: none;
-    color: #000000;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-size: 1rem;
+/*input {*/
+/*    background: none;*/
+/*    color: #000000;*/
+/*    padding-top: 5%;*/
+/*    padding-bottom: 5%;*/
+/*    font-size: 1rem;*/
 
-}
+/*}*/

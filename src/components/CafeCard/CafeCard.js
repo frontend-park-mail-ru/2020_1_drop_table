@@ -1,5 +1,6 @@
 import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
+import ProfileComponent from "../../componentsAI/profile/profile";
 
 export class CafeCardComponent {
     constructor({
@@ -15,7 +16,7 @@ export class CafeCardComponent {
     }
 
     _renderTemplate() {
-        this._el.innerHTML += CafeCard({cafeImageSrc:this._imgSrc,name:this._name, id:this._id});
+        this._el.innerHTML = CafeCard({cafeImageSrc:this._imgSrc,name:this._name, id:this._id});
     }
 
     render() {

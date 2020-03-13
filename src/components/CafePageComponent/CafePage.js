@@ -27,10 +27,11 @@ export class CafePageComponent {
         let button =  document.getElementsByClassName('apple-pass-button').item(0);
         button.addEventListener('click',function (e) {
             let container = document.getElementsByClassName('card-creator-container').item(0);
-            (new CreateCardRedactor(container)).render(context);
+            CreateCardRedactor(container);
 
         })
     }
 }
+
 
 

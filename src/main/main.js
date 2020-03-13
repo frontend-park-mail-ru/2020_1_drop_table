@@ -9,105 +9,52 @@ import {createUserProfilePage} from '../components/userProphilePage/creation';
 import {createNewCafePage} from '../components/AddCafePage/creation';
 
 import {CreateCafePage} from '../components/CafePage/CafePage'
+import {Router} from "../modules/Router";
 
 
-const app = document.body;
+let app = document.body;
 
-
-let routes = [
-    {
-        url: '', callback: function () {
-            app.innerHTML = '';
-            app.appendChild(renderHeader());
-            createCafes();
-        }
-    }
-];
-
-/**
- * Получает то, на что оканчивается url
- * @returns {string}
- */
-function getUrl() {
-    return window.location.hash.substr(1);
-}
-
-/**
- * При изменении url вызывается эта функция, она проходит по списку маршрутов и если подходящий роут найден,
- * вызывает его callback( какие функции нужно вызвать для рендеритнга страничкит)
- * @constructor
- */
-function Routing() {
-    let url = getUrl();
-    let route = routes[0];
-    routes.forEach(item => {
-        if (url === item.url) {
-            route = item;
-        }
-    });
-    route.callback();
-}
-
-
-window.addEventListener('popstate', Routing);
-
-
-setTimeout(Routing, 0);
-
-
-routes.push({
-
-    url: 'reg', callback: () => {
+function initBaseRoutes(router) {
+    router.addRoute('/reg', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader('auth'));
         app.appendChild(renderRegister());
+    });
 
-    }
-});
-routes.push({
-    url: 'login', callback: () => {
+    router.addRoute('/login', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader('auth'));
         app.appendChild(renderLogin());
-    }
+    });
 
-});
-
-routes.push({
-    url: 'myCafe', callback: () => {
+    router.addRoute('/myCafe', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader());
         createCafes();
-    }
+    });
 
-});
-
-routes.push({
-    url: 'profile', callback: () => {
+    router.addRoute('/profile', () => {
         app.innerHTML = '';
         let up = document.createElement('div');
         createUserProfilePage(up);
         app.appendChild(renderHeader('profile'));
         app.appendChild(up);
-    }
+    });
 
-});
-
-routes.push({
-    url: 'createCafe', callback: () => {
+    router.addRoute('/createCafe', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader());
         createNewCafePage(app);
-    }
+    });
 
-});
-
-routes.push({
-    url: 'cafe', callback: () => {
+    router.addRoute('/cafe', (id) => {
+        console.log('callback cafe with id', id);
         app.innerHTML = '';
-        let up = document.createElement('div');
         app.appendChild(renderHeader());
-        CreateCafePage(app, 2);
-    }
+        CreateCafePage(app, id);
+    });
 
-});
+}
+
+let router = new Router;
+initBaseRoutes(router);

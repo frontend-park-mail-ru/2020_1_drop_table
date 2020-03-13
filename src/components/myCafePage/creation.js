@@ -1,5 +1,6 @@
 import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
 import {constants} from "../../utils/constants";
+import {Router} from "../../modules/Router";
 
 
 const app = document.body;
@@ -43,20 +44,26 @@ export function createCafes(cafes) {
         cafesContainerComp.data = JSON.parse(JSON.stringify(cafes));
         cafesContainerComp.render();
         app.appendChild(cafesContainerDiv);
+
+        let buttonAddCafe = document.getElementsByClassName('cafes-page__add-cafe-field__add-button').item(0);
+        buttonAddCafe.addEventListener('click',function (e) {
+            Router.redirect('/createCafe');
+        })
+
     } else {
         ajaxCreateCafe(constants.PATH + '/api/v1/cafe',
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {
-                        console.log('create cafes')
+                        console.log('create cafes');
                         createCafes(response.data);
                     } else {
-                        window.location.hash = '#createCafe';
+                        Router.redirect('/createCafe')
                     }
 
                 } else {
                     if (response.errors[0].message === "no permissions") {
-                        window.location.hash = '#reg'
+                        Router.redirect('/reg')
                     }
                 }
             });

@@ -1,6 +1,7 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
 import {constants} from "../../utils/constants";
+import {Router} from "../../modules/Router";
 
 
 
@@ -67,7 +68,7 @@ function addCafe(e) {
         formData
         , (response) => {
             if (response.errors === null) {
-                window.location.href = '#myCafe';
+                Router.redirect('/myCafe');
             } else {
                 alert(response.errors[0].message); //TODO showError
             }

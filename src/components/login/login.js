@@ -4,6 +4,7 @@ import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
+import {Router} from "../../modules/Router";
 
 /**
  * Логинит пользователя по логину и паролю
@@ -15,7 +16,7 @@ export function doLogin(email, password) {
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
-                window.location.hash = 'myCafe';
+                Router.redirect('/myCafe')
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
@@ -51,6 +52,11 @@ export function renderLogin() {
         doLogin(email, password);
 
     });
+    let reg = form.getElementsByClassName('registerSpan').item(0); // window.location.hash = '#profile';
+    reg.addEventListener('click',function () {
+        Router.redirect('/reg')
+    });
+
     return loginContainer;
 
 }

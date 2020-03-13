@@ -1,95 +1,95 @@
-.formContainer {
-    width: 100%;
-}
+/*.formContainer {*/
+/*    width: 100%;*/
+/*}*/
 
 
-.formField{
-    font-family: 'FuturaBookCTT Normal', arial;
-    width: 25%;
-    margin: 0 auto;
-    padding-bottom: 5%;
-}
+/*.formField{*/
+/*    font-family: 'FuturaBookCTT Normal', arial;*/
+/*    width: 25%;*/
+/*    margin: 0 auto;*/
+/*    padding-bottom: 5%;*/
+/*}*/
 
-.cafeFormField{
-    font-family: 'FuturaBookCTT Normal', arial;
-    width: 50%;
-    margin: 0 auto;
-    padding-bottom: 5%;
-}
+/*.cafeFormField{*/
+/*    font-family: 'FuturaBookCTT Normal', arial;*/
+/*    width: 50%;*/
+/*    margin: 0 auto;*/
+/*    padding-bottom: 5%;*/
+/*}*/
 
-input {
-    background: none;
-    color: #000000;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-size: 1rem;
+/*input {*/
+/*    background: none;*/
+/*    color: #000000;*/
+/*    padding-top: 5%;*/
+/*    padding-bottom: 5%;*/
+/*    font-size: 1rem;*/
 
-}
+/*}*/
 
-input:focus, input:active {
-    outline: none;
-}
+/*input:focus, input:active {*/
+/*    outline: none;*/
+/*}*/
 
-input[type="text"], input[type="email"], input[type="password"] {
-    border: none;
-    border-bottom: solid 2px #000000;
-    width: 100%;
-}
+/*input[type="text"], input[type="email"], input[type="password"] {*/
+/*    border: none;*/
+/*    border-bottom: solid 2px #000000;*/
+/*    width: 100%;*/
+/*}*/
 
-input[type="submit"] {
-    font-weight: 500;
-    color: white;
-    background-color: #A32704;
-    margin-top: 2rem;
-    width: 100%;
-}
+/*input[type="submit"] {*/
+/*    font-weight: 500;*/
+/*    color: white;*/
+/*    background-color: #1e768f;*/
+/*    margin-top: 2rem;*/
+/*    width: 100%;*/
+/*}*/
 
-input[type="submit"]:hover {
-    cursor: pointer;
-}
+/*input[type="submit"]:hover {*/
+/*    cursor: pointer;*/
+/*}*/
 
-input[type="submit"]:active {
-    color: white;
-    background: #A32704;
+/*input[type="submit"]:active {*/
+/*    color: white;*/
+/*    background: #1e768f;*/
 
-}
+/*}*/
 
-.InputField{
+/*.InputField{*/
 
-    margin-top: 8%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-
-
-}
-
-.InputField input {
-    padding-top: 2%;
-}
-
-.InputField label {
-    position: absolute;
-    left: 0;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    color: rgb(0, 0, 0);
-    pointer-events: none;
-    -webkit-transition: all 0.15s ease-out 0s;
-    transition: all 0.15s ease-out 0s;
-    top: -0.5rem;
-    font-size: 1rem;
-}
+/*    margin-top: 8%;*/
+/*    margin-left: auto;*/
+/*    margin-right: auto;*/
+/*    position: relative;*/
 
 
-.haveAccount{
-    width: 100%;
-    padding-top: 2rem;
-    display: inline-block;
-    text-align: center;
-}
-.haveAccount span{
-    display: block;
-    word-wrap: break-word;
-    font-family: 'FuturaDemiCTT Normal', arial;
-}
+/*}*/
+
+/*.InputField input {*/
+/*    padding-top: 2%;*/
+/*}*/
+
+/*.InputField label {*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    -webkit-transform: translateY(-50%);*/
+/*    transform: translateY(-50%);*/
+/*    color: rgb(0, 0, 0);*/
+/*    pointer-events: none;*/
+/*    -webkit-transition: all 0.15s ease-out 0s;*/
+/*    transition: all 0.15s ease-out 0s;*/
+/*    top: -0.5rem;*/
+/*    font-size: 1rem;*/
+/*}*/
+
+
+/*.haveAccount{*/
+/*    width: 100%;*/
+/*    padding-top: 2rem;*/
+/*    display: inline-block;*/
+/*    text-align: center;*/
+/*}*/
+/*.haveAccount span{*/
+/*    display: block;*/
+/*    word-wrap: break-word;*/
+/*    font-family: 'FuturaDemiCTT Normal', arial;*/
+/*}*/

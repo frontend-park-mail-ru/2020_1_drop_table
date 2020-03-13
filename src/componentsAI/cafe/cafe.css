@@ -2,7 +2,6 @@
 
 
 .new-cafe-page__decorate-container {
-    width: 100%;
     margin-left: 20%;
 }
 
@@ -50,18 +49,18 @@
     float: left;
 }
 
-input {
-    background: none;
-    color: #000000;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-size: 1rem;
+/*input {*/
+/*    background: none;*/
+/*    color: #000000;*/
+/*    padding-top: 5%;*/
+/*    padding-bottom: 5%;*/
+/*    font-size: 1rem;*/
 
-}
+/*}*/
 
-input:focus, input:active {
-    outline: none;
-}
+/*input:focus, input:active {*/
+/*    outline: none;*/
+/*}*/
 
 @media only screen and (max-width: 680px) {
 
@@ -69,10 +68,10 @@ input:focus, input:active {
         width: 75%;
     }
 
-    input {
-        padding-top: 10%;
-        padding-bottom: 10%;
-    }
+    /*input {*/
+    /*    padding-top: 10%;*/
+    /*    padding-bottom: 10%;*/
+    /*}*/
 
 
 }
@@ -142,4 +141,6 @@ input[type=file] {
 }
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_span {
     color: black;
+    font-family: Montserrat;
+    text-decoration: underline;
 }

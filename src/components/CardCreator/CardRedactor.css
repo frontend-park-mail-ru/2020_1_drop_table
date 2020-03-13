@@ -40,6 +40,8 @@
         -webkit-flex: 1;
         flex: 1;
         background: none;
+        display: flex;
+        justify-content: space-around;
     }
 
 
