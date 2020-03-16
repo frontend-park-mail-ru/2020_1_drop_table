@@ -6,13 +6,22 @@
  * @param callback Функция принимающая результат ответа
  */
 export function ajax(method,route, body, callback) {
+    let req
+    if(method !== 'GET'){
+        req = new Request(route, {
+            method: method,
+            mode: 'cors',
+            body: JSON.stringify(body),
+            credentials: 'include',
+        });
+    } else{
+        req = new Request(route, {
+            method: method,
+            mode: 'cors',
+            credentials: 'include',
+        });
+    }
 
-    let req = new Request(route, {
-        method: method,
-        mode: 'cors',
-        body: JSON.stringify(body),
-        credentials: 'include',
-    });
     fetch(req)
         .then((response) => {
             if (response.ok) {

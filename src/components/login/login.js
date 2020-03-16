@@ -54,6 +54,11 @@ export function renderLogin() {
         doLogin(email, password, form);
 
     });
+    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#profile';
+    reg.addEventListener('click',function () {
+        Router.redirect('/reg')
+    });
+
     return loginContainer;
 
 }

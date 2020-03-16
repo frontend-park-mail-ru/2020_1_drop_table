@@ -1,12 +1,4 @@
-.error{
-    color: #A32704;
-}
-html {
-    min-width: 480px;
-    max-width: 1440px;
-}
-
-.labelField {
+.decorate-container__dec-label__lab-field {
     display: inline-block;
     vertical-align: center;
     font-family: Montserrat;
@@ -21,30 +13,30 @@ html {
     width: 100%;
 }
 
-.loginField > img {
-    height: 65%;
-    overflow: auto;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
+/*.loginField > img {*/
+/*    height: 65%;*/
+/*    overflow: auto;*/
+/*    margin: auto;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    right: 0;*/
+/*}*/
 
 
-.decorateContainer {
+.decorate-container {
     width: 100%;
 
 }
 
-.labelContainer {
+.decorate-container__dec-label {
     width: 60%;
     height: 50%;
     padding-left: 10%;
-    padding-top: 5%;
+    padding-top: 0%;
 }
 
-.labelField span {
+.decorate-container__dec-label__lab-field_span {
     width: 100%;
     height: 100%;
     font-family: 'FuturaDemiCTT Normal', arial;
@@ -52,33 +44,33 @@ html {
     font-size: 3rem;
 }
 
-.decorateField {
+.decorate-container__dec-label__dec-field {
     padding-top: 0;
-    padding-left: 50%;
+    padding-left: 20%;
     display: inline-flex;
     justify-content: space-between;
 
 }
 
-.rectField {
+.decorate-container__dec-label__dec-field__rect-field {
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-right: 1rem;
 }
 
-.decorateRect {
+.decorate-container__dec-label__dec-field__rect-field__rect {
     width: 10rem;
     height: 0.2rem;
     left: 50%;
-    background-color: #A32704;
+    background-color: #1e768f;
 }
 
-.decorateCircle {
+.decorate-container__dec-label__dec-field__circle {
     width: 2.5rem;
     height: 2.5rem;
     left: 60%;
-    background-color: #A32704;
+    background-color: #1e768f;
     border-radius: 50%;
 }
 
@@ -88,59 +80,34 @@ html {
 }
 
 
-.formField {
+.form-field {
     font-family: 'FuturaBookCTT Normal', arial;
     width: 25%;
     margin: 0 auto;
     padding-bottom: 5%;
 }
 
-.cafeFormField {
-    font-family: 'FuturaBookCTT Normal', arial;
-    width: 50%;
-    margin: 0 auto;
-    padding-bottom: 5%;
-}
-
-input {
-    background: none;
-    color: #000000;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    font-size: 1rem;
-
-}
-
-input:focus, input:active {
-    outline: none;
-}
-
-input[type="text"], input[type="email"], input[type="password"] {
-    border: none;
-    border-bottom: solid 2px #000000;
-    width: 100%;
-
-}
-
-input[type="submit"] {
-    font-weight: 500;
+.form-field__submit {
+    font-weight: bolder;
+    font-size: 1.5rem;
     color: white;
-    background-color: #A32704;
+    background-color: #1e768f;
     margin-top: 2rem;
     width: 100%;
+    height: 4rem;
 }
 
-input[type="submit"]:hover {
+.form-field__submit:hover {
     cursor: pointer;
 }
 
-input[type="submit"]:active {
+.form-field__submit:active {
     color: white;
-    background: #A32704;
-
+    background: #1e768f;
 }
 
-.InputField {
+
+.form-field__input-field {
 
     margin-top: 8%;
     margin-left: auto;
@@ -150,11 +117,25 @@ input[type="submit"]:active {
 
 }
 
-.InputField input {
-    padding-top: 2%;
+.form-field__input-field_input {
+
+    border: none;
+    border-bottom: solid 2px #000000;
+    width: 100%;
+
+
+    background: none;
+    color: #000000;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-size: 1rem;
 }
 
-.InputField label {
+.form-field__input-field_input:focus, .form-field__input-field_input:active {
+    outline: none;
+}
+
+.form-field__input-field_label {
     position: absolute;
     left: 0;
     -webkit-transform: translateY(-50%);
@@ -169,20 +150,20 @@ input[type="submit"]:active {
 
 
 
-.haveAccount {
+.form-field__have-account {
     width: 100%;
     padding-top: 2rem;
     display: inline-block;
     text-align: center;
 }
 
-.haveAccount span {
-    display: block;
-    word-wrap: break-word;
-    font-family: 'FuturaDemiCTT Normal', arial;
-}
+/*.haveAccount span {*/
+/*    display: block;*/
+/*    word-wrap: break-word;*/
+/*    font-family: 'FuturaDemiCTT Normal', arial;*/
+/*}*/
 
-.loginSpan {
+.form-field__have-account__login-span {
     display: block;
     word-wrap: break-word;
     text-decoration: underline;
@@ -211,19 +192,15 @@ input[type="submit"]:active {
 
 @media only screen and (max-width: 680px) {
 
-    .formField {
+    .form-field {
         width: 75%;
     }
 
-    input {
+    .form-field__input-field_input {
         padding-top: 10%;
         padding-bottom: 10%;
     }
-
-    /*top: -0.5rem;*/
-    /*font-size: 1rem;*/
-    /*color: rgb(0, 0, 0);*/
-    .decorateCircle {
+    .decorate-container__dec-label__dec-field__circle {
         left: 40%;
     }
 
@@ -236,9 +213,4 @@ input[type="submit"]:active {
 
 }
 
-
-@media (max-width: 850px) {
-
-
-}
 

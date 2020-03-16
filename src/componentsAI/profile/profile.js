@@ -12,9 +12,8 @@ export default class ProfileComponent {
     }
 
     _addListener(context) {
-        const element = document.getElementById('upload');
+        const element = document.getElementsByClassName('user-profile__header__logo-container_image-picker_input').item(0);
         element.addEventListener(
-
             context['event']['type'],
             context['event']['listener']
         );
@@ -22,15 +21,12 @@ export default class ProfileComponent {
 
     renderProfile(context){
         this._parent.innerHTML = ProfileTemplate(context);
-
-        let formCollection = document.getElementsByClassName('formField');
+        let formCollection = document.getElementsByClassName('user-profile__form-container__form-field');
         this._form = new Form(formCollection.item(0));
     }
-
     renderForm(context){
         this._form.render(context);
     }
-
     render(context) {
         this.renderProfile(context);
         this._addListener(context);

@@ -1,5 +1,6 @@
-import {renderHeader} from "../components/header/header";
+import {renderHeader} from "../components/mainHeader/header";
 import {createCafes} from "../components/myCafePage/creation";
+
 
 let app = document.body;
 
@@ -37,14 +38,28 @@ export class Router {
     _routing() {
         console.log(window.location.pathname);
         const url = this._getUrl();
+        const secondSlashPos = url.slice(1,-1).search('/');
+        let currentUrl = url;
+        let paramsUrl = null;
+        if( secondSlashPos !== -1) {
+            currentUrl = url.slice(1, secondSlashPos + 1);
+            paramsUrl = url.slice(secondSlashPos + 2, url.length);
+            currentUrl = '/' + currentUrl;
+        }
+
         let route = this._routes[0];
         this._routes.forEach(item => {
-            if (url === item.url) {
+            if (currentUrl === item.url) {
                 route = item;
             }
         });
+        if (paramsUrl){//TODO проверка в вайтлисте(мапа)
+            route.callback(paramsUrl);
+        }
+        else{
+            route.callback();
+        }
 
-        route.callback();
     }
 
     addRoute(url, callback) {
@@ -52,3 +67,5 @@ export class Router {
     }
 
 }
+
+

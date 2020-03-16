@@ -1,15 +1,17 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
-import {constants} from '../../utils/constants';
-import {ajaxForm} from '../../utils/ajaxForm';
+import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
+import {ajaxForm} from '../../utils/ajaxForm.js'
 
 
 let app = document.body;
 
 function addCafe(e) {
+    console.log('calling addCafe in creation');
     e.preventDefault();
-    const form = document.getElementsByClassName('cafeFormField').item(0);
+    console.log('calling addCafe in creation after preventdefalult');
+    const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
     const photoInput = document.getElementById('upload');
     const image = document.getElementById('image').getAttribute('src');
     const name = form.elements['name'].value;
@@ -42,7 +44,7 @@ function addCafe(e) {
         formData,
         (response) => {
             if (response.errors === null) {
-                Router.redirect('/myCafe')
+                Router.redirect('/myCafe');
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
@@ -50,7 +52,7 @@ function addCafe(e) {
     );
 }
 
-export function createNewCafePage() {
+export function createNewCafePage(app) {
     let cafe = {
         cafeName: 'Новое кафе',
         imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',
@@ -93,6 +95,8 @@ export function createNewCafePage() {
 
     const cafeElement = document.createElement('div');
     app.appendChild(cafeElement);
+    console.log('cafecomm before');
     (new CafeComponent(cafeElement)).render(cafe);
+    console.log('cafecomm after');
 
 }

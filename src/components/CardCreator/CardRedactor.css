@@ -1,0 +1,51 @@
+
+
+.card-redactor-container__card-form__decorate-text{
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-redactor-container__card-form__decorate-text_h4{
+    font-family: 'FuturaBookCTT Normal', arial;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.card-redactor-container__card-form__image-picker{
+    height: 150px;
+    width: 440px;
+    padding-bottom: 5%;
+}
+.card-redactor-container__card-form__image-picker_img{
+    height: 100%;
+    width: 100%;
+}
+
+@media ( min-width : 600px ) {
+    .card-redactor-container {
+        /*width: 100%;*/
+        display: -webkit-flex;
+        display: flex;
+        flex-wrap:wrap;
+        margin: 0 auto;
+        padding: 10% 10% 0 10%;
+    }
+    .card-redactor-container__card-form {
+        -webkit-flex: 1;
+        flex: 1;
+        background: none;
+        max-width: 50%;
+    }
+
+    .card-redactor-container__card-model {
+        -webkit-flex: 1;
+        flex: 1;
+        background: none;
+        display: flex;
+        justify-content: space-around;
+    }
+
+
+}
+
+
