@@ -4,7 +4,10 @@ import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
+<<<<<<< HEAD
+=======
 import {showError} from "../../modules/formValidator";
+>>>>>>> origin/AI_dev
 import {Router} from "../../modules/Router";
 
 /**
@@ -54,6 +57,11 @@ export function renderLogin() {
         doLogin(email, password, form);
 
     });
+    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#profile';
+    reg.addEventListener('click',function () {
+        Router.redirect('/reg')
+    });
+
     return loginContainer;
 
 }

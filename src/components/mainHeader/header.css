@@ -1,0 +1,77 @@
+.page-header {
+    font-family: Montserrat;
+    font-size: 1.5rem;
+    align-items: center;
+    display: flex;
+    max-height: 5%;
+    /*margin-top: 1.5em;*/
+    margin-right: 1em;
+    margin-left: 1em;
+}
+.page-header__nav {
+    flex: 1;
+}
+
+.page-header__nav__menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+.page-header__nav__menu_list {
+    padding-left: 1em;
+    padding-right: 1em;
+    white-space:nowrap;
+    list-style: none;
+}
+.page-header__nav__menu_list_a{
+    color: black;
+}
+
+.page-header__nav__menu_list_span:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.page-header__logo-container_img{
+    margin-top: 1.5em;
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+}
+
+.page-header__avatar{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+.page-header__avatar_img{
+    margin-left: 1rem;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+}
+.page-header__avatar_span{
+    font-size: 1.5rem;
+    cursor: pointer;
+    object-fit: cover;
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.page-header__h4{
+    width:80px;
+    white-space:nowrap;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+}
+
+.page-header__h4:hover{
+  /*text-decoration: underline;*/
+}
+.page-header__header-right{
+
+    width: 25%;
+}

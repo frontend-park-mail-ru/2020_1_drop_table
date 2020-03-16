@@ -12,7 +12,12 @@ export default class CafeComponent {
     }
 
     _addListener(context) {
-        const element = document.getElementById('upload');
+        console.log('add listener');
+        //const element = document.getElementById('upload');
+        const element =
+            document.getElementsByClassName(
+                'new-cafe-page__outer__sub__image-container__photo-container__image-picker_input').item(0);
+        console.log(element);
         element.addEventListener(
             context['event']['type'],
             context['event']['listener']
@@ -21,8 +26,7 @@ export default class CafeComponent {
 
     renderProfile(context){
         this._parent.innerHTML = CafeTemplate(context);
-
-        let formCollection = document.getElementsByClassName('cafeFormField');
+        let formCollection = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field');
         this._form = new Form(formCollection.item(0));
     }
 
@@ -32,7 +36,9 @@ export default class CafeComponent {
 
     render(context) {
         this.renderProfile(context);
+        console.log('render profile');
         this._addListener(context);
+        console.log('add l');
         this.renderForm(context['form']);
     }
 }

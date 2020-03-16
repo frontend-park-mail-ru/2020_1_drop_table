@@ -58,6 +58,11 @@ export function renderRegister() {
             );
         }
     });
+    let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#profile';
+    login.addEventListener('click',function () {
+        Router.redirect('/login')
+    });
+
     return registerContainer;
 
 }

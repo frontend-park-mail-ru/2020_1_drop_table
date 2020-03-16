@@ -17,11 +17,16 @@ export function showError(whereToInsert, inWitchElement, message) {
  * @param form Форма
  * @returns {boolean} Корректна ли форма
  */
-export function validateForm(form) {
+
+export function deleteOldErrors(form) {
     let errors = form.querySelectorAll('.error');
     for (let err of errors) {
         err.outerHTML = '';                     //Очистка старых ошибок
     }
+}
+
+export function validateForm(form) {
+    deleteOldErrors(form);
     const email = form.elements['email'];
     const repeatedPassword = form.elements['re-password'];
     const password = form.elements['password'];
