@@ -3,7 +3,6 @@
 import './Input.css';
 import InputTemplate from './Input.hbs';
 
-
 export default class CardFormComponent {
 
     constructor(parent = document.body) {
@@ -25,3 +24,4 @@ export default class CardFormComponent {
         this._addListener(context);
     }
 }
+
