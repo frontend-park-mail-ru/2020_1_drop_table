@@ -54,13 +54,15 @@
     }
 
 
-    .cafes-page__add-cafe-field__text-field{
+    .cafes-page__add-cafe-field__text-strip{
         width:40em;
         height:0.5em;
         background-color: #fa9917;
         align-self: flex-end;
+
     }
     .cafes-page__add-cafe-field__text-field_span{
+        font-family: "FuturaBookCTT Normal";
         width:40%;
     }
 
@@ -93,14 +95,26 @@
 
 
 .cafes-page__add-cafe-field__text-field{
+    align-self: flex-end;
+    margin-right: 25em;
+}
+
+.cafes-page__add-cafe-field__text-field_span{
+    font-family: Montserrat;
+    font-size: 2rem;
+    width:40%;
+}
+
+
+.cafes-page__add-cafe-field__text-strip{
     width:40em;
     height:0.5em;
     background-color: #fa9917;
     align-self: flex-end;
 }
-.cafes-page__add-cafe-field__text-field_span{
-    width:40%;
-}
+
+
+
 
 
 .cafes-page__add-cafe-field__add-button{

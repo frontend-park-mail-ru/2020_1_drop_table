@@ -13,7 +13,6 @@ export default class CardFormComponent {
     _addListener(context){
         if('button' in context && 'event' in context){
             const button = this._parent.getElementsByClassName('button').item(0);
-            console.log(button);
             button.addEventListener(
                 context['event']['type'],
                 (e) => context['event']['listener'](e,context)

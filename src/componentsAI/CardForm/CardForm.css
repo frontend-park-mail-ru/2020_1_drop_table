@@ -1,19 +1,45 @@
-.card-form__input-field {
+.card-form__input-header-field,
+.card-form__input-primary-field,
+.card-form__input-secondary-field,
+.card-form__input-auxiliary-field{
     display: flex;
     flex-direction: column;
-    margin: 1rem;
-    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
     border-radius: 0.5rem;
+    margin-right: 0.5rem ;
+    margin-left: 0.5rem ;
     color: #000;
     background: #fff;
     -webkit-filter: drop-shadow(5px 5px 5px #000);
     filter: drop-shadow(5px 5px 5px #000);
+    width: -moz-available;
+}
+
+.HeaderFieldsContainer,
+.PrimaryFieldsContainer,
+.SecondaryFieldsContainer,
+.AuxiliaryFieldsContainer{
+    display:flex;
+    max-width: 100%;
+    margin-right: 1rem ;
+    margin-left: 1rem ;
+}
+.HeaderFieldsContainer, .PrimaryFieldsContainer{
+    width: -moz-available;
+
+}
+.HeaderFieldsContainer{
+    max-width: 40%;
 }
 .card-form__submit{
     font-weight: 500;
     color: white;
     background-color: #1e768f;
-    margin-top: 2rem;
-    height: 5rem;
+    margin-top: 1rem;
+    height: 4rem;
     width: 100%;
+}
+.card-top{
+    display: flex;
 }

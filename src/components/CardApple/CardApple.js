@@ -12,10 +12,9 @@ export class CardAppleComponent {
         this._parent = parent;
     }
 
-    _renderFields(storeCard){
+    _renderFields(secondaryFields, auxiliaryFields){
         let fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
-        const secondaryFields = storeCard['secondaryFields'];
-        const auxiliaryFields = storeCard['auxiliaryFields'];
+        fieldsContainer.innerHTML = '';
         for (let i = 0 ; i < secondaryFields.length; i++){
             (new SecondaryFieldComponent(fieldsContainer)).render(secondaryFields[i]);
         }
@@ -23,25 +22,25 @@ export class CardAppleComponent {
             (new AuxiliaryFieldComponent(fieldsContainer)).render(auxiliaryFields[i]);
         }
     }
-    _renderPrimaryFields(storeCard){
+    _renderPrimaryFields(primaryFields){
         let fieldsContainer = this._parent.getElementsByClassName('card__strip__fields').item(0);
-        const primaryFields = storeCard['primaryFields'];
+        fieldsContainer.innerHTML = '';
         for (let i = 0 ; i < primaryFields.length; i++){
             (new PrimaryFieldComponent(fieldsContainer)).render(primaryFields[i]);
         }
-
     }
     _renderCardHeader(headerFields){
         let fieldsContainer = this._parent.getElementsByClassName('card__header').item(0);
+        fieldsContainer.innerHTML = '';
         (new CardHeaderComponent(fieldsContainer)).render(headerFields);
-
-
     }
+
+
 
     render(context) {
         this._parent.innerHTML = CardApple(context);
-        this._renderCardHeader(context['headerFields']);
-        this._renderPrimaryFields(context['storeCard']);
-        this._renderFields(context['storeCard']);
+        this._renderCardHeader(context['headerFields'][0]);
+        this._renderPrimaryFields(context['primaryFields']);
+        this._renderFields(context['secondaryFields'], context['auxiliaryFields']);
     }
 }

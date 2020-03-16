@@ -1,19 +1,20 @@
 
 
-.needRegister {
+.form-field__need-register {
     width: 100%;
     padding-top: 2rem;
     display: inline-block;
     text-align: center;
 }
 
-.needRegister span {
+.form-field__need-register__first,
+.form-field__need-register__reg-span{
     display: block;
     word-wrap: break-word;
     font-family: 'FuturaDemiCTT Normal', arial;
 }
 
-.registerSpan {
+.form-field__need-register__reg-span {
     display: block;
     word-wrap: break-word;
     text-decoration: underline;

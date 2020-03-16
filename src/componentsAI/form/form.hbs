@@ -1,7 +1,7 @@
 {{#each formFields}}
-    <div class="InputField">
-        <input {{inputOption}} type={{type}} id={{id}} value={{data}}>
-        <label for={{id}}>{{labelData}}</label>
+    <div class="input-field">
+        <input class="input-field_input" {{inputOption}} type={{type}} id={{id}} value={{data}}>
+        <label class="input-field_label" for={{id}}>{{labelData}}</label>
     </div>
 {{/each}}
-<input type="submit" value={{submitValue}}>
+<input class="input-field__submit" type="submit" value={{submitValue}}>

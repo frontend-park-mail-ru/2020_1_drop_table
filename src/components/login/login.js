@@ -52,7 +52,7 @@ export function renderLogin() {
         doLogin(email, password);
 
     });
-    let reg = form.getElementsByClassName('registerSpan').item(0); // window.location.hash = '#profile';
+    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#profile';
     reg.addEventListener('click',function () {
         Router.redirect('/reg')
     });
