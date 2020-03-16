@@ -1,6 +1,5 @@
 import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
-import ProfileComponent from "../profile/profile";
 
 export class CafeCardComponent {
     constructor({

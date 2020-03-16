@@ -1,4 +1,5 @@
 import './Header.css'
+
 import headerTemplate from './Header.hbs';
 import {createUserProfilePage} from "../UserProfilePage/Creation";
 import {ajax} from '../../utils/ajax'
@@ -58,7 +59,7 @@ export function renderHeader(page) {
     if( _hasAvatar ) {
         let avatar = head.getElementsByClassName('page-header__avatar').item(0);
         avatar.addEventListener('click', function () {
-            Router.redirect('/profile');
+            Router.redirect('/Profile');
         });
     }
 

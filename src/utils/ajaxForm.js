@@ -25,6 +25,7 @@ export function ajaxForm(route,method, formData, callback) {
     }
     const req = new Request(route, reqBody);
 
+
     fetch(req)
         .then((response) => {
             if (response.ok) {

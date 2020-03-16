@@ -32,7 +32,7 @@ function initBaseRoutes(router) {
         createCafes();
     });
 
-    router.addRoute('/profile', () => {
+    router.addRoute('/Profile', () => {
         app.innerHTML = '';
         const up = document.createElement('div');
         createUserProfilePage(up);
@@ -47,8 +47,8 @@ function initBaseRoutes(router) {
         createNewCafePage(app);
     });
 
-    router.addRoute('/cafe', (id) => {
-        console.log('callback cafe with id', id);
+    router.addRoute('/Cafe', (id) => {
+        console.log('callback Cafe with id', id);
         app.innerHTML = '';
         app.appendChild(renderHeader());
         CreateCafePage(app, id);
