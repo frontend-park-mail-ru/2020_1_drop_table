@@ -1,5 +1,5 @@
 import {handleImageUpload} from '../../modules/imageUpload';
-import CafeComponent from '../../componentsAI/cafe/cafe';
+import CafeComponent from '../cafe/cafe';
 import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
 import {ajaxForm} from '../../utils/ajaxForm.js'

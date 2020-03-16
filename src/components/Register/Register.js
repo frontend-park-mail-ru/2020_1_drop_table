@@ -1,8 +1,8 @@
 'use strict';
 
-import registerTemplate from './registerTopBar.hbs';
-import './styles.css';
-import registerFormTemplate from './registerForm.hbs';
+import registerTemplate from './RegisterTopBar.hbs';
+import './Styles.css';
+import registerFormTemplate from './RegisterForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
 import {constants} from '../../utils/constants';
 import {ajax} from '../../utils/ajax.js';

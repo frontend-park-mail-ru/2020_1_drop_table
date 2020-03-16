@@ -1,7 +1,7 @@
 'use strict';
-import './login.css';
-import loginTemplate from '../Register/registerTopBar.hbs';
-import loginForm from './loginBottomBar.hbs';
+import './Login.css';
+import loginTemplate from '../Register/RegisterTopBar.hbs';
+import loginForm from './Login.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
 import {showError} from "../../modules/formValidator";

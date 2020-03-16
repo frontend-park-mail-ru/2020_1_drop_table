@@ -3,7 +3,7 @@ import './CafePage.css';
 import CafePageTemplate from './CafePage.hbs';
 import {CreateCafePage} from "../CafePage/CafePage";
 import {CreateCardRedactor} from '../CardCreator/CardCreator'
-import {createNewCafePage} from "../AddCafePage/creation";
+import {createNewCafePage} from "../AddCafePage/Creation";
 
 
 export class CafePageComponent {

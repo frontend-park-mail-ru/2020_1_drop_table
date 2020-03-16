@@ -1,6 +1,6 @@
 import {ajax} from '../../utils/ajax.js';
 import {ajaxForm} from "../../utils/ajaxForm";
-import ProfileComponent from "../../componentsAI/profile/profile";
+import ProfileComponent from "../profile/profile";
 import {handleImageUpload} from "../../modules/imageUpload";
 import {validateForm} from "../../modules/formValidator";
 import {constants} from "../../utils/constants";

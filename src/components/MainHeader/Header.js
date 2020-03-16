@@ -1,10 +1,10 @@
-import './header.css'
-import headerTemplate from './/header.hbs';
-import {createUserProfilePage} from "../UserProfilePage/creation";
+import './Header.css'
+import headerTemplate from './Header.hbs';
+import {createUserProfilePage} from "../UserProfilePage/Creation";
 import {ajax} from '../../utils/ajax'
 import {constants} from "../../utils/constants";
 import {handleImageUpload} from "../../modules/imageUpload";
-import ProfileComponent from "../../componentsAI/profile/profile";
+import ProfileComponent from "../profile/profile";
 import {Router} from "../../modules/Router";
 
 export function renderHeader(page) {

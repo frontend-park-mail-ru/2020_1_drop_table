@@ -1,12 +1,12 @@
-import {renderRegister} from '../components/register/register';
+import {renderRegister} from '../components/Register/Register';
 // import {renderBlankHeader, renderHeader} from '../components/header/header';
 
-import {renderBlankHeader, renderHeader} from '../components/mainHeader/header';
+import {renderBlankHeader, renderHeader} from '../components/MainHeader/Header';
 
-import {renderLogin} from '../components/login/login';
-import {createCafes} from '../components/myCafePage/creation';
-import {createUserProfilePage} from '../components/userProphilePage/creation';
-import {createNewCafePage} from '../components/AddCafePage/creation.js'
+import {renderLogin} from '../components/Login/Login';
+import {createCafes} from '../components/MyCafePage/Creation';
+import {createUserProfilePage} from '../components/UserProfilePage/Creation';
+import {createNewCafePage} from '../components/AddCafePage/Creation.js'
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
 
@@ -20,7 +20,7 @@ function initBaseRoutes(router) {
         app.appendChild(renderRegister());
     });
 
-    router.addRoute('/login', () => {
+    router.addRoute('/Login', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader('auth'));
         app.appendChild(renderLogin());
