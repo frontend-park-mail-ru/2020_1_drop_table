@@ -1,38 +1,15 @@
 import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
+<<<<<<< HEAD
 import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
 
+=======
+import {constants} from '../../utils/constants';
+import {ajax} from '../../utils/ajax.js';
+import {Router} from "../../modules/Router";
+>>>>>>> origin/AI_dev
 
 const app = document.body;
-
-export function ajaxCreateCafe(route, body, callback) {
-
-    let h = new Headers();
-    h.append('Accept', '*/*');
-    h.append('Content-Type', 'text/plain; charset=utf-8');
-    let req = new Request(route, {
-        method: 'GET',
-        headers: h,
-        mode: 'cors',
-        credentials: 'include',
-    });
-
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-
-        })
-        .then((response) => {
-            callback(response);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
 
 export function createCafes(cafes) {
     const cafesContainerDiv = document.createElement('div');
@@ -51,7 +28,8 @@ export function createCafes(cafes) {
         })
 
     } else {
-        ajaxCreateCafe(constants.PATH + '/api/v1/cafe',
+        ajax(constants.PATH + '/api/v1/cafe',
+            'GET',
             {}, (response) => {
                 if (response.errors === null) {
                     if (response.data !== null) {
@@ -66,7 +44,8 @@ export function createCafes(cafes) {
                         Router.redirect('/reg')
                     }
                 }
-            });
+            }
+        )
     }
     return cafesContainerDiv;
 }

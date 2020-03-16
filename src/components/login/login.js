@@ -4,21 +4,26 @@ import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
+<<<<<<< HEAD
+=======
+import {showError} from "../../modules/formValidator";
+>>>>>>> origin/AI_dev
 import {Router} from "../../modules/Router";
 
 /**
  * Логинит пользователя по логину и паролю
  * @param email Значение почты
  * @param password Значение пароль
+ * @param form передаю форму для обработки ошибки
  */
-export function doLogin(email, password) {
-    ajax('POST', constants.PATH+'/api/v1/owner/login',
+export function doLogin(email, password, form) {
+    ajax('POST', constants.PATH + '/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
                 Router.redirect('/myCafe')
             } else {
-                alert(response.errors[0].message); //TODO showError
+                showError(form, form.elements['email'], response.errors[0].message) // TODO проверить работу вызова ошибки при некорректном пользователе
             }
         });
 
@@ -49,7 +54,7 @@ export function renderLogin() {
         //validateForm()
         const email = form.elements['email'].value;
         const password = form.elements['password'].value;
-        doLogin(email, password);
+        doLogin(email, password, form);
 
     });
     let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#profile';
