@@ -1,10 +1,9 @@
-import './header.css'
-import headerTemplate from '../mainHeader/header.hbs';
-import {createUserProfilePage} from "../userProphilePage/creation";
+import './Header.css'
+import headerTemplate from './/Header.hbs';
+import {createUserProfilePage} from "../UserProfilePage/Creation";
 import {ajax} from '../../utils/ajax'
 import {constants} from "../../utils/constants";
 import {handleImageUpload} from "../../modules/imageUpload";
-import ProfileComponent from "../../componentsAI/profile/profile";
 import {Router} from "../../modules/Router";
 
 export function renderHeader(page) {
@@ -58,7 +57,7 @@ export function renderHeader(page) {
     if( _hasAvatar ) {
         let avatar = head.getElementsByClassName('page-header__avatar').item(0);
         avatar.addEventListener('click', function () {
-            Router.redirect('/profile');
+            Router.redirect('/Profile');
         });
     }
 

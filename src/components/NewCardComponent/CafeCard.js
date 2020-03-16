@@ -1,7 +1,5 @@
 import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
-import Form from "../../componentsAI/form/form";
-import ProfileTemplate from "../../componentsAI/profile/profile.hbs";
 
 export class CafeCardComponent {
     constructor(parent = document.body) {

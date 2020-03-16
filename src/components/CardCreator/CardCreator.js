@@ -1,12 +1,12 @@
-import './CardRedactor.css'
+import './CardCreator.css'
 import CardCreator from './CardCreator.hbs'
 
 import {CardAppleComponent} from '../CardApple/CardApple'
 // import {CardCreatorFormComponent} from '../CardCreatorForm/CardCreatorForm'
-import CardFormComponent from '../../componentsAI/CardForm/CardForm'
-import InputComponent from "../../componentsAI/Input/Input";
+import CardFormComponent from '../CardForm/CardForm'
+import InputComponent from "../Input/Input";
 import {uuid} from '../../utils/uuid'
-import form from "../../componentsAI/form/form";
+
 
 
 export function CreateCardRedactor(app, context) {

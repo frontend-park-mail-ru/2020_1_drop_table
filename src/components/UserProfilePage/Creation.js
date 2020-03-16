@@ -1,6 +1,6 @@
 import {ajax} from '../../utils/ajax.js';
 import {ajaxForm} from "../../utils/ajaxForm";
-import ProfileComponent from "../../componentsAI/profile/profile";
+import ProfileComponent from "../Profile/Profile";
 import {handleImageUpload} from "../../modules/imageUpload";
 import {validateForm} from "../../modules/formValidator";
 import {constants} from "../../utils/constants";
@@ -8,7 +8,7 @@ import {constants} from "../../utils/constants";
 function changeUserProfile(e) {
     e.preventDefault();
     const form = document.getElementsByClassName('user-profile__form-container__form-field').item(0);
-    console.log('form in cup');
+    console.log('Form in cup');
     console.log(form);
     const photoInput = document.getElementById('upload');
     const userImage = document.getElementById('image').getAttribute('src');

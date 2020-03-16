@@ -1,8 +1,8 @@
 'use strict';
 
-import registerTemplate from './registerTopBar.hbs';
-import './styles.css';
-import registerFormTemplate from './registerForm.hbs';
+import registerTemplate from './RegisterTopBar.hbs';
+import './Styles.css';
+import registerFormTemplate from './RegisterForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
 import {constants} from '../../utils/constants';
 import {ajax} from '../../utils/ajax.js';
@@ -58,9 +58,9 @@ export function renderRegister() {
             );
         }
     });
-    let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#profile';
+    let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#Profile';
     login.addEventListener('click',function () {
-        Router.redirect('/login')
+        Router.redirect('/Login')
     });
 
     return registerContainer;

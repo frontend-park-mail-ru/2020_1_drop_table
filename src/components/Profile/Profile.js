@@ -1,8 +1,8 @@
 'use strict';
 
-import './profile.css';
-import ProfileTemplate from './profile.hbs';
-import Form from '../form/form.js';
+import './Profile.css';
+import ProfileTemplate from './Profile.hbs';
+import Form from '../Form/Form.js';
 
 export default class ProfileComponent {
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import './decorator.css';
-import DecoratorTemplate from './decorator.hbs';
+import './Decorator.css';
+import DecoratorTemplate from './Decorator.hbs';
 
 export default class DecoratorComponent {
 

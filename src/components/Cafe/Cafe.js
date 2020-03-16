@@ -1,8 +1,8 @@
 'use strict';
 
-import './cafe.css';
-import CafeTemplate from './cafe.hbs';
-import Form from '../form/form.js';
+import './Cafe.css';
+import CafeTemplate from './Cafe.hbs';
+import Form from '../Form/Form.js';
 
 export default class CafeComponent {
 
@@ -36,7 +36,7 @@ export default class CafeComponent {
 
     render(context) {
         this.renderProfile(context);
-        console.log('render profile');
+        console.log('render Profile');
         this._addListener(context);
         console.log('add l');
         this.renderForm(context['form']);

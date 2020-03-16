@@ -1,6 +1,6 @@
 import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
-import ProfileComponent from "../../componentsAI/profile/profile";
+
 
 export class CafeCardComponent {
     constructor({

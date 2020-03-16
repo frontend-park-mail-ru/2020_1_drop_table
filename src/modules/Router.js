@@ -1,5 +1,5 @@
-import {renderHeader} from "../components/mainHeader/header";
-import {createCafes} from "../components/myCafePage/creation";
+import {renderHeader} from "../components/MainHeader/Header";
+import {createCafes} from "../components/MyCafePage/Creation";
 
 
 let app = document.body;

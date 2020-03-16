@@ -1,7 +1,7 @@
 'use strict';
-import './login.css';
-import loginTemplate from '../register/registerTopBar.hbs';
-import loginForm from './loginBottomBar.hbs';
+import './Login.css';
+import loginTemplate from '../Register/RegisterTopBar.hbs';
+import loginForm from './Login.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
 import {showError} from "../../modules/formValidator";
@@ -14,7 +14,7 @@ import {Router} from "../../modules/Router";
  * @param form передаю форму для обработки ошибки
  */
 export function doLogin(email, password, form) {
-    ajax('POST', constants.PATH + '/api/v1/owner/login',
+    ajax('POST', constants.PATH + '/api/v1/owner/Login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {
@@ -54,7 +54,7 @@ export function renderLogin() {
         doLogin(email, password, form);
 
     });
-    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#profile';
+    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#Profile';
     reg.addEventListener('click',function () {
         Router.redirect('/reg')
     });

@@ -9,8 +9,13 @@
  */
 export function ajaxForm(route,method, formData, callback) {
 
+    let h = new Headers();
+    h.append('Accept', '*/*');
+    h.append('Content-Type', 'text/plain; charset=utf-8');
+
     const reqBody = {
         method: method,
+        headers: h,
         mode: 'cors',
         credentials: 'include',
     };
@@ -19,6 +24,7 @@ export function ajaxForm(route,method, formData, callback) {
         reqBody['body'] = formData;
     }
     const req = new Request(route, reqBody);
+
 
     fetch(req)
         .then((response) => {

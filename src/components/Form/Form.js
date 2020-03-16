@@ -1,7 +1,7 @@
 'use strict';
 
-import './form.css';
-import FormTemplate from './form.hbs';
+import './Form.css';
+import FormTemplate from './Form.hbs';
 
 export default class FormComponent {
 
