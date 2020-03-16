@@ -7,11 +7,15 @@ import {renderLogin} from '../components/login/login';
 import {createCafes} from '../components/myCafePage/creation';
 import {createUserProfilePage} from '../components/userProphilePage/creation';
 import {createNewCafePage} from '../components/AddCafePage/creation';
+import {Router} from "../modules/Router";
 
+<<<<<<< HEAD
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
 
 
+=======
+>>>>>>> origin/AI_dev
 let app = document.body;
 
 function initBaseRoutes(router) {
@@ -35,11 +39,12 @@ function initBaseRoutes(router) {
 
     router.addRoute('/profile', () => {
         app.innerHTML = '';
-        let up = document.createElement('div');
+        const up = document.createElement('div');
         createUserProfilePage(up);
         app.appendChild(renderHeader('profile'));
         app.appendChild(up);
     });
+<<<<<<< HEAD
 
     router.addRoute('/createCafe', () => {
         app.innerHTML = '';
@@ -53,6 +58,14 @@ function initBaseRoutes(router) {
         app.appendChild(renderHeader());
         CreateCafePage(app, id);
     });
+=======
+
+    router.addRoute('/createCafe', () => {
+        app.innerHTML = '';
+        app.appendChild(renderHeader());
+        createNewCafePage();
+    })
+>>>>>>> origin/AI_dev
 
 }
 

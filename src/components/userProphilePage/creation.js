@@ -1,33 +1,9 @@
-import {ajaxCreateCafe} from "../myCafePage/creation";
+import {ajax} from '../../utils/ajax.js';
+import {ajaxForm} from "../../utils/ajaxForm";
 import ProfileComponent from "../../componentsAI/profile/profile";
 import {handleImageUpload} from "../../modules/imageUpload";
 import {validateForm} from "../../modules/formValidator";
 import {constants} from "../../utils/constants";
-
-
-function ajaxChangeUserData(route, formData, callback) {
-    let req = new Request(route, {
-        method: 'PUT',
-        mode: 'cors',
-        body: formData,
-        credentials: 'include',
-    });
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return null;
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((formData) => {
-            callback(formData);
-        })
-        .catch((err) => {
-            console.log('ERROR:', err.message);
-        });
-
-}
 
 function changeUserProfile(e) {
     e.preventDefault();
@@ -63,13 +39,15 @@ function changeUserProfile(e) {
 
         formData.append('jsonData', JSON.stringify(data));
 
-        ajaxChangeUserData(constants.PATH+'/api/v1/owner/' + id,
-            formData
-            , (response) => {
+        ajaxForm(constants.PATH+'/api/v1/owner/' + id,
+            'PUT',
+            formData,
+            (response) => {
                 if (response !== null) {
                     alert(response.errors[0].message); //TODO showError
                 }
-            });
+            }
+        );
     }
 
 
@@ -77,8 +55,8 @@ function changeUserProfile(e) {
 
 
 export function createUserProfilePage(app) {
-
-    ajaxCreateCafe(constants.PATH+'/api/v1/getCurrentOwner/',
+    ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+        'GET',
         {}, (response) => {
 
             if (response.errors === null) {
@@ -138,7 +116,6 @@ export function createUserProfilePage(app) {
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
-        });
-
-
+        }
+    );
 }

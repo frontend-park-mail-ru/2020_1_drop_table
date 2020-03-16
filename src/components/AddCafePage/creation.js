@@ -1,32 +1,17 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
+<<<<<<< HEAD
 import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
 
+=======
+import {constants} from '../../utils/constants';
+import {ajaxForm} from '../../utils/ajaxForm';
+import {Router} from "../../modules/Router";
+>>>>>>> origin/AI_dev
 
 
-function ajaxAddCafe(route, formData, callback) {
-    let req = new Request(route, {
-        method: 'POST',
-        mode: 'cors',
-        body: formData,
-        credentials: 'include',
-    });
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((formData) => {
-            callback(formData);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-}
+let app = document.body;
 
 function addCafe(e) {
     console.log('calling addCafe in creation');
@@ -58,21 +43,23 @@ function addCafe(e) {
         };
     }
 
-
-
     formData.append('jsonData', JSON.stringify(data));
 
-
-
-    ajaxAddCafe(constants.PATH+'/api/v1/cafe',
-        formData
-        , (response) => {
+    ajaxForm(constants.PATH+'/api/v1/cafe',
+        'POST',
+        formData,
+        (response) => {
             if (response.errors === null) {
+<<<<<<< HEAD
                 Router.redirect('/myCafe');
+=======
+                Router.redirect('/myCafe')
+>>>>>>> origin/AI_dev
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
-        });
+        }
+    );
 }
 
 export function createNewCafePage(app) {

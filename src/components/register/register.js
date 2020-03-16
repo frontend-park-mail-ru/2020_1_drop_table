@@ -4,40 +4,11 @@ import registerTemplate from './registerTopBar.hbs';
 import './styles.css';
 import registerFormTemplate from './registerForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
-import {constants} from "../../utils/constants";
+import {constants} from '../../utils/constants';
+import {ajax} from '../../utils/ajax.js';
 import {Router} from "../../modules/Router";
 
 const app = document.body;
-
-/**
- * AJAX запрос для регистрации
- * @param route Путь для запроса
- * @param body Отправляемый данные
- * @param callback Обработчик результатов запроса
- */
-function ajaxForReg(route, body, callback) {
-    let formData = new FormData();
-    formData.append('jsonData', JSON.stringify(body));
-    let req = new Request(route, {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'include',
-        body: formData
-    });
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((formData) => {
-            callback(formData);
-        })
-        .catch((err) => {
-        });
-}
 
 /**
  * Создает форма регистрации
@@ -68,9 +39,10 @@ export function renderRegister() {
             const email = form.elements['email'];
             const password = form.elements['password'];
             const name = form.elements['full-name'];
-            ajaxForReg(constants.PATH + '/api/v1/owner',
-                {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()}
-                , (response) => {
+            ajax(constants.PATH + '/api/v1/owner',
+                'POST',
+                {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()},
+                (response) => {
                     if (response.errors === null) {
                         Router.redirect('/myCafe')
                     } else {
@@ -82,8 +54,8 @@ export function renderRegister() {
                             showError(form, email, response.errors[0].message);
                         }
                     }
-                });
-
+                }
+            );
         }
     });
     let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#profile';
