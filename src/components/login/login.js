@@ -4,10 +4,7 @@ import loginTemplate from '../register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
-<<<<<<< HEAD
-=======
 import {showError} from "../../modules/formValidator";
->>>>>>> origin/AI_dev
 import {Router} from "../../modules/Router";
 
 /**

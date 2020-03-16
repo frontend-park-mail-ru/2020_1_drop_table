@@ -1,4 +1,4 @@
-import {renderHeader} from "../components/header/header";
+import {renderHeader} from "../components/mainHeader/header";
 import {createCafes} from "../components/myCafePage/creation";
 
 
@@ -20,11 +20,6 @@ export class Router {
     }
 
     static redirect(url) {
-<<<<<<< HEAD
-        console.log('resirect from ', window.location.href);
-        console.log('resirect to ', url);
-=======
->>>>>>> origin/AI_dev
         window.location.href = url
     }
 
@@ -43,7 +38,6 @@ export class Router {
     _routing() {
         console.log(window.location.pathname);
         const url = this._getUrl();
-<<<<<<< HEAD
         const secondSlashPos = url.slice(1,-1).search('/');
         let currentUrl = url;
         let paramsUrl = null;
@@ -66,24 +60,12 @@ export class Router {
             route.callback();
         }
 
-=======
-        let route = this._routes[0];
-        this._routes.forEach(item => {
-            if (url === item.url) {
-                route = item;
-            }
-        });
-
-        route.callback();
->>>>>>> origin/AI_dev
     }
 
     addRoute(url, callback) {
         this._routes.push({url: url, callback: callback})
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/AI_dev
+
+

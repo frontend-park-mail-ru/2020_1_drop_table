@@ -1,6 +1,5 @@
 import './CafesContainer.css';
 import '../CafeCard/CafeCard.css';
-
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";

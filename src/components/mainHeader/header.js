@@ -1,7 +1,7 @@
 import './header.css'
 import headerTemplate from '../mainHeader/header.hbs';
 import {createUserProfilePage} from "../userProphilePage/creation";
-import {ajaxCreateCafe} from "../myCafePage/creation";
+import {ajax} from '../../utils/ajax'
 import {constants} from "../../utils/constants";
 import {handleImageUpload} from "../../modules/imageUpload";
 import ProfileComponent from "../../componentsAI/profile/profile";
@@ -33,17 +33,17 @@ export function renderHeader(page) {
     } else{
         _hasAvatar = true;
         _hasExit = false;
-        ajaxCreateCafe(constants.PATH+'/api/v1/getCurrentOwner/',
-            {}, (response) => {
-                if (response.errors === null) {
-                    _avatar = response.data['photo'];
-                    console.log('avatar ',_avatar);
-                    let ava = head.getElementsByClassName('page-header__avatar_img').item(0);
-                    ava.setAttribute('src',_avatar); //TODO поменять на promise
-                } else {
-                    alert(response.errors[0].message); //TODO showError
-                }
-            })
+
+        ajax(constants.PATH+'/api/v1/getCurrentOwner/','GET',{},(response) => {
+            if (response.errors === null) {
+                _avatar = response.data['photo'];
+                console.log('avatar ',_avatar);
+                let ava = head.getElementsByClassName('page-header__avatar_img').item(0);
+                ava.setAttribute('src',_avatar); //TODO поменять на promise
+            } else {
+                alert(response.errors[0].message); //TODO showError
+            }
+        });
     }
 
     let headerData = {

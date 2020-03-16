@@ -2,7 +2,7 @@
 
 import './CardForm.css';
 import CardFormTemplate from './CardForm.hbs';
-import InputComponent from '../Input/Input'
+import InputComponent from '../input/input'
 
 export default class CardFormComponent {
 

@@ -1,15 +1,12 @@
 import {CafesContainerComponent} from '../CafesContainer/CafesContainer';
-<<<<<<< HEAD
-import {constants} from "../../utils/constants";
-import {Router} from "../../modules/Router";
-
-=======
 import {constants} from '../../utils/constants';
 import {ajax} from '../../utils/ajax.js';
 import {Router} from "../../modules/Router";
->>>>>>> origin/AI_dev
+
 
 const app = document.body;
+
+
 
 export function createCafes(cafes) {
     const cafesContainerDiv = document.createElement('div');

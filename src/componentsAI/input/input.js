@@ -1,7 +1,7 @@
 'use strict';
 
-import './input.css';
-import InputTemplate from './input.hbs';
+import './Input.css';
+import InputTemplate from './Input.hbs';
 
 
 export default class CardFormComponent {
@@ -15,7 +15,7 @@ export default class CardFormComponent {
             const button = this._parent.getElementsByClassName('button').item(0);
             button.addEventListener(
                 context['event']['type'],
-                context['event']['listener']
+                (e) => context['event']['listener'](e,context)
             );
         }
     }

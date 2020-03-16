@@ -1,14 +1,8 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 import CafeComponent from '../../componentsAI/cafe/cafe';
-<<<<<<< HEAD
 import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
-
-=======
-import {constants} from '../../utils/constants';
-import {ajaxForm} from '../../utils/ajaxForm';
-import {Router} from "../../modules/Router";
->>>>>>> origin/AI_dev
+import {ajaxForm} from '../../utils/ajaxForm.js'
 
 
 let app = document.body;
@@ -50,11 +44,7 @@ function addCafe(e) {
         formData,
         (response) => {
             if (response.errors === null) {
-<<<<<<< HEAD
                 Router.redirect('/myCafe');
-=======
-                Router.redirect('/myCafe')
->>>>>>> origin/AI_dev
             } else {
                 alert(response.errors[0].message); //TODO showError
             }
