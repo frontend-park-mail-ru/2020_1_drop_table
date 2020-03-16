@@ -3,8 +3,6 @@ import './CafePage.css';
 import CafePageTemplate from './CafePage.hbs';
 import {CreateCardRedactor} from '../CardCreator/CardCreator'
 
-
-
 export class CafePageComponent {
     constructor(parent = document.body) {
         this._parent = parent;

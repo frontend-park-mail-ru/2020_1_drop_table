@@ -1,5 +1,7 @@
 import {handleImageUpload} from '../../modules/imageUpload';
+
 import CafeComponent from '../Cafe/Cafe';
+
 import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
 import {ajaxForm} from '../../utils/ajaxForm.js'
@@ -39,7 +41,7 @@ function addCafe(e) {
 
     formData.append('jsonData', JSON.stringify(data));
 
-    ajaxForm(constants.PATH+'/api/v1/Cafe',
+    ajaxForm(constants.PATH+'/api/v1/cafe',
         'POST',
         formData,
         (response) => {

@@ -1,7 +1,6 @@
 import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 
-
 export class CafeCardComponent {
     constructor({
                     el = document.body,
