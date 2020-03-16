@@ -1,6 +1,6 @@
 'use strict';
 import './login.css';
-import loginTemplate from '../register/registerTopBar.hbs';
+import loginTemplate from '../Register/registerTopBar.hbs';
 import loginForm from './loginBottomBar.hbs';
 import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
@@ -14,7 +14,7 @@ import {Router} from "../../modules/Router";
  * @param form передаю форму для обработки ошибки
  */
 export function doLogin(email, password, form) {
-    ajax('POST', constants.PATH + '/api/v1/owner/login',
+    ajax('POST', constants.PATH + '/api/v1/owner/Login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {

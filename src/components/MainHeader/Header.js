@@ -1,6 +1,6 @@
 import './header.css'
-import headerTemplate from '../mainHeader/header.hbs';
-import {createUserProfilePage} from "../userProphilePage/creation";
+import headerTemplate from './/header.hbs';
+import {createUserProfilePage} from "../UserProfilePage/creation";
 import {ajax} from '../../utils/ajax'
 import {constants} from "../../utils/constants";
 import {handleImageUpload} from "../../modules/imageUpload";
