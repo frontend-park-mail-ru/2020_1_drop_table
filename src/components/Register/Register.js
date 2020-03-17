@@ -61,7 +61,7 @@ export function renderRegister() {
     let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#Profile';
 
     login.addEventListener('click',function () {
-        Router.redirect('/Login')
+        Router.redirect('/login')
     });
 
     return registerContainer;

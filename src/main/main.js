@@ -20,7 +20,7 @@ function initBaseRoutes(router) {
         app.appendChild(renderRegister());
     });
 
-    router.addRoute('/Login', () => {
+    router.addRoute('/login', () => {
         app.innerHTML = '';
         app.appendChild(renderHeader('auth'));
         app.appendChild(renderLogin());

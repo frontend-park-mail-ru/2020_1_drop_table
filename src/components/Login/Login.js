@@ -14,7 +14,7 @@ import {Router} from "../../modules/Router";
  * @param form передаю форму для обработки ошибки
  */
 export function doLogin(email, password, form) {
-    ajax('POST', constants.PATH + '/api/v1/owner/Login',
+    ajax('POST', constants.PATH + '/api/v1/owner/login',
         {'email': email.toString(), 'password': password.toString()}
         , (response) => {
             if (response.errors === null) {

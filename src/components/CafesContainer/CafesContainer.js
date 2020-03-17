@@ -47,13 +47,13 @@ export class CafesContainerComponent {
             cardImage.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1,cardIdStr.length);
-                Router.redirect(`/cafe/${cardId}`);
+                Router.redirect(`/Cafe/${cardId}`);
 
             });
             cardName.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1,cardIdStr.length);
-                Router.redirect(`/cafe/${cardId}`);
+                Router.redirect(`/Cafe/${cardId}`);
 
             });
         }
