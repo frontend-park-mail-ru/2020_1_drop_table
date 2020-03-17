@@ -6,6 +6,7 @@ import {ajax} from '../../modules/ajax';
 import {constants} from "../../utils/constants";
 import {showError} from "../../modules/formValidator";
 import {Router} from "../../modules/Router";
+import UserModel from "../../models/UserModel";
 
 /**
  * Логинит пользователя по логину и паролю
@@ -49,10 +50,9 @@ export function renderLogin() {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         //validateForm()
-        const email = form.elements['email'].value;
-        const password = form.elements['password'].value;
-        doLogin(email, password, form);
-
+        const email = form.elements['email'];
+        const password = form.elements['password'];
+        UserModel.login(email.value, password.value).then((errorMessage) => showError(form, email, errorMessage))
     });
 
     let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#Profile';
