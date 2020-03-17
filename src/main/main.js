@@ -6,7 +6,7 @@ import {createUserProfilePage} from '../components/UserProfilePage/Creation';
 import {createNewCafePage} from '../components/AddCafePage/Creation.js'
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
-
+import UserProfileView from '../view/UserProfileView'
 
 let app = document.body;
 
@@ -30,13 +30,13 @@ function initBaseRoutes(router) {
     });
 
     router.addRoute('/Profile', () => {
-        app.innerHTML = '';
-        const up = document.createElement('div');
-        createUserProfilePage(up);
-        (new Header(app)).render('profile');
-        app.appendChild(up);
+        (new UserProfileView(app)).render()
+        // app.innerHTML = '';
+        // const up = document.createElement('div');
+        // createUserProfilePage(up);
+        // (new Header(app)).render('profile');
+        // app.appendChild(up);
     });
-
 
     router.addRoute('/createCafe', () => {
         app.innerHTML = '';
@@ -50,8 +50,6 @@ function initBaseRoutes(router) {
         (new Header(app)).render();
         CreateCafePage(app, id);
     });
-
-
 }
 
 let router = new Router;
