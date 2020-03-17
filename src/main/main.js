@@ -1,8 +1,5 @@
 import {renderRegister} from '../components/Register/Register';
-// import {renderBlankHeader, renderHeader} from '../components/header/header';
-
-import {renderBlankHeader, renderHeader} from '../components/MainHeader/Header';
-
+import Header from '../components/MainHeader/Header';
 import {renderLogin} from '../components/Login/Login';
 import {createCafes} from '../components/MyCafePage/Creation';
 import {createUserProfilePage} from '../components/UserProfilePage/Creation';
@@ -16,19 +13,19 @@ let app = document.body;
 function initBaseRoutes(router) {
     router.addRoute('/reg', () => {
         app.innerHTML = '';
-        app.appendChild(renderHeader('auth'));
+        (new Header(app)).render('auth');
         app.appendChild(renderRegister());
     });
 
     router.addRoute('/login', () => {
         app.innerHTML = '';
-        app.appendChild(renderHeader('auth'));
+        (new Header(app)).render('auth');
         app.appendChild(renderLogin());
     });
 
     router.addRoute('/myCafe', () => {
         app.innerHTML = '';
-        app.appendChild(renderHeader());
+        (new Header(app)).render();
         createCafes();
     });
 
@@ -36,21 +33,21 @@ function initBaseRoutes(router) {
         app.innerHTML = '';
         const up = document.createElement('div');
         createUserProfilePage(up);
-        app.appendChild(renderHeader('profile'));
+        (new Header(app)).render('profile');
         app.appendChild(up);
     });
 
 
     router.addRoute('/createCafe', () => {
         app.innerHTML = '';
-        app.appendChild(renderHeader());
+        (new Header(app)).render();
         createNewCafePage(app);
     });
 
     router.addRoute('/Cafe', (id) => {
         console.log('callback Cafe with id', id);
         app.innerHTML = '';
-        app.appendChild(renderHeader());
+        (new Header(app)).render();
         CreateCafePage(app, id);
     });
 

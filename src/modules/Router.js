@@ -1,4 +1,4 @@
-import {renderHeader} from "../components/MainHeader/Header";
+import Header from "../components/MainHeader/Header";
 import {createCafes} from "../components/MyCafePage/Creation";
 
 
@@ -11,7 +11,7 @@ export class Router {
         this._routes.push({
             url: '', callback: () => {
                 app.innerHTML = '';
-                app.appendChild(renderHeader());
+                (new Header(app)).render();
                 createCafes()
             }
         });
