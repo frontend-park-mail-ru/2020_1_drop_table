@@ -4,9 +4,8 @@ import registerTemplate from './RegisterTopBar.hbs';
 import './Styles.css';
 import registerFormTemplate from './RegisterForm.hbs';
 import {showError, validateForm} from '../../modules/formValidator';
-import {constants} from '../../utils/constants';
-import {ajax} from '../../utils/ajax.js';
 import {Router} from "../../modules/Router";
+import UserModel from "../../models/UserModel";
 
 const app = document.body;
 
@@ -39,23 +38,20 @@ export function renderRegister() {
             const email = form.elements['email'];
             const password = form.elements['password'];
             const name = form.elements['full-name'];
-            ajax(constants.PATH + '/api/v1/owner',
-                'POST',
-                {'name': name.value.toString(), 'email': email.value.toString(), 'password': password.value.toString()},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect('/myCafe')
-                    } else {
-                        if (response.errors[0].message[0] === 'P') {
-                            showError(form, password, response.errors[0].message);
-                        } else if (response.errors[0].message[0] === 'N') {
-                            showError(form, name, response.errors[0].message);
-                        } else {
-                            showError(form, email, response.errors[0].message);
-                        }
-                    }
+
+            const user = new UserModel();
+            user.email = email.value.toString();
+            user.password = password.value.toString();
+            user.name = name.value.toString();
+            user.register().then((errorMessage) => {
+                if (errorMessage[0] === 'P') {
+                    showError(form, password, errorMessage);
+                } else if (errorMessage[0] === 'N') {
+                    showError(form, name, errorMessage);
+                } else {
+                    showError(form, email, errorMessage);
                 }
-            );
+            });
         }
     });
     let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#Profile';

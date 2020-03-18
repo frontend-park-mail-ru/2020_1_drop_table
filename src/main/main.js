@@ -9,6 +9,7 @@ import {Router} from "../modules/Router";
 
 import UserProfileView from '../view/UserProfileView'
 import UserProfileController from "../controllers/UserProfileController";
+import UserModel from "../models/UserModel";
 
 let app = document.body;
 
@@ -32,8 +33,9 @@ function initBaseRoutes(router) {
     });
 
     router.addRoute('/Profile', () => {
+        const user = new UserModel();
         const userProfileView = new UserProfileView(app);
-        const userProfileController = new UserProfileController(userProfileView);
+        const userProfileController = new UserProfileController(user, userProfileView);
         userProfileController.control();
     });
 

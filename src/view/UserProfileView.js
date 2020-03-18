@@ -13,8 +13,8 @@ export default class UserProfileView{
         return this._profileContext
     }
 
-    set profileContext(_profileContext){
-        this._profileContext = _profileContext
+    set profileContext(context){
+        this._profileContext = context;
     }
 
     render(){

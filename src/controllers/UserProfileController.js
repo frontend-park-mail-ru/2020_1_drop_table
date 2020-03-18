@@ -1,14 +1,12 @@
 'use strict';
 
-import {constants} from "../utils/constants";
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
-import {ajaxForm} from "../utils/ajaxForm";
-import UserModel from '../models/UserModel';
 
 export default class UserProfileController{
 
-    constructor(userProfileView){
+    constructor(userModel, userProfileView){
+        this._userModel = userModel;
         this._userProfileView = userProfileView;
     }
 
@@ -18,50 +16,21 @@ export default class UserProfileController{
         console.log('Form in cup');
         console.log(form);
         const photoInput = document.getElementById('upload');
-        const userImage = document.getElementById('image').getAttribute('src');
-        const id = form.elements['userId'].value;
-        const name = form.elements['name'].value;
-        const email = form.elements['email'].value;
-        const password1 = form.elements['password'].value;
         const photo = photoInput.files[0];
+
         if (validateForm(form)) {
-            let formData = new FormData();
+            this._userModel.name = form.elements['name'].value.toString();
+            this._userModel.email = form.elements['email'].value.toString();
+            this._userModel.password = form.elements['password'].value.toString();
 
-            let data = {
-                'name': name.toString(),
-                'email': email.toString(),
-                'password': password1.toString()
-            };
-
-            if (photo) {
-                formData.append('photo', photo);
-            } else{
-                data = {
-                    'name': name.toString(),
-                    'email': email.toString(),
-                    'password': password1.toString(),
-                    'photo': userImage.toString()
-                };
-            }
-
-            formData.append('jsonData', JSON.stringify(data));
-
-            ajaxForm(constants.PATH+'/api/v1/owner/' + id,
-                'PUT',
-                formData,
-                (response) => {
-                    if (response !== null) {
-                        alert(response.errors[0].message); //TODO showError
-                    }
-                }
-            );
+            this._userModel.editOwner(photo);
         }
     }
 
-    _makeUserProfileViewContext(userData) {
+    _makeUserProfileViewContext() {
         return {
-            imgSrc: (userData['photo'] !== '')
-                ? userData['photo'] : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+            imgSrc: ( this._userModel.photo !== '')
+                ?  this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
             event: {
                 type: 'change',
                 listener: handleImageUpload
@@ -71,35 +40,35 @@ export default class UserProfileController{
                     {
                         type: 'hidden',
                         id: 'userId',
-                        data: userData['id'],
+                        data:  this._userModel.id,
                         labelData: '',
                         inputOption: 'readonly',
                     },
                     {
                         type: 'text',
                         id: 'name',
-                        data: userData['name'],
+                        data:  this._userModel.name,
                         labelData: 'Имя',
                         inputOption: 'required',
                     },
                     {
                         type: 'email',
                         id: 'email',
-                        data: userData['email'],
+                        data:  this._userModel.email,
                         labelData: 'Почта',
                         inputOption: 'required',
                     },
                     {
                         type: 'password',
                         id: 'password',
-                        data: userData['password'],
+                        data:  this._userModel.password,
                         labelData: 'Пароль',
                         inputOption: 'required'
                     },
                     {
                         type: 'password',
                         id: 're-password',
-                        data: userData['password'],
+                        data:  this._userModel.password,
                         labelData: 'Повторите пароль',
                         inputOption: 'required'
                     },
@@ -107,16 +76,15 @@ export default class UserProfileController{
                 submitValue: 'Готово',
                 event: {
                     type: 'submit',
-                    listener: this._changeUserProfileListener
+                    listener: this._changeUserProfileListener.bind(this)
                 },
             },
         };
     }
 
     control(){
-        const userData = UserModel.getUser();
-        const userProfileViewContext = this._makeUserProfileViewContext(userData);
-        this._userProfileView.profileContext(userProfileViewContext);
+        const userProfileViewContext = this._makeUserProfileViewContext();
+        this._userProfileView.profileContext = userProfileViewContext;
         this._userProfileView.render();
     }
 

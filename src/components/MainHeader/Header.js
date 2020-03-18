@@ -1,15 +1,17 @@
 import './Header.css'
 
 import headerTemplate from './Header.hbs';
-import {ajax} from '../../utils/ajax';
-import {constants} from "../../utils/constants";
 import {Router} from "../../modules/Router";
+import UserModel from "../../models/UserModel";
 
 export default class Header{
 
     constructor(parent = document.body) {
         this._parent = parent;
-        this._avatar = 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+        this._userModel = new UserModel();
+
+        this._avatar = ( this._userModel.photo !== '')
+            ?  this._userModel.photo : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
         this._head = null;
 
         this._logo = null;
@@ -38,23 +40,6 @@ export default class Header{
             this._head = document.createElement('div');
             this._hasAvatar = true;
             this._hasExit = false;
-
-            ajax(constants.PATH+'/api/v1/getCurrentOwner/',
-                'GET',
-                {},
-                this._ajaxCallback
-            );
-        }
-    }
-
-    _ajaxCallback(response){
-        if (response.errors === null) {
-            this._avatar = response.data['photo'];
-            console.log('avatar ', this._avatar);
-            let ava = this._head.getElementsByClassName('page-header__avatar_img').item(0);
-            ava.setAttribute('src', this._avatar); //TODO поменять на promise
-        } else {
-            alert(response.errors[0].message); //TODO showError
         }
     }
 

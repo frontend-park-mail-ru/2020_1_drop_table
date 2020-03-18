@@ -5,7 +5,7 @@
  * @param body Тело запроса
  * @param callback Функция принимающая результат ответа
  */
-export function ajax(method, route, body, callback) {
+export function authAjax(method, route, body, callback) {
     let req;
     if(method !== 'GET'){
         req = new Request(route, {
