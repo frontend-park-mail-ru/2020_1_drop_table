@@ -63,14 +63,17 @@ export default class UserModel {
     }
 
     _getUser() {
-        const userData = JSON.parse(sessionStorage.getItem("user"));
+        let userData = sessionStorage.getItem("user");
         if (userData) {
+            userData = JSON.parse(userData);
             this._editedAt = userData['editedAt'];
             this._email = userData['email'];
             this._id = userData['id'];
             this._name = userData['name'];
             this._password = userData['password'];
             this._photo = userData['photo'];
+        } else {
+            this.getOwner();
         }
     }
 
