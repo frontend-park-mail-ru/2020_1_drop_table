@@ -19,10 +19,10 @@ export default class UserProfileView{
 
     render(){
         this._app.innerHTML = '';
-        (new Header(this._app)).render('profile');
-
-        const profileElement = document.createElement('div');
-        (new ProfileComponent(profileElement)).render(this._profileContext);
-        this._app.appendChild(profileElement);
+        (new Header(this._app)).render('profile').then(()=>{
+            const profileElement = document.createElement('div');
+            (new ProfileComponent(profileElement)).render(this._profileContext);
+            this._app.appendChild(profileElement);
+        });
     }
 }

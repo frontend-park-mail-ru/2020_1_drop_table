@@ -17,35 +17,12 @@ export default class UserModel {
         this._getUser();
     }
 
-    get editedAt(){
-        this._checkUserData(this._editedAt);
-        return this._editedAt;
-    }
-
-    get email(){
-        this._checkUserData(this._email);
-        return this._email;
-    }
-
-    get id(){
-        this._checkUserData(this._id);
-        return this._id;
-    }
-
-    get name(){
-        this._checkUserData(this._name);
-        return this._name;
-    }
-
-    get password(){
-        this._checkUserData(this._password);
-        return this._password;
-    }
-
-    get photo(){
-        this._checkUserData(this._photo);
-        return this._photo;
-    }
+    get editedAt(){return this._editedAt;}
+    get email(){return this._email;}
+    get id(){return this._id;}
+    get name(){return this._name;}
+    get password(){return this._password;}
+    get photo(){return this._photo;}
 
     set email(email){
         this._email = email;
@@ -66,14 +43,7 @@ export default class UserModel {
         let userData = sessionStorage.getItem("user");
         if (userData) {
             userData = JSON.parse(userData);
-            this._editedAt = userData['editedAt'];
-            this._email = userData['email'];
-            this._id = userData['id'];
-            this._name = userData['name'];
-            this._password = userData['password'];
-            this._photo = userData['photo'];
-        } else {
-            this.getOwner();
+            this._filUserData(userData);
         }
     }
 
@@ -115,79 +85,80 @@ export default class UserModel {
         return formData;
     }
 
-    _checkUserData(data){
-        if (!data){
-            this.getOwner();
-        }
+    _filUserData(data){
+        this._editedAt = data['editedAt'];
+        this._email = data['email'];
+        this._id = data['id'];
+        this._name = data['name'];
+        this._password = data['password'];
+        this._photo = data['photo'];
     }
 
     getOwner(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             ajax(constants.PATH+'/api/v1/getCurrentOwner/',
                 'GET',
                 {},
                 (response) => {
+                    console.log(response);
                     if (response.errors === null) {
-                        this._editedAt = response.data['editedAt'];
-                        this._email = response.data['email'];
-                        this._id = response.data['id'];
-                        this._name = response.data['name'];
-                        this._password = response.data['password'];
-                        this._photo = response.data['photo'];
-
+                        this._filUserData(response.data);
                         this._saveUser();
+                        resolve();
                     } else {
-                        alert(response.errors[0].message); //TODO showError
-                    }
-                }
-            )
-        });
-    }
-
-    editOwner(photo = null){
-        const formData = this._makeFormData(photo);
-
-        return new Promise((resolve) => {
-            ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
-                'PUT',
-                formData,
-                (response) => {
-                    if (response.errors !== null) {
-                       alert(response.errors[0].message); //TODO showError
+                        reject(response.errors); //TODO showError
                     }
                 }
             );
         });
     }
 
-    register() {
-        return new Promise((resolve) => {
-            ajax(constants.PATH + "/api/v1/owner",
-                "POST",
-                    {"name": this.name.toString(), "email": this.email.toString(), "password": this.password.toString()},
-                    (response) => {
-                        if (response.errors === null) {
-                            Router.redirect("/myCafe");
-                        } else {
-                            resolve(response.errors[0].message);
-                        }
+    editOwner(photo = null){
+        const formData = this._makeFormData(photo);
+
+        return new Promise((resolve, reject) => {
+            ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
+                'PUT',
+                formData,
+                (response) => {
+                    console.log(response);
+                    if (response.errors === null) {
+                        this._filUserData(response.data);
+                        this._saveUser();
+                        resolve();
                     }
-                );
-            }
-        );
+                    reject(response.errors);
+                }
+            );
+        });
     }
 
-    login() {
-        return new Promise((resolve) => {
-            authAjax("POST",
-                constants.PATH + "/api/v1/owner/login",
-                {"email": this._email.toString(), "password": this.password.toString()},
+    register() {
+        return new Promise((resolve, reject) => {
+            ajax(constants.PATH + "/api/v1/owner",
+                "POST",
+                {"name": this.name, "email": this.email, "password": this.password},
                 (response) => {
                     if (response.errors === null) {
                         Router.redirect("/myCafe");
-                    } else {
-                        resolve(response.errors[0].message); // TODO проверить работу вызова ошибки при некорректном пользователе
+                        resolve();
                     }
+                    reject(response.errors[0].message);
+                });
+        });
+    }
+
+    login() {
+        return new Promise((resolve, reject) => {
+            authAjax("POST",
+                constants.PATH + "/api/v1/owner/login",
+                {"email": this.email, "password": this.password},
+                (response) => {
+                    if (response.errors === null) {
+                        Router.redirect("/myCafe");
+                        resolve();
+                    }
+                    reject(response.errors[0].message); // TODO проверить работу вызова ошибки при некорректном пользователе
                 });
         });
     }

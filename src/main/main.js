@@ -12,26 +12,38 @@ import UserProfileController from "../controllers/UserProfileController";
 import UserModel from "../models/UserModel";
 import CafeModel from "../models/CafeModel";
 import CafeListModel from "../models/CafeListModel";
+import CafeListView from "../view/CafeListView";
 
 let app = document.body;
 
 function initBaseRoutes(router) {
     router.addRoute('/reg', () => {
+        sessionStorage.clear();
         app.innerHTML = '';
-        (new Header(app)).render('auth');
-        app.appendChild(renderRegister());
+        (new Header(app)).render('auth').then(() => {
+            app.appendChild(renderRegister());
+        });
     });
 
     router.addRoute('/login', () => {
+        sessionStorage.clear();
         app.innerHTML = '';
-        (new Header(app)).render('auth');
-        app.appendChild(renderLogin());
+        (new Header(app)).render('auth').then(() => {
+            app.appendChild(renderLogin());
+        });
     });
 
     router.addRoute('/myCafe', () => {
-        app.innerHTML = '';
-        (new Header(app)).render();
-        createCafes();
+        const cafeList = new CafeListModel();
+        const cafeListView = new CafeListView(app);
+        cafeList.cafesList().then(()=>{
+            cafeListView.cafeListContext = cafeList.context;
+            cafeListView.render();
+        });
+
+        //app.innerHTML = '';
+        //(new Header(app)).render();
+        //createCafes();
     });
 
     router.addRoute('/Profile', () => {
@@ -43,15 +55,17 @@ function initBaseRoutes(router) {
 
     router.addRoute('/createCafe', () => {
         app.innerHTML = '';
-        (new Header(app)).render();
-        createNewCafePage(app);
+        (new Header(app)).render().then(() => {
+            createNewCafePage(app);
+        });
     });
 
     router.addRoute('/Cafe', (id) => {
         console.log('callback Cafe with id', id);
         app.innerHTML = '';
-        (new Header(app)).render();
-        CreateCafePage(app, id);
+        (new Header(app)).render().then(() => {
+            CreateCafePage(app, id);
+        });
     });
 }
 

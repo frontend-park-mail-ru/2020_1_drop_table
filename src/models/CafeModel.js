@@ -29,43 +29,67 @@ export default class CafeModel {
     }
 
     get address(){
-        this._checkCafeData(this._address);
-        return this._address;
+        if (!this._address){
+            this.getCafe().then(()=>{
+                return this._address;
+            });
+        }
     }
 
     get closeTime(){
-        this._checkCafeData(this._closeTime);
-        return this._closeTime;
+        if (!this._closeTime){
+            this.getCafe().then(()=>{
+                return this._closeTime;
+            });
+        }
     }
 
     get description(){
-        this._checkCafeData(this._description);
-        return this._description;
+        if (!this._description){
+            this.getCafe().then(()=>{
+                return this._description;
+            });
+        }
     }
 
     get id(){
-        this._checkCafeData(this._id);
-        return this._id;
+        if (!this._id){
+            this.getCafe().then(()=>{
+                return this._id;
+            });
+        }
     }
 
     get name(){
-        this._checkCafeData(this._name);
-        return this._name;
+        if (!this._name){
+            this.getCafe().then(()=>{
+                return this._name;
+            });
+        }
     }
 
     get openTime(){
-        this._checkCafeData(this._openTime);
-        return this._openTime;
+        if (!this._openTime){
+            this.getCafe().then(()=>{
+                return this._openTime;
+            });
+        }
     }
 
     get ownerID(){
-        this._checkCafeData(this._ownerID);
-        return this._ownerID;
+        if (!this._ownerID){
+            this.getCafe().then(()=>{
+                return this._ownerID;
+            });
+        }
     }
 
     get photo(){
-        this._checkCafeData(this._photo);
-        return this._photo;
+        if (!this._photo) {
+            this.getCafe().then(() => {
+                return this._photo;
+            });
+        }
     }
 
     set address(address){
@@ -97,8 +121,6 @@ export default class CafeModel {
         if (cafeData) {
             cafeData = JSON.parse(cafeData)[this.listId];
             this._fillCafeData(cafeData);
-        } else {
-            this.getCafe();
         }
     }
 
@@ -137,16 +159,18 @@ export default class CafeModel {
     }
 
     getCafe(){
-        authAjax('GET',constants.PATH+`/api/v1/cafe/${this.id}`,
-            null
-            , (response) => {
-                if (response.errors === null) {
-                    console.log('cafe response', response); //REMOVE
-                    this._fillCafeData(response);
-                    this._saveCafe();
-                } else {
-                    alert(response.errors[0].message); //TODO showError
-                }
-            });
+        return new Promise((resolve) => {
+            authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
+                null,
+                (response) => {
+                    if (response.errors === null) {
+                        console.log('cafe response', response); //REMOVE
+                        this._fillCafeData(response);
+                        this._saveCafe();
+                    } else {
+                        alert(response.errors[0].message); //TODO showError
+                    }
+                });
+        });
     }
 }

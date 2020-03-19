@@ -13,79 +13,95 @@ export default class UserProfileController{
     _changeUserProfileListener(e) {
         e.preventDefault();
         const form = document.getElementsByClassName('user-profile__form-container__form-field').item(0);
-        console.log('Form in cup');
-        console.log(form);
         const photoInput = document.getElementById('upload');
         const photo = photoInput.files[0];
 
         if (validateForm(form)) {
-            this._userModel.name = form.elements['name'].value.toString();
-            this._userModel.email = form.elements['email'].value.toString();
-            this._userModel.password = form.elements['password'].value.toString();
-
-            this._userModel.editOwner(photo);
+            this._checkUserData().then(() => {
+                this._userModel.name = form.elements['name'].value.toString();
+                this._userModel.email = form.elements['email'].value.toString();
+                this._userModel.password = form.elements['password'].value.toString();
+                this._userModel.editOwner(photo);
+            });
         }
     }
 
     _makeUserProfileViewContext() {
-        return {
-            imgSrc: ( this._userModel.photo !== '')
-                ?  this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
-            event: {
-                type: 'change',
-                listener: handleImageUpload
-            },
-            form: {
-                formFields: [
-                    {
-                        type: 'hidden',
-                        id: 'userId',
-                        data:  this._userModel.id,
-                        labelData: '',
-                        inputOption: 'readonly',
+        return new Promise((resolve, reject) => {
+            this._checkUserData().then(() => {
+                resolve({
+                    imgSrc: ( this._userModel.photo !== '')
+                        ?  this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                    event: {
+                        type: 'change',
+                        listener: handleImageUpload
                     },
-                    {
-                        type: 'text',
-                        id: 'name',
-                        data:  this._userModel.name,
-                        labelData: 'Имя',
-                        inputOption: 'required',
+                    form: {
+                        formFields: [
+                            {
+                                type: 'hidden',
+                                id: 'userId',
+                                data:  this._userModel.id,
+                                labelData: '',
+                                inputOption: 'readonly',
+                            },
+                            {
+                                type: 'text',
+                                id: 'name',
+                                data:  this._userModel.name,
+                                labelData: 'Имя',
+                                inputOption: 'required',
+                            },
+                            {
+                                type: 'email',
+                                id: 'email',
+                                data:  this._userModel.email,
+                                labelData: 'Почта',
+                                inputOption: 'required',
+                            },
+                            {
+                                type: 'password',
+                                id: 'password',
+                                data:  this._userModel.password,
+                                labelData: 'Пароль',
+                                inputOption: 'required'
+                            },
+                            {
+                                type: 'password',
+                                id: 're-password',
+                                data:  this._userModel.password,
+                                labelData: 'Повторите пароль',
+                                inputOption: 'required'
+                            },
+                        ],
+                        submitValue: 'Готово',
+                        event: {
+                            type: 'submit',
+                            listener: this._changeUserProfileListener.bind(this)
+                        },
                     },
-                    {
-                        type: 'email',
-                        id: 'email',
-                        data:  this._userModel.email,
-                        labelData: 'Почта',
-                        inputOption: 'required',
-                    },
-                    {
-                        type: 'password',
-                        id: 'password',
-                        data:  this._userModel.password,
-                        labelData: 'Пароль',
-                        inputOption: 'required'
-                    },
-                    {
-                        type: 'password',
-                        id: 're-password',
-                        data:  this._userModel.password,
-                        labelData: 'Повторите пароль',
-                        inputOption: 'required'
-                    },
-                ],
-                submitValue: 'Готово',
-                event: {
-                    type: 'submit',
-                    listener: this._changeUserProfileListener.bind(this)
-                },
-            },
-        };
+                });
+            });
+        });
     }
 
+    _checkUserData(){
+        return new Promise((resolve, reject) => {
+            if(this._userModel.id == null){
+                this._userModel.getOwner().then(success => {resolve(success)}, error => {reject(error)});
+            }
+            else{
+                resolve();
+            }
+        });
+    }
+
+
     control(){
-        const userProfileViewContext = this._makeUserProfileViewContext();
-        this._userProfileView.profileContext = userProfileViewContext;
-        this._userProfileView.render();
+        this._makeUserProfileViewContext().then((userProfileViewContext) =>{
+            this._userProfileView.profileContext = userProfileViewContext;
+            this._userProfileView.render();
+        });
     }
 
 }

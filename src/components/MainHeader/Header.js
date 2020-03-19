@@ -10,8 +10,7 @@ export default class Header{
         this._parent = parent;
         this._userModel = new UserModel();
 
-        this._avatar = ( this._userModel.photo !== '')
-            ?  this._userModel.photo : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+        this._avatar = null
         this._head = null;
 
         this._logo = null;
@@ -44,37 +43,61 @@ export default class Header{
     }
 
     _renderHeader(){
-        const headerData = {
-            hasAvatar: this._hasAvatar,
-            hasExit: this._hasExit,
-            logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
-            menuList: this._menuList,
-            avatarImageSrc: this._avatar
-        };
+        return new Promise((resolve, reject) => {
+            this._checkUserData().then(() => {
+                this._avatar = ( this._userModel.photo !== '')
+                ?  this._userModel.photo : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
 
-        this._head.innerHTML = headerTemplate(headerData);
+                const headerData = {
+                    hasAvatar: this._hasAvatar,
+                    hasExit: this._hasExit,
+                    logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
+                    menuList: this._menuList,
+                    avatarImageSrc: this._avatar
+                };
 
-        if (this._hasAvatar) {
-            let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
-            avatar.addEventListener('click', function () {
-                Router.redirect('/Profile');
+                this._head.innerHTML = headerTemplate(headerData);
+
+                if (this._hasAvatar) {
+                    let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
+                    avatar.addEventListener('click', function () {
+                        Router.redirect('/Profile');
+                    });
+                }
+
+                if (this._hasExit) {
+                    let avatar = this._head.getElementsByClassName('page-header__h4').item(0);
+                    avatar.addEventListener('click', function () {
+                        alert('exit');
+                    });
+                }
+
+                resolve();
             });
-        }
+        });
+    }
 
-        if (this._hasExit) {
-            let avatar = this._head.getElementsByClassName('page-header__h4').item(0);
-            avatar.addEventListener('click', function () {
-                alert('exit');
-            });
-        }
+    _checkUserData(){
+        return new Promise((resolve, reject) => {
+            if(this._userModel.id == null){
+                this._userModel.getOwner().then(success => {resolve(success)}, error => {reject(error)});
+            }
+            else{
+                resolve();
+            }
+        });
     }
 
     render(page){
-        this._head = document.createElement('div');
-        this._head.className = 'header';
-        this._setProperties(page);
-        this._renderHeader();
-        this._parent.appendChild(this._head);
+        return new Promise((resolve, reject) => {
+            this._head = document.createElement('div');
+            this._head.className = 'header';
+            this._setProperties(page);
+            this._renderHeader().then(()=>{
+                this._parent.appendChild(this._head);
+                resolve();
+            });
+        });
     }
 }
 

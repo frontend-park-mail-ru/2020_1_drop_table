@@ -30,7 +30,8 @@ export function renderLogin() {
         const user = new UserModel();
         user.email = form.elements['email'].value;
         user.password = form.elements['password'].value;
-        user.login().then((errorMessage) => alert(errorMessage)); //TODO
+        user.login().then(()=>{}, (errorMessage) => alert(errorMessage)); //TODO
+
     });
 
     let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#Profile';

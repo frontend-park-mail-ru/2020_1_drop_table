@@ -7,7 +7,7 @@
  * @param {FormData} formData - данные
  * @param {function} callback - функция, которая будет вызвана после запроса
  */
-export function ajaxForm(route,method, formData, callback) {
+export function ajaxForm(route, method, formData, callback) {
 
     const reqBody = {
         method: method,

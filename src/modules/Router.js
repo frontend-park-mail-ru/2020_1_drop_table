@@ -1,5 +1,7 @@
 import Header from "../components/MainHeader/Header";
 import {createCafes} from "../components/MyCafePage/Creation";
+import CafeListModel from "../models/CafeListModel";
+import CafeListView from "../view/CafeListView";
 
 
 let app = document.body;
@@ -10,9 +12,12 @@ export class Router {
         this._routes = [];
         this._routes.push({
             url: '', callback: () => {
-                app.innerHTML = '';
-                (new Header(app)).render();
-                createCafes()
+                const cafeList = new CafeListModel();
+                const cafeListView = new CafeListView(app);
+                cafeList.cafesList().then(()=>{
+                    cafeListView.cafeListContext = cafeList.context;
+                    cafeListView.render();
+                });
             }
         });
         window.addEventListener('popstate', this._routing.bind(this));

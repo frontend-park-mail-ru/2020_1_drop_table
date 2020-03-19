@@ -43,15 +43,18 @@ export function renderRegister() {
             user.email = email.value.toString();
             user.password = password.value.toString();
             user.name = name.value.toString();
-            user.register().then((errorMessage) => {
-                if (errorMessage[0] === 'P') {
-                    showError(form, password, errorMessage);
-                } else if (errorMessage[0] === 'N') {
-                    showError(form, name, errorMessage);
-                } else {
-                    showError(form, email, errorMessage);
-                }
-            });
+            user.register().then(
+                () => {},
+                errorMessage => {
+                    if (errorMessage[0] === 'P') {
+                        showError(form, password, errorMessage);
+                    } else if (errorMessage[0] === 'N') {
+                        showError(form, name, errorMessage);
+                    } else {
+                        showError(form, email, errorMessage);
+                    }
+                });
+
         }
     });
     let login = form.getElementsByClassName('form-field__have-account__login-span').item(0); // window.location.hash = '#Profile';
