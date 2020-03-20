@@ -10,7 +10,7 @@ export default class Header{
         this._parent = parent;
         this._userModel = new UserModel();
 
-        this._avatar = null
+        this._avatar = null;
         this._head = null;
 
         this._logo = null;
@@ -79,7 +79,7 @@ export default class Header{
 
     _checkUserData(){
         return new Promise((resolve, reject) => {
-            if(this._userModel.id == null){
+            if(this._userModel.id == null && this._userModel.email != null){
                 this._userModel.getOwner().then(success => {resolve(success)}, error => {reject(error)});
             }
             else{
