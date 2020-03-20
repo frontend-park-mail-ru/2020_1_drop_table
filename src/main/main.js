@@ -36,14 +36,16 @@ function initBaseRoutes(router) {
     router.addRoute('/myCafe', () => {
         const cafeList = new CafeListModel();
         const cafeListView = new CafeListView(app);
-        cafeList.cafesList().then(()=>{
+
+        if(cafeList.isEmpty){
+            cafeList.cafesList().then(()=>{
+                cafeListView.cafeListContext = cafeList.context;
+                cafeListView.render();
+            });
+        } else {
             cafeListView.cafeListContext = cafeList.context;
             cafeListView.render();
-        });
-
-        //app.innerHTML = '';
-        //(new Header(app)).render();
-        //createCafes();
+        }
     });
 
     router.addRoute('/Profile', () => {

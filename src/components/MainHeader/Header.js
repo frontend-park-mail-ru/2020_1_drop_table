@@ -82,9 +82,7 @@ export default class Header{
             if(this._userModel.id == null && this._userModel.email != null){
                 this._userModel.getOwner().then(success => {resolve(success)}, error => {reject(error)});
             }
-            else{
-                resolve();
-            }
+            resolve();
         });
     }
 

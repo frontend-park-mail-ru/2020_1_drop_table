@@ -25,17 +25,17 @@ export default class UserModel {
     get photo(){return this._photo;}
 
     set email(email){
-        this._email = email;
+        this._email = email.toString();
         this._saveUser();
     }
 
     set name(name){
-        this._name = name;
+        this._name = name.toString();
         this._saveUser();
     }
 
     set password(password){
-        this._password = password;
+        this._password = password.toString();
         this._saveUser();
     }
 
@@ -100,7 +100,6 @@ export default class UserModel {
                 'GET',
                 {},
                 (response) => {
-                    console.log(response);
                     if (response.errors === null) {
                         this._filUserData(response.data);
                         this._saveUser();
@@ -121,7 +120,6 @@ export default class UserModel {
                 'PUT',
                 formData,
                 (response) => {
-                    console.log(response);
                     if (response.errors === null) {
                         this._filUserData(response.data);
                         this._saveUser();

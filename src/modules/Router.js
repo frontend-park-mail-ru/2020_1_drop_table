@@ -14,10 +14,16 @@ export class Router {
             url: '', callback: () => {
                 const cafeList = new CafeListModel();
                 const cafeListView = new CafeListView(app);
-                cafeList.cafesList().then(()=>{
+
+                if(cafeList.isEmpty){
+                    cafeList.cafesList().then(()=>{
+                        cafeListView.cafeListContext = cafeList.context;
+                        cafeListView.render();
+                    });
+                } else {
                     cafeListView.cafeListContext = cafeList.context;
                     cafeListView.render();
-                });
+                }
             }
         });
         window.addEventListener('popstate', this._routing.bind(this));
