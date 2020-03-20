@@ -3,6 +3,7 @@
 import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import CafeModel from "./CafeModel";
+import {Router} from "../modules/Router";
 
 export default class CafeListModel{
 
@@ -60,16 +61,17 @@ export default class CafeListModel{
                 'GET',
                 {},
                 (response) => {
-                    if(response.data == null){ //TODO fix in back
-                        response.data = [];
-                    }
-
-                    if (response.errors === null) {
-                        this._saveCafeList(response.data);
-                        this._constructCafe(response.data);
+                    if(response.data == null){
+                        Router.redirect('/createCafe');
                         resolve();
                     } else {
-                        reject(response.errors[0].message); //TODO showError
+                        if (response.errors === null) {
+                            this._saveCafeList(response.data);
+                            this._constructCafe(response.data);
+                            resolve();
+                        } else {
+                            reject(response.errors[0].message); //TODO showError
+                        }
                     }
                 }
             )
