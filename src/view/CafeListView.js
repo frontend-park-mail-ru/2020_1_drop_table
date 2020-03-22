@@ -7,15 +7,15 @@ import Header from "../components/MainHeader/Header";
 export default class CafeListView{
     constructor(app = document.body) {
         this._app = app;
-        this._cafeListContext = null;
+        this._context = null;
     }
 
-    get cafeListContext(){
-        return this._cafeListContext;
+    get context(){
+        return this._context;
     }
 
-    set cafeListContext(cafeListContext){
-        this._cafeListContext = cafeListContext;
+    set context(context){
+        this._context = context;
     }
 
     _renderCafes(context){
@@ -35,7 +35,7 @@ export default class CafeListView{
     render() {
         this._app.innerHTML = '';
         (new Header(this._app)).render().then(()=>{
-            this._renderCafes(this._cafeListContext);
+            this._renderCafes(this._context);
         });
     }
 }

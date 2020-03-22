@@ -98,8 +98,8 @@ export default class UserProfileController{
 
 
     control(){
-        this._makeUserProfileViewContext().then((userProfileViewContext) =>{
-            this._userProfileView.profileContext = userProfileViewContext;
+        this._makeUserProfileViewContext().then((context) =>{
+            this._userProfileView.context = context;
             this._userProfileView.render();
         });
     }

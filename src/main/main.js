@@ -13,6 +13,8 @@ import UserModel from "../models/UserModel";
 import CafeModel from "../models/CafeModel";
 import CafeListModel from "../models/CafeListModel";
 import CafeListView from "../view/CafeListView";
+import CreateCafeView from "../view/CreateCafeView";
+import CreateCafeController from "../controllers/CreateCafeController";
 
 let app = document.body;
 
@@ -39,11 +41,11 @@ function initBaseRoutes(router) {
 
         if(cafeList.isEmpty){
             cafeList.cafesList().then(()=>{
-                cafeListView.cafeListContext = cafeList.context;
+                cafeListView.context = cafeList.context;
                 cafeListView.render();
             });
         } else {
-            cafeListView.cafeListContext = cafeList.context;
+            cafeListView.context = cafeList.context;
             cafeListView.render();
         }
     });
@@ -56,10 +58,10 @@ function initBaseRoutes(router) {
     });
 
     router.addRoute('/createCafe', () => {
-        app.innerHTML = '';
-        (new Header(app)).render().then(() => {
-            createNewCafePage(app);
-        });
+        const cafeList = new CafeListModel();
+        const createCafeView = new CreateCafeView();
+        const createCafeController = new CreateCafeController(cafeList, createCafeView);
+        createCafeController.control();
     });
 
     router.addRoute('/Cafe', (id) => {

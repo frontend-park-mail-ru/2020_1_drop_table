@@ -17,11 +17,11 @@ export class Router {
 
                 if(cafeList.isEmpty){
                     cafeList.cafesList().then(()=>{
-                        cafeListView.cafeListContext = cafeList.context;
+                        cafeListView.context = cafeList.context;
                         cafeListView.render();
                     });
                 } else {
-                    cafeListView.cafeListContext = cafeList.context;
+                    cafeListView.context = cafeList.context;
                     cafeListView.render();
                 }
             }
