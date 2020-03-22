@@ -1,4 +1,3 @@
-import {renderRegister} from '../components/Register/Register';
 import Header from '../components/MainHeader/Header';
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
@@ -24,12 +23,6 @@ function initBaseRoutes(router) {
         const registerView = new RegisterView(app);
         const registerController = new RegisterController(userModel, registerView);
         registerController.control();
-
-        // sessionStorage.clear();
-        // app.innerHTML = '';
-        // (new Header(app)).render('auth').then(() => {
-        //     app.appendChild(renderRegister());
-        // });
     });
 
     router.addRoute('/login', () => {
