@@ -13,16 +13,23 @@ import CreateCafeView from "../view/CreateCafeView";
 import CreateCafeController from "../controllers/CreateCafeController";
 import LoginView from "../view/LoginView";
 import LoginController from "../controllers/LoginController";
+import RegisterView from "../view/RegisterView";
+import RegisterController from "../controllers/RegisterController";
 
 let app = document.body;
 
 function initBaseRoutes(router) {
     router.addRoute('/reg', () => {
-        sessionStorage.clear();
-        app.innerHTML = '';
-        (new Header(app)).render('auth').then(() => {
-            app.appendChild(renderRegister());
-        });
+        const userModel = new UserModel();
+        const registerView = new RegisterView(app);
+        const registerController = new RegisterController(userModel, registerView);
+        registerController.control();
+
+        // sessionStorage.clear();
+        // app.innerHTML = '';
+        // (new Header(app)).render('auth').then(() => {
+        //     app.appendChild(renderRegister());
+        // });
     });
 
     router.addRoute('/login', () => {
@@ -30,12 +37,6 @@ function initBaseRoutes(router) {
         const loginView = new LoginView(app);
         const loginController = new LoginController(userModel, loginView);
         loginController.control();
-
-        // sessionStorage.clear();
-        // app.innerHTML = '';
-        // (new Header(app)).render('auth').then(() => {
-        //     app.appendChild(renderLogin());
-        // });
     });
 
     router.addRoute('/myCafe', () => {
