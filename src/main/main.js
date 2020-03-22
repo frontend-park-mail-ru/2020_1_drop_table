@@ -1,9 +1,5 @@
 import {renderRegister} from '../components/Register/Register';
 import Header from '../components/MainHeader/Header';
-import {renderLogin} from '../components/Login/Login';
-import {createCafes} from '../components/MyCafePage/Creation';
-import {createUserProfilePage} from '../components/UserProfilePage/Creation';
-import {createNewCafePage} from '../components/AddCafePage/Creation.js'
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
 
@@ -15,6 +11,8 @@ import CafeListModel from "../models/CafeListModel";
 import CafeListView from "../view/CafeListView";
 import CreateCafeView from "../view/CreateCafeView";
 import CreateCafeController from "../controllers/CreateCafeController";
+import LoginView from "../view/LoginView";
+import LoginController from "../controllers/LoginController";
 
 let app = document.body;
 
@@ -28,11 +26,16 @@ function initBaseRoutes(router) {
     });
 
     router.addRoute('/login', () => {
-        sessionStorage.clear();
-        app.innerHTML = '';
-        (new Header(app)).render('auth').then(() => {
-            app.appendChild(renderLogin());
-        });
+        const userModel = new UserModel();
+        const loginView = new LoginView(app);
+        const loginController = new LoginController(userModel, loginView);
+        loginController.control();
+
+        // sessionStorage.clear();
+        // app.innerHTML = '';
+        // (new Header(app)).render('auth').then(() => {
+        //     app.appendChild(renderLogin());
+        // });
     });
 
     router.addRoute('/myCafe', () => {
