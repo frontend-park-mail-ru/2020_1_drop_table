@@ -18,6 +18,7 @@ import CafeListController from "../controllers/CafeListController";
 import CafePageController from "../controllers/CafePageContoller";
 import CafePageView from "../view/CafePageView";
 
+
 let app = document.body;
 
 function initBaseRoutes(router) {
@@ -65,6 +66,7 @@ function initBaseRoutes(router) {
         const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
         cafePageController.control(id);
     });
+
 
 }
 

@@ -12,7 +12,6 @@ export default class CafeListModel{
         const cafeListData = this._loadCafeList();
         this._constructCafe(cafeListData);
     }
-
     getCafeById(id){
         console.log('cafe get by id');
         console.log(this._cafeModelsList);
@@ -90,4 +89,6 @@ export default class CafeListModel{
             )
         });
     }
+
 }
+

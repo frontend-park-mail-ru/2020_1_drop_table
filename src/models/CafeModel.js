@@ -29,6 +29,7 @@ export default class CafeModel {
         const cafeData = JSON.parse(cafeListData)[this.listId];
         return cafeData;
     }
+
     get listId(){return this._listId}
     get address(){return this._address}
     get closeTime(){return this._closeTime}
@@ -160,3 +161,4 @@ export default class CafeModel {
         });
     }
 }
+
