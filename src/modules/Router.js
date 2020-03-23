@@ -1,5 +1,9 @@
-import {renderHeader} from "../components/MainHeader/Header";
+import Header from "../components/MainHeader/Header";
 import {createCafes} from "../components/MyCafePage/Creation";
+import CafeListModel from "../models/CafeListModel";
+import CafeListView from "../view/CafeListView";
+import UserModel from "../models/UserModel";
+import CafeListController from "../controllers/CafeListController";
 
 
 let app = document.body;
@@ -10,9 +14,11 @@ export class Router {
         this._routes = [];
         this._routes.push({
             url: '', callback: () => {
-                app.innerHTML = '';
-                app.appendChild(renderHeader());
-                createCafes()
+                const cafeList = new CafeListModel();
+                const userModel = new UserModel();
+                const cafeListView = new CafeListView(app);
+                const cafeListController = new CafeListController(cafeList, userModel, cafeListView);
+                cafeListController.control();
             }
         });
         window.addEventListener('popstate', this._routing.bind(this));

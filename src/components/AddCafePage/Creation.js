@@ -1,10 +1,7 @@
 import {handleImageUpload} from '../../modules/imageUpload';
 
 import CafeComponent from '../Cafe/Cafe';
-
-import {constants} from "../../utils/constants";
-import {Router} from "../../modules/Router";
-import {ajaxForm} from '../../utils/ajaxForm.js'
+import CafeListModel from "../../models/CafeListModel";
 
 
 let app = document.body;
@@ -16,42 +13,16 @@ function addCafe(e) {
     const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
     const photoInput = document.getElementById('upload');
     const image = document.getElementById('image').getAttribute('src');
-    const name = form.elements['name'].value;
-    const address = form.elements['address'].value;
-    const description = form.elements['description'].value;
-    const photo = photoInput.files[0];
 
-    let formData = new FormData();
+    const cafeList = new CafeListModel();
+    const cafe = cafeList.createCafe();
+    console.log('new cafe', cafe);
+    cafe.name = form.elements['name'].value;
+    cafe.address = form.elements['address'].value;
+    cafe.description = form.elements['description'].value;
+    cafe.photo = image;
 
-    let data = {
-        'name': name.toString(),
-        'address': address.toString(),
-        'description': description.toString()
-    };
-    if (photo) {
-        formData.append('photo', photo);
-    } else {
-        data = {
-            'name': name.toString(),
-            'address': address.toString(),
-            'description': description.toString(),
-            'photo':image
-        };
-    }
-
-    formData.append('jsonData', JSON.stringify(data));
-
-    ajaxForm(constants.PATH+'/api/v1/cafe',
-        'POST',
-        formData,
-        (response) => {
-            if (response.errors === null) {
-                Router.redirect('/myCafe');
-            } else {
-                alert(response.errors[0].message); //TODO showError
-            }
-        }
-    );
+    cafe.create(photoInput.files[0]);
 }
 
 export function createNewCafePage(app) {

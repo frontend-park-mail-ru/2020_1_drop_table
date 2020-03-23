@@ -1,5 +1,6 @@
-<div class="card-top">
+
     <div class="HeaderFieldsContainer">
+        <h4 class="nameField_h4">Хедер поля</h4>
         {{#each headerFields}}
             <div class="card-form__input-header-field" id="{{id}}">
             </div>
@@ -7,25 +8,26 @@
     </div>
 
     <div class="PrimaryFieldsContainer">
+        <h4 class="nameField_h4">Главные поля</h4>
+
         {{#each primaryFields}}
             <div class="card-form__input-primary-field" id="{{id}}">
             </div>
         {{/each}}
     </div>
-</div>
+
+
 
 <div class="SecondaryFieldsContainer">
+    <h4 class="nameField_h4">Второстепенные поля</h4>
     {{#each secondaryFields}}
         <div class="card-form__input-secondary-field" id="{{id}}">
         </div>
     {{/each}}
 </div>
 
-<div class="AuxiliaryFieldsContainer">
-    {{#each auxiliaryFields}}
-        <div class="card-form__input-auxiliary-field" id="{{id}}">
-        </div>
-    {{/each}}
-</div>
 
-<input class="card-form__submit" type="submit" value={{submitValue}}>
+
+
+
+

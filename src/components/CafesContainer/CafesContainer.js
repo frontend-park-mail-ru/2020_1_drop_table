@@ -5,10 +5,9 @@ import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";
 
 export class CafesContainerComponent {
-    constructor({
-                    el = document.body,
-                } = {}) {
-        this._el = el;
+    constructor(parent = document.body) {
+        this._parent = parent;
+        console.log('parent', this._parent);
     }
 
     get data() {
@@ -38,22 +37,22 @@ export class CafesContainerComponent {
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
 
-        this._el.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
+        this._parent.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 
-        for(let i = 0; i< this.data.length; i++){
-            let card = this._el.getElementsByClassName('cafe-card-container').item(i);
-            let cardImage = this._el.getElementsByClassName('cafe-card-container__image-container').item(i);
-            let cardName = this._el.getElementsByClassName('cafe-card-container__name-container').item(i);
+        for(let i = 0; i < this.data.length; i++){
+            let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
+            let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
+            let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
             cardImage.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
-                const cardId = cardIdStr.slice(1,cardIdStr.length);
-                Router.redirect(`/cafe/${cardId}`);
+                const cardId = cardIdStr.slice(1, cardIdStr.length);
+                Router.redirect(`/Cafe/${cardId}`);
 
             });
             cardName.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
-                const cardId = cardIdStr.slice(1,cardIdStr.length);
-                Router.redirect(`/cafe/${cardId}`);
+                const cardId = cardIdStr.slice(1, cardIdStr.length);
+                Router.redirect(`/Cafe/${cardId}`);
 
             });
         }

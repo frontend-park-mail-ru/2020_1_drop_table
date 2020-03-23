@@ -1,77 +1,83 @@
 import './Header.css'
 
 import headerTemplate from './Header.hbs';
-import {createUserProfilePage} from "../UserProfilePage/Creation";
-import {ajax} from '../../utils/ajax'
-import {constants} from "../../utils/constants";
-import {handleImageUpload} from "../../modules/imageUpload";
-import ProfileComponent from "../profile/profile";
-import {Router} from "../../modules/Router";
 
-export function renderHeader(page) {
-    let head = document.createElement('div');
-    head.className = 'header';
-    let _hasAvatar;
-    let _hasExit;
-    let _menuList = [
-        {href: '/myCafes', text: 'Мои кафе'},
-        {href: '/createCafe', text: 'Добавить'},
-        {href: '/statistics', text: 'Статистика'},
-        {href: '/staff', text: 'Работники'},
-    ];
+export default class Header{
 
-    let _logo;
-    let _avatar = 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+    constructor(parent = document.body) {
+        this._parent = parent;
 
-    if( page == 'auth'){
-        _hasAvatar = false;
-        _hasExit = false;
-        _menuList =[];
+        this._avatar = null;
+        this._head = null;
 
-    } else if(page == 'profile'){
-        _hasAvatar = false;
-        _hasExit = true;
-    } else{
-        _hasAvatar = true;
-        _hasExit = false;
+        this._logo = null;
+        this._hasAvatar = false;
+        this._hasExit = false;
 
-        ajax(constants.PATH+'/api/v1/getCurrentOwner/','GET',{},(response) => {
-            if (response.errors === null) {
-                _avatar = response.data['photo'];
-                console.log('avatar ',_avatar);
-                let ava = head.getElementsByClassName('page-header__avatar_img').item(0);
-                ava.setAttribute('src',_avatar); //TODO поменять на promise
-            } else {
-                alert(response.errors[0].message); //TODO showError
-            }
-        });
+        this._menuList = [
+            {href: '/myCafes', text: 'Мои кафе'},
+            {href: '/createCafe', text: 'Добавить'},
+            {href: '/statistics', text: 'Статистика'},
+            {href: '/staff', text: 'Работники'},
+        ];
     }
 
-    let headerData = {
-        hasAvatar: _hasAvatar,
-        hasExit: _hasExit,
-        logoImageSrc:'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
-        menuList: _menuList,
-        avatarImageSrc:_avatar
-    };
-    head.innerHTML = headerTemplate(headerData);
+    _setProperties(context){
+        if (context['type'] === 'auth') {
+            this._hasAvatar = false;
+            this._hasExit = false;
+            this._menuList =[];
 
-    if( _hasAvatar ) {
-        let avatar = head.getElementsByClassName('page-header__avatar').item(0);
-        avatar.addEventListener('click', function () {
-            Router.redirect('/Profile');
-        });
+        } else if (context['type'] === 'profile') {
+            this._hasAvatar = false;
+            this._hasExit = true;
+
+        } else {
+            this._head = document.createElement('div');
+            this._hasAvatar = true;
+            this._hasExit = false;
+        }
     }
 
-    if ( _hasExit){
-        let avatar = head.getElementsByClassName('page-header__h4').item(0);
-        avatar.addEventListener('click', function () {
-            alert('exit');
-        });
+    _addListeners(context){
+        if (this._hasAvatar) {
+            let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
+            avatar.addEventListener(context['avatar']['event']['type'],
+                context['avatar']['event']['listener']);
+        }
+
+        if (this._hasExit) {
+            let exit = this._head.getElementsByClassName('page-header__h4').item(0);
+            exit.addEventListener(context['exit']['event']['type'],
+                context['exit']['event']['listener']);
+        }
     }
 
-    return head;
+    _renderHeader(context){
+        this._avatar = ( context['avatar']['photo'] !== '')
+            ?  context['avatar']['photo'] : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+
+        const headerData = {
+            hasAvatar: this._hasAvatar,
+            hasExit: this._hasExit,
+            logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
+            menuList: this._menuList,
+            avatarImageSrc: this._avatar
+        };
+
+        this._head.innerHTML = headerTemplate(headerData);
+    }
+
+    render(context){
+        this._head = document.createElement('div');
+        this._head.className = 'header';
+
+        this._setProperties(context);
+        this._renderHeader(context);
+        this._parent.appendChild(this._head);
+
+        this._addListeners(context);
+    }
 }
-
 
 

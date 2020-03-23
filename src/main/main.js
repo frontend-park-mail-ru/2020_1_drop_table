@@ -1,59 +1,70 @@
-import {renderRegister} from '../components/Register/Register';
-// import {renderBlankHeader, renderHeader} from '../components/header/header';
-
-import {renderBlankHeader, renderHeader} from '../components/MainHeader/Header';
-
-import {renderLogin} from '../components/Login/Login';
-import {createCafes} from '../components/MyCafePage/Creation';
-import {createUserProfilePage} from '../components/UserProfilePage/Creation';
-import {createNewCafePage} from '../components/AddCafePage/Creation.js'
+import Header from '../components/MainHeader/Header';
 import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
 
+import UserProfileView from '../view/UserProfileView'
+import UserProfileController from "../controllers/UserProfileController";
+import UserModel from "../models/UserModel";
+import CafeModel from "../models/CafeModel";
+import CafeListModel from "../models/CafeListModel";
+import CafeListView from "../view/CafeListView";
+import CreateCafeView from "../view/CreateCafeView";
+import CreateCafeController from "../controllers/CreateCafeController";
+import LoginView from "../view/LoginView";
+import LoginController from "../controllers/LoginController";
+import RegisterView from "../view/RegisterView";
+import RegisterController from "../controllers/RegisterController";
+import CafeListController from "../controllers/CafeListController";
+import CafePageController from "../controllers/CafePageContoller";
+import CafePageView from "../view/CafePageView";
 
 let app = document.body;
 
 function initBaseRoutes(router) {
     router.addRoute('/reg', () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader('auth'));
-        app.appendChild(renderRegister());
+        const userModel = new UserModel();
+        const registerView = new RegisterView(app);
+        const registerController = new RegisterController(userModel, registerView);
+        registerController.control();
     });
 
-    router.addRoute('/Login', () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader('auth'));
-        app.appendChild(renderLogin());
+    router.addRoute('/login', () => {
+        const userModel = new UserModel();
+        const loginView = new LoginView(app);
+        const loginController = new LoginController(userModel, loginView);
+        loginController.control();
     });
 
     router.addRoute('/myCafe', () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader());
-        createCafes();
+        const cafeList = new CafeListModel();
+        const userModel = new UserModel();
+        const cafeListView = new CafeListView(app);
+        const cafeListController = new CafeListController(cafeList, userModel, cafeListView);
+        cafeListController.control();
     });
 
     router.addRoute('/Profile', () => {
-        app.innerHTML = '';
-        const up = document.createElement('div');
-        createUserProfilePage(up);
-        app.appendChild(renderHeader('profile'));
-        app.appendChild(up);
+        const user = new UserModel();
+        const userProfileView = new UserProfileView(app);
+        const userProfileController = new UserProfileController(user, userProfileView);
+        userProfileController.control();
     });
 
-
     router.addRoute('/createCafe', () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader());
-        createNewCafePage(app);
+        const cafeList = new CafeListModel();
+        const userModel = new UserModel();
+        const createCafeView = new CreateCafeView();
+        const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
+        createCafeController.control();
     });
 
     router.addRoute('/Cafe', (id) => {
-        console.log('callback Cafe with id', id);
-        app.innerHTML = '';
-        app.appendChild(renderHeader());
-        CreateCafePage(app, id);
+        const cafeListModel = new CafeListModel();
+        const userModel = new UserModel();
+        const cafePageView = new CafePageView();
+        const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
+        cafePageController.control(id);
     });
-
 
 }
 

@@ -1,6 +1,6 @@
 
-.nameField_h4, .button{
-    margin-left: 5%;
+.nameField_h4, .field-button{
+    margin-left: 10%;
 }
 .nameField_h4{
     font-family: Montserrat;
@@ -14,8 +14,9 @@
     margin-bottom: 0.5rem;
     width: 80%;
     height:1.5rem;
-    border: none;
-    border-bottom: solid 2px #000000;
+    /*border: none;*/
+    /*border-bottom: solid 2px #000000;*/
+    border: solid 2px #000000;
 
 }
 
@@ -28,8 +29,9 @@
 
 }
 
-.button {
-    width: 25px;
+.field-button {
+    width: 100px;
+    /*width: 25px;*/
     height: 25px;
     border-radius: 25px;
     border: 2px solid #1e768f;
@@ -39,36 +41,40 @@
     overflow: hidden;
 }
 
-.button:hover {
-    width: 100px;
-    transition: width 0.7s;
-}
+/*.field-button:hover {*/
+/*    width: 100px;*/
+/*    transition: width 0.7s;*/
+/*}*/
 
-.button i {
-    font-size: 1rem;
-    opacity: 1;
-    transition: opacity 0.5s
-}
+/*.field-button i {*/
+/*    font-size: 1rem;*/
+/*    opacity: 1;*/
+/*    transition: opacity 0.5s*/
+/*}*/
 
-.button:hover i {
+/*.field-button:hover i {*/
+/*    opacity: 0;*/
+/*    transition: opacity 0.5s*/
+/*}*/
+.field-button i {
     opacity: 0;
     transition: opacity 0.5s
 }
 
-.button .button-text {
-    opacity: 0;
+.field-button .button-text {
+    /*opacity: 0;*/
 
-    transition: opacity .5s;
+    /*transition: opacity .5s;*/
     /*position: absolute;*/
     display: flex;
     justify-content: space-around;
-    margin-top: -25%;
+    margin-top: -20%;
     font-size: 1rem;
     width: 100%;
     left: 0;
 }
 
-.button:hover .button-text {
-    opacity: 1;
-    transition: opacity 0.5s
-}
+/*.field-button:hover .button-text {*/
+/*    opacity: 1;*/
+/*    transition: opacity 0.5s*/
+/*}*/

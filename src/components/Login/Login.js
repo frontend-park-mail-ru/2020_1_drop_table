@@ -1,68 +1,43 @@
 'use strict';
 import './Login.css';
-import loginTemplate from '../Register/RegisterTopBar.hbs';
-import loginForm from './Login.hbs';
-import {ajax} from '../../modules/ajax';
-import {constants} from "../../utils/constants";
-import {showError} from "../../modules/formValidator";
-import {Router} from "../../modules/Router";
+import LoginTemplate from '../Register/RegisterTopBar.hbs';
+import LoginFormTemplate from './Login.hbs';
 
-/**
- * Логинит пользователя по логину и паролю
- * @param email Значение почты
- * @param password Значение пароль
- * @param form передаю форму для обработки ошибки
- */
-export function doLogin(email, password, form) {
-    ajax('POST', constants.PATH + '/api/v1/owner/Login',
-        {'email': email.toString(), 'password': password.toString()}
-        , (response) => {
-            if (response.errors === null) {
-                Router.redirect('/myCafe')
-            } else {
-                showError(form, form.elements['email'], response.errors[0].message) // TODO проверить работу вызова ошибки при некорректном пользователе
-            }
-        });
+export default class LoginComponent{
+    constructor(parent) {
+        this._parent = parent;
+        this._form = null;
+    }
 
-}
+    _addListeners(context){
+        this._form.addEventListener(context['form']['event']['type'],
+            context['form']['event']['listener']);
 
+        let register = document.body.getElementsByClassName('form-field__need-register__reg-span').item(0);
+        register.addEventListener(context['register']['event']['type'],
+            context['register']['event']['listener']);
+    }
 
-/**
- * Функция рендерит форму логина
- * @returns {HTMLDivElement} Отредеренную форму для логина
- */
-export function renderLogin() {
+    _renderTopBar(){
+        let topBar = document.createElement('div');
+        topBar.className = 'decorateContainer';
+        topBar.innerHTML = LoginTemplate({name: 'Логин'});
+        this._parent.appendChild(topBar);
+    }
 
-    let loginContainer = document.createElement('div');
-    loginContainer.className = 'loginContainer';
-    let topBar = document.createElement('div');
-    topBar.className = 'decorateContainer';
-    topBar.innerHTML = loginTemplate({name: 'Логин'});
-    loginContainer.appendChild(topBar);
+    _renderForm(){
+        let form = document.createElement('div');
+        form.className = 'formContainer';
+        form.innerHTML = LoginFormTemplate({email: 'Почта', password: 'Пароль'});
+        this._parent.appendChild(form);
+        this._form = form.firstElementChild;
+    }
 
-    let form = document.createElement('div');
-    form.className = 'formContainer';
-    form.innerHTML = loginForm({email: 'Почта', password: 'Пароль'});
-    loginContainer.appendChild(form);
-    form = form.firstElementChild;
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        //validateForm()
-        const email = form.elements['email'].value;
-        const password = form.elements['password'].value;
-        doLogin(email, password, form);
-
-    });
-
-    let reg = form.getElementsByClassName('form-field__need-register__reg-span').item(0); // window.location.hash = '#Profile';
-
-    reg.addEventListener('click',function () {
-        Router.redirect('/reg')
-    });
-
-    return loginContainer;
-
+    render(context){
+        this._renderTopBar();
+        this._renderForm();
+        this._addListeners(context);
+    }
 }
 
 

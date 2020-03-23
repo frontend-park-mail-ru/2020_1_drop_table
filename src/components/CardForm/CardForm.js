@@ -1,8 +1,11 @@
 'use strict';
 
 import './CardForm.css';
+// import  './imagePicker.css'
 import CardFormTemplate from './CardForm.hbs';
 import InputComponent from '../Input/Input'
+
+
 
 export default class CardFormComponent {
 
@@ -54,5 +57,11 @@ export default class CardFormComponent {
     render(context) {
         this._parent.innerHTML = CardFormTemplate(context);
         this._renderInputs(context);
+
+
     }
 }
+
+
+
+
