@@ -21,13 +21,12 @@ export default class RegisterView{
         let registerContainer = document.createElement('div');
         registerContainer.className = 'registerContainer';
         this._app.appendChild(registerContainer);
-        (new RegisterComponent(registerContainer)).render(this._context);
+        (new RegisterComponent(registerContainer)).render(this._context['register']);
     }
 
     render(){
         this._app.innerHTML = '';
-        (new Header(this._app)).render('auth').then(() => {
-            this._renderRegister();
-        });
+        (new Header(this._app)).render(this._context['header']);
+        this._renderRegister();
     }
 }

@@ -34,8 +34,8 @@ export default class CafeListView{
 
     render() {
         this._app.innerHTML = '';
-        (new Header(this._app)).render().then(()=>{
-            this._renderCafes(this._context);
-        });
+        console.log('context', this._context['header']);
+        (new Header(this._app)).render(this._context['header']);
+        this._renderCafes(this._context['cafeList']);
     }
 }

@@ -2,7 +2,7 @@
 
 import {Router} from "../modules/Router";
 
-export default class LoginController{
+export default class LoginController {
 
     constructor(userModel, loginView) {
         this._userModel = userModel;
@@ -23,16 +23,24 @@ export default class LoginController{
 
     _makeContext(){
         return {
-            form:{
-                event:{
-                    type: 'submit',
-                    listener: this._submitListener.bind(this)
-                }
+            header: {
+                type: 'auth',
+                avatar: {
+                    photo: null
+                },
             },
-            register:{
-                event:{
-                    type: 'click',
-                    listener: this._registerListener
+            login: {
+                form: {
+                    event: {
+                        type: 'submit',
+                        listener: this._submitListener.bind(this)
+                    }
+                },
+                register: {
+                    event: {
+                        type: 'click',
+                        listener: this._registerListener
+                    }
                 }
             }
         }

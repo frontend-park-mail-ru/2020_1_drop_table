@@ -2,6 +2,7 @@
 
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
+import {Router} from "../modules/Router";
 
 export default class UserProfileController{
 
@@ -26,53 +27,79 @@ export default class UserProfileController{
         }
     }
 
-    _makeUserProfileViewContext() {
+    _headerAvatarListener(){
+        Router.redirect('/Profile');
+    }
+
+    _headerExitListener(){
+        alert('exit'); //TODO EXIT
+    }
+
+    _makeContext() {
         return new Promise((resolve, reject) => {
             this._checkUserData().then(() => {
                 resolve({
-                    imgSrc: ( this._userModel.photo !== '')
-                        ?  this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
-                    event: {
-                        type: 'change',
-                        listener: handleImageUpload
-                    },
-                    form: {
-                        formFields: [
-                            {
-                                type: 'text',
-                                id: 'name',
-                                data:  this._userModel.name,
-                                labelData: 'Имя',
-                                inputOption: 'required',
-                            },
-                            {
-                                type: 'email',
-                                id: 'email',
-                                data:  this._userModel.email,
-                                labelData: 'Почта',
-                                inputOption: 'required',
-                            },
-                            {
-                                type: 'password',
-                                id: 'password',
-                                data:  this._userModel.password,
-                                labelData: 'Пароль',
-                                inputOption: 'required'
-                            },
-                            {
-                                type: 'password',
-                                id: 're-password',
-                                data:  this._userModel.password,
-                                labelData: 'Повторите пароль',
-                                inputOption: 'required'
-                            },
-                        ],
-                        submitValue: 'Готово',
-                        event: {
-                            type: 'submit',
-                            listener: this._changeUserProfileListener.bind(this)
+                    header:{
+                        type: 'profile',
+                        avatar:{
+                            photo: '',
+                            event:{
+                                type: 'click',
+                                listener: this._headerAvatarListener.bind(this)
+                            }
                         },
+                        exit:{
+                            event:{
+                                type: 'click',
+                                listener: this._headerExitListener.bind(this)
+                            }
+                        }
                     },
+                    profile: {
+                        imgSrc: (this._userModel.photo !== '')
+                            ? this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                        event: {
+                            type: 'change',
+                            listener: handleImageUpload
+                        },
+                        form: {
+                            formFields: [
+                                {
+                                    type: 'text',
+                                    id: 'name',
+                                    data: this._userModel.name,
+                                    labelData: 'Имя',
+                                    inputOption: 'required',
+                                },
+                                {
+                                    type: 'email',
+                                    id: 'email',
+                                    data: this._userModel.email,
+                                    labelData: 'Почта',
+                                    inputOption: 'required',
+                                },
+                                {
+                                    type: 'password',
+                                    id: 'password',
+                                    data: this._userModel.password,
+                                    labelData: 'Пароль',
+                                    inputOption: 'required'
+                                },
+                                {
+                                    type: 'password',
+                                    id: 're-password',
+                                    data: this._userModel.password,
+                                    labelData: 'Повторите пароль',
+                                    inputOption: 'required'
+                                },
+                            ],
+                            submitValue: 'Готово',
+                            event: {
+                                type: 'submit',
+                                listener: this._changeUserProfileListener.bind(this)
+                            },
+                        },
+                    }
                 });
             });
         });
@@ -91,7 +118,7 @@ export default class UserProfileController{
 
 
     control(){
-        this._makeUserProfileViewContext().then((context) =>{
+        this._makeContext().then((context) =>{
             this._userProfileView.context = context;
             this._userProfileView.render();
         });

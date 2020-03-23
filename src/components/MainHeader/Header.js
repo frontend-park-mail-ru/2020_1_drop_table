@@ -1,14 +1,11 @@
 import './Header.css'
 
 import headerTemplate from './Header.hbs';
-import {Router} from "../../modules/Router";
-import UserModel from "../../models/UserModel";
 
 export default class Header{
 
     constructor(parent = document.body) {
         this._parent = parent;
-        this._userModel = new UserModel();
 
         this._avatar = null;
         this._head = null;
@@ -25,13 +22,13 @@ export default class Header{
         ];
     }
 
-    _setProperties(page){
-        if (page === 'auth') {
+    _setProperties(context){
+        if (context['type'] === 'auth') {
             this._hasAvatar = false;
             this._hasExit = false;
             this._menuList =[];
 
-        } else if (page === 'profile') {
+        } else if (context['type'] === 'profile') {
             this._hasAvatar = false;
             this._hasExit = true;
 
@@ -42,60 +39,44 @@ export default class Header{
         }
     }
 
-    _renderHeader(){
-        return new Promise((resolve, reject) => {
-            this._checkUserData().then(() => {
-                this._avatar = ( this._userModel.photo !== '')
-                ?  this._userModel.photo : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+    _addListeners(context){
+        if (this._hasAvatar) {
+            let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
+            avatar.addEventListener(context['avatar']['event']['type'],
+                context['avatar']['event']['listener']);
+        }
 
-                const headerData = {
-                    hasAvatar: this._hasAvatar,
-                    hasExit: this._hasExit,
-                    logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
-                    menuList: this._menuList,
-                    avatarImageSrc: this._avatar
-                };
-
-                this._head.innerHTML = headerTemplate(headerData);
-
-                if (this._hasAvatar) {
-                    let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
-                    avatar.addEventListener('click', function () {
-                        Router.redirect('/Profile');
-                    });
-                }
-
-                if (this._hasExit) {
-                    let avatar = this._head.getElementsByClassName('page-header__h4').item(0);
-                    avatar.addEventListener('click', function () {
-                        alert('exit');
-                    });
-                }
-
-                resolve();
-            });
-        });
+        if (this._hasExit) {
+            let exit = this._head.getElementsByClassName('page-header__h4').item(0);
+            exit.addEventListener(context['exit']['event']['type'],
+                context['exit']['event']['listener']);
+        }
     }
 
-    _checkUserData(){
-        return new Promise((resolve, reject) => {
-            if(this._userModel.id == null && this._userModel.email != null){
-                this._userModel.getOwner().then(success => {resolve(success)}, error => {reject(error)});
-            }
-            resolve();
-        });
+    _renderHeader(context){
+        this._avatar = ( context['avatar']['photo'] !== '')
+            ?  context['avatar']['photo'] : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+
+        const headerData = {
+            hasAvatar: this._hasAvatar,
+            hasExit: this._hasExit,
+            logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
+            menuList: this._menuList,
+            avatarImageSrc: this._avatar
+        };
+
+        this._head.innerHTML = headerTemplate(headerData);
     }
 
-    render(page){
-        return new Promise((resolve, reject) => {
-            this._head = document.createElement('div');
-            this._head.className = 'header';
-            this._setProperties(page);
-            this._renderHeader().then(()=>{
-                this._parent.appendChild(this._head);
-                resolve();
-            });
-        });
+    render(context){
+        this._head = document.createElement('div');
+        this._head.className = 'header';
+
+        this._setProperties(context);
+        this._renderHeader(context);
+        this._parent.appendChild(this._head);
+
+        this._addListeners(context);
     }
 }
 

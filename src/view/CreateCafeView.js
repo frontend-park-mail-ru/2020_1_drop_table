@@ -20,10 +20,9 @@ export default class CreateCafeView{
 
     render(){
         this._app.innerHTML = '';
-        (new Header(this._app)).render().then(() => {
-            const cafeElement = document.createElement('div');
-            this._app.appendChild(cafeElement);
-            (new CafeComponent(cafeElement)).render(this._context);
-        });
+        (new Header(this._app)).render(this._context['header']);
+        const cafeElement = document.createElement('div');
+        this._app.appendChild(cafeElement);
+        (new CafeComponent(cafeElement)).render(this._context['cafe']);
     }
 }

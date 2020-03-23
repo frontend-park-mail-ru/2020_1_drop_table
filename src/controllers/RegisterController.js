@@ -12,16 +12,24 @@ export default class RegisterController{
 
     _makeContext(){
         return {
-            form: {
-                event: {
-                    type: 'submit',
-                    listener: this._formListener.bind(this)
-                }
+            header: {
+                type: 'auth',
+                avatar: {
+                    photo: null
+                },
             },
-            login: {
-                event: {
-                    type: 'click',
-                    listener: this._loginListener
+            register: {
+                form: {
+                    event: {
+                        type: 'submit',
+                        listener: this._formListener.bind(this)
+                    }
+                },
+                login: {
+                    event: {
+                        type: 'click',
+                        listener: this._loginListener
+                    }
                 }
             }
         }

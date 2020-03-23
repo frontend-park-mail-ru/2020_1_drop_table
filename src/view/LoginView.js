@@ -22,13 +22,12 @@ export default class LoginView{
         let loginContainer = document.createElement('div');
         loginContainer.className = 'loginContainer';
         this._app.appendChild(loginContainer);
-        (new LoginComponent(loginContainer)).render(this._context);
+        (new LoginComponent(loginContainer)).render(this._context['login']);
     }
 
     render(){
         this._app.innerHTML = '';
-        (new Header(this._app)).render('auth').then(() => {
-            this._renderLogin();
-        });
+        (new Header(this._app)).render(this._context['header']);
+        this._renderLogin();
     }
 }

@@ -1,12 +1,12 @@
 'use strict';
 
 import {handleImageUpload} from "../modules/imageUpload";
-import CafeListModel from "../models/CafeListModel";
-import CafeComponent from "../components/Cafe/Cafe";
+import {Router} from "../modules/Router";
 
 export default class CreateCafeController{
-    constructor(cafeList, createCafeView) {
+    constructor(cafeList, userModel, createCafeView) {
         this._cafeList = cafeList;
+        this._userModel = userModel;
         this._createCafeView = createCafeView;
     }
 
@@ -25,49 +25,84 @@ export default class CreateCafeController{
         cafe.create(photoInput.files[0]);
     }
 
-    _makeCreateCafeViewContext(){
-        return {
-            cafeName: 'Новое кафе',
-            imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',
-            event: {
-                type: 'change',
-                listener: handleImageUpload
-            },
-            form: {
-                formFields: [
-                    {
-                        type: 'text',
-                        id: 'name',
-                        data: ' ',
-                        labelData: 'Название',
-                        inputOption:'required',
+    _headerAvatarListener(){
+        Router.redirect('/Profile');
+    }
+
+    _checkUserData(){
+        return new Promise((resolve, reject) => {
+            if(this._userModel.id == null && this._userModel.email != null){
+                this._userModel.getOwner().then(() => {
+                    resolve();
+                });
+            } else {
+                resolve();
+            }
+        });
+    }
+
+    _makeContext(){
+        return new Promise((resolve, reject) => {
+            this._checkUserData().then(() => {
+                resolve({
+                    header:{
+                        type: null,
+                            avatar:{
+                            photo: this._userModel.photo,
+                                event:{
+                                type: 'click',
+                                    listener: this._headerAvatarListener.bind(this)
+                            }
+                        },
                     },
-                    {
-                        type: 'text',
-                        id: 'address',
-                        data: ' ',
-                        labelData: 'Адрес',
-                        inputOption:'required',
-                    },
-                    {
-                        type: 'text',
-                        id: 'description',
-                        data: ' ',
-                        labelData: 'Описание',
-                        inputOption:'required',
-                    },
-                ],
-                submitValue: 'Готово',
-                event: {
-                    type: 'submit',
-                    listener: this._addCafe.bind(this)
-                },
-            },
-        };
+                    cafe: {
+                        cafeName: 'Новое кафе',
+                            imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',
+                            event: {
+                            type: 'change',
+                                listener: handleImageUpload
+                        },
+                        form: {
+                            formFields: [
+                                {
+                                    type: 'text',
+                                    id: 'name',
+                                    data: ' ',
+                                    labelData: 'Название',
+                                    inputOption: 'required',
+                                },
+                                {
+                                    type: 'text',
+                                    id: 'address',
+                                    data: ' ',
+                                    labelData: 'Адрес',
+                                    inputOption: 'required',
+                                },
+                                {
+                                    type: 'text',
+                                    id: 'description',
+                                    data: ' ',
+                                    labelData: 'Описание',
+                                    inputOption: 'required',
+                                },
+                            ],
+                                submitValue: 'Готово',
+                                event: {
+                                type: 'submit',
+                                    listener: this._addCafe.bind(this)
+                            },
+                        },
+                    }
+                });
+            });
+        });
+
     }
 
     control(){
-        this._createCafeView.context = this._makeCreateCafeViewContext();
-        this._createCafeView.render();
+        this._makeContext().then((context) => {
+            this._createCafeView.context = context;
+            this._createCafeView.render();
+        });
     }
 }
