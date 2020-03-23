@@ -1,0 +1,64 @@
+
+body{
+    background-color:  #ffffff;
+}
+.cafe-card-container {
+    width: 30rem;
+    height: 20rem;
+    padding: 0;
+    position: relative;
+    background-color:  #ffffff;
+    min-height: max-content;
+    min-width: max-content;
+    margin-bottom: 5rem;
+    max-height: 425px;
+    max-width: 630px;
+    font-size: 2.5rem;
+}
+.cafe-card-container__image-container{
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+}
+.cafe-card-container__image-container_img{
+    float: left;
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    left: 0;
+    top: 0;
+}
+.cafe-card-container__name-container{
+    cursor: pointer;
+    float: right;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+    width: 60%;
+    min-height: 50%;
+    height: auto;
+    bottom: 0;
+    right: 0;
+    top: 50%;
+    position: absolute;
+    display: flex;
+
+}
+.cafe-card-container__name-container__strip{
+    width: 100%;
+    height: 12%;
+    background-color: #1e768f;
+
+}
+
+.cafe-card-container__name-container__text-field_h4{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: Montserrat;
+    color: #000000;
+    transform: translate(-50%, -50%);
+
+}
+
+

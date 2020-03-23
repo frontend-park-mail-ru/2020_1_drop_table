@@ -1,0 +1,27 @@
+{
+  "name": "untitled",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -p",
+    "watch": "webpack --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "handlebars-loader": "^1.7.1",
+    "raw-loader": "^4.0.0",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@jaames/iro": "^5.1.5",
+    "@sphinxxxx/color-conversion": "^2.2.2",
+    "css-loader": "^3.4.2",
+    "handlebars": "^4.7.3",
+    "style-loader": "^1.1.3"
+  }
+}

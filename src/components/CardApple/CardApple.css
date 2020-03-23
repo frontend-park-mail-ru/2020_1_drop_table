@@ -1,0 +1,171 @@
+
+.card {
+    border-radius: 0.5rem;
+    color: #000;
+    background: #fff;
+    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    flex-shrink: 0;
+    font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    font-weight: normal;
+
+    /*height: 35em;*/
+    /*width: calc(35em / 1.28);*/
+    height: 603px;
+    width: 408px;
+
+    -webkit-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
+}
+
+.card__header{
+    font-size: 1.5rem;
+    height: 15%;
+    width:100%;
+    display: flex;
+    justify-content: flex-start;
+}
+.card__header_img{
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    padding-left:2.5%;
+    height: 95%;
+    width: 18.25%;
+    object-fit: cover;
+}
+.card__header__field{
+    padding-left: 2.5%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 1rem;
+    width: 100%;
+    overflow: hidden;
+}
+.logo-text-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-fields-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    overflow: hidden;
+}
+.header-field{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: end;
+    margin-top: -10%;
+}
+.header-field_span_label{
+    font-size: 1rem;
+}
+.header-field_span_value{
+    font-size:1.25rem;
+}
+.card__strip{
+    height:27.5%;
+    width:100%;
+    background-color: #333333;
+
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.card__strip__fields{
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+}
+.card__header__fields__primary{
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+.card__header__fields__primary_spanValue{
+    font-size: 4.5rem;
+    margin-left: 1rem;
+}
+.card__header__fields__primary_spanLabel{
+    font-size: 1.5rem;
+    margin-left: 1rem;
+}
+.card__strip_img{
+    height: 100%;
+    width:100%;
+    object-fit: cover;
+}
+.card__header__fields{
+    overflow: hidden;
+    height: 10%;
+    width: 100%;
+    padding-bottom: 28.5%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card__header__fields__secondary{
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+}
+
+.card__header__fields__secondary_spanLabel{
+font-size: 1rem;
+
+}
+.card__header__fields__secondary_spanValue{
+    font-size: 1.5rem;
+
+}
+
+.card__header__fields__auxiliary{
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+ }
+
+.card__header__fields__auxiliary_spanLabel{
+    font-size: 0.9rem;
+}
+
+.card__header__fields__auxiliary_spanValue{
+    font-size: 1.4rem;
+}
+
+.card__footer {
+    /*background-color: #993758;*/
+    height: 25.5%;
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.card__footer__qr-container{
+    /*background-color: #3a9939;*/
+    align-items: center;
+    height:100%;
+    width: 37.6%;
+}
+.card__footer__qr-container_img{
+    width: 100%;
+    height: 100%;
+    /*object-fit: cover;*/
+}
+
+.card-with-submit{
+    position: sticky;
+    top: 10%;
+}
+
+.card-form__submit{
+    font-size: 2rem;
+    font-family: Montserrat;
+}
+
+

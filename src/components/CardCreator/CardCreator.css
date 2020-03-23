@@ -1,0 +1,101 @@
+
+.redactor{
+    display: flex;
+    flex-direction: column;
+}
+.card-redactor-container__card-form__decorate-text{
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-redactor-container__card-form__decorate-text_h4{
+    font-family: 'FuturaBookCTT Normal', arial;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.card-redactor-container__card-form__image-picker{
+    height: 112px;
+    width: 100%;
+    padding-bottom: 5%;
+    justify-content: space-around;
+    display: flex;
+}
+
+.card-redactor-container__card-form__image-picker_img{
+    max-height: 112px;
+    max-width: 330px;
+}
+.card-redactor-container__card-form__image-picker_img-avatar{
+    height: 100%;
+    width: 100%;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+@media ( min-width : 600px ) {
+    .card-redactor-container {
+        /*width: 100%;*/
+        display: -webkit-flex;
+        display: flex;
+        flex-wrap:wrap;
+        margin: 0 auto;
+        padding: 0 10%;
+        justify-content: space-between;
+    }
+    .card-redactor-container__card-form {
+        -webkit-flex: 1;
+        flex: 1;
+        background: none;
+    }
+
+    .card-redactor-container__card-model {
+        margin-top: 15%;
+    }
+
+
+}
+
+.card-color-pickers-container{
+    display: flex;
+    margin-right: 1rem ;
+    margin-left: 1rem ;
+    flex-direction: column;
+}
+
+.card-color-pickers-container_color-picker{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem ;
+    margin-left: 0.5rem ;
+    color: #000;
+    background: #fff;
+    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    width: -moz-available;
+}
+
+
+.card-color-pickers-container_color-picker_span{
+    font-size: 1rem;
+    font-family: Montserrat;
+    justify-self: center;
+}
+.card-color-pickers-container_color-picker_container{
+    justify-self: center;
+}
+.center-picker{
+    display: flex;
+    justify-content: space-around;
+
+    margin: 1rem;
+}
+
+.card-redactor-container__card-form__image-picker__input{
+    width: 1px;
+}
+
+

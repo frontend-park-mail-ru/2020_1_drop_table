@@ -1,0 +1,30 @@
+<header class="page-header">
+    <div class="page-header__logo-container">
+        <img class="page-header__logo-container_img" src="{{logoImageSrc}}"/>
+    </div>
+
+    <nav class="page-header__nav">
+        <ul class="page-header__nav__menu">
+            {{#each menuList}}
+            <li class="page-header__nav__menu_list">
+                <a class="page-header__nav__menu_list_a" href={{href}}>
+                    <span class="page-header__nav__menu_list_span">{{text}}</span>
+                </a>
+            </li>
+            {{/each}}
+        </ul>
+    </nav>
+    <div class="page-header__header-right">
+    {{#if hasAvatar}}
+        <div class="page-header__avatar">
+            <span class="page-header__avatar_span">Мой профиль</span>
+            <img class="page-header__avatar_img" src="{{avatarImageSrc}}">
+        </div>
+    {{/if}}
+
+    {{#if hasExit}}
+        <h4 class="page-header__h4">Выйти из аккаунта</h4>
+    {{/if}}
+    </div>
+
+</header>
