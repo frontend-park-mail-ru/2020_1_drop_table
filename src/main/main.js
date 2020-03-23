@@ -15,6 +15,9 @@ import LoginController from "../controllers/LoginController";
 import RegisterView from "../view/RegisterView";
 import RegisterController from "../controllers/RegisterController";
 import CafeListController from "../controllers/CafeListController";
+import CafePageController from "../controllers/CafePageContoller";
+import CafePageView from "../view/CafePageView";
+
 
 let app = document.body;
 
@@ -57,12 +60,14 @@ function initBaseRoutes(router) {
     });
 
     router.addRoute('/Cafe', (id) => {
-        console.log('callback Cafe with id', id);
-        app.innerHTML = '';
-        //(new Header(app)).render().then(() => {
-            CreateCafePage(app, id);
-        //});
+        const cafeListModel = new CafeListModel();
+        const userModel = new UserModel();
+        const cafePageView = new CafePageView();
+        const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
+        cafePageController.control(id);
     });
+
+
 }
 
 let router = new Router;

@@ -23,6 +23,13 @@ export default class CafeModel {
         this._loadCafe();
     }
 
+    get context(){
+        console.log('in context');
+        let cafeListData = sessionStorage.getItem('CafeList');
+        const cafeData = JSON.parse(cafeListData)[this.listId];
+        return cafeData;
+    }
+
     get listId(){return this._listId}
     get address(){return this._address}
     get closeTime(){return this._closeTime}
@@ -154,3 +161,4 @@ export default class CafeModel {
         });
     }
 }
+

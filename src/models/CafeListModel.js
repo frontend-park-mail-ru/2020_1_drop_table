@@ -12,6 +12,18 @@ export default class CafeListModel{
         const cafeListData = this._loadCafeList();
         this._constructCafe(cafeListData);
     }
+    getCafeById(id){
+        console.log('cafe get by id');
+        console.log(this._cafeModelsList);
+
+        return this._cafeModelsList.find((cafe)=>{
+            console.log(cafe.id, ' ', id);
+            if ( cafe.id == id ){
+                return true;
+            }
+            return false;
+        })
+    }
 
     _loadCafeList(){
         let cafeListData = sessionStorage.getItem('CafeList');
@@ -77,4 +89,6 @@ export default class CafeListModel{
             )
         });
     }
+
 }
+
