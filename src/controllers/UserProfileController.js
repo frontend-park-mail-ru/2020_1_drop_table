@@ -39,13 +39,6 @@ export default class UserProfileController{
                     form: {
                         formFields: [
                             {
-                                type: 'hidden',
-                                id: 'userId',
-                                data:  this._userModel.id,
-                                labelData: '',
-                                inputOption: 'readonly',
-                            },
-                            {
                                 type: 'text',
                                 id: 'name',
                                 data:  this._userModel.name,
