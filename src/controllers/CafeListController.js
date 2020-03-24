@@ -14,6 +14,10 @@ export default class CafeListController{
         Router.redirect('/Profile');
     }
 
+    _cafeListButtonListener(){
+        Router.redirect('/createCafe')
+    }
+
     _checkCafeListModel(){
         return new Promise((resolve, reject) => {
             if(this._cafeListModel.isEmpty) {
@@ -56,6 +60,14 @@ export default class CafeListController{
                             }
                         },
                     };
+
+                    cafeListContext['button'] = {
+                        event:{
+                            type: 'click',
+                            listener: this._cafeListButtonListener.bind(this)
+                        }
+                    };
+
                     resolve(cafeListContext);
                 });
             });
