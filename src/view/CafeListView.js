@@ -20,10 +20,7 @@ export default class CafeListView{
 
     _renderCafes(context){
         const cafesContainer = document.createElement('div');
-        const cafesContainerComp = new CafesContainerComponent(cafesContainer);
-
-        cafesContainerComp.data = JSON.parse(JSON.stringify(context));
-        cafesContainerComp.render();
+        (new CafesContainerComponent(cafesContainer)).render(context);
         this._app.appendChild(cafesContainer);
 
         let buttonAddCafe = document.getElementsByClassName('cafes-page__add-cafe-field__add-button').item(0);
@@ -34,7 +31,6 @@ export default class CafeListView{
 
     render() {
         this._app.innerHTML = '';
-        console.log('context', this._context['header']);
         (new Header(this._app)).render(this._context['header']);
         this._renderCafes(this._context['cafeList']);
     }

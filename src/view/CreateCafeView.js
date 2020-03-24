@@ -1,7 +1,6 @@
 'use strict';
 
 import Header from "../components/MainHeader/Header";
-import {createNewCafePage} from "../components/AddCafePage/Creation";
 import CafeComponent from "../components/Cafe/Cafe";
 
 export default class CreateCafeView{

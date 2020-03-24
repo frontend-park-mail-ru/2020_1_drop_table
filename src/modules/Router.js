@@ -1,5 +1,3 @@
-import Header from "../components/MainHeader/Header";
-import {createCafes} from "../components/MyCafePage/Creation";
 import CafeListModel from "../models/CafeListModel";
 import CafeListView from "../view/CafeListView";
 import UserModel from "../models/UserModel";
@@ -47,6 +45,8 @@ export class Router {
         const secondSlashPos = url.slice(1,-1).search('/');
         let currentUrl = url;
         let paramsUrl = null;
+        const getParams=window.location.search.replace( '?', '');
+        console.log(getParams)
         if( secondSlashPos !== -1) {
             currentUrl = url.slice(1, secondSlashPos + 1);
             paramsUrl = url.slice(secondSlashPos + 2, url.length);
@@ -60,10 +60,10 @@ export class Router {
             }
         });
         if (paramsUrl){//TODO проверка в вайтлисте(мапа)
-            route.callback(paramsUrl);
+            route.callback(paramsUrl,getParams);
         }
         else{
-            route.callback();
+            route.callback(getParams);
         }
 
     }
