@@ -5,28 +5,27 @@ import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";
 
 export class CafesContainerComponent {
+
     constructor(parent = document.body) {
         this._parent = parent;
-        console.log('parent', this._parent);
+        this._firstColumn = null;
+        this._secondColumn = null;
     }
 
-    get data() {
-        return this._data;
+    _makeData(context){
+        let center = context.length / 2;
+        this._firstColumn = context.slice(0, center);
+        this._secondColumn = context.slice(center);
     }
 
-    set data(d) {
-        this._data = d;
-        let center = d.length / 2;
-        this._firstColumn = d.slice(0, center);
-        this._secondColumn = d.slice(center);
-    }
-   _cropName(name){
+    _cropName(name){
         if(name.length>10){
             return name.slice(0,8).concat('...')
         }
         return name;
     }
-    _renderTemplate() {
+
+    _renderTemplate(context) {
 
         let fc = this._firstColumn.map(({photo = photo, name = name, id = id} = {}) => {
 
@@ -39,16 +38,18 @@ export class CafesContainerComponent {
 
         this._parent.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 
-        for(let i = 0; i < this.data.length; i++){
+        for(let i = 0; i < context.length; i++){
             let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
             let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
             let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
+
             cardImage.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1, cardIdStr.length);
                 Router.redirect(`/Cafe/${cardId}`);
 
             });
+
             cardName.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1, cardIdStr.length);
@@ -58,9 +59,9 @@ export class CafesContainerComponent {
         }
     }
 
-    render() {
-        return this._renderTemplate();
-
+    render(context) {
+        this._makeData(context);
+        this._renderTemplate(context);
     }
 
 }

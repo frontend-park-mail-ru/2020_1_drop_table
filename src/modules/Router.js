@@ -1,5 +1,3 @@
-import Header from "../components/MainHeader/Header";
-import {createCafes} from "../components/MyCafePage/Creation";
 import CafeListModel from "../models/CafeListModel";
 import CafeListView from "../view/CafeListView";
 import UserModel from "../models/UserModel";
