@@ -19,10 +19,10 @@ export default class RegisterComponent{
             context['login']['event']['listener']);
     }
 
-    _renderTopBar(){
+    _renderTopBar(topBarText){
         let topBar = document.createElement('div');
         topBar.className = 'decorateContainer';
-        topBar.innerHTML = RegisterTemplate({name: 'Регистрация'});
+        topBar.innerHTML = RegisterTemplate({name: topBarText});
         this._parent.appendChild(topBar);
     }
 
@@ -39,8 +39,8 @@ export default class RegisterComponent{
         this._form = form.firstElementChild;
     }
 
-    render(context){
-        this._renderTopBar();
+    render(context,topBarText){
+        this._renderTopBar(topBarText);
         this._renderForm();
         this._addListeners(context);
     }
