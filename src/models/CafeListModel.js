@@ -14,12 +14,8 @@ export default class CafeListModel{
     }
 
     getCafeById(id){
-        console.log('cafe get by id');
-        console.log(this._cafeModelsList);
-
-        return this._cafeModelsList.find((cafe)=>{
-            console.log(cafe.id, ' ', id);
-            return cafe.id === id;
+        return this._cafeModelsList.find((cafe) => {
+            return cafe.id == id;
         })
     }
 

@@ -18,8 +18,8 @@ export async function ajaxForm(route, method, formData, callback) {
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;
     }
-    const req = new Request(route, reqBody);
 
+    const req = new Request(route, reqBody);
     let responseJson = null;
 
     try {

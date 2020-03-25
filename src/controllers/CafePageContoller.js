@@ -17,6 +17,8 @@ export default class CafePageController {
         await this._checkUserModel();
 
         const cafe = this._cafeListModel.getCafeById(id);
+        console.log(cafe);
+
         let cafeContext = {
             'cafe': cafe.context
         };
