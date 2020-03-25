@@ -17,24 +17,41 @@ export default class UserModel {
         this._getUser();
     }
 
-    get editedAt(){return this._editedAt;}
-    get email(){return this._email;}
-    get id(){return this._id;}
-    get name(){return this._name;}
-    get password(){return this._password;}
-    get photo(){return this._photo;}
+    get editedAt() {
+        return this._editedAt;
+    }
 
-    set email(email){
+    get email() {
+        return this._email;
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    get name() {
+        return this._name;
+    }
+
+    get password() {
+        return this._password;
+    }
+
+    get photo() {
+        return this._photo;
+    }
+
+    set email(email) {
         this._email = email.toString();
         this._saveUser();
     }
 
-    set name(name){
+    set name(name) {
         this._name = name.toString();
         this._saveUser();
     }
 
-    set password(password){
+    set password(password) {
         this._password = password.toString();
         this._saveUser();
     }
@@ -61,7 +78,7 @@ export default class UserModel {
         sessionStorage.setItem("user", JSON.stringify(obj));
     }
 
-    _makeFormData(photo){
+    _makeFormData(photo) {
         let formData = new FormData();
         let data = {
             'name': this.name,
@@ -71,8 +88,7 @@ export default class UserModel {
 
         if (photo) {
             formData.append('photo', photo);
-        }
-        else {
+        } else {
             data = {
                 'name': this.name,
                 'email': this.email,
@@ -85,7 +101,7 @@ export default class UserModel {
         return formData;
     }
 
-    _filUserData(data){
+    _filUserData(data) {
         this._editedAt = data['editedAt'];
         this._email = data['email'];
         this._id = data['id'];
@@ -94,9 +110,9 @@ export default class UserModel {
         this._photo = data['photo'];
     }
 
-    getOwner(){
+    getOwner() {
         return new Promise((resolve, reject) => {
-            ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+            ajax(constants.PATH + '/api/v1/getCurrentOwner/',
                 'GET',
                 {},
                 (response) => {
@@ -112,11 +128,11 @@ export default class UserModel {
         });
     }
 
-    editOwner(photo = null){
+    editOwner(photo = null) {
         const formData = this._makeFormData(photo);
 
         return new Promise((resolve, reject) => {
-            ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
+            ajaxForm(constants.PATH + '/api/v1/owner/' + this.id,
                 'PUT',
                 formData,
                 (response) => {
@@ -133,7 +149,7 @@ export default class UserModel {
 
     register() {
         return new Promise((resolve, reject) => {
-            ajax(constants.PATH + "/api/v1/owner",
+            ajax(constants.PATH + "/api/v1/staff",
                 "POST",
                 {"name": this.name, "email": this.email, "password": this.password},
                 (response) => {
@@ -157,6 +173,24 @@ export default class UserModel {
                         resolve();
                     }
                     reject(response.errors[0].message); // TODO проверить работу вызова ошибки при некорректном пользователе
+                });
+        });
+    }
+
+
+    addStaff(uuid) {
+        return new Promise((resolve, reject) => {
+            console.log(uuid)
+            const requestUrl = "/api/v1/add_staff?uuid=" + uuid
+            ajax(constants.PATH + requestUrl,
+                "POST",
+                {"name": this.name, "email": this.email, "password": this.password},
+                (response) => {
+                    if (response.errors === null) {
+                        Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
+                        resolve();
+                    }
+                    reject(response.errors[0].message);
                 });
         });
     }
