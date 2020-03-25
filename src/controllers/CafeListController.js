@@ -18,66 +18,58 @@ export default class CafeListController{
         Router.redirect('/createCafe')
     }
 
-    _checkCafeListModel(){
-        return new Promise((resolve, reject) => {
-            if(this._cafeListModel.isEmpty) {
-                this._cafeListModel.cafesList().then(()=>{
-                    resolve();
-                });
-            } else {
-                resolve();
+    async _checkCafeListModel(){
+        if(this._cafeListModel.isEmpty) {
+            try {
+                await this._cafeListModel.cafesList();
+            } catch (exception) {
+                alert(exception[0].message); //TODO обработка исключения
             }
-        });
+        }
     }
 
-    _checkUserData(){
-        return new Promise((resolve, reject) => {
-            if (this._userModel.id == null && this._userModel.email != null){
-                this._userModel.getOwner().then(() => {
-                    resolve();
-                });
-            } else {
-                resolve();
+
+    async _checkUserData(){
+        if (this._userModel.id == null && this._userModel.email != null) {
+            try {
+                await this._userModel.getOwner();
+            } catch (exception) {
+                alert(exception[0].message); //TODO обработка исключения
             }
-        });
+        }
     }
 
-    _makeContext(){
-        return new Promise((resolve, reject) => {
-            this._checkCafeListModel().then(()=>{
-                this._checkUserData().then(() => {
-                    let cafeListContext = {
-                        cafeList: this._cafeListModel.context
-                    };
+    async _makeContext(){
+        await this._checkCafeListModel();
+        await this._checkUserData();
 
-                    cafeListContext['header'] = {
-                        type: null,
-                        avatar:{
-                            photo: this._userModel.photo,
-                            event:{
-                                type: 'click',
-                                listener: this._headerAvatarListener.bind(this)
-                            }
-                        },
-                    };
+        let cafeListContext = {
+            cafeList: this._cafeListModel.context
+        };
 
-                    cafeListContext['button'] = {
-                        event:{
-                            type: 'click',
-                            listener: this._cafeListButtonListener.bind(this)
-                        }
-                    };
+        cafeListContext['header'] = {
+            type: null,
+            avatar:{
+                photo: this._userModel.photo,
+                event:{
+                    type: 'click',
+                    listener: this._headerAvatarListener.bind(this)
+                }
+                },
+        };
 
-                    resolve(cafeListContext);
-                });
-            });
-        });
+        cafeListContext['button'] = {
+            event:{
+                type: 'click',
+                listener: this._cafeListButtonListener.bind(this)
+            }
+        };
+
+        return cafeListContext;
     }
 
-    control(){
-        this._makeContext().then((context) => {
-            this._cafeListView.context = context;
-            this._cafeListView.render();
-        });
+    async control(){
+        this._cafeListView.context = await this._makeContext();
+        this._cafeListView.render();
     }
 }

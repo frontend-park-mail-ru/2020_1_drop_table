@@ -9,12 +9,17 @@ export default class LoginController {
         this._loginView = loginView;
     }
 
-    _submitListener(e){
+    async _submitListener(e){
         e.preventDefault();
         const form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
         this._userModel.email = form.elements['email'].value;
         this._userModel.password = form.elements['password'].value;
-        this._userModel.login().then(()=>{}, (errorMessage) => alert(errorMessage)); //TODO
+
+        try{
+            await this._userModel.login();
+        } catch (exception) {
+            alert(exception); //TODO Обработка ошибок при логине
+        }
     }
 
     _registerListener(){

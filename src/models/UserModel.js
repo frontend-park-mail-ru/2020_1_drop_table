@@ -57,7 +57,6 @@ export default class UserModel {
             "photo": this._photo
         };
 
-
         sessionStorage.setItem("user", JSON.stringify(obj));
     }
 
@@ -94,70 +93,62 @@ export default class UserModel {
         this._photo = data['photo'];
     }
 
-    getOwner(){
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH+'/api/v1/getCurrentOwner/',
-                'GET',
-                {},
-                (response) => {
-                    if (response.errors === null) {
-                        this._filUserData(response.data);
-                        this._saveUser();
-                        resolve();
-                    } else {
-                        reject(response.errors); //TODO showError
-                    }
+    async getOwner(){
+        await ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+            'GET',
+            {},
+            (response) => {
+                if (response.errors === null) {
+                    this._filUserData(response.data);
+                    this._saveUser();
+                } else {
+                    throw response.errors;
                 }
-            );
-        });
+            }
+        );
     }
 
-    editOwner(photo = null){
+    async editOwner(photo = null){
         const formData = this._makeFormData(photo);
-
-        return new Promise((resolve, reject) => {
-            ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
-                'PUT',
-                formData,
-                (response) => {
-                    if (response.errors === null) {
-                        this._filUserData(response.data);
-                        this._saveUser();
-                        resolve();
-                    }
-                    reject(response.errors);
+        await ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
+            'PUT',
+            formData,
+            (response) => {
+                if (response.errors === null) {
+                    this._filUserData(response.data);
+                    this._saveUser();
+                } else {
+                    throw response.errors;
                 }
-            );
+            }
+        );
+
+    }
+
+    async register() {
+        await ajax(constants.PATH + "/api/v1/owner",
+            "POST",
+            {"name": this.name, "email": this.email, "password": this.password},
+            (response) => {
+            if (response.errors === null) {
+                Router.redirect("/myCafe");
+            } else {
+                throw response.errors;
+            }
         });
     }
 
-    register() {
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH + "/api/v1/owner",
-                "POST",
-                {"name": this.name, "email": this.email, "password": this.password},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect("/myCafe");
-                        resolve();
-                    }
-                    reject(response.errors[0].message);
-                });
+    async login() {
+        await authAjax("POST",
+            constants.PATH + "/api/v1/owner/login",
+            {"email": this.email, "password": this.password},
+            (response) => {
+            if (response.errors === null) {
+                Router.redirect("/myCafe");
+            } else {
+                throw response.errors;
+            }
         });
     }
 
-    login() {
-        return new Promise((resolve, reject) => {
-            authAjax("POST",
-                constants.PATH + "/api/v1/owner/login",
-                {"email": this.email, "password": this.password},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect("/myCafe");
-                        resolve();
-                    }
-                    reject(response.errors[0].message); // TODO проверить работу вызова ошибки при некорректном пользователе
-                });
-        });
-    }
 }

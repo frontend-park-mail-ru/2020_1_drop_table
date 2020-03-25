@@ -19,10 +19,7 @@ export default class CafeListModel{
 
         return this._cafeModelsList.find((cafe)=>{
             console.log(cafe.id, ' ', id);
-            if ( cafe.id == id ){
-                return true;
-            }
-            return false;
+            return cafe.id === id;
         })
     }
 
@@ -68,26 +65,22 @@ export default class CafeListModel{
         return cafe;
     }
 
-    cafesList() {
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH + '/api/v1/cafe',
-                'GET',
-                {},
-                (response) => {
-                    if(response.data == null){
-                        Router.redirect('/createCafe');
-                        resolve();
+    async cafesList() {
+        await ajax(constants.PATH + '/api/v1/cafe',
+            'GET',
+            {},
+            (response) => {
+                if(response.data == null){
+                    Router.redirect('/createCafe');
+                } else {
+                    if (response.errors === null) {
+                        this._saveCafeList(response.data);
+                        this._constructCafe(response.data);
                     } else {
-                        if (response.errors === null) {
-                            this._saveCafeList(response.data);
-                            this._constructCafe(response.data);
-                            resolve();
-                        } else {
-                            reject(response.errors[0].message); //TODO showError
-                        }
+                        throw response.errors;
                     }
                 }
-            )
-        });
+            }
+        )
     }
 }

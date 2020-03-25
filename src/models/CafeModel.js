@@ -126,37 +126,33 @@ export default class CafeModel {
         return formData;
     }
 
-    getCafe(){
-        return new Promise((resolve) => {
-            authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
-                null,
-                (response) => {
-                    if (response.errors === null) {
-                        this._fillCafeData(response.data);
-                        this._saveCafe();
-                    } else {
-                        alert(response.errors[0].message); //TODO showError
-                    }
-                });
-        });
+    async getCafe(){
+        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
+            null,
+            (response) => {
+                if (response.errors === null) {
+                    this._fillCafeData(response.data);
+                    this._saveCafe();
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
     }
 
-    create(photo) {
-        return new Promise((resolve, reject) => {
-            ajaxForm(constants.PATH + '/api/v1/cafe',
-                'POST',
-                this.getFormData(),
-                (response) => {
-                    if (response.errors === null) {
-                        this._fillCafeData(response.data);
-                        this._saveCafe();
-                        Router.redirect('/myCafe');
-                        resolve();
-                    } else {
-                        reject(response.errors[0].message); //TODO showError
-                    }
+    async create(photo) {
+        await ajaxForm(constants.PATH + '/api/v1/cafe',
+            'POST',
+            this.getFormData(),
+            (response) => {
+                if (response.errors === null) {
+                    this._fillCafeData(response.data);
+                    this._saveCafe();
+                    Router.redirect('/myCafe');
+                } else {
+                    throw response.errors;
                 }
-            );
-        });
+            }
+        );
     }
 }
