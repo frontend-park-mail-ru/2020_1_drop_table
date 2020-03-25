@@ -6,10 +6,11 @@ import {CardAppleComponent} from "../components/CardApple/CardApple";
 import '../components/CardCreator/CardCreator.css'
 import colorPicker from "../utils/colorPicker";
 import {picker} from '../utils/cardRedactorUtils'
+import BaseView from "./BaseView";
 
-export default class CardRedactorView {
+export default class CardRedactorView extends BaseView{
     constructor(app = document.body) {
-        this._app = app;
+        super(app);
         this._context = null;
         this._appleCard = null;
         let container = document.getElementsByClassName('card-creator-container').item(0);
@@ -22,14 +23,6 @@ export default class CardRedactorView {
         this.colorWheelBackground = new colorPicker.ColorPicker("#background-color", picker);
         this.colorWheelForeground = new colorPicker.ColorPicker("#foreground-color", picker);
         this.colorWheelLabel = new colorPicker.ColorPicker("#label-color", picker);
-    }
-
-    get context() {
-        return this._context
-    }
-
-    set context(context) {
-        this._context = context;
     }
 
     render() {

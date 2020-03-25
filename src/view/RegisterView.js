@@ -2,22 +2,13 @@
 
 import RegisterComponent from "../components/Register/Register";
 import Header from "../components/MainHeader/Header";
+import BaseView from "./BaseView";
 
-export default class RegisterView{
-    constructor(app,topBarText) {
-        this._app = app;
-        this._context = null;
-        this._topBarText=topBarText
+export default class RegisterView extends BaseView {
+    constructor(app) {
+        super(app);
+
     }
-
-    set context(context){
-        this._context = context;
-    }
-
-    get context(){
-        return this._context;
-    }
-
     _renderRegister(){
         let registerContainer = document.createElement('div');
         registerContainer.className = 'registerContainer';

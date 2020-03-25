@@ -2,20 +2,12 @@
 
 import LoginComponent from "../components/Login/Login";
 import Header from "../components/MainHeader/Header";
+import BaseView from "./BaseView";
 
-export default class LoginView{
+export default class LoginView extends BaseView {
 
     constructor(app = document.body) {
-        this._app = app;
-        this._context = null;
-    }
-
-    set context(context){
-        this._context = context;
-    }
-
-    get context(){
-        return this._context;
+        super(app);
     }
 
     _renderLogin(){

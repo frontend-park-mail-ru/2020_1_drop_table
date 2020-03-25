@@ -3,19 +3,11 @@ import {CafePageComponent} from "../components/CafePageComponent/CafePage";
 import CardRedactorController from "../controllers/CardRedactorController";
 import CardRedactorView from "./CardRedactorView";
 import {AppleCardModel} from "../models/AppleCardModel";
+import BaseView from "./BaseView";
 
-export default class CafePageView{
+export default class CafePageView extends BaseView {
     constructor(app = document.body) {
-        this._app = app;
-        this._context = null;
-    }
-
-    get context(){
-        return this._context
-    }
-
-    set context(context){
-        this._context = context;
+        super(app);
     }
 
     render(){
