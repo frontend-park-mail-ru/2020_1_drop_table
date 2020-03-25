@@ -1,21 +1,14 @@
 'use strict';
 
+import BaseView from "./BaseView";
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer";
 import {Router} from "../modules/Router";
 import Header from "../components/MainHeader/Header";
 
-export default class CafeListView{
+
+export default class CafeListView extends BaseView{
     constructor(app = document.body) {
-        this._app = app;
-        this._context = null;
-    }
-
-    get context(){
-        return this._context;
-    }
-
-    set context(context){
-        this._context = context;
+        super(app);
     }
 
     _renderCafes(context){

@@ -1,11 +1,8 @@
-import Header from '../components/MainHeader/Header';
-import {CreateCafePage} from '../components/CafePage/CafePage'
 import {Router} from "../modules/Router";
 
 import UserProfileView from '../view/UserProfileView'
 import UserProfileController from "../controllers/UserProfileController";
 import UserModel from "../models/UserModel";
-import CafeModel from "../models/CafeModel";
 import CafeListModel from "../models/CafeListModel";
 import CafeListView from "../view/CafeListView";
 import CreateCafeView from "../view/CreateCafeView";

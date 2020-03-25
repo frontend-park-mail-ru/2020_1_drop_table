@@ -2,19 +2,11 @@
 
 import RegisterComponent from "../components/Register/Register";
 import Header from "../components/MainHeader/Header";
+import BaseView from "./BaseView";
 
-export default class RegisterView{
+export default class RegisterView extends BaseView {
     constructor(app) {
-        this._app = app;
-        this._context = null;
-    }
-
-    set context(context){
-        this._context = context;
-    }
-
-    get context(){
-        return this._context;
+        super(app);
     }
 
     _renderRegister(){
