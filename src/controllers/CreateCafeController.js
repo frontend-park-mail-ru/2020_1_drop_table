@@ -5,7 +5,7 @@ import {Router} from "../modules/Router";
 
 export default class CreateCafeController{
     constructor(cafeList, userModel, createCafeView) {
-        this._cafeList = cafeList;
+        this._cafeListModel = cafeList;
         this._userModel = userModel;
         this._createCafeView = createCafeView;
     }
@@ -16,12 +16,11 @@ export default class CreateCafeController{
         const photoInput = document.getElementById('upload');
         const image = document.getElementById('image').getAttribute('src');
 
-        const cafe = this._cafeList.createCafe();
+        const cafe = this._cafeListModel.createCafe();
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
         cafe.photo = image;
-
 
         try {
             await cafe.create(photoInput.files[0]);
@@ -34,23 +33,12 @@ export default class CreateCafeController{
         Router.redirect('/Profile');
     }
 
-    async _checkUserData(){
-        if(this._userModel.id == null && this._userModel.email != null) {
-            try {
-                await this._userModel.getOwner();
-            } catch (exception) {
-                alert(exception[0].message); //TODO сделать обработку исключения
-            }
-        }
-    }
-
     async _makeContext(){
-        await this._checkUserData();
         return {
             header:{
                 type: null,
                 avatar: {
-                    photo: this._userModel.photo,
+                    photo: await this._userModel.photo,
                     event: {
                         type: 'click',
                         listener: this._headerAvatarListener.bind(this)

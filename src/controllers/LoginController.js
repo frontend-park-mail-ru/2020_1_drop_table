@@ -18,7 +18,7 @@ export default class LoginController {
         try{
             await this._userModel.login();
         } catch (exception) {
-            alert(exception); //TODO Обработка ошибок при логине
+            alert(exception[0].message); //TODO Обработка ошибок при логине
         }
     }
 

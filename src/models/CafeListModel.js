@@ -13,10 +13,34 @@ export default class CafeListModel{
         this._constructCafe(cafeListData);
     }
 
+    get context(){
+        return new Promise(async (resolve) => {
+            await this._checkCafeList();
+            const cafeList = sessionStorage.getItem('CafeList');
+            if(cafeList){
+                resolve(JSON.parse(cafeList));
+            }
+            resolve(null);
+        });
+    }
+
+    get isEmpty(){
+        return new Promise(async (resolve) => {
+            await this._checkCafeList();
+            resolve(!this._cafeModelsList.length);
+        });
+    }
+
     getCafeById(id){
         return this._cafeModelsList.find((cafe) => {
-            return cafe.id == id;
-        })
+            return cafe._id == id;
+        });
+    }
+
+    async _checkCafeList(data){
+        if(!data){
+            await this.cafesList();
+        }
     }
 
     _loadCafeList(){
@@ -39,18 +63,6 @@ export default class CafeListModel{
             const cafe = new CafeModel(id);
             this._cafeModelsList.push(cafe);
         });
-    }
-
-    get context(){
-        const cafeList = sessionStorage.getItem('CafeList');
-        if(cafeList){
-            return(JSON.parse(cafeList));
-        }
-        return [];
-    }
-
-    get isEmpty(){
-        return !this._cafeModelsList.length
     }
 
     createCafe(){

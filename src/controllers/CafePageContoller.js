@@ -13,9 +13,6 @@ export default class CafePageController {
     }
 
     async _makeContext(id){
-        await this._checkCafeModel();
-        await this._checkUserModel();
-
         const cafe = this._cafeListModel.getCafeById(id);
         console.log(cafe);
 
@@ -26,7 +23,7 @@ export default class CafePageController {
         cafeContext['header'] = {
             type: null,
             avatar: {
-                photo: this._userModel.photo,
+                photo: await this._userModel.photo,
                 event: {
                     type: 'click',
                     listener: this._headerAvatarListener.bind(this)
@@ -35,22 +32,6 @@ export default class CafePageController {
         };
 
         return cafeContext;
-    }
-
-    async _checkUserModel(){
-        if (this._userModel.id == null && this._userModel.email != null) {
-            try {
-                await this._userModel.getOwner();
-            } catch (exception) {
-                alert(exception[0].message); //TODO сделать обработку исключения
-            }
-        }
-    }
-
-    async _checkCafeModel(){
-        if (this._cafeListModel.isEmpty) {
-            await this._cafeListModel.cafesList();
-        }
     }
 
     async control(id){

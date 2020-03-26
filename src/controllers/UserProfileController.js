@@ -18,7 +18,6 @@ export default class UserProfileController{
         const photo = photoInput.files[0];
 
         if (validateForm(form)) {
-            await this._checkUserData();
             this._userModel.name = form.elements['name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
@@ -40,7 +39,6 @@ export default class UserProfileController{
     }
 
     async _makeContext() {
-        await this._checkUserData();
         return {
             header: {
                 type: 'profile',
@@ -59,8 +57,8 @@ export default class UserProfileController{
                 }
             },
             profile: {
-                imgSrc: (this._userModel.photo !== '')
-                    ? this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                imgSrc: (await this._userModel.photo !== '')
+                    ? await this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -70,28 +68,28 @@ export default class UserProfileController{
                         {
                             type: 'text',
                             id: 'name',
-                            data: this._userModel.name,
+                            data: await this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
                         },
                         {
                             type: 'email',
                             id: 'email',
-                            data: this._userModel.email,
+                            data: await this._userModel.email,
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
                             type: 'password',
                             id: 'password',
-                            data: this._userModel.password,
+                            data: await this._userModel.password,
                             labelData: 'Пароль',
                             inputOption: 'required'
                         },
                         {
                             type: 'password',
                             id: 're-password',
-                            data: this._userModel.password,
+                            data: await this._userModel.password,
                             labelData: 'Повторите пароль',
                             inputOption: 'required'
                         },
@@ -104,16 +102,6 @@ export default class UserProfileController{
                 },
             }
         };
-    }
-
-    async _checkUserData(){
-        if(this._userModel.id == null){
-            try {
-                await this._userModel.getOwner();
-            } catch (exception) {
-                alert(exception[0].message); //TODO Сделать обработку исключения
-            }
-        }
     }
 
     async control(){

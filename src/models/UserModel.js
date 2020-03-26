@@ -18,27 +18,45 @@ export default class UserModel {
     }
 
     get editedAt() {
-        return this._editedAt;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._editedAt);
+            resolve(this._editedAt);
+        });
     }
 
     get email() {
-        return this._email;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._email);
+            resolve(this._email);
+        });
     }
 
     get id() {
-        return this._id;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._id);
+            resolve(this._id);
+        });
     }
 
     get name() {
-        return this._name;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._name);
+            resolve(this._name);
+        });
     }
 
     get password() {
-        return this._password;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._password);
+            resolve(this._password);
+        });
     }
 
     get photo() {
-        return this._photo;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._photo);
+            resolve(this._photo);
+        });
     }
 
     set email(email) {
@@ -54,6 +72,12 @@ export default class UserModel {
     set password(password) {
         this._password = password.toString();
         this._saveUser();
+    }
+
+    async _checkUser(data){
+        if(!data){
+            await this.getOwner();
+        }
     }
 
     _getUser() {
@@ -77,22 +101,22 @@ export default class UserModel {
         sessionStorage.setItem("user", JSON.stringify(obj));
     }
 
-    _makeFormData(photo) {
+    async _makeFormData(photo) {
         let formData = new FormData();
         let data = {
-            'name': this.name,
-            'email': this.email,
-            'password': this.password,
+            'name': await this.name,
+            'email': await this.email,
+            'password': await this.password,
         };
 
         if (photo) {
             formData.append('photo', photo);
         } else {
             data = {
-                'name': this.name,
-                'email': this.email,
-                'password': this.password,
-                'photo': this.photo
+                'name': await this.name,
+                'email': await this.email,
+                'password': await this.password,
+                'photo': await this.photo
             }
         }
 
@@ -125,8 +149,8 @@ export default class UserModel {
     }
 
     async editOwner(photo = null){
-        const formData = this._makeFormData(photo);
-        await ajaxForm(constants.PATH+'/api/v1/owner/' + this.id,
+        const formData = await this._makeFormData(photo);
+        await ajaxForm(constants.PATH+'/api/v1/owner/' + await this.id,
             'PUT',
             formData,
             (response) => {
@@ -144,7 +168,7 @@ export default class UserModel {
     async register() {
         await ajax(constants.PATH + "/api/v1/owner",
             "POST",
-            {"name": this.name, "email": this.email, "password": this.password},
+            {"name": await this.name, "email": await this.email, "password": await this.password},
             (response) => {
             if (response.errors === null) {
                 Router.redirect("/myCafe");
@@ -157,7 +181,7 @@ export default class UserModel {
     async login() {
         await authAjax("POST",
             constants.PATH + "/api/v1/owner/login",
-            {"email": this.email, "password": this.password},
+            {"email": await this.email, "password": await this.password},
             (response) => {
             if (response.errors === null) {
                 Router.redirect("/myCafe");
@@ -171,7 +195,7 @@ export default class UserModel {
         const requestUrl = "/api/v1/add_staff?uuid=" + uuid;
         await ajax(constants.PATH + requestUrl,
             "POST",
-            {"name": this.name, "email": this.email, "password": this.password},
+            {"name": await this.name, "email": await this.email, "password": await this.password},
             (response) => {
                 if (response.errors === null) {
                     Router.redirect("/"); //TODO редирект на кнопку с добавление кофе

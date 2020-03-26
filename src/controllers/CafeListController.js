@@ -18,44 +18,20 @@ export default class CafeListController{
         Router.redirect('/createCafe')
     }
 
-    async _checkCafeListModel(){
-        if(this._cafeListModel.isEmpty) {
-            try {
-                await this._cafeListModel.cafesList();
-            } catch (exception) {
-                alert(exception[0].message); //TODO обработка исключения
-            }
-        }
-    }
-
-
-    async _checkUserData(){
-        if (this._userModel.id == null && this._userModel.email != null) {
-            try {
-                await this._userModel.getOwner();
-            } catch (exception) {
-                alert(exception[0].message); //TODO обработка исключения
-            }
-        }
-    }
-
     async _makeContext(){
-        await this._checkCafeListModel();
-        await this._checkUserData();
-
         let cafeListContext = {
-            cafeList: this._cafeListModel.context
+            cafeList: await this._cafeListModel.context
         };
 
         cafeListContext['header'] = {
             type: null,
-            avatar:{
-                photo: this._userModel.photo,
-                event:{
+            avatar: {
+                photo: await this._userModel.photo,
+                event: {
                     type: 'click',
                     listener: this._headerAvatarListener.bind(this)
                 }
-                },
+            }
         };
 
         cafeListContext['button'] = {
@@ -69,6 +45,7 @@ export default class CafeListController{
     }
 
     async control(){
+        console.log('controll');
         this._cafeListView.context = await this._makeContext();
         this._cafeListView.render();
     }
