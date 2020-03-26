@@ -46,7 +46,7 @@ export class Router {
         let currentUrl = url;
         let paramsUrl = null;
         const getParams=window.location.search.replace( '?', '');
-        console.log(getParams)
+        console.log(getParams);
         if( secondSlashPos !== -1) {
             currentUrl = url.slice(1, secondSlashPos + 1);
             paramsUrl = url.slice(secondSlashPos + 2, url.length);

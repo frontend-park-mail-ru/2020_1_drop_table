@@ -5,8 +5,9 @@
  * @param body Тело запроса
  * @param callback Функция принимающая результат ответа
  */
-export function authAjax(method, route, body, callback) {
+export async function authAjax(method, route, body, callback) {
     let req;
+
     if(method !== 'GET'){
         req = new Request(route, {
             method: method,
@@ -14,7 +15,8 @@ export function authAjax(method, route, body, callback) {
             body: JSON.stringify(body),
             credentials: 'include',
         });
-    } else{
+
+    } else {
         req = new Request(route, {
             method: method,
             mode: 'cors',
@@ -22,18 +24,18 @@ export function authAjax(method, route, body, callback) {
         });
     }
 
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
-        })
-        .then((formData) => {
-            callback(formData);
-        })
-        .catch((err) => {
-            console.log('ERROR:', err.message);
-        });
+    let responseJson = null;
+
+    try {
+        const response = await fetch(req);
+        if (response.ok) {
+            responseJson = await response.json();
+        } else {
+            throw new Error('Response not ok');
+        }
+    } catch (exception) {
+        console.log('Ajax Error:', exception.message);
+    }
+
+    callback(responseJson);
 }

@@ -7,7 +7,7 @@
  * @param {FormData} formData - данные
  * @param {function} callback - функция, которая будет вызвана после запроса
  */
-export function ajaxForm(route, method, formData, callback) {
+export async function ajaxForm(route, method, formData, callback) {
 
     const reqBody = {
         method: method,
@@ -18,21 +18,20 @@ export function ajaxForm(route, method, formData, callback) {
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;
     }
+
     const req = new Request(route, reqBody);
+    let responseJson = null;
 
-    fetch(req)
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error('BAD HTTP stuff');
-            }
+    try {
+        const response = await fetch(req);
+        if (response.ok) {
+            responseJson = await response.json();
+        } else {
+            throw new Error('Response not ok');
+        }
+    } catch (exception) {
+        console.log('Ajax Error:', exception.message);
+    }
 
-        })
-        .then((response) => {
-            callback(response);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    callback(responseJson);
 }

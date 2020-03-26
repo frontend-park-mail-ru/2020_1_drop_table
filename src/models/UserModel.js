@@ -18,27 +18,45 @@ export default class UserModel {
     }
 
     get editedAt() {
-        return this._editedAt;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._editedAt);
+            resolve(this._editedAt);
+        });
     }
 
     get email() {
-        return this._email;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._email);
+            resolve(this._email);
+        });
     }
 
     get id() {
-        return this._id;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._id);
+            resolve(this._id);
+        });
     }
 
     get name() {
-        return this._name;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._name);
+            resolve(this._name);
+        });
     }
 
     get password() {
-        return this._password;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._password);
+            resolve(this._password);
+        });
     }
 
     get photo() {
-        return this._photo;
+        return new Promise(async (resolve) => {
+            await this._checkUser(this._photo);
+            resolve(this._photo);
+        });
     }
 
     set email(email) {
@@ -54,6 +72,12 @@ export default class UserModel {
     set password(password) {
         this._password = password.toString();
         this._saveUser();
+    }
+
+    async _checkUser(data){
+        if(!data){
+            await this.getOwner();
+        }
     }
 
     _getUser() {
@@ -74,26 +98,25 @@ export default class UserModel {
             "photo": this._photo
         };
 
-
         sessionStorage.setItem("user", JSON.stringify(obj));
     }
 
-    _makeFormData(photo) {
+    async _makeFormData(photo) {
         let formData = new FormData();
         let data = {
-            'name': this.name,
-            'email': this.email,
-            'password': this.password,
+            'name': await this.name,
+            'email': await this.email,
+            'password': await this.password,
         };
 
         if (photo) {
             formData.append('photo', photo);
         } else {
             data = {
-                'name': this.name,
-                'email': this.email,
-                'password': this.password,
-                'photo': this.photo
+                'name': await this.name,
+                'email': await this.email,
+                'password': await this.password,
+                'photo': await this.photo
             }
         }
 
@@ -110,88 +133,77 @@ export default class UserModel {
         this._photo = data['photo'];
     }
 
-    getOwner() {
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH + '/api/v1/getCurrentOwner/',
-                'GET',
-                {},
-                (response) => {
-                    if (response.errors === null) {
-                        this._filUserData(response.data);
-                        this._saveUser();
-                        resolve();
-                    } else {
-                        reject(response.errors); //TODO showError
-                    }
+    async getOwner(){
+        await ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+            'GET',
+            {},
+            (response) => {
+                if (response.errors === null) {
+                    this._filUserData(response.data);
+                    this._saveUser();
+                } else {
+                    throw response.errors;
                 }
-            );
-        });
+            }
+        );
     }
 
-    editOwner(photo = null) {
-        const formData = this._makeFormData(photo);
-
-        return new Promise((resolve, reject) => {
-            ajaxForm(constants.PATH + '/api/v1/owner/' + this.id,
-                'PUT',
-                formData,
-                (response) => {
-                    if (response.errors === null) {
-                        this._filUserData(response.data);
-                        this._saveUser();
-                        resolve();
-                    }
-                    reject(response.errors);
+    async editOwner(photo = null){
+        const formData = await this._makeFormData(photo);
+        await ajaxForm(constants.PATH+'/api/v1/owner/' + await this.id,
+            'PUT',
+            formData,
+            (response) => {
+                if (response.errors === null) {
+                    this._filUserData(response.data);
+                    this._saveUser();
+                } else {
+                    throw response.errors;
                 }
-            );
+            }
+        );
+
+    }
+
+    async register() {
+        await ajax(constants.PATH + "/api/v1/owner",
+            "POST",
+            {"name": await this.name, "email": await this.email, "password": await this.password},
+            (response) => {
+            if (response.errors === null) {
+                Router.redirect("/myCafe");
+            } else {
+                throw response.errors;
+            }
         });
     }
 
-    register() {
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH + "/api/v1/staff",
-                "POST",
-                {"name": this.name, "email": this.email, "password": this.password},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect("/myCafe");
-                        resolve();
-                    }
-                    reject(response.errors[0].message);
-                });
+    async login() {
+        await authAjax("POST",
+            constants.PATH + "/api/v1/owner/login",
+            {"email": await this.email, "password": await this.password},
+            (response) => {
+            if (response.errors === null) {
+                Router.redirect("/myCafe");
+            } else {
+                throw response.errors;
+            }
         });
     }
 
-    login() {
-        return new Promise((resolve, reject) => {
-            authAjax("POST",
-                constants.PATH + "/api/v1/owner/login",
-                {"email": this.email, "password": this.password},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect("/myCafe");
-                        resolve();
-                    }
-                    reject(response.errors[0].message); // TODO проверить работу вызова ошибки при некорректном пользователе
-                });
-        });
+    async addStaff(uuid) {
+        const requestUrl = "/api/v1/add_staff?uuid=" + uuid;
+        await ajax(constants.PATH + requestUrl,
+            "POST",
+            {"name": await this.name, "email": await this.email, "password": await this.password},
+            (response) => {
+                if (response.errors === null) {
+                    Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
+                } else {
+                    throw response.errors[0].message;
+                }
+            }
+        );
     }
 
-
-    addStaff(uuid) {
-        return new Promise((resolve, reject) => {
-            console.log(uuid)
-            const requestUrl = "/api/v1/add_staff?uuid=" + uuid
-            ajax(constants.PATH + requestUrl,
-                "POST",
-                {"name": this.name, "email": this.email, "password": this.password},
-                (response) => {
-                    if (response.errors === null) {
-                        Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
-                        resolve();
-                    }
-                    reject(response.errors[0].message);
-                });
-        });
-    }
 }

@@ -23,21 +23,72 @@ export default class CafeModel {
         this._loadCafe();
     }
 
+    get address(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._address);
+            resolve(this._address);
+        });
+    }
+
+    get closeTime(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._closeTime);
+            resolve(this._closeTime);
+        });
+    }
+
+    get description(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._description);
+            resolve(this._description);
+        });
+    }
+
+    get id(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._id);
+            resolve(this._id);
+        });
+    }
+
+    get name(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._name);
+            resolve(this._name);
+        });
+    }
+
+    get openTime(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._openTime);
+            resolve(this._openTime);
+        });
+    }
+
+    get ownerID(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._ownerID);
+            resolve(this._ownerID);
+        });
+    }
+
+    get photo(){
+        return new Promise(async (resolve) => {
+            await this._checkCafe(this._photo);
+            resolve(this._photo);
+        });
+    }
+
     get context(){
         console.log('in context');
         let cafeListData = sessionStorage.getItem('CafeList');
-        const cafeData = JSON.parse(cafeListData)[this.listId];
+        const cafeData = JSON.parse(cafeListData)[this._listId];
         return cafeData;
     }
-    get listId(){return this._listId}
-    get address(){return this._address}
-    get closeTime(){return this._closeTime}
-    get description(){return this._description}
-    get id(){return this._id}
-    get name(){return this._name}
-    get openTime(){return this._openTime}
-    get ownerID(){return this._ownerID}
-    get photo(){return this._photo}
+
+    set listId(listId){
+        this._listId = listId;
+    }
 
     set address(address){
         this._address = address.toString();
@@ -69,34 +120,40 @@ export default class CafeModel {
         this._saveCafe();
     }
 
+    async _checkCafe(data){
+        if(!data){
+            await this.getCafe();
+        }
+    }
+
     _loadCafe(){
         let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData) {
-            const cafeData = JSON.parse(cafeListData)[this.listId];
+        if (cafeListData && this._listId != null) {
+            const cafeData = JSON.parse(cafeListData)[this._listId];
             if(cafeData){
-                this._fillCafeData(cafeData);
+                this.fillCafeData(cafeData);
             }
         }
     }
 
     _saveCafe(){
         const data = {
-            'address': this.address,
-            'closeTime': this.closeTime,
-            'description': this.description,
-            'id': this.id,
-            'name': this.name,
-            'openTime': this.openTime,
-            'ownerID': this.ownerID,
-            'photo': this.photo
+            'address': this._address,
+            'closeTime': this._closeTime,
+            'description': this._description,
+            'id': this._id,
+            'name': this._name,
+            'openTime': this._openTime,
+            'ownerID': this._ownerID,
+            'photo': this._photo
         };
 
         let cafeList = JSON.parse(sessionStorage.getItem('CafeList'));
-        cafeList[this.listId] = data;
+        cafeList[this._listId] = data;
         sessionStorage.setItem('CafeList', JSON.stringify(cafeList));
     }
 
-    _fillCafeData(context){
+    fillCafeData(context){
         this._address = context['address'];
         this._closeTime = context['closeTime'];
         this._description = context['description'];
@@ -105,58 +162,38 @@ export default class CafeModel {
         this._openTime = context['openTime'];
         this._ownerID = context['ownerID'];
         this._photo = context['photo'];
+        this._saveCafe();
     }
 
-    getFormData(photo){
+    async getFormData(photo){
         let formData = new FormData();
 
         let data = {
-            'name': this.name,
-            'address': this.address,
-            'description': this.description
+            'name': await this.name,
+            'address': await this.address,
+            'description': await this.description
         };
 
         if (photo) {
             formData.append('photo', photo);
         } else {
-            data['photo'] = this.photo;
+            data['photo'] = await this.photo;
         }
 
         formData.append('jsonData', JSON.stringify(data));
         return formData;
     }
 
-    getCafe(){
-        return new Promise((resolve) => {
-            authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
-                null,
-                (response) => {
-                    if (response.errors === null) {
-                        this._fillCafeData(response.data);
-                        this._saveCafe();
-                    } else {
-                        alert(response.errors[0].message); //TODO showError
-                    }
-                });
-        });
-    }
-
-    create(photo) {
-        return new Promise((resolve, reject) => {
-            ajaxForm(constants.PATH + '/api/v1/cafe',
-                'POST',
-                this.getFormData(),
-                (response) => {
-                    if (response.errors === null) {
-                        this._fillCafeData(response.data);
-                        this._saveCafe();
-                        Router.redirect('/myCafe');
-                        resolve();
-                    } else {
-                        reject(response.errors[0].message); //TODO showError
-                    }
+    async getCafe(){
+        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this._id}`,
+            null,
+            (response) => {
+                if (response.errors === null) {
+                    this.fillCafeData(response.data);
+                } else {
+                    throw response.errors;
                 }
-            );
-        });
+            }
+        );
     }
 }
