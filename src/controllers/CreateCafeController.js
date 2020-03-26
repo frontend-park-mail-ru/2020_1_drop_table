@@ -23,7 +23,7 @@ export default class CreateCafeController{
         cafe.photo = image;
 
         try {
-            await cafe.create(photoInput.files[0]);
+            await this._cafeListModel.create(photoInput.files[0], cafe);
         } catch (exception) {
             alert(exception[0].message); //TODO Сделать обработку исключения
         }

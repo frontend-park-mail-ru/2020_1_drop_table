@@ -86,6 +86,10 @@ export default class CafeModel {
         return cafeData;
     }
 
+    set listId(listId){
+        this._listId = listId;
+    }
+
     set address(address){
         this._address = address.toString();
         this._saveCafe();
@@ -124,10 +128,10 @@ export default class CafeModel {
 
     _loadCafe(){
         let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData) {
+        if (cafeListData && this._listId != null) {
             const cafeData = JSON.parse(cafeListData)[this._listId];
             if(cafeData){
-                this._fillCafeData(cafeData);
+                this.fillCafeData(cafeData);
             }
         }
     }
@@ -149,7 +153,7 @@ export default class CafeModel {
         sessionStorage.setItem('CafeList', JSON.stringify(cafeList));
     }
 
-    _fillCafeData(context){
+    fillCafeData(context){
         this._address = context['address'];
         this._closeTime = context['closeTime'];
         this._description = context['description'];
@@ -158,9 +162,10 @@ export default class CafeModel {
         this._openTime = context['openTime'];
         this._ownerID = context['ownerID'];
         this._photo = context['photo'];
+        this._saveCafe();
     }
 
-    async _getFormData(photo){
+    async getFormData(photo){
         let formData = new FormData();
 
         let data = {
@@ -184,24 +189,7 @@ export default class CafeModel {
             null,
             (response) => {
                 if (response.errors === null) {
-                    this._fillCafeData(response.data);
-                    this._saveCafe();
-                } else {
-                    throw response.errors;
-                }
-            }
-        );
-    }
-
-    async create(photo) {
-        await ajaxForm(constants.PATH + '/api/v1/cafe',
-            'POST',
-            await this._getFormData(),
-            (response) => {
-                if (response.errors === null) {
-                    this._fillCafeData(response.data);
-                    this._saveCafe();
-                    Router.redirect('/myCafe');
+                    this.fillCafeData(response.data);
                 } else {
                     throw response.errors;
                 }
