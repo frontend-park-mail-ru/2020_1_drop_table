@@ -35,7 +35,7 @@ export default class RegisterController{
         }
     }
 
-    _formListener(e) {
+    async _formListener(e) {
         e.preventDefault();
 
         let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
@@ -47,18 +47,20 @@ export default class RegisterController{
             this._userModel.email = email.value.toString();
             this._userModel.password = password.value.toString();
             this._userModel.name = name.value.toString();
-            this._userModel.register().then(
-                () => {},
-                errorMessage => {
-                    if (errorMessage[0] === 'P') {
-                        showError(form, password, errorMessage);
-                    } else if (errorMessage[0] === 'N') {
-                        showError(form, name, errorMessage);
-                    } else {
-                        showError(form, email, errorMessage);
-                    }
-                });
+
+            try {
+                await this._userModel.register();
+            } catch (exception) {
+                if (exception[0].message === 'P') { //TODO доделать обработку ошибок при регистрации
+                    showError(form, password, exception);
+                } else if (exception[0].message === 'N') {
+                    showError(form, name, exception[0].message);
+                } else {
+                    showError(form, email, exception[0].message);
+                }
+            }
         }
+
     }
 
     _loginListener(){

@@ -2,19 +2,11 @@
 
 import Header from "../components/MainHeader/Header";
 import ProfileComponent from "../components/Profile/Profile";
+import BaseView from "./BaseView";
 
-export default class UserProfileView{
+export default class UserProfileView extends BaseView {
     constructor(app = document.body) {
-        this._app = app;
-        this._context = null;
-    }
-
-    get context(){
-        return this._context
-    }
-
-    set context(context){
-        this._context = context;
+        super(app);
     }
 
     render(){

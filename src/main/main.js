@@ -66,7 +66,7 @@ function initBaseRoutes(router) {
 
     router.addRoute('/addStaff', (getParams) => {
         if (getParams !== "") {
-            let uuid = getParams.split('=')[1].toString()
+            let uuid = getParams.split('=')[1].toString();
             const userModel = new UserModel();
             const registerView = new RegisterView(app, "Добавление сотрудника");
             const addStaffController = new AddStaffController(userModel, registerView,uuid);

@@ -2,19 +2,11 @@
 
 import Header from "../components/MainHeader/Header";
 import CafeComponent from "../components/Cafe/Cafe";
+import BaseView from "./BaseView";
 
-export default class CreateCafeView{
+export default class CreateCafeView extends BaseView{
     constructor(app = document.body) { // TODO Remove createNewCafePage
-        this._app = app;
-        this._context = null;
-    }
-
-    set context(context){
-        this._context = context;
-    }
-
-    get context(){
-        return this._context;
+        super(app);
     }
 
     render(){

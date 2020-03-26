@@ -4,6 +4,7 @@ import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import CafeModel from "./CafeModel";
 import {Router} from "../modules/Router";
+import {ajaxForm} from "../utils/ajaxForm";
 
 export default class CafeListModel{
 
@@ -13,17 +14,34 @@ export default class CafeListModel{
         this._constructCafe(cafeListData);
     }
 
-    getCafeById(id){
-        console.log('cafe get by id');
-        console.log(this._cafeModelsList);
-
-        return this._cafeModelsList.find((cafe)=>{
-            console.log(cafe.id, ' ', id);
-            if ( cafe.id == id ){
-                return true;
+    get context(){
+        return new Promise(async (resolve) => {
+            await this._checkCafeList();
+            const cafeList = sessionStorage.getItem('CafeList');
+            if(cafeList){
+                resolve(JSON.parse(cafeList));
             }
-            return false;
-        })
+            resolve(null);
+        });
+    }
+
+    get isEmpty(){
+        return new Promise(async (resolve) => {
+            await this._checkCafeList();
+            resolve(!this._cafeModelsList.length);
+        });
+    }
+
+    getCafeById(id){
+        return this._cafeModelsList.find((cafe) => {
+            return cafe._id == id;
+        });
+    }
+
+    async _checkCafeList(data){
+        if(!data){
+            await this.cafesList();
+        }
     }
 
     _loadCafeList(){
@@ -48,46 +66,43 @@ export default class CafeListModel{
         });
     }
 
-    get context(){
-        const cafeList = sessionStorage.getItem('CafeList');
-        if(cafeList){
-            return(JSON.parse(cafeList));
-        }
-        return [];
-    }
-
-    get isEmpty(){
-        return !this._cafeModelsList.length
-    }
-
     createCafe(){
-        let cafeListData = this._loadCafeList();
-        cafeListData.push({});
-        const cafe = new CafeModel(this._cafeModelsList.length);
-        this._cafeModelsList.push(cafe);
-        return cafe;
+        return new CafeModel();
     }
 
-    cafesList() {
-        return new Promise((resolve, reject) => {
-            ajax(constants.PATH + '/api/v1/cafe',
-                'GET',
-                {},
-                (response) => {
-                    if(response.data == null){
-                        Router.redirect('/createCafe');
-                        resolve();
+    async cafesList() {
+        await ajax(constants.PATH + '/api/v1/cafe',
+            'GET',
+            {},
+            (response) => {
+                if(response.data == null){
+                    Router.redirect('/createCafe');
+                } else {
+                    if (response.errors === null) {
+                        this._saveCafeList(response.data);
+                        this._constructCafe(response.data);
                     } else {
-                        if (response.errors === null) {
-                            this._saveCafeList(response.data);
-                            this._constructCafe(response.data);
-                            resolve();
-                        } else {
-                            reject(response.errors[0].message); //TODO showError
-                        }
+                        throw response.errors;
                     }
                 }
-            )
-        });
+            }
+        )
+    }
+
+    async create(photo, cafe) {
+        await ajaxForm(constants.PATH + '/api/v1/cafe',
+            'POST',
+            await cafe.getFormData(photo),
+            (response) => {
+                if (response.errors === null) {
+                    cafe.listId = this._cafeModelsList.length;
+                    cafe.fillCafeData(response.data);
+                    this._cafeModelsList.push(cafe);
+                    Router.redirect('/myCafe');
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
     }
 }
