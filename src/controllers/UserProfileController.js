@@ -43,7 +43,7 @@ export default class UserProfileController{
             header: {
                 type: 'profile',
                 avatar: {
-                    photo: '',
+                    photo: null,
                     event: {
                         type: 'click',
                         listener: this._headerAvatarListener.bind(this)

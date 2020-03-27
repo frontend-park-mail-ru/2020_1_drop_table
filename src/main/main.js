@@ -41,11 +41,11 @@ function initBaseRoutes(router) {
         cafeListController.control();
     });
 
-    router.addRoute('/Profile', () => {
+    router.addRoute('/Profile', async () => {
         const user = new UserModel();
         const userProfileView = new UserProfileView(app);
         const userProfileController = new UserProfileController(user, userProfileView);
-        userProfileController.control();
+        await userProfileController.control();
     });
 
     router.addRoute('/createCafe', () => {

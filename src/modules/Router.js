@@ -3,7 +3,6 @@ import CafeListView from "../view/CafeListView";
 import UserModel from "../models/UserModel";
 import CafeListController from "../controllers/CafeListController";
 
-
 let app = document.body;
 
 export class Router {
