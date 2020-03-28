@@ -13,7 +13,7 @@ export default class LoginComponent{
         this._form.addEventListener(context['form']['event']['type'],
             context['form']['event']['listener']);
 
-        let register = document.body.getElementsByClassName('form-field__need-register__reg-span').item(0);
+        let register = document.getElementById('application').getElementsByClassName('form-field__need-register__reg-span').item(0);
         register.addEventListener(context['register']['event']['type'],
             context['register']['event']['listener']);
     }

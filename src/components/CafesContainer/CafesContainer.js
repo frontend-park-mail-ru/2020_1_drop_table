@@ -6,7 +6,7 @@ import {Router} from "../../modules/Router";
 
 export class CafesContainerComponent {
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
         this._firstColumn = null;
         this._secondColumn = null;
@@ -32,7 +32,6 @@ export class CafesContainerComponent {
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
         let sc = this._secondColumn.map(({photo = photo, name = name, id = id} = {}) => {
-
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
 
@@ -46,14 +45,17 @@ export class CafesContainerComponent {
             cardImage.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1, cardIdStr.length);
-                Router.redirect(`/Cafe/${cardId}`);
+                // Router.redirect(`/Cafe/${cardId}`);
+                window.location.replace(`/cafe/${cardId}`)
+
 
             });
 
             cardName.addEventListener('click',function (e) {
                 const cardIdStr = card.getAttribute('id');
                 const cardId = cardIdStr.slice(1, cardIdStr.length);
-                Router.redirect(`/Cafe/${cardId}`);
+                // Router.redirect(`/Cafe/${cardId}`);
+                window.location.replace(`/cafe/${cardId}`)
 
             });
         }

@@ -3,87 +3,85 @@
 import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import {authAjax} from "../utils/authAjax";
-import {CafePageComponent} from "../components/CafePageComponent/CafePage";
-import {ajaxForm} from "../utils/ajaxForm";
-// import {Router} from "../modules/Router";
 
-export default class CafeModel {
+
+export default class StaffModel { // дописать потом
 
     constructor(listId) {
         this._listId = listId;
-        this._id = null;
-        this._address = null;
-        this._closeTime = null;
-        this._description = null;
+        this._staffid = null;
         this._name = null;
-        this._openTime = null;
-        this._ownerID = null;
+        this._email = null;
+        this.password = null; //потом убрать стоит
+        this._editdat = null;
         this._photo = null;
+        this._isowner = null;
+        this._cafeid = null;
 
         this._loadCafe();
     }
 
     get address(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._address);
+            await this._checkStaff(this._address);
             resolve(this._address);
         });
     }
 
     get closeTime(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._closeTime);
+            await this._checkStaff(this._closeTime);
             resolve(this._closeTime);
         });
     }
 
     get description(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._description);
+            await this._checkStaff(this._description);
             resolve(this._description);
         });
     }
 
     get id(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._id);
+            await this._checkStaff(this._id);
             resolve(this._id);
         });
     }
 
     get name(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._name);
+            await this._checkStaff(this._name);
             resolve(this._name);
         });
     }
 
     get openTime(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._openTime);
+            await this._checkStaff(this._openTime);
             resolve(this._openTime);
         });
     }
 
     get ownerID(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._ownerID);
+            await this._checkStaff(this._ownerID);
             resolve(this._ownerID);
         });
     }
 
     get photo(){
         return new Promise(async (resolve) => {
-            await this._checkCafe(this._photo);
+            await this._checkStaff(this._photo);
             resolve(this._photo);
         });
     }
 
     get context(){
         console.log('in context');
-        let cafeListData = sessionStorage.getItem('CafeList');
-        const cafeData = JSON.parse(cafeListData)[this._listId];
-        return cafeData;
+        let staffListData = sessionStorage.getItem('StaffList');
+        const staffData = JSON.parse(staffListData)[this._listId];
+        return staffData;
     }
 
     set listId(listId){
@@ -92,51 +90,51 @@ export default class CafeModel {
 
     set address(address){
         this._address = address.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
     set closeTime(closeTime){
         this._closeTime = closeTime.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
     set description(description){
         this._description = description.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
     set name(name){
         this._name = name.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
     set openTime(openTime){
         this._openTime = openTime.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
     set photo(photo){
         this._photo = photo.toString();
-        this._saveCafe();
+        this._saveStaff();
     }
 
-    async _checkCafe(data){
+    async _checkStaff(data){
         if(!data){
-            await this.getCafe();
+            await this.getStaff();
         }
     }
 
     _loadCafe(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData && this._listId != null) {
-            const cafeData = JSON.parse(cafeListData)[this._listId];
-            if(cafeData){
-                this.fillCafeData(cafeData);
+        let staffListData = sessionStorage.getItem('StaffList');
+        if (staffListData && this._listId != null) {
+            const staffData = JSON.parse(staffListData)[this._listId];
+            if(staffData){
+                this.fillStaffData(staffData);
             }
         }
     }
 
-    _saveCafe(){
+    _saveStaff(){
         const data = {
             'address': this._address,
             'closeTime': this._closeTime,
@@ -148,12 +146,13 @@ export default class CafeModel {
             'photo': this._photo
         };
 
-        let cafeList = JSON.parse(sessionStorage.getItem('CafeList'));
-        cafeList[this._listId] = data;
-        sessionStorage.setItem('CafeList', JSON.stringify(cafeList));
+        let staffList = JSON.parse(sessionStorage.getItem('StaffList'));
+        staffList[this._listId] = data;
+        sessionStorage.setItem('StaffList', JSON.stringify(staffList));
     }
 
-    fillCafeData(context){
+    fillStaffData(context){
+
         this._address = context['address'];
         this._closeTime = context['closeTime'];
         this._description = context['description'];
@@ -162,7 +161,7 @@ export default class CafeModel {
         this._openTime = context['openTime'];
         this._ownerID = context['ownerID'];
         this._photo = context['photo'];
-        this._saveCafe();
+        this._saveStaff();
     }
 
     async getFormData(photo){
@@ -184,12 +183,12 @@ export default class CafeModel {
         return formData;
     }
 
-    async getCafe(){
-        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this._id}`,
+    async getStaff(){
+        await authAjax('GET', constants.PATH + `/api/v1/staff/${this._id}`,
             null,
             (response) => {
                 if (response.errors === null) {
-                    this.fillCafeData(response.data);
+                    this.fillStaffData(response.data);
                 } else {
                     throw response.errors;
                 }

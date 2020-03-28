@@ -5,7 +5,7 @@ import CafeComponent from "../components/Cafe/Cafe";
 import BaseView from "./BaseView";
 
 export default class CreateCafeView extends BaseView{
-    constructor(app = document.body) { // TODO Remove createNewCafePage
+    constructor(app = document.getElementById('application')) { // TODO Remove createNewCafePage
         super(app);
     }
 

@@ -142,5 +142,5 @@ input[type=file] {
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_span {
     color: black;
     font-family: Montserrat;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }

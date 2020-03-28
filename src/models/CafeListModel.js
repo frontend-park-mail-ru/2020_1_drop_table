@@ -76,7 +76,8 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.data == null){
-                    Router.redirect('/createCafe');
+                    window.location.replace('/createCafe')
+                    // Router.redirect('/createCafe');
                 } else {
                     if (response.errors === null) {
                         this._saveCafeList(response.data);
@@ -98,7 +99,8 @@ export default class CafeListModel{
                     cafe.listId = this._cafeModelsList.length;
                     cafe.fillCafeData(response.data);
                     this._cafeModelsList.push(cafe);
-                    Router.redirect('/myCafe');
+                    window.location.replace('/myCafes')
+                    // Router.redirect('/myCafes');
                 } else {
                     throw response.errors;
                 }

@@ -6,7 +6,7 @@ import {AppleCardModel} from "../models/AppleCardModel";
 import BaseView from "./BaseView";
 
 export default class CafePageView extends BaseView {
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
     }
 

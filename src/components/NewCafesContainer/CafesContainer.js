@@ -6,7 +6,7 @@ import CafeCard from '../CafeCard/CafeCard.hbs';
 
 export class CafesContainerComponent {
     constructor({
-                    el = document.body,
+                    el = document.getElementById('application'),
                 } = {}) {
         this._el = el;
     }

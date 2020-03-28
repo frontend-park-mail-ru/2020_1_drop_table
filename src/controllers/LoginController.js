@@ -2,6 +2,8 @@
 
 import {Router} from "../modules/Router";
 
+import {router} from "../main/main";
+
 export default class LoginController {
 
     constructor(userModel, loginView) {
@@ -18,12 +20,12 @@ export default class LoginController {
         try{
             await this._userModel.login();
         } catch (exception) {
-            alert(exception[0].message); //TODO Обработка ошибок при логине
+           // alert(exception[0].message); //TODO Обработка ошибок при логине
         }
     }
 
     _registerListener(){
-        Router.redirect('/reg')
+        window.location.replace('/reg')
     }
 
     _makeContext(){

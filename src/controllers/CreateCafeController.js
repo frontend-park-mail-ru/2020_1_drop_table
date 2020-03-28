@@ -30,7 +30,7 @@ export default class CreateCafeController{
     }
 
     _headerAvatarListener(){
-        Router.redirect('/Profile');
+        window.location.replace('/profile')
     }
 
     async _makeContext(){

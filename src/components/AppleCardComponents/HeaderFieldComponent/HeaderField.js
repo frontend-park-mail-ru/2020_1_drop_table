@@ -1,7 +1,7 @@
 'use strict';
 import HeaderField from './HeaderField.hbs';
 export class HeaderFieldComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

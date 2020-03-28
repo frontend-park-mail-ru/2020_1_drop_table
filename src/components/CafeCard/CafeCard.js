@@ -3,7 +3,7 @@ import CafeCard from '../CafeCard/CafeCard.hbs';
 
 export class CafeCardComponent {
     constructor({
-                    el = document.body,
+                    el = document.getElementById('application'),
                     imgSrc = 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
                     name = 'Кафе',
                     id = 0,

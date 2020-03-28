@@ -63,7 +63,7 @@ export default class AddStaffController{
     }
 
     _loginListener(){
-        Router.redirect('/login');
+        window.location.replace('/login')
     }
 
     control(){

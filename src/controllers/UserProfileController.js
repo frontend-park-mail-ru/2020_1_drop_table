@@ -31,11 +31,13 @@ export default class UserProfileController{
     }
 
     _headerAvatarListener(){
-        Router.redirect('/Profile');
+        window.location.replace('/profile')
+
     }
 
     _headerExitListener(){
-        alert('exit'); //TODO EXIT
+        sessionStorage.clear();
+        window.location.replace('/login')
     }
 
     async _makeContext() {

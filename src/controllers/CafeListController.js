@@ -11,11 +11,11 @@ export default class CafeListController{
     }
 
     _headerAvatarListener(){
-        Router.redirect('/Profile');
+        window.location.href = '/profile'
     }
 
     _cafeListButtonListener(){
-        Router.redirect('/createCafe')
+        window.location.replace('/createCafe')
     }
 
     async _makeContext(){
@@ -45,7 +45,7 @@ export default class CafeListController{
     }
 
     async control(){
-        console.log('controll');
+        console.log('control');
         this._cafeListView.context = await this._makeContext();
         this._cafeListView.render();
     }

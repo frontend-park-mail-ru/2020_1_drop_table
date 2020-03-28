@@ -6,7 +6,7 @@ import BaseView from "./BaseView";
 
 export default class LoginView extends BaseView {
 
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
     }
 

@@ -13,7 +13,7 @@ export default class RegisterView extends BaseView {
         let registerContainer = document.createElement('div');
         registerContainer.className = 'registerContainer';
         this._app.appendChild(registerContainer);
-        (new RegisterComponent(registerContainer)).render(this._context['register'],this._topBarText);
+        (new RegisterComponent(registerContainer)).render(this._context['register'],'Регистрация');
     }
 
     render(){

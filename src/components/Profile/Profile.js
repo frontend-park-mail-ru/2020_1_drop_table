@@ -6,7 +6,7 @@ import Form from '../Form/Form.js';
 
 export default class ProfileComponent {
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
         this._form = null;
     }

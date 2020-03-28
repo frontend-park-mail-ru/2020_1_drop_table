@@ -9,7 +9,7 @@ import InputComponent from '../Input/Input'
 
 export default class CardFormComponent {
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

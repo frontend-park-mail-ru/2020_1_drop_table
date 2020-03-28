@@ -1,7 +1,7 @@
 'use strict';
 import PrimaryField from './PrimaryField.hbs';
 export class PrimaryFieldComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

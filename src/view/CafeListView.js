@@ -7,7 +7,7 @@ import Header from "../components/MainHeader/Header";
 
 
 export default class CafeListView extends BaseView{
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
     }
 
@@ -18,7 +18,8 @@ export default class CafeListView extends BaseView{
 
         let buttonAddCafe = document.getElementsByClassName('cafes-page__add-cafe-field__add-button').item(0);
         buttonAddCafe.addEventListener('click',function (e) {
-            Router.redirect('/createCafe');
+            // Router.redirect('/createCafe');
+            window.location.replace('/createCafe')
         }) // Need move to CafesContainerComponent
     }
 

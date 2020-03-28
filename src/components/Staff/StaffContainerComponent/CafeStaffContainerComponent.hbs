@@ -1,0 +1,22 @@
+<div class="cafe-with-staff-container">
+
+    <div class="cafe-with-staff-container__cafe-name">
+        <div class="cafe-with-staff-container__cafe-name__strip"></div>
+        <span class="cafe-with-staff-container__cafe-with-staff-container_span">{{name}}</span>
+    </div>
+
+    <div class="cafe-staff-container">
+
+        <div class="cafe-staff-container__design">
+            <div class="cafe-staff-container__design__long-strip"></div>
+            <div class="cafe-staff-container__design__medium-strip"></div>
+            <div class="cafe-staff-container__design__short-strip"></div>
+        </div>
+
+        {{#each staffList}}
+            {{{this}}}
+        {{/each}}
+
+    </div>
+
+</div>
