@@ -1,6 +1,7 @@
 'use strict';
 
 import {Router} from "../modules/Router";
+import {router} from "../main/main";
 
 export default class CafeListController{
 
@@ -11,11 +12,11 @@ export default class CafeListController{
     }
 
     _headerAvatarListener(){
-        window.location.href = '/profile'
+        router._goTo('/profile');
     }
 
     _cafeListButtonListener(){
-        window.location.replace('/createCafe')
+        router._goTo('/createCafe');
     }
 
     async _makeContext(){

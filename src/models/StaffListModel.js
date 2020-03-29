@@ -5,6 +5,7 @@ import {constants} from "../utils/constants";
 import StaffModel from "./StaffModel";
 import {Router} from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
+import {router} from "../main/main";
 
 
 export default class StaffListModel{
@@ -77,8 +78,7 @@ export default class StaffListModel{
             {},
             (response) => {
                 if(response.data == null){
-                    window.location.replace('/createCafe')
-                    // Router.redirect('/createCafe');
+                    //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
                         this._saveStaffList(response.data);
@@ -100,8 +100,7 @@ export default class StaffListModel{
                     staff.listId = this._staffModelsList.length;
                     staff.fillStaffData(response.data);
                     this._staffModelsList.push(staff);
-                    // Router.redirect('/myCafes');
-                    window.location.replace('/myCafes')
+                    router._goTo('/myCafes');
                 } else {
                     throw response.errors;
                 }

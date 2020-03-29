@@ -5,6 +5,7 @@ import {constants} from "../utils/constants";
 import CafeModel from "./CafeModel";
 import {Router} from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
+import {router} from "../main/main";
 
 export default class CafeListModel{
 
@@ -76,8 +77,7 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.data == null){
-                    window.location.replace('/createCafe')
-                    // Router.redirect('/createCafe');
+                    //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
                         this._saveCafeList(response.data);
@@ -99,8 +99,7 @@ export default class CafeListModel{
                     cafe.listId = this._cafeModelsList.length;
                     cafe.fillCafeData(response.data);
                     this._cafeModelsList.push(cafe);
-                    window.location.replace('/myCafes')
-                    // Router.redirect('/myCafes');
+                    router._goTo('/myCafes');
                 } else {
                     throw response.errors;
                 }

@@ -177,8 +177,7 @@ export default class UserModel {
             {"name": await this.name, "email": await this.email, "password": await this.password, "isOwner":true},
             (response) => {
             if (response.errors === null) {
-                window.location.replace('/myCafes')
-                // Router.redirect("/myCafes");
+                router._goTo('/myCafes');
             } else {
                 throw response.errors;
             }
@@ -195,11 +194,7 @@ export default class UserModel {
             (response) => {
             if (response.errors === null) {
                 console.log('replace to mycafe')
-                // Router.goTo('/reg');
-                //router._goTo('/Profile')
-                //console.log(router.routes)
-                window.location.replace('/Profile')
-                //Router.redirect("/myCafes");
+                router._goTo('/Profile')
             } else {
                 throw response.errors;
             }
@@ -213,7 +208,7 @@ export default class UserModel {
             {"name": await this.name, "email": await this.email, "password": await this.password},
             (response) => {
                 if (response.errors === null) {
-                    window.location.replace('/')
+                    router._goTo('/');
                     // Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
                 } else {
                     throw response.errors[0].message;

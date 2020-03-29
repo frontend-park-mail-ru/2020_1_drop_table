@@ -3,6 +3,7 @@
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
 import {Router} from "../modules/Router";
+import {router} from "../main/main";
 
 export default class UserProfileController{
 
@@ -31,13 +32,12 @@ export default class UserProfileController{
     }
 
     _headerAvatarListener(){
-        window.location.replace('/profile')
-
+        router._goTo('/profile');
     }
 
     _headerExitListener(){
         sessionStorage.clear();
-        window.location.replace('/login')
+        router._goTo('/login');
     }
 
     async _makeContext() {

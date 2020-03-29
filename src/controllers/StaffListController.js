@@ -1,6 +1,7 @@
 'use strict';
 
 import {Router} from "../modules/Router";
+import {router} from "../main/main";
 
 export default class StaffListController{
 
@@ -11,8 +12,7 @@ export default class StaffListController{
     }
 
     _headerAvatarListener(){
-        window.location.replace('/profile')
-        // Router.redirect('/Profile');
+        router._goTo('/profile');
     }
 
     // _cafeListButtonListener(){

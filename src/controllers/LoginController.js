@@ -25,7 +25,7 @@ export default class LoginController {
     }
 
     _registerListener(){
-        window.location.replace('/reg')
+        router._goTo('/reg');
     }
 
     _makeContext(){

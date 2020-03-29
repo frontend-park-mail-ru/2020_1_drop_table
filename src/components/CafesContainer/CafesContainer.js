@@ -3,6 +3,7 @@ import '../CafeCard/CafeCard.css';
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";
+import {router} from "../../main/main";
 
 export class CafesContainerComponent {
 
@@ -34,30 +35,31 @@ export class CafesContainerComponent {
         let sc = this._secondColumn.map(({photo = photo, name = name, id = id} = {}) => {
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
-
-        this._parent.innerHTML = CafeContainer({firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
+        const noCafes = (!(fc.length > 0 && sc.length > 0));
+        console.log('nocafe', noCafes)
+        this._parent.innerHTML = CafeContainer({noCafes: noCafes, firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 
         for(let i = 0; i < context.length; i++){
             let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
             let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
             let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
 
-            cardImage.addEventListener('click',function (e) {
-                const cardIdStr = card.getAttribute('id');
-                const cardId = cardIdStr.slice(1, cardIdStr.length);
-                // Router.redirect(`/Cafe/${cardId}`);
-                window.location.replace(`/cafe/${cardId}`)
+            console.log('cardImage',cardImage)
+            if(cardImage && cardName) {
+                cardImage.addEventListener('click', function (e) {
+                    const cardIdStr = card.getAttribute('id');
+                    const cardId = cardIdStr.slice(1, cardIdStr.length);
+                    router._goTo(`/cafe/${cardId}`);
+                });
 
+                cardName.addEventListener('click', function (e) {
+                    const cardIdStr = card.getAttribute('id');
+                    const cardId = cardIdStr.slice(1, cardIdStr.length);
+                    // Router.redirect(`/Cafe/${cardId}`);
+                    window.location.replace(`/cafe/${cardId}`)
 
-            });
-
-            cardName.addEventListener('click',function (e) {
-                const cardIdStr = card.getAttribute('id');
-                const cardId = cardIdStr.slice(1, cardIdStr.length);
-                // Router.redirect(`/Cafe/${cardId}`);
-                window.location.replace(`/cafe/${cardId}`)
-
-            });
+                });
+            }
         }
     }
 

@@ -3,6 +3,7 @@
 import {validateForm} from "../modules/formValidator";
 import {showError} from "../modules/formValidator";
  import Router from "../modules/Router";
+import {router} from "../main/main";
 
 
 
@@ -66,7 +67,7 @@ export default class RegisterController{
     }
 
     _loginListener(){
-        window.location.replace('/login')
+        router._goTo('/login');
     }
 
     control(){

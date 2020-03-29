@@ -3,6 +3,7 @@
 import {validateForm} from "../modules/formValidator";
 import {showError} from "../modules/formValidator";
 import {Router} from "../modules/Router";
+import {router} from "../main/main";
 
 export default class AddStaffController{
     constructor(userModel, registerView,uuid) {
@@ -63,7 +64,7 @@ export default class AddStaffController{
     }
 
     _loginListener(){
-        window.location.replace('/login')
+        router._goTo('/login');
     }
 
     control(){

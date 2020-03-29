@@ -49,8 +49,9 @@ const port = 3000;
 // });
 
 app.all('*', function(req, res, next) {
-    res.sendFile(__dirname + '/dist/index.html');
     console.log('tut')
+    res.sendFile(__dirname + '/dist/index.html');
+
 });
 
 app.listen(port, function() {

@@ -14,88 +14,11 @@ import RegisterController from "../controllers/RegisterController";
 import CafeListController from "../controllers/CafeListController";
 import CafePageController from "../controllers/CafePageContoller";
 import CafePageView from "../view/CafePageView";
-import AddStaffController from "../controllers/addStaffController";
-import RegisterComponent from "../components/Register/Register";
-import {StaffPageComponent} from "../components/Staff/StaffPageComponent/StaffPageComponent";
 import StaffListView from "../view/StaffListView";
 import StaffListController from "../controllers/StaffListController";
 
 
 let app = document.getElementById('application');
-
-function initBaseRoutes(router) {
-    router.addRoute('/reg', () => {
-        const userModel = new UserModel();
-        const registerView = new RegisterView(app, "Регистрация");
-        const registerController = new RegisterController(userModel, registerView);
-        registerController.control();
-    });
-
-    router.addRoute('/login', () => {
-        const userModel = new UserModel();
-        const loginView = new LoginView(app);
-        const loginController = new LoginController(userModel, loginView);
-        loginController.control();
-    });
-
-    router.addRoute('/myCafes', () => {
-        const cafeList = new CafeListModel();
-        const userModel = new UserModel();
-        const cafeListView = new CafeListView(app);
-        const cafeListController = new CafeListController(cafeList, userModel, cafeListView);
-        cafeListController.control();
-    });
-
-    router.addRoute('/profile', () => {
-        const user = new UserModel();
-        const userProfileView = new UserProfileView(app);
-        const userProfileController = new UserProfileController(user, userProfileView);
-        userProfileController.control();
-    });
-
-    router.addRoute('/createCafe', () => {
-        const cafeList = new CafeListModel();
-        const userModel = new UserModel();
-        const createCafeView = new CreateCafeView();
-        const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
-        createCafeController.control();
-    });
-
-    router.addRoute('/Cafe', (id) => {
-        const cafeListModel = new CafeListModel();
-        const userModel = new UserModel();
-        const cafePageView = new CafePageView();
-        const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
-        cafePageController.control(id);
-    });
-
-    router.addRoute('/Staff', () => {
-        //StaffPageComponent
-        const cafeList = new CafeListModel();
-        const userModel = new UserModel();
-        const staffListView = new StaffListView(app);
-        const staffListController = new StaffListController(cafeList, userModel, staffListView);
-        staffListController.control();
-
-    });
-
-
-
-    router.addRoute('/addStaff', (getParams) => {
-        if (getParams !== "") {
-            let uuid = getParams.split('=')[1].toString();
-            const userModel = new UserModel();
-            const registerView = new RegisterView(app, "Добавление сотрудника");
-            const addStaffController = new AddStaffController(userModel, registerView,uuid);
-            addStaffController.control();
-            console.log(uuid)
-        } else {
-            alert("no uuid")
-        }
-    })
-
-}
-const root = document.getElementById('application');
 // let newRouter = new NewRouter(root);
 
 function doreg(){
@@ -156,7 +79,7 @@ function doCafe(id){
     cafePageController.control(id);
 }
 function test(req) {
-    console.log(`Showing cafe for ${req.param.username}`);
+
      doCafe(req.param.id);
 }
 
@@ -177,7 +100,3 @@ router.get('/cafe/{id}', test).setName('Cafe');
 
 router.init();
 
-
-
-// let router = new Router();
-// initBaseRoutes(router);
