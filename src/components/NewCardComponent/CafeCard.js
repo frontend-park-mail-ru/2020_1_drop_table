@@ -2,7 +2,7 @@ import './CafeCard.css';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 
 export class CafeCardComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

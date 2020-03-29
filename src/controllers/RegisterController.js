@@ -2,7 +2,10 @@
 
 import {validateForm} from "../modules/formValidator";
 import {showError} from "../modules/formValidator";
-import {Router} from "../modules/Router";
+ import Router from "../modules/Router";
+import {router} from "../main/main";
+
+
 
 export default class RegisterController{
     constructor(userModel, registerView) {
@@ -64,7 +67,7 @@ export default class RegisterController{
     }
 
     _loginListener(){
-        Router.redirect('/login');
+        router._goTo('/login');
     }
 
     control(){

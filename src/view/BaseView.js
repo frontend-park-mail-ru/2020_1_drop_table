@@ -1,7 +1,7 @@
 
 export default class BaseView{
 
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         this._app = app;
         this._context = null;
     }

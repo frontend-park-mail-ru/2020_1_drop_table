@@ -5,7 +5,7 @@ import ProfileComponent from "../components/Profile/Profile";
 import BaseView from "./BaseView";
 
 export default class UserProfileView extends BaseView {
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
     }
 

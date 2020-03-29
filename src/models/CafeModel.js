@@ -5,7 +5,7 @@ import {constants} from "../utils/constants";
 import {authAjax} from "../utils/authAjax";
 import {CafePageComponent} from "../components/CafePageComponent/CafePage";
 import {ajaxForm} from "../utils/ajaxForm";
-import {Router} from "../modules/Router";
+// import {Router} from "../modules/Router";
 
 export default class CafeModel {
 

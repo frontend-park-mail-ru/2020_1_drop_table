@@ -2,6 +2,7 @@
 
 import {handleImageUpload} from "../modules/imageUpload";
 import {Router} from "../modules/Router";
+import {router} from "../main/main";
 
 export default class CreateCafeController{
     constructor(cafeList, userModel, createCafeView) {
@@ -30,7 +31,7 @@ export default class CreateCafeController{
     }
 
     _headerAvatarListener(){
-        Router.redirect('/Profile');
+        router._goTo('/profile');
     }
 
     async _makeContext(){

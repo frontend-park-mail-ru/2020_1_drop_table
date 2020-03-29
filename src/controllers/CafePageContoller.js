@@ -1,4 +1,5 @@
-import {Router} from "../modules/Router";
+import {router} from "../main/main";
+
 
 export default class CafePageController {
 
@@ -9,7 +10,7 @@ export default class CafePageController {
     }
 
     _headerAvatarListener(){
-        Router.redirect('/Profile');
+        router._goTo('/profile');
     }
 
     async _makeContext(id){

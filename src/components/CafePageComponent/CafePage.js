@@ -4,7 +4,7 @@ import CafePageTemplate from './CafePage.hbs';
 import {CreateCardRedactor} from '../CardCreator/CardCreator'
 
 export class CafePageComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

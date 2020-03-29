@@ -4,10 +4,11 @@ import BaseView from "./BaseView";
 import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer";
 import {Router} from "../modules/Router";
 import Header from "../components/MainHeader/Header";
+import {router} from "../main/main";
 
 
 export default class CafeListView extends BaseView{
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
     }
 
@@ -18,7 +19,7 @@ export default class CafeListView extends BaseView{
 
         let buttonAddCafe = document.getElementsByClassName('cafes-page__add-cafe-field__add-button').item(0);
         buttonAddCafe.addEventListener('click',function (e) {
-            Router.redirect('/createCafe');
+            router._goTo('/createCafe');
         }) // Need move to CafesContainerComponent
     }
 

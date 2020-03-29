@@ -26,6 +26,8 @@
 
 }
 
+
+
 @media(max-width: 1250px){
     .cafes-page__all-cafes-container{
         padding-right: 100%;
@@ -142,3 +144,24 @@
 
 }
 
+
+.cafes-page__no-cafes-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 20%;
+}
+
+.cafes-page__no-cafes-container__text-field{
+    display: flex;
+    justify-content: center;
+    height: 80%;
+    width: 100%;
+}
+.cafes-page__no-cafes-container__text-field_span{
+    font-family: Montserrat;
+    font-size: 5rem;
+
+}

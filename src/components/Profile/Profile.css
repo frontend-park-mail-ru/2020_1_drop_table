@@ -16,7 +16,7 @@
     padding-left: 10%;
     float: left;
     font-family: Montserrat;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 .user-profile__header__logo-container_image-picker_img{

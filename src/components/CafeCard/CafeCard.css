@@ -23,6 +23,7 @@ body{
 .cafe-card-container__image-container_img{
     float: left;
     position: absolute;
+    object-fit: cover;
     width: 80%;
     height: 100%;
     left: 0;

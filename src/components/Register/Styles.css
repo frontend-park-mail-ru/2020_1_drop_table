@@ -122,12 +122,10 @@
     border: none;
     border-bottom: solid 2px #000000;
     width: 100%;
-
-
+    padding-bottom: 2%;
     background: none;
     color: #000000;
     padding-top: 5%;
-    padding-bottom: 5%;
     font-size: 1rem;
 }
 
@@ -166,7 +164,7 @@
 .form-field__have-account__login-span {
     display: block;
     word-wrap: break-word;
-    text-decoration: underline;
+    /*text-decoration: underline;*/
 }
 
 .newCafeContainer {

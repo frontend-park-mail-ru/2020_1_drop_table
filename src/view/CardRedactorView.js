@@ -9,7 +9,7 @@ import {picker} from '../utils/cardRedactorUtils'
 import BaseView from "./BaseView";
 
 export default class CardRedactorView extends BaseView{
-    constructor(app = document.body) {
+    constructor(app = document.getElementById('application')) {
         super(app);
         this._context = null;
         this._appleCard = null;

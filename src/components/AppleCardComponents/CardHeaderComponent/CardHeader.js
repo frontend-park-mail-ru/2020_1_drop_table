@@ -2,7 +2,7 @@
 import CardHeader from './CardHeader.hbs';
 import {HeaderFieldComponent} from "../HeaderFieldComponent/HeaderField";
 export class CardHeaderComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 
