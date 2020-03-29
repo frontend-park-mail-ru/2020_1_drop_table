@@ -26,7 +26,7 @@ export default class CafeListController{
         cafeListContext['header'] = {
             type: null,
             avatar: {
-                photo: await this._userModel.photo,
+                photo: this._userModel.photo,
                 event: {
                     type: 'click',
                     listener: this._headerAvatarListener.bind(this)

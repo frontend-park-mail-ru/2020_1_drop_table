@@ -43,7 +43,7 @@ export default class UserProfileController{
             header: {
                 type: 'profile',
                 avatar: {
-                    photo: '',
+                    photo: null,
                     event: {
                         type: 'click',
                         listener: this._headerAvatarListener.bind(this)
@@ -57,8 +57,8 @@ export default class UserProfileController{
                 }
             },
             profile: {
-                imgSrc: (await this._userModel.photo !== '')
-                    ? await this._userModel.photo : 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                imgSrc: 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                imgSrcPromise: this._userModel.photo,
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -68,28 +68,32 @@ export default class UserProfileController{
                         {
                             type: 'text',
                             id: 'name',
-                            data: await this._userModel.name,
+                            data: 'name',
+                            inputPromise: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
                         },
                         {
                             type: 'email',
                             id: 'email',
-                            data: await this._userModel.email,
+                            data: 'email',
+                            inputPromise: this._userModel.email,
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
                             type: 'password',
                             id: 'password',
-                            data: await this._userModel.password,
+                            data: 'password',
+                            inputPromise: this._userModel.password,
                             labelData: 'Пароль',
                             inputOption: 'required'
                         },
                         {
                             type: 'password',
                             id: 're-password',
-                            data: await this._userModel.password,
+                            data: 'password',
+                            inputPromise: this._userModel.password,
                             labelData: 'Повторите пароль',
                             inputOption: 'required'
                         },

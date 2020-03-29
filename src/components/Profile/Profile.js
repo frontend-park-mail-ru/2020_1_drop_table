@@ -19,17 +19,32 @@ export default class ProfileComponent {
         );
     }
 
+    _handlePromises(context){
+        if ('imgSrcPromise' in context){
+            context['imgSrcPromise'].then((imgSrc) => {
+                let imageElement = this._parent.getElementsByClassName(
+                    'user-profile__header__logo-container_image-picker_img').item(0);
+                imageElement.src = imgSrc;
+            }, (exception) => {
+                alert(exception); //TODO Сделать обработку ошибки
+            })
+        }
+    }
+
     renderProfile(context){
         this._parent.innerHTML += ProfileTemplate(context);
-        let formCollection = this._parent.getElementsByClassName('user-profile__form-container__form-field');
-        this._form = new Form(formCollection.item(0));
+        let formCollection = this._parent.getElementsByClassName('user-profile__form-container__form-field').item(0);
+        this._form = new Form(formCollection);
     }
+
     renderForm(context){
         this._form.render(context);
     }
+
     render(context) {
         this.renderProfile(context);
-        this._addListener(context);
         this.renderForm(context['form']);
+        this._addListener(context);
+        this._handlePromises(context);
     }
 }

@@ -7,7 +7,7 @@ export default class Header{
     constructor(parent = document.body) {
         this._parent = parent;
 
-        this._avatar = null;
+        this._avatar = 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
         this._head = null;
 
         this._logo = null;
@@ -54,8 +54,8 @@ export default class Header{
     }
 
     _renderHeader(context){
-        this._avatar = ( context['avatar']['photo'] !== '')
-            ?  context['avatar']['photo'] : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+        // this._avatar = ( context['avatar']['photo'] !== '')
+        //     ?  context['avatar']['photo'] : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
 
         const headerData = {
             hasAvatar: this._hasAvatar,
@@ -68,6 +68,17 @@ export default class Header{
         this._head.innerHTML = headerTemplate(headerData);
     }
 
+    _renderAvatar(context){
+        if(this._hasAvatar && context['avatar']['photo']){
+            context['avatar']['photo'].then((photo) => {
+                let avatarElement = this._parent.getElementsByClassName('page-header__avatar_img').item(0);
+                avatarElement.src = photo;
+            }, (exception) => {
+                alert(exception); //TODO сделать обработку ошибки
+            });
+        }
+    }
+
     render(context){
         this._head = document.createElement('div');
         this._head.className = 'header';
@@ -77,6 +88,7 @@ export default class Header{
         this._parent.appendChild(this._head);
 
         this._addListeners(context);
+        this._renderAvatar(context);
     }
 }
 
