@@ -34,7 +34,7 @@ export default class LoginController {
                 type: 'auth',
                 avatar: {
                     photo: null
-                },
+                }
             },
             login: {
                 form: {

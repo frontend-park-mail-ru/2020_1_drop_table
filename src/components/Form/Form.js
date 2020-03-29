@@ -9,6 +9,20 @@ export default class FormComponent {
         this._parent = parent;
     }
 
+    _handlePromises(context){
+        const inputElementsCollection = this._parent.getElementsByClassName('input-field_input');
+        context['formFields'].forEach((form, index) => {
+            let inputElement = inputElementsCollection.item(index);
+            if('inputPromise' in form){
+                form['inputPromise'].then((value) => {
+                    inputElement.value = value;
+                });
+            }
+        }, (exception) => {
+            alert(exception); //TODO Сделать обработку ошибки
+        });
+    }
+
     _addListener(context){
         this._parent.addEventListener(
             context['event']['type'],
@@ -19,5 +33,6 @@ export default class FormComponent {
     render(context) {
         this._parent.innerHTML = FormTemplate(context);
         this._addListener(context);
+        this._handlePromises(context);
     }
 }
