@@ -1,8 +1,9 @@
 'use strict';
 
-import FormValidation, {validateForm} from "../modules/formValidator";
+import FormValidation from "../modules/FormValidation";
 import {showError} from "../modules/formValidator";
 import {Router} from "../modules/Router";
+import ServerErrorHandler from "../modules/ServerErrorHandler";
 
 export default class RegisterController{
     constructor(userModel, registerView) {
@@ -39,8 +40,15 @@ export default class RegisterController{
         e.preventDefault();
 
         let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
-        const validateContext = [ //По хорошему registerComponent нужно переписать на formComponent, тогда этот context перейдёт в _makeContext
-                                // Ну или можно вынести в отдельный файл
+        const validateContext = [
+            {
+                id: 'full-name',
+                validate: (inputElement) => {
+                    if(inputElement.value.toString().length < 4){
+                        return 'Слишком короткое имя';
+                    }
+                }
+            },
             {
                 id: 'email',
                 validate: (inputElement) => {
@@ -53,7 +61,7 @@ export default class RegisterController{
             {
                 id: 'password',
                 validate: (inputElement) => {
-                    if(form.elements['password'].value.toString().length < 7){
+                    if(inputElement.value.toString().length < 8){
                         return 'Пароль слишком короткий';
                     }
                 }
@@ -68,8 +76,14 @@ export default class RegisterController{
             },
         ];
 
-        const formValidator = new FormValidation(form);
-        if(formValidator.validate(validateContext)){
+        const serverErrorsContext = {
+            'User with this email already existed': form['email'],
+            'Password must be at least 8 characters in length': form['password'],
+            'Name must be at least 4 characters in length': form['full-name'],
+            'Email must be a valid email': form['email']
+        };
+
+        if((new FormValidation(form)).validate(validateContext)){
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
             this._userModel.name = form.elements['full-name'].value.toString();
@@ -77,17 +91,9 @@ export default class RegisterController{
             try {
                 await this._userModel.register();
             } catch (exception) {
-                console.log(exception);
-                if (exception[0].message === 'P') { //TODO доделать обработку ошибок при регистрации
-                    showError(form, password, exception);
-                } else if (exception[0].message === 'N') {
-                    showError(form, name, exception[0].message);
-                } else {
-                    showError(form, email, exception[0].message);
-                }
+                (new ServerErrorHandler(form, serverErrorsContext)).handle(exception);
             }
         }
-
     }
 
     _loginListener(){
