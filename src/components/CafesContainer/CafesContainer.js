@@ -35,8 +35,11 @@ export class CafesContainerComponent {
         let sc = this._secondColumn.map(({photo = photo, name = name, id = id} = {}) => {
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
-        const noCafes = (!(fc.length > 0 && sc.length > 0));
-        console.log('nocafe', noCafes)
+
+
+
+        const noCafes = !context.length;
+
         this._parent.innerHTML = CafeContainer({noCafes: noCafes, firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
 
         for(let i = 0; i < context.length; i++){

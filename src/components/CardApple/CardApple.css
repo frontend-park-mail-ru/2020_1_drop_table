@@ -69,7 +69,6 @@
 .card__strip{
     height:27.5%;
     width:100%;
-    background-color: #333333;
 
     background-size: cover;
     display: flex;

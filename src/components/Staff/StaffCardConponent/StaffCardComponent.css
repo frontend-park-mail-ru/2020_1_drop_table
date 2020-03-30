@@ -37,7 +37,7 @@
 }
 
 .staff-card-container__name-container_span{
-    font-family: "Montserrat";
+    font-family: Montserrat, Arial;
     font-size: 2rem;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .staff-card-container__position-container{
-    font-family: "Montserrat";
+    font-family: Montserrat, Arial;
     display: flex;
     margin-left: 10%;
 

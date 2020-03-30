@@ -20,7 +20,7 @@
         white-space: nowrap;
     }
     .cafe-with-staff-container__cafe-with-staff-container_span{
-        font-family: "Montserrat";
+        font-family: Montserrat, Arial;
         font-size: 2rem;
     }
 
@@ -42,7 +42,7 @@
 
 
     .cafe-with-staff-container__cafe-with-staff-container_span{
-        font-family: "Montserrat";
+        font-family: Montserratб , Arial;
         font-size: 4rem;
     }
 

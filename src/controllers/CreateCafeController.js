@@ -28,6 +28,7 @@ export default class CreateCafeController{
         } catch (exception) {
             alert(exception[0].message); //TODO Сделать обработку исключения
         }
+
     }
 
     _headerAvatarListener(){
