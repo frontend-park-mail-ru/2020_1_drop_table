@@ -3,6 +3,8 @@
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
 import {Router} from "../modules/Router";
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
 export default class UserProfileController{
 
@@ -17,25 +19,20 @@ export default class UserProfileController{
         const photoInput = document.getElementById('upload');
         const photo = photoInput.files[0];
 
-        if (validateForm(form)) {
-            this._userModel.name = form.elements['name'].value.toString();
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
+
+        if ((new FormValidation(form)).validate(validateContext)) {
+            this._userModel.name = form.elements['full-name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
 
             try {
                 await this._userModel.editOwner(photo);
             } catch (exception) {
-                alert(exception[0].message); //TODO Сделать обработку исключения
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
-    }
-
-    _headerAvatarListener(){
-        Router.redirect('/Profile');
-    }
-
-    _headerExitListener(){
-        alert('exit'); //TODO EXIT
     }
 
     async _makeContext() {
@@ -46,13 +43,17 @@ export default class UserProfileController{
                     photo: null,
                     event: {
                         type: 'click',
-                        listener: this._headerAvatarListener.bind(this)
+                        listener: () => {
+                            Router.redirect('/Profile');
+                        }
                     }
                 },
                 exit: {
                     event: {
                         type: 'click',
-                        listener: this._headerExitListener.bind(this)
+                        listener: () => {
+                            alert('exit'); //TODO EXIT
+                        }
                     }
                 }
             },
@@ -105,6 +106,53 @@ export default class UserProfileController{
                     },
                 },
             }
+        };
+    }
+
+    _makeValidateContext(form){
+        return [
+            {
+                element: form.elements['full-name'],
+                validate: () => {
+                    if(form.elements['full-name'].value.toString().length < 4){
+                        return 'Слишком короткое имя';
+                    }
+                }
+            },
+            {
+                element: form.elements['email'],
+                validate: () => {
+                    const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
+                    if(!emailRegex.test(form.elements['email'].value.toString())){
+                        return 'Некорректный email';
+                    }
+                }
+            },
+            {
+                element: form.elements['password'],
+                validate: () => {
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий';
+                    }
+                }
+            },
+            {
+                element: form.elements['re-password'],
+                validate: () => {
+                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
+                        return 'Пароли не совпадают';
+                    }
+                }
+            },
+        ];
+    }
+
+    _makeExceptionContext(form){
+        return {
+            'User with this email already existed': form['email'],
+            'Password must be at least 8 characters in length': form['password'],
+            'Name must be at least 4 characters in length': form['full-name'],
+            'Email must be a valid email': form['email']
         };
     }
 
