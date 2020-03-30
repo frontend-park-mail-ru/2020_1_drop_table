@@ -1,7 +1,7 @@
 'use strict';
 import AuxiliaryField from './AuxiliaryField.hbs';
 export class AuxiliaryFieldComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

@@ -4,6 +4,8 @@ import {Router} from "../modules/Router";
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
+import {router} from "../main/main";
+
 export default class LoginController {
 
     constructor(userModel, loginView) {
@@ -17,6 +19,8 @@ export default class LoginController {
         this._userModel.email = form.elements['email'].value;
         this._userModel.password = form.elements['password'].value;
 
+
+
         const validateContext = this._makeValidateContext();
         const serverExceptionContext = this._makeExceptionContext(form);
 
@@ -26,12 +30,10 @@ export default class LoginController {
             } catch (exception) {
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
+
         }
     }
 
-    _registerListener(){
-        Router.redirect('/reg')
-    }
 
     _makeViewContext(){
         return {
@@ -51,7 +53,7 @@ export default class LoginController {
                 register: {
                     event: {
                         type: 'click',
-                        listener: this._registerListener
+                        listener: ()=>{router._goTo('/reg');}
                     }
                 }
             }

@@ -1,8 +1,12 @@
 'use strict';
 
+import {validateForm} from "../modules/formValidator";
+import {showError} from "../modules/formValidator";
+import {router} from "../main/main";
+
 import FormValidation from "../modules/FormValidation";
-import {Router} from "../modules/Router";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+
 
 export default class RegisterController{
     constructor(userModel, registerView) {
@@ -49,7 +53,7 @@ export default class RegisterController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            Router.redirect('/login');
+                            router._goTo('/login');
                         }
                     }
                 }

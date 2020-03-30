@@ -1,9 +1,12 @@
 'use strict';
 
 import {handleImageUpload} from "../modules/imageUpload";
-import {Router} from "../modules/Router";
+
+import {router} from "../main/main";
+
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+
 
 export default class CreateCafeController{
     constructor(cafeList, userModel, createCafeView) {
@@ -34,9 +37,10 @@ export default class CreateCafeController{
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
+
     }
 
-    async _makeContext(){
+    async _makeViewContext(){
         return {
             header:{
                 type: null,
@@ -45,7 +49,7 @@ export default class CreateCafeController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            Router.redirect('/Profile');
+                            router._goTo('/profile');
                         }
                     }
                 }
@@ -99,7 +103,7 @@ export default class CreateCafeController{
     }
 
     async control(){
-        this._createCafeView.context = await this._makeContext();
+        this._createCafeView.context = await this._makeViewContext();
         this._createCafeView.render();
     }
 }

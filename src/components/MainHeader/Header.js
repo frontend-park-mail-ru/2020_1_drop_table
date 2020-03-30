@@ -1,10 +1,11 @@
 import './Header.css'
 
 import headerTemplate from './Header.hbs';
+import {Router} from "../../modules/Router";
 
 export default class Header{
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
 
         this._avatar = 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
@@ -19,6 +20,7 @@ export default class Header{
             {href: '/createCafe', text: 'Добавить'},
             {href: '/statistics', text: 'Статистика'},
             {href: '/staff', text: 'Работники'},
+
         ];
     }
 
@@ -51,6 +53,7 @@ export default class Header{
             exit.addEventListener(context['exit']['event']['type'],
                 context['exit']['event']['listener']);
         }
+
     }
 
     _renderHeader(context){

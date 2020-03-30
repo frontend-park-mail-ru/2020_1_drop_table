@@ -5,7 +5,7 @@ import DecoratorTemplate from './Decorator.hbs';
 
 export default class DecoratorComponent {
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

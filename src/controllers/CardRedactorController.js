@@ -9,13 +9,20 @@ export default class CardRedactorController {
          this._cardRedactorView = cardRedactorView;
     }
 
-    control(){
+    async control(){
+        console.log('control card redactor');
+        this._appleCard.context = await this._makeContext();
         this._cardRedactorView._appleCard = this._appleCard;
         this._cardRedactorView.render();
         this.addListeners();
         this.addImageListeners();
         this.addColorPickerListeners(this);
-
+    }
+    async _makeContext(){
+        let appleCardContext = {
+            appleCard: await this._appleCard.context
+        };
+        return appleCardContext;
     }
 
     editTextInputListener(e) {
@@ -26,7 +33,7 @@ export default class CardRedactorController {
             target.getAttribute('class'),
             target.value);
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-
+        this.addSubmitListener()
     }
 
 
@@ -72,14 +79,33 @@ export default class CardRedactorController {
             }
 
         }
+
+    }
+
+    addSubmitListener(){
         const submit = document.getElementsByClassName('card-form__submit').item(0);
         submit.addEventListener('click', (e) => {
             e.preventDefault();
             alert('submit');
-            console.log(JSON.stringify(this._appleCard.getAsJson()));
+
+            const iconInput = document.getElementById('uploadAvatar');
+            let icon = iconInput.files[0];
+
+            const stripInput = document.getElementById('uploadStrip');
+            let strip = stripInput.files[0];
+
+            const images ={
+                'icon.png': icon,
+                'icon@2x.png': icon,
+                'logo.png': icon,
+                'logo@2x.png': icon,
+                'strip.png': strip,
+                'strip@2x.png': strip
+            };
+
+            this._appleCard.editCard(images);
+            console.log('apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
         });
-
-
     }
 
     addCardField(e) {
@@ -89,6 +115,7 @@ export default class CardRedactorController {
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
         this.addListeners();
         this.addColorPickerListeners(this);
+        this.addSubmitListener()
     }
 
     removeAppleCardField(e) {
@@ -120,6 +147,7 @@ export default class CardRedactorController {
                 };
                 fr.readAsDataURL(files[0]);
             }
+
         });
         avatarInput.addEventListener('change',(e)=>{
             let tgt = e.target, files = tgt.files;

@@ -1,12 +1,17 @@
 import {ajax} from '../utils/ajax';
 import {authAjax} from '../utils/authAjax'
 import {constants} from "../utils/constants";
-import {Router} from "../modules/Router";
+import Router from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
+
+
+import {router} from "../main/main";
 
 export default class UserModel {
 
+
     constructor() {
+
         this._editedAt = null;
         this._email = null;
         this._id = null;
@@ -134,7 +139,7 @@ export default class UserModel {
     }
 
     async getOwner(){
-        await ajax(constants.PATH+'/api/v1/getCurrentOwner/',
+        await ajax(constants.PATH+'/api/v1/get_current_staff/',
             'GET',
             {},
             (response) => {
@@ -150,7 +155,7 @@ export default class UserModel {
 
     async editOwner(photo = null){
         const formData = await this._makeFormData(photo);
-        await ajaxForm(constants.PATH+'/api/v1/owner/' + await this.id,
+        await ajaxForm(constants.PATH+'/api/v1/staff/' + await this.id,
             'PUT',
             formData,
             (response) => {
@@ -166,12 +171,13 @@ export default class UserModel {
     }
 
     async register() {
-        await ajax(constants.PATH + "/api/v1/owner",
+        sessionStorage.clear();
+        await ajax(constants.PATH + "/api/v1/staff",
             "POST",
-            {"name": await this.name, "email": await this.email, "password": await this.password},
+            {"name": await this.name, "email": await this.email, "password": await this.password, "isOwner":true},
             (response) => {
             if (response.errors === null) {
-                Router.redirect("/myCafe");
+                router._goTo('/myCafes');
             } else {
                 throw response.errors;
             }
@@ -179,12 +185,16 @@ export default class UserModel {
     }
 
     async login() {
+
+        console.log('login');
+        sessionStorage.clear();
         await authAjax("POST",
-            constants.PATH + "/api/v1/owner/login",
+            constants.PATH + "/api/v1/staff/login",
             {"email": await this.email, "password": await this.password},
             (response) => {
             if (response.errors === null) {
-                Router.redirect("/myCafe");
+                console.log('replace to mycafe')
+                router._goTo('/Profile')
             } else {
                 throw response.errors;
             }
@@ -198,7 +208,8 @@ export default class UserModel {
             {"name": await this.name, "email": await this.email, "password": await this.password},
             (response) => {
                 if (response.errors === null) {
-                    Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
+                    router._goTo('/');
+                    // Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
                 } else {
                     throw response.errors[0].message;
                 }

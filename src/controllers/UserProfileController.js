@@ -2,9 +2,12 @@
 
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
-import {Router} from "../modules/Router";
+
+import {router} from "../main/main";
+
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+
 
 export default class UserProfileController{
 
@@ -35,6 +38,14 @@ export default class UserProfileController{
         }
     }
 
+
+
+    _headerExitListener(){
+        sessionStorage.clear();
+        router._goTo('/login');
+    }
+
+
     _makeViewContext() {
         return {
             header: {
@@ -44,7 +55,7 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            Router.redirect('/Profile');
+                            router._goTo('/profile');
                         }
                     }
                 },
@@ -52,7 +63,9 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            alert('exit'); //TODO EXIT
+                          sessionStorage.clear();
+                           router._goTo('/login');
+                           
                         }
                     }
                 }

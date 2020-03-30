@@ -5,7 +5,7 @@ import FormTemplate from './Form.hbs';
 
 export default class FormComponent {
 
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 

@@ -9,7 +9,7 @@ import {CardHeaderComponent} from "../AppleCardComponents/CardHeaderComponent/Ca
 
 
 export class CardAppleComponent {
-    constructor(parent = document.body) {
+    constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 
