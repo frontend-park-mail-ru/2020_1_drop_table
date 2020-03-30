@@ -2,16 +2,23 @@
 
 import {uuid} from "../utils/uuid";
 import {CardField} from "./CardField.js";
+import {ajax} from "../utils/ajax";
+import {constants} from "../utils/constants";
+import {ajaxForm} from "../utils/ajaxForm";
 
 export class AppleCardModel {
 
-    constructor() {
-        this._organizationName = 'org';
-        this._description = 'descr';
-        this._labelColor = 'rgb(0, 0, 0)';
-        this._logoText = 'test';
-        this._foregroundColor = 'rgb(0, 0, 0)';
-        this._backgroundColor = 'rgb(252, 255, 254)';
+
+    constructor(cafeId) {
+        this._cafeId = cafeId;
+        this._icon = null;
+        this._strip = null;
+        this._organizationName = null;
+        this._description = null;
+        this._labelColor = null;
+        this._logoText = null;
+        this._foregroundColor = null;
+        this._backgroundColor = null;
         this._backFields = [];
         this._storeCard = {
             'headerFields': [],
@@ -20,56 +27,43 @@ export class AppleCardModel {
             'auxiliaryFields': [],
         };
 
-        this._storeCard.headerFields.push(new CardField({
-            'fieldType': 'HeaderField',
-            'key': uuid(),
-            'label': 'labelH',
-            'value': 'valueH'
-        }));
-        this._storeCard.headerFields.push(new CardField({
-            'fieldType': 'HeaderField',
-            'key': uuid(),
-            'label': 'labelH',
-            'value': 'valueH'
-        }));
 
-        this._storeCard.primaryFields.push(new CardField({
-            'fieldType': 'PrimaryField',
-            'key': uuid(),
-            'label': 'label1',
-            'value': 'value1'
-        }));
-        this._storeCard.secondaryFields.push(new CardField({
-            'fieldType': 'SecondaryField',
-            'key': uuid(),
-            'label': 'label1',
-            'value': 'value1'
-        }));
-        this._storeCard.secondaryFields.push(new CardField({
-            'fieldType': 'SecondaryField',
-            'key': uuid(),
-            'label': 'label2',
-            'value': 'value2'
-        }));
-        // this._storeCard.auxiliaryFields.push(new CardField({
-        //     'fieldType': 'AuxiliaryField',
-        //     'key': uuid(),
-        //     'label': 'label1',
-        //     'value': 'value1'
-        // }));
+        this._minDesign = `{
+        "barcode": {"format": "PKBarcodeFormatQR",
+     "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
+      "messageEncoding": "iso-8859-1"},
+       "logoText": "Это",
+        "locations": [{"latitude": 37.6189722, "longitude": -122.3748889}, {"latitude": 37.33182, "longitude": -122.03118}],
+         "storeCard": {
+         "headerFields": [{"key": "_676325044", "label": "твоя", "value": "классная"}],
+          "primaryFields": [{"key": "_768436380", "label": "Попробуй", "value": "карточка"}],
+          "secondaryFields": [{"key": "_768436380", "label": "отредактировать", "value": "её"}]
+          },
+           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
+            "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
+             "backgroundColor": "rgb(30, 118, 143)", "foregroundColor": "rgb(0, 0, 0)",
+              "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
+               "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"}`;
+
     };
 
-    // constructor(appleCardData){
-    //     this._organizationName =  appleCardData['organizationName'];
-    //     this._description =  appleCardData['description'];
-    //     this._labelColor = appleCardData['labelColor'];
-    //     this._logoText = appleCardData['logoText'];
-    //     this._foregroundColor = appleCardData['foregroundColor'];
-    //     this._backgroundColor = appleCardData['backgroundColor'];
-    //     this._headerFields = appleCardData['headerFields'];
-    //     this._backFields = appleCardData['backFields'];
-    //     this._storeCard = appleCardData['storeCard'];
-    // }
+
+
+    get context() {
+        return new Promise(async (resolve) => {
+            await this.getCard();
+            const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
+            if (cafeCard) {
+                console.log()
+                resolve(JSON.parse(cafeCard));
+            }
+            resolve(null);
+        });
+    }
+
+    set context(context) {
+
+    }
 
     get organizationName() {
         return this._organizationName;
@@ -150,7 +144,7 @@ export class AppleCardModel {
 
 
         this._storeCard['headerFields'].slice(1, this._storeCard['headerFields'].length).forEach(field => {
-           json.storeCard.headerFields.push(field.getAsJson())
+            json.storeCard.headerFields.push(field.getAsJson())
         });
 
         this._storeCard['primaryFields'].forEach(field => {
@@ -168,11 +162,10 @@ export class AppleCardModel {
 
     getAsFormData() {
         let fd = {
-            stripImageSrc: 'https://sun9-12.userapi.com/c853624/v853624246/1f694a/E7zRrtbvTc0.jpg',
-            logoImageSrc: 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg',
+            stripImageSrc: this._strip,
+            logoImageSrc: this._icon,
             qrCodeImageSrc: 'https://sun9-66.userapi.com/c853624/v853624565/1f56ee/O8_4ZwO3xXY.jpg',
             logoText: this._logoText,
-
             backgroundColor: this._backgroundColor,
             foregroundColor: this._foregroundColor,
             labelColor: this._labelColor,
@@ -182,44 +175,28 @@ export class AppleCardModel {
             auxiliaryFields: [],
         };
 
-
-        // let field = this._headerFields[0].getAsFormData(undefined, true);
-        // fd.headerFields.push(field);
-
-
         for (let i = 0; i < this._storeCard['headerFields'].length; i++) {
             let field;
-            if(i === 0){
+            if (i === 0) {
                 field = this._storeCard['headerFields'][i].getAsFormData(undefined, true);
+            } else {
+                field = this._storeCard['headerFields'][i].getAsFormData(i - 1, false);
             }
-            else{
-                field = this._storeCard['headerFields'][i].getAsFormData(i-1, false);
-            }
-
             fd.headerFields.push(field);
-
-            // let field = this._storeCard['primaryFields'][i].getAsFormData(i, false);
-            // fd.primaryFields.push(field);
-
         }
 
         for (let i = 0; i < this._storeCard['primaryFields'].length; i++) {
             let field = this._storeCard['primaryFields'][i].getAsFormData(i, false);
             fd.primaryFields.push(field);
-
         }
         for (let i = 0; i < this._storeCard['secondaryFields'].length; i++) {
-            let field = this._storeCard['secondaryFields'][i].getAsFormData(i,false);
+            let field = this._storeCard['secondaryFields'][i].getAsFormData(i, false);
             fd.secondaryFields.push(field);
         }
-        // for (let i = 0; i < this._storeCard['auxiliaryFields'].length; i++) {
-        //     let field = this._storeCard['auxiliaryFields'][i].getAsFormData(i, false);
-        //     fd.auxiliaryFields.push(field);
-        // }
         return fd;
     }
 
-    pushField(fieldType){
+    pushField(fieldType) {
         switch (fieldType) {
             case 'HeaderField':
                 this._storeCard.headerFields.push(new CardField({'fieldType': 'HeaderField'}));
@@ -239,7 +216,8 @@ export class AppleCardModel {
 
         }
     }
-    removeField(fieldType, id){
+
+    removeField(fieldType, id) {
         switch (fieldType) {
             case 'HeaderField':
                 this.removeFieldByTypeAndId('headerFields', id);
@@ -255,6 +233,7 @@ export class AppleCardModel {
                 break;
         }
     }
+
     changeField(fieldType, id, type, text) {
         switch (fieldType) {
             case 'HeaderField':
@@ -286,7 +265,7 @@ export class AppleCardModel {
                         if (type === 'labelField') {
                             this._storeCard.secondaryFields[i].label = text;
                         } else if (type === 'valueField') {
-                            this._storeCard.secondaryFields[i].value = text ;
+                            this._storeCard.secondaryFields[i].value = text;
                         }
                     }
                 }
@@ -307,5 +286,157 @@ export class AppleCardModel {
 
     }
 
+    _fillStoreCardByDesign(design){
+
+        // логотекст считаем за 0 хедер поле
+        this._storeCard.headerFields.push(new CardField({
+            'fieldType': 'HeaderField',
+            'key': uuid(),
+            'label': design.logoText,
+            'value': 'valueH'
+        }));
+
+        //заполняем хедер филды
+        if( !design.storeCard.headerFields ){
+            console.log('No HeaderFields');
+            this._storeCard.headerFields.push(new CardField({
+                'fieldType': 'HeaderField',
+                'key': uuid(),
+                'label': '',
+                'value': ''
+            }));
+        } else {
+            console.log('Has HeaderFields');
+            design.storeCard.headerFields.forEach((headerField)=>{
+                this._storeCard.headerFields.push(new CardField({
+                    'fieldType': 'HeaderField',
+                    'key': uuid(),
+                    'label': headerField.label,
+                    'value': headerField.value,
+                }));
+            })
+        }
+        if( !design.storeCard.primaryFields ){
+            console.log('No HeaderFields');
+            this._storeCard.primaryFields.push(new CardField({
+                'fieldType': 'PrimaryField',
+                'key': uuid(),
+                'label': '',
+                'value': ''
+            }));
+        } else {
+            design.storeCard.primaryFields.forEach((primaryField)=>{
+                this._storeCard.primaryFields.push(new CardField({
+                'fieldType': 'PrimaryField',
+                'key': uuid(),
+                'label': primaryField.label,
+                'value': primaryField.value
+            }));
+            })
+        }
+
+        if( !design.storeCard.secondaryFields ){
+            this._storeCard.secondaryFields.push(new CardField({
+                'fieldType': 'SecondaryField',
+                'key': uuid(),
+                'label': '',
+                'value': ''
+            }));
+        } else {
+            design.storeCard.secondaryFields.forEach((secondaryField)=>{
+                this._storeCard.secondaryFields.push(new CardField({
+                    'fieldType': 'SecondaryField',
+                    'key': uuid(),
+                    'label': secondaryField.label,
+                    'value': secondaryField.value
+                }));
+            })
+        }
+
+
+
+
+
+
+    }
+    _fillCardData(context){
+
+        const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
+        const design =  JSON.parse(jsonDesign);
+
+        this._icon = context.icon;
+        this._strip = context.strip;
+
+        this._cafeId = this._cafeId;
+        this._organizationName = design.organizationName;
+        this._description = design.description;;
+        this._labelColor = design.labelColor;
+        this._logoText = design.logoText;
+        this._foregroundColor = design.foregroundColor;
+        this._backgroundColor = design.backgroundColor;
+        this._backFields = [];
+        this._storeCard = {
+            'headerFields': [],
+            'primaryFields': [],
+            'secondaryFields': [],
+            'auxiliaryFields': [],
+        };
+        this._fillStoreCardByDesign(design);
+    }
+
+    async getCard() {
+        await ajax(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?published=true&design_only=true`,
+            'GET',
+            {},
+            (response) => {
+                if (response.data == null) {
+                    console.log('null data: ', response.data)
+                    //router._goTo('/createCafe');
+                } else {
+                    if (response.errors === null) {
+                       this._fillCardData(response.data);
+                    } else {
+                        throw response.errors;
+                    }
+                }
+            }
+        )
+    }
+
+    async _makeFormData(images) {
+        let formData = new FormData();
+        const data = this.getAsJson();
+        formData.append('jsonData', JSON.stringify(data));
+        if (images) {
+            formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
+            formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
+            formData.append('logo.png',(images['logo.png'])?images['logo.png']:this._icon );
+            formData.append('logo@2x.png',(images['logo@2x.png'])?images['logo@2x.png']:this._icon);
+            formData.append('strip.png',(images['strip.png'])?images['strip.png']:this._strip  );
+            formData.append('strip@2x.png',(images['strip@2x.png'])?images['strip@2x.png']:this._strip);
+        }
+
+        return formData;
+    }
+
+
+    async editCard(images) {
+        const formData = await this._makeFormData(images);
+        await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=true`, //todo make await
+            'PUT',
+            formData,
+            (response) => {
+                if (response.errors === null) {
+                    console.log('editCard success', response);
+                    // this._filUserData(response.data);
+                    // this._saveUser();
+                } else {
+                    console.log('error ', response.errors);
+                    throw response.errors;
+                }
+            }
+        );
+
+    }
 }
 

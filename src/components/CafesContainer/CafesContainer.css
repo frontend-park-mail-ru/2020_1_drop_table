@@ -64,7 +64,7 @@
 
     }
     .cafes-page__add-cafe-field__text-field_span{
-        font-family: "FuturaBookCTT Normal";
+        font-family: "FuturaBookCTT Normal", serif;
         width:40%;
     }
 
@@ -161,7 +161,7 @@
     width: 100%;
 }
 .cafes-page__no-cafes-container__text-field_span{
-    font-family: Montserrat;
+    font-family: FuturaDemiCTT Normal, Arial;
     font-size: 5rem;
 
 }

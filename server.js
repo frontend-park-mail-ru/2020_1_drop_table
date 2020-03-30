@@ -49,7 +49,7 @@ const port = 3000;
 // });
 
 app.all('*', function(req, res, next) {
-    console.log('tut')
+
     res.sendFile(__dirname + '/dist/index.html');
 
 });

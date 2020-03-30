@@ -20,6 +20,7 @@ export default class CafeListController{
     }
 
     async _makeContext(){
+
         let cafeListContext = {
             cafeList: await this._cafeListModel.context
         };
@@ -41,7 +42,7 @@ export default class CafeListController{
                 listener: this._cafeListButtonListener.bind(this)
             }
         };
-
+        console.log(cafeListContext);
         return cafeListContext;
     }
 

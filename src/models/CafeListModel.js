@@ -13,6 +13,7 @@ export default class CafeListModel{
         this._cafeModelsList = [];
         const cafeListData = this._loadCafeList();
         this._constructCafe(cafeListData);
+        console.log('sas', this._cafeModelsList.length);
     }
 
     get context(){
@@ -25,6 +26,7 @@ export default class CafeListModel{
             resolve(null);
         });
     }
+
 
     get isEmpty(){
         return new Promise(async (resolve) => {
