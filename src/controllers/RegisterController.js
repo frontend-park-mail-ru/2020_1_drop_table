@@ -2,9 +2,10 @@
 
 import {validateForm} from "../modules/formValidator";
 import {showError} from "../modules/formValidator";
- import Router from "../modules/Router";
 import {router} from "../main/main";
 
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
 
 export default class RegisterController{
@@ -13,7 +14,27 @@ export default class RegisterController{
         this._registerView = registerView;
     }
 
-    _makeContext(){
+    async _formListener(e) {
+        e.preventDefault();
+
+        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
+
+        if((new FormValidation(form)).validate(validateContext)){
+            this._userModel.email = form.elements['email'].value.toString();
+            this._userModel.password = form.elements['password'].value.toString();
+            this._userModel.name = form.elements['full-name'].value.toString();
+
+            try {
+                await this._userModel.register();
+            } catch (exception) {
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+            }
+        }
+    }
+
+    _makeViewContext(){
         return {
             header: {
                 type: 'auth',
@@ -31,48 +52,65 @@ export default class RegisterController{
                 login: {
                     event: {
                         type: 'click',
-                        listener: this._loginListener
+                        listener: () => {
+                            router._goTo('/login');
+                        }
                     }
                 }
             }
         }
     }
 
-    async _formListener(e) {
-        e.preventDefault();
-
-        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
-        if (validateForm(form)) {
-            const email = form.elements['email'];
-            const password = form.elements['password'];
-            const name = form.elements['full-name'];
-
-            this._userModel.email = email.value.toString();
-            this._userModel.password = password.value.toString();
-            this._userModel.name = name.value.toString();
-
-            try {
-                await this._userModel.register();
-            } catch (exception) {
-                if (exception[0].message === 'P') { //TODO доделать обработку ошибок при регистрации
-                    showError(form, password, exception);
-                } else if (exception[0].message === 'N') {
-                    showError(form, name, exception[0].message);
-                } else {
-                    showError(form, email, exception[0].message);
+    _makeValidateContext(form){
+        return [
+            {
+                element: form.elements['full-name'],
+                validate: () => {
+                    if(form.elements['full-name'].value.toString().length < 4){
+                        return 'Слишком короткое имя';
+                    }
                 }
-            }
-        }
-
+            },
+            {
+                element: form.elements['email'],
+                validate: () => {
+                    const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
+                    if(!emailRegex.test(form.elements['email'].value.toString())){
+                        return 'Некорректный email';
+                    }
+                }
+            },
+            {
+                element: form.elements['password'],
+                validate: () => {
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий';
+                    }
+                }
+            },
+            {
+                element: form.elements['re-password'],
+                validate: () => {
+                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
+                        return 'Пароли не совпадают';
+                    }
+                }
+            },
+        ];
     }
 
-    _loginListener(){
-        router._goTo('/login');
+    _makeExceptionContext(form){
+        return {
+            'User with this email already existed': form['email'],
+            'Password must be at least 8 characters in length': form['password'],
+            'Name must be at least 4 characters in length': form['full-name'],
+            'Email must be a valid email': form['email']
+        };
     }
 
     control(){
         sessionStorage.clear();
-        this._registerView.context = this._makeContext();
+        this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }
 }
