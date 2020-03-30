@@ -67,11 +67,11 @@ export default class UserProfileController{
                     formFields: [
                         {
                             type: 'text',
-                            id: 'name',
+                            id: 'full-name',
                             data: 'name',
-                            inputPromise: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
+                            inputPromise: this._userModel.name,
                         },
                         {
                             type: 'email',
@@ -87,7 +87,7 @@ export default class UserProfileController{
                             data: 'password',
                             inputPromise: this._userModel.password,
                             labelData: 'Пароль',
-                            inputOption: 'required'
+                            inputOption: 'required',
                         },
                         {
                             type: 'password',
@@ -95,7 +95,7 @@ export default class UserProfileController{
                             data: 'password',
                             inputPromise: this._userModel.password,
                             labelData: 'Повторите пароль',
-                            inputOption: 'required'
+                            inputOption: 'required',
                         },
                     ],
                     submitValue: 'Готово',

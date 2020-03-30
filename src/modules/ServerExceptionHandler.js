@@ -1,7 +1,7 @@
 import {Router} from "./Router";
 import BaseErrorHandler from './BaseErrorHandler'
 
-export default class ServerErrorHandler extends BaseErrorHandler{
+export default class ServerExceptionHandler extends BaseErrorHandler{
 
     constructor(parent, context) {
         super(parent);

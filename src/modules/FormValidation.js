@@ -2,20 +2,17 @@ import BaseErrorHandler from './BaseErrorHandler'
 
 export default class FormValidation extends BaseErrorHandler{
 
-    constructor(form) {
-        super(form);
+    constructor(parent) {
+        super(parent);
         this._correct = true;
     }
 
     _validateForm(context){
-        context.forEach((form) => {
-            let formElement = this._parent.elements[form['id']];
-            if ('validate' in form){
-                const errorMessage = form['validate'](formElement);
-                if(!!errorMessage){
-                    this._correct = false;
-                    this._addError(formElement, errorMessage);
-                }
+        context.forEach((obj) => {
+            const errorMessage = obj.validate();
+            if(!!errorMessage){
+                this._correct = false;
+                this._addError(obj.element, errorMessage);
             }
         });
     }

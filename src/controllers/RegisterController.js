@@ -1,9 +1,8 @@
 'use strict';
 
 import FormValidation from "../modules/FormValidation";
-import {showError} from "../modules/formValidator";
 import {Router} from "../modules/Router";
-import ServerErrorHandler from "../modules/ServerErrorHandler";
+import ServerErrorHandler from "../modules/ServerExceptionHandler";
 
 export default class RegisterController{
     constructor(userModel, registerView) {
@@ -11,7 +10,7 @@ export default class RegisterController{
         this._registerView = registerView;
     }
 
-    _makeContext(){
+    _makeViewContext(){
         return {
             header: {
                 type: 'auth',
@@ -29,59 +28,68 @@ export default class RegisterController{
                 login: {
                     event: {
                         type: 'click',
-                        listener: this._loginListener
+                        listener: () => {
+                            Router.redirect('/login');
+                        }
                     }
                 }
             }
         }
     }
 
-    async _formListener(e) {
-        e.preventDefault();
-
-        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
-        const validateContext = [
+    _makeValidateContext(form){
+        return [
             {
-                id: 'full-name',
-                validate: (inputElement) => {
-                    if(inputElement.value.toString().length < 4){
+                element: form.elements['full-name'],
+                validate: () => {
+                    if(form.elements['full-name'].value.toString().length < 4){
                         return 'Слишком короткое имя';
                     }
                 }
             },
             {
-                id: 'email',
+                element: form.elements['email'],
                 validate: (inputElement) => {
                     const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
-                    if(!emailRegex.test(inputElement.value.toString())){
+                    if(!emailRegex.test(form.elements['email'].value.toString())){
                         return 'Некорректный email';
                     }
                 }
             },
             {
-                id: 'password',
+                element: form.elements['password'],
                 validate: (inputElement) => {
-                    if(inputElement.value.toString().length < 8){
+                    if(form.elements['password'].value.toString().length < 8){
                         return 'Пароль слишком короткий';
                     }
                 }
             },
             {
-                id: 're-password',
+                element: form.elements['re-password'],
                 validate: (inputElement) => {
-                    if(inputElement.value.toString() !== form.elements['password'].value.toString()){
+                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
                         return 'Пароли не совпадают';
                     }
                 }
             },
         ];
+    }
 
-        const serverErrorsContext = {
+    _makeHandleErrorsContext(form){
+        return {
             'User with this email already existed': form['email'],
             'Password must be at least 8 characters in length': form['password'],
             'Name must be at least 4 characters in length': form['full-name'],
             'Email must be a valid email': form['email']
         };
+    }
+
+    async _formListener(e) {
+        e.preventDefault();
+
+        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
+        const validateContext = this._makeValidateContext(form);
+        const serverErrorsContext = this._makeHandleErrorsContext(form);
 
         if((new FormValidation(form)).validate(validateContext)){
             this._userModel.email = form.elements['email'].value.toString();
@@ -96,13 +104,9 @@ export default class RegisterController{
         }
     }
 
-    _loginListener(){
-        Router.redirect('/login');
-    }
-
     control(){
         sessionStorage.clear();
-        this._registerView.context = this._makeContext();
+        this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }
 }
