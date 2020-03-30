@@ -35,7 +35,7 @@ export default class UserProfileController{
         }
     }
 
-    async _makeContext() {
+    _makeViewContext() {
         return {
             header: {
                 type: 'profile',
@@ -70,9 +70,9 @@ export default class UserProfileController{
                             type: 'text',
                             id: 'full-name',
                             data: 'name',
+                            inputPromise: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
-                            inputPromise: this._userModel.name,
                         },
                         {
                             type: 'email',
@@ -157,7 +157,7 @@ export default class UserProfileController{
     }
 
     async control(){
-        this._userProfileView.context = await this._makeContext();
+        this._userProfileView.context = this._makeViewContext();
         this._userProfileView.render();
     }
 

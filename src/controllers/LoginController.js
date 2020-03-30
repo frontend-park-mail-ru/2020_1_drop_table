@@ -1,6 +1,8 @@
 'use strict';
 
 import {Router} from "../modules/Router";
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
 export default class LoginController {
 
@@ -15,10 +17,15 @@ export default class LoginController {
         this._userModel.email = form.elements['email'].value;
         this._userModel.password = form.elements['password'].value;
 
-        try{
-            await this._userModel.login();
-        } catch (exception) {
-            alert(exception[0].message); //TODO Обработка ошибок при логине
+        const validateContext = this._makeValidateContext();
+        const serverExceptionContext = this._makeExceptionContext(form);
+
+        if ((new FormValidation(form)).validate(validateContext)) {
+            try{
+                await this._userModel.login();
+            } catch (exception) {
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+            }
         }
     }
 
@@ -26,7 +33,7 @@ export default class LoginController {
         Router.redirect('/reg')
     }
 
-    _makeContext(){
+    _makeViewContext(){
         return {
             header: {
                 type: 'auth',
@@ -51,9 +58,17 @@ export default class LoginController {
         }
     }
 
+    _makeValidateContext(form){
+        return []; // TODO
+    }
+
+    _makeExceptionContext(form){
+        return {}; //TODO
+    }
+
     control(){
         sessionStorage.clear();
-        this._loginView.context = this._makeContext();
+        this._loginView.context = this._makeViewContext();
         this._loginView.render();
     }
 }

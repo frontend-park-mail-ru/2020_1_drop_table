@@ -2,6 +2,8 @@
 
 import {handleImageUpload} from "../modules/imageUpload";
 import {Router} from "../modules/Router";
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
 export default class CreateCafeController{
     constructor(cafeList, userModel, createCafeView) {
@@ -22,15 +24,16 @@ export default class CreateCafeController{
         cafe.description = form.elements['description'].value;
         cafe.photo = image;
 
-        try {
-            await this._cafeListModel.create(photoInput.files[0], cafe);
-        } catch (exception) {
-            alert(exception[0].message); //TODO Сделать обработку исключения
-        }
-    }
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
 
-    _headerAvatarListener(){
-        Router.redirect('/Profile');
+        if ((new FormValidation(form)).validate(validateContext)) {
+            try {
+                await this._cafeListModel.create(photoInput.files[0], cafe);
+            } catch (exception) {
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+            }
+        }
     }
 
     async _makeContext(){
@@ -41,7 +44,9 @@ export default class CreateCafeController{
                     photo: this._userModel.photo,
                     event: {
                         type: 'click',
-                        listener: this._headerAvatarListener.bind(this)
+                        listener: () => {
+                            Router.redirect('/Profile');
+                        }
                     }
                 }
             },
@@ -83,6 +88,14 @@ export default class CreateCafeController{
                 },
             }
         };
+    }
+
+    _makeValidateContext(form){
+        return []; // TODO
+    }
+
+    _makeExceptionContext(form){
+        return {}; //TODO
     }
 
     async control(){
