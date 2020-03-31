@@ -67,7 +67,7 @@ export default class RegisterController{
                 element: form.elements['full-name'],
                 validate: () => {
                     if(form.elements['full-name'].value.toString().length < 4){
-                        return 'Слишком короткое имя';
+                        return 'Имя слишком короткое';
                     }
                 }
             },
