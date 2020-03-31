@@ -9,11 +9,16 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
     }
 
     _handleError(error){
-        if (error in this._context){
-            if (this._context.error instanceof Function){
-                this._context.error();
+        if (error in this._context) {
+            let message = null, element = null;
+            if (this._context[error] instanceof Function) {
+                [message, element,] = this._context[error]();
             } else {
-                this._addError(this._context[error], error);
+                [element, message,] = ([error].concat(this._context[error])).reverse();
+            }
+
+            if(element && message) {
+                this._addError(element, message);
             }
         } else {
             console.log('unknown server error: ' + error);
