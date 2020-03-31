@@ -1,4 +1,4 @@
-import {Router} from "./Router";
+import {router} from "../main/main";
 import BaseErrorHandler from './BaseErrorHandler'
 
 export default class ServerExceptionHandler extends BaseErrorHandler{
@@ -16,9 +16,9 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
                 this._addError(this._context[error], error);
             }
         } else {
-            console.log('unknown server error' + error + ' redirect to login');
+            console.log('unknown server error: ' + error);
             alert();
-            Router.redirect('/login');
+            router._goTo('/login');
         }
     }
 
