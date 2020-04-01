@@ -17,7 +17,10 @@
 /*    padding-bottom: 5%;*/
 /*}*/
 
+@import url(https://db.onlinewebfonts.com/c/fd6e6c30c7d355528ba9428eea942445?family=Futura);
 .input-field_input {
+
+    /*font-family: 'Futura', SansSerif;*/
     background: none;
     color: #000000;
     font-size: 1rem;

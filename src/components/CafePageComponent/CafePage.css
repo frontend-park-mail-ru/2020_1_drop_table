@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
 .cafe-page{
+    font-family: 'Montserrat',SansSerif;
     height: 100%;
     display: flex;
     padding: 0 10% 10% 10%;
     justify-content: space-around;
-    font-family: Montserrat;
+    /*font-family: Montserrat;*/
     min-width: 972px;
     min-height: 675px;
 }

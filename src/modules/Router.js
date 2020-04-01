@@ -154,7 +154,6 @@ let app = document.body;
     }
 
     _goTo(url, data = {}, title =""){
-        console.log('in goto', url);
         if(!Utils.isSet(url)) throw new ArgNotFound("url");
         if(!Utils.isString(url)) throw new ArgTypeError("url", "string", url);
         if(Utils.isEmpty(url)) throw new TypeError("url cannot be empty");

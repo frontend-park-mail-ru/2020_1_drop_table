@@ -3,10 +3,12 @@
     margin-left: 10%;
 }
 .nameField_h4{
-    font-family: Montserrat;
+        /*font-family: 'FuturaBookCTT Normal', arial;*/
+    /*font-family: Montserrat;*/
 }
 .labelField, .valueField, .valueField_label, .labelField_label{
-    font-family: Montserrat;
+    /*font-family: Montserrat;*/
+    /*    font-family: 'FuturaBookCTT Normal', arial;*/
     margin-left: 10%;
     margin-right: 10%;
 }

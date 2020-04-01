@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+
 .page-header {
-    font-family: Montserrat, arial;
+    font-family: 'Montserrat',Arial;
     font-size: 1.5rem;
     align-items: center;
     display: flex;

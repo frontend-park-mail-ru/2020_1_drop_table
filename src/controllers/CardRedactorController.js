@@ -10,13 +10,14 @@ export default class CardRedactorController {
     }
 
     async control(){
-        console.log('control card redactor');
         this._appleCard.context = await this._makeContext();
         this._cardRedactorView._appleCard = this._appleCard;
         this._cardRedactorView.render();
-        this.addListeners();
         this.addImageListeners();
+        this.addCardFieldsListeners();
+        this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+
     }
     async _makeContext(){
         let appleCardContext = {
@@ -33,7 +34,9 @@ export default class CardRedactorController {
             target.getAttribute('class'),
             target.value);
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-        this.addSubmitListener()
+
+        this.addSavePublishListeners();
+        this.addImageListeners()
     }
 
 
@@ -57,19 +60,16 @@ export default class CardRedactorController {
 
 
 
-    addListeners() {
-        let labelInputs = document.getElementsByClassName('labelField');
-        let valueInputs = document.getElementsByClassName('valueField');
-
+    addCardFieldsListeners() {
+        const labelInputs = document.getElementsByClassName('labelField');
+        const valueInputs = document.getElementsByClassName('valueField');
+        const fieldButtons = document.getElementsByClassName('field-button');
         for (let i = 0; i < labelInputs.length; i++) {
             labelInputs.item(i).addEventListener('change', this.editTextInputListener.bind(this));
         }
         for (let i = 0; i < valueInputs.length; i++) {
             valueInputs.item(i).addEventListener('change', this.editTextInputListener.bind(this));
         }
-
-
-        let fieldButtons = document.getElementsByClassName('field-button');
         for (let i = 0; i < fieldButtons.length; i++) {
             const buttonType = fieldButtons.item(i).getElementsByClassName('button-text').item(0).innerText;
             if (buttonType === 'Добавить') {
@@ -77,22 +77,53 @@ export default class CardRedactorController {
             } else {
                 fieldButtons.item(i).addEventListener('click', this.removeAppleCardField.bind(this));
             }
-
         }
-
     }
 
-    addSubmitListener(){
-        const submit = document.getElementsByClassName('card-form__submit').item(0);
-        submit.addEventListener('click', (e) => {
+    //todo пофиксить, когда будут новые ручки с сервера
+    addSavePublishListeners(){
+        const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
+        submitSave.addEventListener('click', (e) => {
             e.preventDefault();
-            alert('submit');
 
             const iconInput = document.getElementById('uploadAvatar');
             let icon = iconInput.files[0];
 
             const stripInput = document.getElementById('uploadStrip');
             let strip = stripInput.files[0];
+
+            //todo Попросить Диму принимать урлы а не только изображения
+            if(!strip){
+                strip = this._appleCard._strip;
+            }
+            if(!icon){
+                icon = this._appleCard._icon;
+            }
+            const images ={'icon.png': icon, 'icon@2x.png': icon,
+                'logo.png': icon, 'logo@2x.png': icon,
+                'strip.png': strip, 'strip@2x.png': strip
+            };
+
+            this._appleCard.editCard(images, false);
+            console.log(' save apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
+        });
+
+        const submitPublish = document.getElementsByClassName('card-form__buttons__publish').item(0);
+        submitPublish.addEventListener('click', (e) => {
+            e.preventDefault();
+            const iconInput = document.getElementById('uploadAvatar');
+            let icon = iconInput.files[0];
+            const stripInput = document.getElementById('uploadStrip');
+            let strip = stripInput.files[0];
+
+            if(strip === null){
+                strip = this._appleCard._strip;
+                console.log('взял из карты strip ', strip)
+            }
+            if(icon === null){
+                icon = this._appleCard._icon;
+                console.log('взял из карты icon', icon)
+            }
 
             const images ={
                 'icon.png': icon,
@@ -102,29 +133,30 @@ export default class CardRedactorController {
                 'strip.png': strip,
                 'strip@2x.png': strip
             };
-
-            this._appleCard.editCard(images);
-            console.log('apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
+            this._appleCard.editCard(images,true);
+            console.log(' publish apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
         });
     }
 
     addCardField(e) {
-        let parent = e.target.parentNode.parentNode;
+        const parent = e.target.parentNode.parentNode;
         this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
         this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-        this.addListeners();
+        this.addCardFieldsListeners();
         this.addColorPickerListeners(this);
-        this.addSubmitListener()
+        this.addSavePublishListeners();
     }
 
     removeAppleCardField(e) {
-        let parent = e.target.parentNode.parentNode;
+        const parent = e.target.parentNode.parentNode;
         this._appleCard.removeField(getContextByClass(parent.getAttribute('class')), parent.getAttribute('id'));
         this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-        this.addListeners();
+        this.addCardFieldsListeners();
+        this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+
 
     }
 
@@ -132,7 +164,6 @@ export default class CardRedactorController {
         const stripInput = document.getElementById('uploadStrip');
         const stripImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);
         const stripCardImage = document.getElementsByClassName('card__strip').item(0);
-
         const avatarInput = document.getElementById('uploadAvatar');
         const avatarImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img-avatar').item(0);
         const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
@@ -150,11 +181,12 @@ export default class CardRedactorController {
 
         });
         avatarInput.addEventListener('change',(e)=>{
-            let tgt = e.target, files = tgt.files;
+            const tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {
                 let fr = new FileReader();
                 fr.onload = function () {
                     avatarImage.src = fr.result;
+                    avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
                     avatarCardImage.src= fr.result;
                 };
                 fr.readAsDataURL(files[0]);

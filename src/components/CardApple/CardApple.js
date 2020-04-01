@@ -19,10 +19,6 @@ export class CardAppleComponent {
         for (let i = 0 ; i < secondaryFields.length; i++){
             (new SecondaryFieldComponent(fieldsContainer)).render(secondaryFields[i]);
         }
-        // for (let i = 0 ; i < auxiliaryFields.length; i++){
-        //     (new AuxiliaryFieldComponent(fieldsContainer)).render(auxiliaryFields[i]);
-        // }
-
     }
     _renderPrimaryFields(primaryFields){
         let fieldsContainer = this._parent.getElementsByClassName('card__strip__fields').item(0);
@@ -40,24 +36,19 @@ export class CardAppleComponent {
 
 
     _renderForegroundColor(foregroundColor){
-        let logoText = document.getElementsByClassName('card__header__field_span').item(0);
-        logoText.style.color = foregroundColor;
+        const fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
+        const secondaryValues = fieldsContainer.getElementsByClassName('card__header__fields__secondary_spanValue');
+        const headerValues = document.getElementsByClassName('header-field_span_value');
+        const primaryFields = document.getElementsByClassName('card__header__fields__primary');
 
-        let fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
-
-        let secondaryValues = fieldsContainer.getElementsByClassName('card__header__fields__secondary_spanValue');
         for ( let i = 0; i < secondaryValues.length; i++ ){
             secondaryValues.item(i).style.color = foregroundColor;
         }
-
-        // let auxiliaryValues = fieldsContainer.getElementsByClassName('card__header__fields__auxiliary_spanValue');
-        // for ( let i = 0; i < auxiliaryValues.length; i++ ){
-        //     auxiliaryValues.item(i).style.color = foregroundColor;
-        // }
-
-        let headerValues = document.getElementsByClassName('header-field_span_value');
-        for ( let i = 0; i < headerValues.length; i++ ){
+        for ( let i = 1; i < headerValues.length; i++ ){
             headerValues.item(i).style.color = foregroundColor;
+        }
+        for ( let i = 0; i < primaryFields.length; i++ ){
+            primaryFields.item(i).style.color = foregroundColor;
         }
 
 
@@ -72,17 +63,14 @@ export class CardAppleComponent {
     }
 
     _renderLabelColor(labelColor){
-        let fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
-        let secondaryLabels = fieldsContainer.getElementsByClassName('card__header__fields__secondary_spanLabel');
-        // let auxiliaryLabels = fieldsContainer.getElementsByClassName('card__header__fields__auxiliary_spanLabel');
-        let headerLabels = document.getElementsByClassName('header-field_span_label');
-
+        const fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
+        const secondaryLabels = fieldsContainer.getElementsByClassName('card__header__fields__secondary_spanLabel');
+        const headerLabels = document.getElementsByClassName('header-field_span_label');
+        const logoText = document.getElementsByClassName('card__header__field_span').item(0);
+        logoText.style.color = labelColor;
         for ( let i = 0; i < secondaryLabels.length; i++ ){
             secondaryLabels.item(i).style.color = labelColor;
         }
-        // for ( let i = 0; i < auxiliaryLabels.length; i++ ){
-        //     auxiliaryLabels.item(i).style.color = labelColor;
-        // }
         for ( let i = 0; i < headerLabels.length; i++ ){
             headerLabels.item(i).style.color = labelColor;
         }

@@ -56,7 +56,7 @@ export default class CreateCafeController{
             },
             cafe: {
                 cafeName: 'Новое кафе',
-                imgSrc: 'https://www.restorating.ru/upload/images/2015/04/08/restorating-pmibar-01.jpg',
+                imgSrc: '/images/test.jpg',
                 event: {
                     type: 'change',
                     listener: handleImageUpload

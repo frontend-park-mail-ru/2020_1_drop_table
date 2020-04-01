@@ -38,14 +38,40 @@
 /*.HeaderFieldsContainer{*/
 /*    max-width: 40%;*/
 /*}*/
-.card-form__submit{
-    font-weight: 500;
+.card-form__buttons{
+    display: flex;
+}
+.card-form__buttons__save{
+    border-radius: 0.5rem;
+    border-width: 0;
+    width: 50%;
     color: white;
     background-color: #1e768f;
-    margin-top: 1rem;
+    opacity: 75%;
+    margin: 1rem;
     height: 4rem;
-    width: 100%;
+    font-size: 1.5rem;
+
 }
+.card-form__buttons__save:hover{
+
+}
+
+.card-form__buttons__publish{
+    border-radius: 0.5rem;
+    border-width: 0;
+    width: 50%;
+    color: white;
+    background-color: #1e768f;
+    margin: 1rem;
+    font-size: 1.5rem;
+    height: 4rem;
+}
+.card-form__buttons__publish:hover{
+
+}
+
+
 .card-top{
     display: flex;
 }

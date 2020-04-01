@@ -94,14 +94,15 @@ export default class StaffListController{
                 ],
 
             }
-            // await this._ListModel.context
+            // await = this._staffListModel.context
 
         };
 
         staffListContext['header'] = {
             type: null,
             avatar: {
-                photo: await this._userModel.photo,
+                //await this._userModel.photo,
+                photo: null,
                 event: {
                     type: 'click',
                     listener: this._headerAvatarListener.bind(this)
@@ -111,8 +112,13 @@ export default class StaffListController{
         return staffListContext;
     }
 
+    addListeners(context){
+        const cafesButtons = document.getElementsByClassName('cafes-page__add-cafe-field__text-field');
+    }
     async control(){
         this._staffListView.context = await this._makeContext();
         this._staffListView.render();
+
+
     }
 }

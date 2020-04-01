@@ -1,10 +1,10 @@
 import './CafeStaffContainerComponent.css';
-import '../StaffCardConponent/StaffCardComponent.css';
+import '../StaffCardComponent/StaffCardComponent.css';
 import CafeStaffContainer from './CafeStaffContainerComponent.hbs';
-import StaffCard from '../StaffCardConponent/StaffCardComponent.hbs';
+import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs';
 import {Router} from "../../../modules/Router";
 import CafeCard from "../../CafeCard/CafeCard.hbs";
-import {StaffCardComponent} from "../StaffCardConponent/StaffCardComponent";
+import {StaffCardComponent} from "../StaffCardComponent/StaffCardComponent";
 
 
 export class CafeStaffContainerComponent {

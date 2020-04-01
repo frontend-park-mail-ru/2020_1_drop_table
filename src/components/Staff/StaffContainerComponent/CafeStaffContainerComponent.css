@@ -13,14 +13,14 @@
     }
 
     .cafe-with-staff-container__cafe-name{
-        height: 5%;
-        /*transform: rotate(270deg);*/
-        display: flex;
-        justify-content: start;
-        white-space: nowrap;
+        /*height: 5%;*/
+        /*!*transform: rotate(270deg);*!*/
+        /*display: flex;*/
+        /*justify-content: start;*/
+        /*white-space: nowrap;*/
     }
     .cafe-with-staff-container__cafe-with-staff-container_span{
-        font-family: Montserrat, Arial;
+        font-family: Montserrat, SansSerif;
         font-size: 2rem;
     }
 
@@ -30,10 +30,16 @@
 @media(min-width: 820px) {
 
     .cafe-with-staff-container__cafe-name{
+
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+
         height: 5%;
         transform: rotate(270deg);
-        display: flex;
-        justify-content: end;
+        justify-content: flex-end;
+        -webkit-box-pack: start;
         margin: 80%;
         white-space: nowrap;
         padding: 100% 0;
@@ -42,7 +48,7 @@
 
 
     .cafe-with-staff-container__cafe-with-staff-container_span{
-        font-family: Montserratб , Arial;
+        font-family: Montserrat , SansSerif ;
         font-size: 4rem;
     }
 
@@ -78,7 +84,7 @@
     width: 94.5%;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     padding-top: 6%;
 }
 
@@ -103,3 +109,7 @@
     width: 40%;
     margin-bottom: 0.2rem;
 }
+
+
+
+
