@@ -21,6 +21,8 @@ export default class CafeListView extends BaseView{
         buttonAddCafe.addEventListener('click',function (e) {
             router._goTo('/createCafe');
         }) // Need move to CafesContainerComponent
+
+
     }
 
     render() {

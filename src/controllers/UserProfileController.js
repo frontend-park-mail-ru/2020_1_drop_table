@@ -59,7 +59,7 @@ export default class UserProfileController{
                 }
             },
             profile: {
-                imgSrc: 'https://pngimage.net/wp-content/uploads/2018/06/user-logo-png-4.png',
+                imgSrc: '/images/userpic.png',
                 imgSrcPromise: this._userModel.photo,
                 event: {
                     type: 'change',

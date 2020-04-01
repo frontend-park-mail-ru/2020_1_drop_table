@@ -47,7 +47,6 @@ export default class CafeListController{
     }
 
     async control(){
-        console.log('control');
         this._cafeListView.context = await this._makeContext();
         this._cafeListView.render();
     }

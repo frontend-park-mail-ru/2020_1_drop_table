@@ -80,7 +80,6 @@ export default class CafeModel {
     }
 
     get context(){
-        console.log('in context');
         let cafeListData = sessionStorage.getItem('CafeList');
         const cafeData = JSON.parse(cafeListData)[this._listId];
         return cafeData;

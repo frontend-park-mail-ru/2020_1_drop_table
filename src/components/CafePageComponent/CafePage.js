@@ -8,12 +8,19 @@ export class CafePageComponent {
         this._parent = parent;
     }
 
+    _cropName(name){
+        if(name.length>20){
+            return name.slice(0,18).concat('...')
+        }
+        return name;
+    }
+
     render(context) {
         let openTime = new Date(context['openTime']);
         let closeTime = new Date(context['closeTime']);
 
         let data = {
-            name: context['name'],
+            name: this._cropName(context['name']),
             address: context['address'],
             description: context['description'],
             openTime: openTime.getHours()+':'+openTime.getMinutes(),

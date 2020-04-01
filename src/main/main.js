@@ -16,13 +16,17 @@ import CafePageController from "../controllers/CafePageContoller";
 import CafePageView from "../view/CafePageView";
 import StaffListView from "../view/StaffListView";
 import StaffListController from "../controllers/StaffListController";
+import LandingModel from "../models/LandingModel";
+import LandingView from "../view/LandingView";
+import LandingController from "../controllers/LandingController";
+import StaffModel from "../models/StaffModel";
+import AddStaffController from "../controllers/addStaffController";
 
 
 let app = document.getElementById('application');
 // let newRouter = new NewRouter(root);
 
 function doreg(){
-    console.log('in reg');
     const userModel = new UserModel();
     const registerView = new RegisterView(app, "Регистрация");
     const registerController = new RegisterController(userModel, registerView);
@@ -37,7 +41,6 @@ function dolog(){
         loginController.control();
 }
 function doMyCafes(){
-    console.log('in mycafes');
     const cafeList = new CafeListModel();
     const userModel = new UserModel();
     const cafeListView = new CafeListView(app);
@@ -54,7 +57,7 @@ function doProfile(){
 }
 
 function doCreateCafe(){
-    console.log('in createcafe');
+
     const cafeList = new CafeListModel();
     const userModel = new UserModel(router);
     const createCafeView = new CreateCafeView();
@@ -62,7 +65,6 @@ function doCreateCafe(){
     createCafeController.control();
 }
 function doStaff(){
-    console.log('in staff');
     const cafeList = new CafeListModel();
     const userModel = new UserModel();
     const staffListView = new StaffListView(app);
@@ -70,7 +72,8 @@ function doStaff(){
     staffListController.control();
 }
 
-function doCafe(id){
+function doCafe(req){
+    const id = req.param.id;
     console.log('in cafe');
     const cafeListModel = new CafeListModel();
     const userModel = new UserModel();
@@ -78,9 +81,19 @@ function doCafe(id){
     const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
     cafePageController.control(id);
 }
-function test(req) {
 
-     doCafe(req.param.id);
+function doLanding() {
+    const landingModel = new LandingModel();
+    const landingView = new LandingView(app);
+    const landingController = new LandingController(landingModel, landingView);
+    landingController.control();
+}
+
+function doAddStaff() {
+    const staffModel = new StaffModel();
+    const addStaffView = new RegisterView(app);
+    const addStaffController = new AddStaffController(staffModel, addStaffView);
+    addStaffController.control();
 }
 
 const myOptions ={
@@ -90,13 +103,16 @@ const myOptions ={
 export const router = new Router(myOptions);
 
 router.get("/", doreg);
+router.get("/landing", doLanding).setName("Landing");
 router.get("/reg", doreg).setName("Reg");
 router.get("/login", dolog).setName("Login");
 router.get("/myCafes", doMyCafes).setName("MyCafes");
 router.get("/profile", doProfile).setName("Profile");
 router.get("/createCafe", doCreateCafe).setName("CreateCafe");
 router.get("/staff", doStaff).setName("Staff");
-router.get('/cafe/{id}', test).setName('Cafe');
+router.get('/cafe/{id}', doCafe).setName('Cafe');
+
+router.get("/addStaff", doAddStaff).setName("AddStaff");
 
 router.init();
 

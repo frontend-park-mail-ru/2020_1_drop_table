@@ -1,6 +1,7 @@
 let path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/main/main.js',
@@ -32,6 +33,27 @@ module.exports = {
                 }
             },
             {
+                test: /\.(woff2?|ttf|otf|eot|svg|png|jpg)$/,
+                exclude: /node_modules/,
+                loader: 'file-loader',
+                options: {
+                    name: './external/[name].[ext]',
+                },
+            },
+
+            {
+                test: /\.(jpg|png|gif)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'img/',
+                        publicPath:'img/'
+                    }
+                }]
+            },
+
+            {
                 test: /\.hbs$/,
                 loader: "handlebars-loader"
             }
@@ -58,7 +80,11 @@ module.exports = {
             filename: 'index.html',
             template: './src/html/index.html',
             favicon: './src/images/logo.ico'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {from:'src/images',to:'images'},
+            {from:'src/fonts',to:'fonts'}
+        ]),
     ]
 };
 

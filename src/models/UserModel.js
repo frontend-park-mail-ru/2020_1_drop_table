@@ -135,7 +135,7 @@ export default class UserModel {
         this._id = data['id'];
         this._name = data['name'];
         this._password = data['password'];
-        this._photo = data['photo'];
+        this._photo = data['photo']? data['photo']:'/images/userpic.png';
     }
 
     async getOwner(){
@@ -185,8 +185,6 @@ export default class UserModel {
     }
 
     async login() {
-
-        console.log('login');
         sessionStorage.clear();
         await authAjax("POST",
             constants.PATH + "/api/v1/staff/login",

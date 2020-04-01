@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
 .redactor{
+    font-family: 'Montserrat',SansSerif;
     display: flex;
     flex-direction: column;
 }
@@ -29,7 +31,6 @@
 .card-redactor-container__card-form__image-picker_img-avatar{
     height: 100%;
     width: 100%;
-    max-height: 100px;
     max-width: 100px;
 }
 
@@ -81,7 +82,7 @@
 
 .card-color-pickers-container_color-picker_span{
     font-size: 1rem;
-    font-family: Montserrat;
+    /*font-family: Montserrat;*/
     justify-self: center;
 }
 .card-color-pickers-container_color-picker_container{
