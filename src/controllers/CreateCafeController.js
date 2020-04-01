@@ -95,11 +95,41 @@ export default class CreateCafeController{
     }
 
     _makeValidateContext(form){
-        return []; // TODO
+        return [
+            {
+                element: form.elements['name'],
+                validate: () => {
+                    if(form.elements['name'].value.toString().length < 2){
+                        return 'Название кафе слишком короткое';
+                    }
+                }
+            },
+            {
+                element: form.elements['address'],
+                validate: () => {
+                    if(form.elements['address'].value.toString().length < 6){
+                        return 'Адрес кафе слишком короткий';
+                    }
+                }
+            },
+            {
+                element: form.elements['description'],
+                validate: () => {
+                    if(form.elements['description'].value.toString().length < 6){
+                        return 'Описание кафе слишком короткое';
+                    }
+                }
+            },
+        ];
     }
 
     _makeExceptionContext(form){
-        return {}; //TODO
+        return {
+            'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
+                'Название кафе слишком короткое',
+                form['name']
+            ],
+        };
     }
 
     async control(){

@@ -178,6 +178,7 @@ export default class CafeModel {
             formData.append('photo', photo);
         } else {
             data['photo'] = await this.photo;
+            console.log(data['photo']);
         }
 
         formData.append('jsonData', JSON.stringify(data));

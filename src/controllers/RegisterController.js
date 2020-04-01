@@ -67,7 +67,7 @@ export default class RegisterController{
                 element: form.elements['full-name'],
                 validate: () => {
                     if(form.elements['full-name'].value.toString().length < 4){
-                        return 'Слишком короткое имя';
+                        return 'Имя слишком короткое';
                     }
                 }
             },
@@ -76,7 +76,7 @@ export default class RegisterController{
                 validate: () => {
                     const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
                     if(!emailRegex.test(form.elements['email'].value.toString())){
-                        return 'Некорректный email';
+                        return 'Некорректная почта';
                     }
                 }
             },
@@ -101,10 +101,22 @@ export default class RegisterController{
 
     _makeExceptionContext(form){
         return {
-            'User with this email already existed': form['email'],
-            'Password must be at least 8 characters in length': form['password'],
-            'Name must be at least 4 characters in length': form['full-name'],
-            'Email must be a valid email': form['email']
+            'given item already existed': [
+                'Пользователь с такой почтой уже существует',
+                form['email']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
+                'Минимальная длинна пароля 8 символов',
+                form['password']
+            ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'min\' tag': [
+                'Имя слишком короткое',
+                form['full-name']
+            ],
+            'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
+                'Некоректная почта',
+                form['email']
+            ]
         };
     }
 

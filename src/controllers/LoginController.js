@@ -21,7 +21,7 @@ export default class LoginController {
 
 
 
-        const validateContext = this._makeValidateContext();
+        const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
         if ((new FormValidation(form)).validate(validateContext)) {
@@ -61,11 +61,34 @@ export default class LoginController {
     }
 
     _makeValidateContext(form){
-        return []; // TODO
+        return [
+            {
+                element: form.elements['email'],
+                validate: () => {
+                    const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
+                    if(!emailRegex.test(form.elements['email'].value.toString())){
+                        return 'Некорректная почта';
+                    }
+                }
+            },
+            {
+                element: form.elements['password'],
+                validate: () => {
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий';
+                    }
+                }
+            }
+        ];
     }
 
     _makeExceptionContext(form){
-        return {}; //TODO
+        return {
+            'resource you request not found': [
+                'Некорректный логин или пароль',
+                form['password']
+            ],
+        };
     }
 
     control(){
