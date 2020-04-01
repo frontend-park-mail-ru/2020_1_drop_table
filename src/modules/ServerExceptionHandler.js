@@ -22,7 +22,6 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
             }
         } else {
             console.log('unknown server error: ' + error);
-            alert();
             router._goTo('/login');
         }
     }

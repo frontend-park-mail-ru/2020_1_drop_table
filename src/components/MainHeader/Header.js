@@ -57,9 +57,6 @@ export default class Header{
     }
 
     _renderHeader(context){
-        // this._avatar = ( context['avatar']['photo'] !== '')
-        //     ?  context['avatar']['photo'] : 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
-
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
@@ -77,7 +74,7 @@ export default class Header{
                 let avatarElement = this._parent.getElementsByClassName('page-header__avatar_img').item(0);
                 avatarElement.src = photo;
             }, (exception) => {
-                alert(exception); //TODO сделать обработку ошибки
+                alert(exception[0].message); //TODO сделать обработку ошибки
             });
         }
     }
