@@ -33,9 +33,7 @@ export default class CafeComponent {
 
     render(context) {
         this.renderProfile(context);
-        console.log('render Profile');
         this._addListener(context);
-        console.log('add l');
         this.renderForm(context['form']);
     }
 }

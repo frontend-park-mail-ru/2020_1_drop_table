@@ -8,7 +8,7 @@ export default class Header{
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
 
-        this._avatar = 'https://sun9-52.userapi.com/c857120/v857120621/e1197/AGVLHk62SEs.jpg';
+        this._avatar = '/images/userpic.png';
         this._head = null;
 
         this._logo = null;
@@ -72,7 +72,9 @@ export default class Header{
         if(this._hasAvatar && context['avatar']['photo']){
             context['avatar']['photo'].then((photo) => {
                 let avatarElement = this._parent.getElementsByClassName('page-header__avatar_img').item(0);
-                avatarElement.src = photo;
+                if(photo) {
+                    avatarElement.src = photo;
+                }
             }, (exception) => {
                 alert(exception[0].message); //TODO сделать обработку ошибки
             });

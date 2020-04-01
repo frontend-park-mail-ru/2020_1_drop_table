@@ -1,6 +1,6 @@
 import './StaffPageComponent.css';
 import StaffPage from './StaffPageComponent.hbs';
-import StaffCard from '../StaffCardConponent/StaffCardComponent.hbs'
+import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs'
 
 import '../StaffContainerComponent/CafeStaffContainerComponent.css';
 
@@ -18,8 +18,10 @@ export class StaffPageComponent {
             for(let cafe of staff){
                 staffList.push(StaffCard(cafe));
             }
+
             (new CafeStaffContainerComponent(this._parent)).render({name, staffList});
         }
+        this._parent.innerHTML += StaffPage();
     }
 
     render(context) {

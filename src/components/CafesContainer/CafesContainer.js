@@ -46,7 +46,6 @@ export class CafesContainerComponent {
             let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
             let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
             let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
-
             if(cardImage && cardName) {
                 cardImage.addEventListener('click', function (e) {
                     const cardIdStr = card.getAttribute('id');
@@ -63,6 +62,7 @@ export class CafesContainerComponent {
                 });
             }
         }
+
     }
 
     render(context) {

@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+
 .decorate-container__dec-label__lab-field {
+    font-family: 'Montserrat',SansSerif;
     display: inline-block;
     vertical-align: center;
-    font-family: Montserrat;
+    /*font-family: Montserrat;*/
     font-style: normal;
     font-weight: normal;
     overflow: auto;

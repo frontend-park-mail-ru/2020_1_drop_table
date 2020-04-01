@@ -13,7 +13,6 @@ export default class CafeListModel{
         this._cafeModelsList = [];
         const cafeListData = this._loadCafeList();
         this._constructCafe(cafeListData);
-        console.log('sas', this._cafeModelsList.length);
     }
 
     get context(){

@@ -15,8 +15,6 @@ export default class CafePageController {
 
     async _makeContext(id){
         const cafe = this._cafeListModel.getCafeById(id);
-        console.log(cafe);
-
         let cafeContext = {
             'cafe': cafe.context
         };

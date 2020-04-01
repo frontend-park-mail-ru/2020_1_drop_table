@@ -5,6 +5,7 @@ import {CardField} from "./CardField.js";
 import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import {ajaxForm} from "../utils/ajaxForm";
+import {AppleCardQrWindowComponent} from "../components/AppleCardQrWindow/AppleCardQrWindow";
 
 export class AppleCardModel {
 
@@ -26,7 +27,6 @@ export class AppleCardModel {
             'secondaryFields': [],
             'auxiliaryFields': [],
         };
-
 
         this._minDesign = `{
         "barcode": {"format": "PKBarcodeFormatQR",
@@ -54,7 +54,6 @@ export class AppleCardModel {
             await this.getCard();
             const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
             if (cafeCard) {
-                console.log()
                 resolve(JSON.parse(cafeCard));
             }
             resolve(null);
@@ -126,11 +125,36 @@ export class AppleCardModel {
     }
 
     getAsJson() {
+        console.log('json test', this._storeCard['headerFields']);
         let json = {
+
+            "formatVersion": 1,
+            "passTypeIdentifier": "pass.com.ssoboy",
+            "serialNumber": "ART",
+            "teamIdentifier": "WSULUSUQ63",
+            "webServiceURL": "https://example.com/passes/",
+            "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
+            "barcode": {
+                "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
+                "format": "PKBarcodeFormatQR",
+                "messageEncoding": "iso-8859-1"
+            },
+            "locations": [
+                {
+                    "longitude": -122.3748889,
+                    "latitude": 37.6189722
+                },
+                {
+                    "longitude": -122.03118,
+                    "latitude": 37.33182
+                }
+            ],
+
+
             "organizationName": this._organizationName,
             "description": this._description,
             "labelColor": this._labelColor,
-            "logoText": this._storeCard['headerFields'][0]._label,
+            "logoText": (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
             "foregroundColor": this._foregroundColor,
             "backgroundColor": this._backgroundColor,
             "backFields": [],
@@ -298,7 +322,6 @@ export class AppleCardModel {
 
         //заполняем хедер филды
         if( !design.storeCard.headerFields ){
-            console.log('No HeaderFields');
             this._storeCard.headerFields.push(new CardField({
                 'fieldType': 'HeaderField',
                 'key': uuid(),
@@ -317,7 +340,6 @@ export class AppleCardModel {
             })
         }
         if( !design.storeCard.primaryFields ){
-            console.log('No HeaderFields');
             this._storeCard.primaryFields.push(new CardField({
                 'fieldType': 'PrimaryField',
                 'key': uuid(),
@@ -356,8 +378,6 @@ export class AppleCardModel {
 
 
 
-
-
     }
     _fillCardData(context){
 
@@ -367,7 +387,8 @@ export class AppleCardModel {
         this._icon = context.icon;
         this._strip = context.strip;
 
-        this._cafeId = this._cafeId;
+        console.log('icon ',context.icon);
+
         this._organizationName = design.organizationName;
         this._description = design.description;;
         this._labelColor = design.labelColor;
@@ -390,7 +411,8 @@ export class AppleCardModel {
             {},
             (response) => {
                 if (response.data == null) {
-                    console.log('null data: ', response.data)
+                    console.log('null data: ', response.data);
+                    this._fillCardData({design: this._minDesign});
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
@@ -420,14 +442,19 @@ export class AppleCardModel {
     }
 
 
-    async editCard(images) {
+    async editCard(images, publish) {
         const formData = await this._makeFormData(images);
-        await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=true`, //todo make await
+
+        await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=${publish.toString()}`, //todo make await
             'PUT',
             formData,
             (response) => {
                 if (response.errors === null) {
                     console.log('editCard success', response);
+                    if(response.data['QR'] && response.data['URL'] && publish){
+                        console.log('window component');
+                        (new AppleCardQrWindowComponent( response.data['URL'], response.data['QR'])).render();
+                    }
                     // this._filUserData(response.data);
                     // this._saveUser();
                 } else {

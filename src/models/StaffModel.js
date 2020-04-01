@@ -18,7 +18,7 @@ export default class StaffModel { // дописать потом
         this._isowner = null;
         this._cafeid = null;
 
-        this._loadCafe();
+       // this._loadStaff();
     }
 
     get address(){
@@ -124,7 +124,8 @@ export default class StaffModel { // дописать потом
         }
     }
 
-    _loadCafe(){
+    _loadStaff(){
+        console.log('load staff');
         let staffListData = sessionStorage.getItem('StaffList');
         if (staffListData && this._listId != null) {
             const staffData = JSON.parse(staffListData)[this._listId];
@@ -135,6 +136,7 @@ export default class StaffModel { // дописать потом
     }
 
     _saveStaff(){
+
         const data = {
             'address': this._address,
             'closeTime': this._closeTime,
@@ -152,7 +154,7 @@ export default class StaffModel { // дописать потом
     }
 
     fillStaffData(context){
-
+        console.log('fill staffData');
         this._address = context['address'];
         this._closeTime = context['closeTime'];
         this._description = context['description'];
@@ -165,6 +167,7 @@ export default class StaffModel { // дописать потом
     }
 
     async getFormData(photo){
+        console.log('get FormData');
         let formData = new FormData();
 
         let data = {
@@ -188,6 +191,7 @@ export default class StaffModel { // дописать потом
             null,
             (response) => {
                 if (response.errors === null) {
+                    console.log('getStaff ', response.data);
                     this.fillStaffData(response.data);
                 } else {
                     throw response.errors;

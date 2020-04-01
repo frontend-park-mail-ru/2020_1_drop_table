@@ -1,4 +1,5 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
 .form-field__need-register {
     width: 100%;
@@ -11,7 +12,7 @@
 .form-field__need-register__reg-span{
     display: block;
     word-wrap: break-word;
-    font-family: 'FuturaDemiCTT Normal', arial;
+    font-family: 'Montserrat',SansSerif;
 }
 
 .form-field__need-register__reg-span {
