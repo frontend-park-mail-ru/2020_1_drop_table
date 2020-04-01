@@ -15,7 +15,7 @@ export default class CardRedactorController {
         this._cardRedactorView.render();
         this.addImageListeners();
         this.addCardFieldsListeners();
-        this.addImageListeners();
+        this.addSavePublishListeners();
         this.addColorPickerListeners(this);
 
     }
@@ -35,7 +35,7 @@ export default class CardRedactorController {
             target.value);
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
 
-        this.addImageListeners();
+        this.addSavePublishListeners();
         this.addImageListeners()
     }
 
@@ -81,7 +81,7 @@ export default class CardRedactorController {
     }
 
     //todo пофиксить, когда будут новые ручки с сервера
-    addImageListeners(){
+    addSavePublishListeners(){
         const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
         submitSave.addEventListener('click', (e) => {
             e.preventDefault();
@@ -145,7 +145,7 @@ export default class CardRedactorController {
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
         this.addCardFieldsListeners();
         this.addColorPickerListeners(this);
-        this.addImageListeners()
+        this.addSavePublishListeners();
     }
 
     removeAppleCardField(e) {
@@ -154,8 +154,9 @@ export default class CardRedactorController {
         this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
         this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
         this.addCardFieldsListeners();
-        this.addImageListeners();
+        this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+
 
     }
 
