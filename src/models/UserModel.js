@@ -191,9 +191,10 @@ export default class UserModel {
             {"email": await this.email, "password": await this.password},
             (response) => {
             if (response.errors === null) {
-                console.log('replace to mycafe')
-                router._goTo('/Profile')
+                console.log('replace to mycafe');
+                router._goTo('/profile')
             } else {
+                alert();
                 throw response.errors;
             }
         });

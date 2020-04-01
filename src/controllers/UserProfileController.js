@@ -2,8 +2,12 @@
 
 import {handleImageUpload} from "../modules/imageUpload";
 import {validateForm} from "../modules/formValidator";
-import {Router} from "../modules/Router";
+
 import {router} from "../main/main";
+
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+
 
 export default class UserProfileController{
 
@@ -18,29 +22,31 @@ export default class UserProfileController{
         const photoInput = document.getElementById('upload');
         const photo = photoInput.files[0];
 
-        if (validateForm(form)) {
-            this._userModel.name = form.elements['name'].value.toString();
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
+
+        if ((new FormValidation(form)).validate(validateContext)) {
+            this._userModel.name = form.elements['full-name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
 
             try {
                 await this._userModel.editOwner(photo);
             } catch (exception) {
-                alert(exception[0].message); //TODO Сделать обработку исключения
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
     }
 
-    _headerAvatarListener(){
-        router._goTo('/profile');
-    }
+
 
     _headerExitListener(){
         sessionStorage.clear();
         router._goTo('/login');
     }
 
-    async _makeContext() {
+
+    _makeViewContext() {
         return {
             header: {
                 type: 'profile',
@@ -48,13 +54,19 @@ export default class UserProfileController{
                     photo: null,
                     event: {
                         type: 'click',
-                        listener: this._headerAvatarListener.bind(this)
+                        listener: () => {
+                            router._goTo('/profile');
+                        }
                     }
                 },
                 exit: {
                     event: {
                         type: 'click',
-                        listener: this._headerExitListener.bind(this)
+                        listener: () => {
+                          sessionStorage.clear();
+                           router._goTo('/login');
+                           
+                        }
                     }
                 }
             },
@@ -69,7 +81,7 @@ export default class UserProfileController{
                     formFields: [
                         {
                             type: 'text',
-                            id: 'name',
+                            id: 'full-name',
                             data: 'name',
                             inputPromise: this._userModel.name,
                             labelData: 'Имя',
@@ -89,7 +101,7 @@ export default class UserProfileController{
                             data: 'password',
                             inputPromise: this._userModel.password,
                             labelData: 'Пароль',
-                            inputOption: 'required'
+                            inputOption: 'required',
                         },
                         {
                             type: 'password',
@@ -97,7 +109,7 @@ export default class UserProfileController{
                             data: 'password',
                             inputPromise: this._userModel.password,
                             labelData: 'Повторите пароль',
-                            inputOption: 'required'
+                            inputOption: 'required',
                         },
                     ],
                     submitValue: 'Готово',
@@ -110,8 +122,67 @@ export default class UserProfileController{
         };
     }
 
+    _makeValidateContext(form){
+        return [
+            {
+                element: form.elements['full-name'],
+                validate: () => {
+                    if(form.elements['full-name'].value.toString().length < 4){
+                        return 'Имя слишком короткое';
+                    }
+                }
+            },
+            {
+                element: form.elements['email'],
+                validate: () => {
+                    const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
+                    if(!emailRegex.test(form.elements['email'].value.toString())){
+                        return 'Некорректная почта';
+                    }
+                }
+            },
+            {
+                element: form.elements['password'],
+                validate: () => {
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий';
+                    }
+                }
+            },
+            {
+                element: form.elements['re-password'],
+                validate: () => {
+                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
+                        return 'Пароли не совпадают';
+                    }
+                }
+            },
+        ];
+    }
+
+    _makeExceptionContext(form){
+        return {
+            'pq: duplicate key value violates unique constraint \"staff_email_key\"': [
+                'Пользователь с такой почтой уже существует',
+                form['email']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
+                'Минимальная длинна пароля 8 символов',
+                form['password']
+            ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'min\' tag': [
+                'Имя слишком короткое',
+                form['full-name']
+            ],
+            'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
+                'Некоректная почта',
+                form['email']
+            ]
+        };
+    }
+
     async control(){
-        this._userProfileView.context = await this._makeContext();
+        this._userProfileView.context = this._makeViewContext();
         this._userProfileView.render();
     }
 

@@ -1,8 +1,12 @@
 'use strict';
 
 import {handleImageUpload} from "../modules/imageUpload";
-import {Router} from "../modules/Router";
+
 import {router} from "../main/main";
+
+import FormValidation from "../modules/FormValidation";
+import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+
 
 export default class CreateCafeController{
     constructor(cafeList, userModel, createCafeView) {
@@ -23,19 +27,20 @@ export default class CreateCafeController{
         cafe.description = form.elements['description'].value;
         cafe.photo = image;
 
-        try {
-            await this._cafeListModel.create(photoInput.files[0], cafe);
-        } catch (exception) {
-            alert(exception[0].message); //TODO Сделать обработку исключения
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
+
+        if ((new FormValidation(form)).validate(validateContext)) {
+            try {
+                await this._cafeListModel.create(photoInput.files[0], cafe);
+            } catch (exception) {
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+            }
         }
 
     }
 
-    _headerAvatarListener(){
-        router._goTo('/profile');
-    }
-
-    async _makeContext(){
+    async _makeViewContext(){
         return {
             header:{
                 type: null,
@@ -43,7 +48,9 @@ export default class CreateCafeController{
                     photo: this._userModel.photo,
                     event: {
                         type: 'click',
-                        listener: this._headerAvatarListener.bind(this)
+                        listener: () => {
+                            router._goTo('/profile');
+                        }
                     }
                 }
             },
@@ -87,8 +94,46 @@ export default class CreateCafeController{
         };
     }
 
+    _makeValidateContext(form){
+        return [
+            {
+                element: form.elements['name'],
+                validate: () => {
+                    if(form.elements['name'].value.toString().length < 2){
+                        return 'Название кафе слишком короткое';
+                    }
+                }
+            },
+            {
+                element: form.elements['address'],
+                validate: () => {
+                    if(form.elements['address'].value.toString().length < 6){
+                        return 'Адрес кафе слишком короткий';
+                    }
+                }
+            },
+            {
+                element: form.elements['description'],
+                validate: () => {
+                    if(form.elements['description'].value.toString().length < 6){
+                        return 'Описание кафе слишком короткое';
+                    }
+                }
+            },
+        ];
+    }
+
+    _makeExceptionContext(form){
+        return {
+            'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
+                'Название кафе слишком короткое',
+                form['name']
+            ],
+        };
+    }
+
     async control(){
-        this._createCafeView.context = await this._makeContext();
+        this._createCafeView.context = await this._makeViewContext();
         this._createCafeView.render();
     }
 }

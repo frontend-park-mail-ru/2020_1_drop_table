@@ -3,8 +3,7 @@ import CafeListView from "../view/CafeListView";
 import UserModel from "../models/UserModel";
 import CafeListController from "../controllers/CafeListController";
 
-import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams
-} from "./utils.js";
+import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from "./Utils.js";
 
 let app = document.body;
 
