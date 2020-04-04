@@ -1,9 +1,5 @@
 'use strict';
 
-self.addEventListener('activate', (event) => {
-    console.log('Активирован');
-});
-
 const CACHE_NAME = 'eloyalty';
 const cacheUrls = [
     '/',
