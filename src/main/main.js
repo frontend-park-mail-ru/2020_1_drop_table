@@ -22,6 +22,14 @@ import LandingController from "../controllers/LandingController";
 import StaffModel from "../models/StaffModel";
 import AddStaffController from "../controllers/addStaffController";
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
+        .then((reg) => {
+            console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch((error) => {
+        console.log('Registration failed with ' + error);
+    });
+}
 
 let app = document.getElementById('application');
 // let newRouter = new NewRouter(root);
