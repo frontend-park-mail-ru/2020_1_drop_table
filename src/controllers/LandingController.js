@@ -4,14 +4,24 @@ import {Router} from "../modules/Router";
 
 import {router} from "../main/main";
 
+/** контроллер лэндинга */
 export default class LandingController {
 
+    /**
+     * Инициализация LandingController
+     * @param {LandingModel} landingModel модель лэндинга
+     * @param {LandingView} landingView view лэндинга
+     */
     constructor(landingModel, landingView) {
         this._landingModel = landingModel;
         this._landingView = landingView;
     }
 
-    _makeContext(){
+    /**
+     * Создание контекста для LandingView
+     * @return {obj} созданный контекст
+     */
+    _makeViewContext(){
         return {
             header: {
                 type: 'auth',
@@ -22,9 +32,10 @@ export default class LandingController {
         }
     }
 
+    /** Запуск контроллера */
     control(){
         sessionStorage.clear();
-        this._landingView.context = this._makeContext();
+        this._landingView.context = this._makeViewContext();
         this._landingView.render();
     }
 }

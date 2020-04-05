@@ -15,7 +15,4 @@ export function CreateCafePage(app, id) {
                 alert(response.errors[0].message); //TODO showError
             }
         });
-
-
-
 }

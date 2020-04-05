@@ -3,8 +3,13 @@ import './Header.css'
 import headerTemplate from './Header.hbs';
 import {Router} from "../../modules/Router";
 
+/** Компонента хэдера */
 export default class Header{
 
+    /**
+     * Инициализация компоненты хэдера
+     * @param {Element} parent элемент в котором будет располагаться компонента хэдера
+     */
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
 
@@ -24,6 +29,11 @@ export default class Header{
         ];
     }
 
+    /**
+     * Установка свойств хэдера
+     * @param {obj} context некоторый контекст с информацией о хэдере
+     * @private
+     */
     _setProperties(context){
         if (context['type'] === 'auth') {
             this._hasAvatar = false;
@@ -41,6 +51,11 @@ export default class Header{
         }
     }
 
+    /**
+     * Добавление листенеров на элементы
+     * @param {obj} context некоторый контекст с информацией о хэдере
+     * @private
+     */
     _addListeners(context){
         if (this._hasAvatar) {
             let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
@@ -56,6 +71,11 @@ export default class Header{
 
     }
 
+    /**
+     * Отрисовка хэдера
+     * @param {obj} context некоторый контекст с информацией о хэдере
+     * @private
+     */
     _renderHeader(context){
         const headerData = {
             hasAvatar: this._hasAvatar,
@@ -68,6 +88,11 @@ export default class Header{
         this._head.innerHTML = headerTemplate(headerData);
     }
 
+    /**
+     * Отрисовка аватарки
+     * @param {obj} context некоторый контекст с информацией о хэдере
+     * @private
+     */
     _renderAvatar(context){
         if(this._hasAvatar && context['avatar']['photo']){
             context['avatar']['photo'].then((photo) => {
@@ -81,6 +106,10 @@ export default class Header{
         }
     }
 
+    /**
+     * Отрисовка хэдера
+     * @param {obj} context некоторый контекст с информацией о хэдере
+     */
     render(context){
         this._head = document.createElement('div');
         this._head.className = 'header';

@@ -4,7 +4,7 @@ import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import {authAjax} from "../utils/authAjax";
 
-
+/** Класс модели рабочего */
 export default class StaffModel { // дописать потом
 
     constructor() {
@@ -186,6 +186,7 @@ export default class StaffModel { // дописать потом
         return formData;
     }
 
+    /** Получение работника */
     async getStaff(){
         await authAjax('GET', constants.PATH + `/api/v1/staff/${this._id}`,
             null,

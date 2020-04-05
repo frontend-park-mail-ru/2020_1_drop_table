@@ -5,12 +5,18 @@ import CardRedactorView from "./CardRedactorView";
 import {AppleCardModel} from "../models/AppleCardModel";
 import BaseView from "./BaseView";
 
+/** view страницы кафе */
 export default class CafePageView extends BaseView {
+
+    /**
+     * Инициализация CafePageView
+     * @param {Element} app элемент в котором находится приложение
+     */
     constructor(app = document.getElementById('application')) {
         super(app);
     }
 
-    applePassButtonClick (e) {
+    applePassButtonClick (e) { //TODO move to controller
         let container = document.getElementsByClassName('card-creator-container').item(0);
         if( container.innerHTML.toString().length <= 2 ){
             console.log('cafe context: ', this._context['cafe'].id);
@@ -21,6 +27,7 @@ export default class CafePageView extends BaseView {
         }
     }
 
+    /** Отрисовка страницы с кафе */
     render(){
         this._app.innerHTML = '';
         (new Header(this._app)).render(this._context['header']);

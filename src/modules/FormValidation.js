@@ -1,12 +1,23 @@
 import BaseErrorHandler from './BaseErrorHandler'
 
+
+/** Класс валидации форм*/
 export default class FormValidation extends BaseErrorHandler{
 
+    /**
+     * Инициализация FormValidation
+     * @param {Element} parent элемент формы
+     */
     constructor(parent) {
         super(parent);
         this._correct = true;
     }
 
+    /**
+     * Валидация формы
+     * @param {Array} context контекст для валидации формы
+     * @private
+     */
     _validateForm(context){
         context.forEach((obj) => {
             const errorMessage = obj.validate();
@@ -17,6 +28,11 @@ export default class FormValidation extends BaseErrorHandler{
         });
     }
 
+    /**
+     * Валидация формы
+     * @param {obj} context контекст для валидации
+     * @return {boolean} результат валидации
+     */
     validate(context){
         this._deleteErrors();
         this._validateForm(context);

@@ -8,11 +8,11 @@ import {ajaxForm} from "../utils/ajaxForm";
 import {router} from "../main/main";
 import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
+/** Класс модели юзера */
 export default class UserModel {
 
-
+    /** Инициализация модели */
     constructor() {
-
         this._editedAt = null;
         this._email = null;
         this._id = null;
@@ -23,6 +23,10 @@ export default class UserModel {
         this._getUser();
     }
 
+    /**
+     * Возвращает промис, который возвращает время редактирования
+     * @return {Promise} промис, который возвращает время редактирования.
+     */
     get editedAt() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._editedAt);
@@ -30,6 +34,10 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Возвращает промис, который возвращает email
+     * @return {Promise} промис, который возвращает email.
+     */
     get email() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._email);
@@ -37,6 +45,10 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Возвращает промис, который возвращает id
+     * @return {Promise} промис, который возвращает id.
+     */
     get id() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._id);
@@ -44,6 +56,10 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Возвращает промис, который возвращает name
+     * @return {Promise} промис, который возвращает name.
+     */
     get name() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._name);
@@ -51,6 +67,10 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Возвращает промис, который возвращает password
+     * @return {Promise} промис, который возвращает password.
+     */
     get password() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._password);
@@ -58,6 +78,10 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Возвращает промис, который возвращает photo
+     * @return {Promise} промис, который возвращает photo.
+     */
     get photo() {
         return new Promise(async (resolve) => {
             await this._checkUser(this._photo);
@@ -65,27 +89,44 @@ export default class UserModel {
         });
     }
 
+    /**
+     * Устанавливает значение email
+     * @param {string} email
+     */
     set email(email) {
         this._email = email.toString();
         this._saveUser();
     }
 
+    /**
+     * Устанавливает значение name
+     * @param {string} name
+     */
     set name(name) {
         this._name = name.toString();
         this._saveUser();
     }
 
+    /**
+     * Устанавливает значение password
+     * @param {string} password
+     */
     set password(password) {
         this._password = password.toString();
         this._saveUser();
     }
 
+    /**
+     * Проверяет существование поля data
+     * @param {string|null} data
+     */
     async _checkUser(data){
         if(!data){
             await this.getOwner();
         }
     }
 
+    /** Заполняет поля userModel из sessionStorage */
     _getUser() {
         let userData = sessionStorage.getItem("user");
         if (userData) {
@@ -94,6 +135,7 @@ export default class UserModel {
         }
     }
 
+    /** Сохраняет поля userModel в sessionStorage */
     _saveUser() {
         const obj = {
             "editedAt": this._editedAt,
@@ -107,6 +149,11 @@ export default class UserModel {
         sessionStorage.setItem("user", JSON.stringify(obj));
     }
 
+    /**
+     * Возвращает formData из полей userModel
+     * @param {obj|null} photo
+     * @return {FormData} formData
+     */
     async _makeFormData(photo) {
         let formData = new FormData();
         let data = {
@@ -130,6 +177,10 @@ export default class UserModel {
         return formData;
     }
 
+    /**
+     * Заполняет поля userModel
+     * @param {obj} data
+     */
     _filUserData(data) {
         this._editedAt = data['editedAt'];
         this._email = data['email'];
@@ -139,6 +190,7 @@ export default class UserModel {
         this._photo = data['photo']? data['photo']:'/images/userpic.png';
     }
 
+    /** Получение информации о текущем пользователе. */
     async getOwner(){
         await ajax(constants.PATH+'/api/v1/get_current_staff/',
             'GET',
@@ -154,6 +206,7 @@ export default class UserModel {
         );
     }
 
+    /** Изменение информации о текущем пользователе. */
     async editOwner(photo = null){
         const formData = await this._makeFormData(photo);
         await ajaxForm(constants.PATH+'/api/v1/staff/' + await this.id,
@@ -171,6 +224,7 @@ export default class UserModel {
 
     }
 
+    /** Регистрация пользователя. */
     async register() {
         sessionStorage.clear();
         await ajax(constants.PATH + "/api/v1/staff",
@@ -185,6 +239,7 @@ export default class UserModel {
         });
     }
 
+    /** Аунтификация пользователя. */
     async login() {
         sessionStorage.clear();
         await authAjax("POST",
@@ -201,10 +256,9 @@ export default class UserModel {
         });
     }
 
+    /** Добавление работника */
     async addStaff(uuid) {
         const requestUrl = "/api/v1/add_staff?uuid=" + uuid;
-
-
         await ajax(constants.PATH + requestUrl,
             "POST",
           {"name": await this.name, "email": await this.email, "password": await this.password},
@@ -219,6 +273,7 @@ export default class UserModel {
         );
     }
 
+    /** Добавление QR работника */
     async addStaffQR(cafeId) {
         await ajax(constants.PATH + `/api/v1/staff/generateQr/${cafeId}`,
             'GET',
@@ -236,5 +291,4 @@ export default class UserModel {
             }
         )
     }
-
 }

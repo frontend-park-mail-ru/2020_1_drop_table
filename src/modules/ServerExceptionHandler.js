@@ -1,13 +1,23 @@
 import {router} from "../main/main";
 import BaseErrorHandler from './BaseErrorHandler'
 
+/** Обработчик ошибок сервера */
 export default class ServerExceptionHandler extends BaseErrorHandler{
 
+    /**
+     * Инициализация FormValidation
+     * @param {Element} parent элемент в котором происходит обработка ошибок
+     */
     constructor(parent, context) {
         super(parent);
         this._context = context;
     }
 
+    /**
+     * Обработка одной ошибки
+     * @param {string} error сообщение ошибки
+     * @private
+     */
     _handleError(error){
         if (error in this._context) {
             let message = null, element = null;
@@ -26,6 +36,10 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
         }
     }
 
+    /**
+     * Обработка списка ошибок
+     * @param {Array} errors список ошибок
+     */
     handle(errors){
         this._deleteErrors();
         errors.forEach((error) => {

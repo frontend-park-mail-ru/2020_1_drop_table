@@ -7,14 +7,22 @@ import {router} from "../main/main";
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
-
+/** контроллер создания кафе */
 export default class CreateCafeController{
-    constructor(cafeList, userModel, createCafeView) {
-        this._cafeListModel = cafeList;
+
+    /**
+     * Инициализация CafePageController
+     * @param {CafeListModel} cafeListModel модель списка кафе
+     * @param {UserModel} userModel модель пользователя
+     * @param {CreateCafeView} createCafeView view для создания кафе
+     */
+    constructor(cafeListModel, userModel, createCafeView) {
+        this._cafeListModel = cafeListModel;
         this._userModel = userModel;
         this._createCafeView = createCafeView;
     }
 
+    /** Event добавление кафе */
     async _addCafe(e) {
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
@@ -44,6 +52,10 @@ export default class CreateCafeController{
 
     }
 
+    /**
+     * Создание контекста для CafePageView
+     * @return {obj} созданный контекст
+     */
     async _makeViewContext(){
         return {
             header:{
@@ -98,6 +110,11 @@ export default class CreateCafeController{
         };
     }
 
+    /**
+     * Создание контекста для FormValidation
+     * @param {Element} form элемент валидируеммой формы
+     * @return {Array} созданный контекст
+     */
     _makeValidateContext(form){
         return [
             {
@@ -127,6 +144,11 @@ export default class CreateCafeController{
         ];
     }
 
+    /**
+     * Создание контекста для ServerExceptionHandler
+     * @param {Element} form вылидируемый элемент
+     * @return {obj} созданный контекст
+     */
     _makeExceptionContext(form){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
@@ -136,6 +158,7 @@ export default class CreateCafeController{
         };
     }
 
+    /** Запуск контроллера */
     async control(){
         this._createCafeView.context = await this._makeViewContext();
         this._createCafeView.render();

@@ -7,14 +7,22 @@ import {router} from "../main/main";
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
-
+/** контроллер редактирования кафе */
 export default class EditCafeController{
+
+    /**
+     * Инициализация EditCafeController
+     * @param {CafeListModel} cafeList модель списка кафе
+     * @param {UserModel} userModel модель пользователя
+     * @param {CreateCafeView} createCafeView view создания кафе
+     */
     constructor(cafeList, userModel, createCafeView) {
         this._cafeListModel = cafeList;
         this._userModel = userModel;
         this._createCafeView = createCafeView;
     }
 
+    /** Event измененич кафе */
     async _editCafe(e) {
         console.log('editCafe');
         e.preventDefault();
@@ -45,9 +53,13 @@ export default class EditCafeController{
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
-
     }
 
+    /**
+     * Создание контекста для CreateCafeView
+     * @param {int} id идентификатор кафе
+     * @return {obj} созданный контекст
+     */
     async _makeViewContext(id){
         const cafe = this._cafeListModel.getCafeById(id);
 
@@ -107,6 +119,11 @@ export default class EditCafeController{
         };
     }
 
+    /**
+     * Создание контекста для FormValidation
+     * @param {Element} form элемент валидируеммой формы
+     * @return {Array} созданный контекст
+     */
     _makeValidateContext(form){
         return [
             {
@@ -127,7 +144,11 @@ export default class EditCafeController{
             },
             {
                 element: form.elements['description'],
-                validate: () => {
+                validate: () => {/**
+     * Создание контекста для ServerExceptionHandler
+     * @param {Element} form вылидируемый элемент
+     * @return {obj} созданный контекст
+     */
                     if(form.elements['description'].value.toString().length < 6){
                         return 'Описание кафе слишком короткое';
                     }
@@ -136,6 +157,11 @@ export default class EditCafeController{
         ];
     }
 
+    /**
+     * Создание контекста для ServerExceptionHandler
+     * @param {Element} form вылидируемый элемент
+     * @return {obj} созданный контекст
+     */
     _makeExceptionContext(form){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
@@ -145,6 +171,10 @@ export default class EditCafeController{
         };
     }
 
+    /**
+     * Запуск контроллера
+     * @param {int} id идентификатор кафе
+     */
     async control(id){
         this._id = id;
         this._createCafeView.context = await this._makeViewContext(id);

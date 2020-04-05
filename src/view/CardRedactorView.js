@@ -8,7 +8,13 @@ import colorPicker from "../utils/colorPicker";
 import {picker} from '../utils/cardRedactorUtils'
 import BaseView from "./BaseView";
 
+/** view редактора крточки */
 export default class CardRedactorView extends BaseView{
+
+    /**
+     * Инициализация CardRedactorView
+     * @param {Element} app элемент в котором находится приложение
+     */
     constructor(app = document.getElementById('application')) {
         super(app);
         this._context = null;
@@ -25,6 +31,7 @@ export default class CardRedactorView extends BaseView{
         this.colorWheelLabel = new colorPicker.ColorPicker("#label-color", picker);
     }
 
+    /** Отрисовка редактора крточки */
     render() {
         this.cardFormComp.render(this._appleCard.getAsFormData());
         this.cardAppleComp.render(this._appleCard.getAsFormData());

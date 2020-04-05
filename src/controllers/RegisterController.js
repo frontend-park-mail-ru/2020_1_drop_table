@@ -7,13 +7,20 @@ import {router} from "../main/main";
 import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
-
+/** контроллер регистрации */
 export default class RegisterController{
+
+    /**
+     * Инициализация RegisterController
+     * @param {UserModel} userModel модель пользователя
+     * @param {RegisterView} registerView view для регистрации
+     */
     constructor(userModel, registerView) {
         this._userModel = userModel;
         this._registerView = registerView;
     }
 
+    /** Event регистрации */
     async _formListener(e) {
         e.preventDefault();
 
@@ -34,6 +41,10 @@ export default class RegisterController{
         }
     }
 
+    /**
+     * Создание контекста для RegisterView
+     * @return {obj} созданный контекст
+     */
     _makeViewContext(){
         return {
             header: {
@@ -61,6 +72,11 @@ export default class RegisterController{
         }
     }
 
+    /**
+     * Создание контекста для FormValidation
+     * @param {Element} form элемент валидируеммой формы
+     * @return {Array} созданный контекст
+     */
     _makeValidateContext(form){
         return [
             {
@@ -99,6 +115,11 @@ export default class RegisterController{
         ];
     }
 
+    /**
+     * Создание контекста для ServerExceptionHandler
+     * @param {Element} form вылидируемый элемент
+     * @return {obj} созданный контекст
+     */
     _makeExceptionContext(form){
         return {
             'given item already existed': [
@@ -120,6 +141,7 @@ export default class RegisterController{
         };
     }
 
+    /** Запуск контроллера */
     control(){
         sessionStorage.clear();
         this._registerView.context = this._makeViewContext();

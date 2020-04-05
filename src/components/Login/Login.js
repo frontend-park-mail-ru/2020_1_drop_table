@@ -3,12 +3,23 @@ import './Login.css';
 import LoginTemplate from '../Register/RegisterTopBar.hbs';
 import LoginFormTemplate from './Login.hbs';
 
+/** Компонента логина */
 export default class LoginComponent{
+
+    /**
+     * Инициализация компоненты логина
+     * @param {Element} parent элемент в котором будет располагаться компонента лендинга
+     */
     constructor(parent) {
         this._parent = parent;
         this._form = null;
     }
 
+    /**
+     * Добавление листенеров на элементы
+     * @param {obj} context некоторый контекст с информацией о странице логина
+     * @private
+     */
     _addListeners(context){
         this._form.addEventListener(context['form']['event']['type'],
             context['form']['event']['listener']);
@@ -18,6 +29,7 @@ export default class LoginComponent{
             context['register']['event']['listener']);
     }
 
+    /** Отрисока TopBar */
     _renderTopBar(){
         let topBar = document.createElement('div');
         topBar.className = 'decorateContainer';
@@ -25,6 +37,7 @@ export default class LoginComponent{
         this._parent.appendChild(topBar);
     }
 
+    /** Отрисока формы */
     _renderForm(){
         let form = document.createElement('div');
         form.className = 'formContainer';
@@ -33,6 +46,10 @@ export default class LoginComponent{
         this._form = form.firstElementChild;
     }
 
+    /**
+     * Отрисока компоненты логина
+     * @param {obj} context некоторый контекст с информацией о странице логина
+     */
     render(context){
         this._renderTopBar();
         this._renderForm();
