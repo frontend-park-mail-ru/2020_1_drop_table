@@ -4,7 +4,7 @@ import Header from "../components/MainHeader/Header";
 import CafeComponent from "../components/Cafe/Cafe";
 import BaseView from "./BaseView";
 
-/** view редактора крточки */
+/** view создания кафе */
 export default class CreateCafeView extends BaseView{
 
     /**
