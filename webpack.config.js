@@ -7,7 +7,6 @@ module.exports = {
     entry: './src/main/main.js',
     module: {
         rules: [
-
             {
                 test: /\.(js)$/,
                 exclude: /node_modules/,
@@ -40,7 +39,6 @@ module.exports = {
                     name: './external/[name].[ext]',
                 },
             },
-
             {
                 test: /\.(jpg|png|gif)$/,
                 use: [{
@@ -52,10 +50,13 @@ module.exports = {
                     }
                 }]
             },
-
             {
                 test: /\.hbs$/,
                 loader: "handlebars-loader"
+            },
+            {
+                test: /\.worker\.js$/,
+                use: { loader: 'worker-loader' }
             }
         ]
     },
