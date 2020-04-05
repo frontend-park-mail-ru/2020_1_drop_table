@@ -30,6 +30,8 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.9.0",
     "@sphinxxxx/color-conversion": "^2.2.2",
+    "acorn": "^7.1.1",
+    "acorn-jsx": "^5.2.0",
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-runtime": "^6.23.0",

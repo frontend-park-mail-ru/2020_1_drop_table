@@ -135,7 +135,7 @@ export class AppleCardModel {
             "webServiceURL": "https://example.com/passes/",
             "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
             "barcode": {
-                "message": `${constants.PATH}/points/<<CustomerID>>`,
+                "message": `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
                 "format": "PKBarcodeFormatQR",
                 "messageEncoding": "iso-8859-1"
             },

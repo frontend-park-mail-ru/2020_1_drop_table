@@ -16,20 +16,27 @@ export async function ajaxForm(route, method, formData, callback) {
     };
 
     const myCsrf = sessionStorage.getItem('Csrf');
-    if(myCsrf){
-        reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
-    }
+    console.log('myCSRF form', myCsrf)
 
+    if(myCsrf){
+        console.log('test123')
+        reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
+        //reqBody.headers.push('X-CSRF-TOKEN', myCsrf);
+    }
+    console.log('test12233')
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;
     }
 
     const req = new Request(route, reqBody);
+
     let responseJson = null;
 
     try {
         const response = await fetch(req);
+
         if (response.ok) {
+            console.log('resp  formok');
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
