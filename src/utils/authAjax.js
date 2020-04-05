@@ -6,41 +6,46 @@
  * @param callback Функция принимающая результат ответа
  */
 export async function authAjax(method, route, body, callback) {
-    let req;
+    let reqBody;
 
     if(method !== 'GET'){
-        req = new Request(route, {
+        reqBody = {
             method: method,
             mode: 'cors',
             body: JSON.stringify(body),
             credentials: 'include',
-        });
+        };
 
     } else {
-        req = new Request(route, {
+        reqBody ={
             method: method,
             mode: 'cors',
             credentials: 'include',
-        });
+        };
     }
-
     const myCsrf = sessionStorage.getItem('Csrf');
+    console.log('myCSRF auth', myCsrf)
     if(myCsrf){
-        // req.headers = {'X-CSRF-TOKEN': myCsrf};
-        req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
+        reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
+        //req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
     }
 
+
+    const req = new Request(route, reqBody);
     let responseJson = null;
     try {
         const response = await fetch(req);
+
+
         if (response.ok) {
-            console.log('resp ok')
+            console.log('resp auth ok');
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
             }
             responseJson = await response.json();
         } else {
+
             throw new Error('Response not ok');
         }
     } catch (exception) {
