@@ -6,7 +6,7 @@ import {Router} from "../modules/Router";
 import Header from "../components/MainHeader/Header";
 import {router} from "../main/main";
 
-/** View списка кафе */
+/** View страницы со списком кафе */
 export default class CafeListView extends BaseView{
 
     /**
@@ -32,7 +32,7 @@ export default class CafeListView extends BaseView{
         }) // Need move to CafesContainerComponent
     }
 
-    /** Отрисовка страницы с списком кафе */
+    /** Отрисовка страницы со списком кафе */
     render() {
         this._app.innerHTML = '';
         (new Header(this._app)).render(this._context['header']);
