@@ -26,6 +26,14 @@ import EditCafeController from "../controllers/EditCafeController";
 import StaffMenuView from "../view/StaffMenuView";
 import StaffMenuController from "../controllers/StaffMenuController";
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
+        .then((reg) => {
+            console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch((error) => {
+        console.log('Registration failed with ' + error);
+    });
+}
 
 let app = document.getElementById('application');
 
