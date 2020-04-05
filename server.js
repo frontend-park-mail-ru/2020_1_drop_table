@@ -8,7 +8,7 @@ const app = express();
 app.use(cookie());
 app.use(express.static('dist'));
 
-const port = 80;
+const port = 3000;
 
 
 

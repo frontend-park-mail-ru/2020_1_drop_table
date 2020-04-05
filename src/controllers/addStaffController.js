@@ -43,10 +43,10 @@ export default class AddStaffController{
         e.preventDefault();
 
         let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
-        // const validateContext = this._makeValidateContext(form);
-        // const serverExceptionContext = this._makeExceptionContext(form);
+        const validateContext = this._makeValidateContext(form);
+        const serverExceptionContext = this._makeExceptionContext(form);
 
-        // if((new FormValidation(form)).validate(validateContext)){
+        if((new FormValidation(form)).validate(validateContext)){
 
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
@@ -59,9 +59,9 @@ export default class AddStaffController{
             } catch (exception) {
                 console.log('exc',exception);
 
-                // (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
-        //}
+        }
     }
 
     _loginListener(){
