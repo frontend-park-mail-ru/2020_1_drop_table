@@ -91,6 +91,7 @@ export default class StaffListModel{
         return new StaffModel();
     }
 
+    /** получение списка работников */
     async staffList() { //!!!
         console.log('in staff list')
         await ajax(constants.PATH + `/api/v1/staff/get_staff_list/5`,
@@ -115,6 +116,7 @@ export default class StaffListModel{
         )
     }
 
+    /** создание qr работника */
     async addStaffQR(cafeId) {
         await ajax(constants.PATH + `/api/v1/staff/generateQr/${7}`,
             'GET',
