@@ -7,7 +7,7 @@ import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTyp
 
 let app = document.body;
 
- class Router {
+class Router {
     constructor(options){
         this.routes = [];
         this.path =  this._requestPath();

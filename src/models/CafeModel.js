@@ -5,6 +5,7 @@ import {constants} from "../utils/constants";
 import {authAjax} from "../utils/authAjax";
 import {CafePageComponent} from "../components/CafePageComponent/CafePage";
 import {ajaxForm} from "../utils/ajaxForm";
+import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 // import {Router} from "../modules/Router";
 
 export default class CafeModel {
@@ -166,11 +167,11 @@ export default class CafeModel {
 
     async getFormData(photo){
         let formData = new FormData();
-
         let data = {
             'name': await this.name,
+            'CafeName': await this.name,
             'address': await this.address,
-            'description': await this.description
+            'description': await this.description,
         };
 
         if (photo) {
@@ -184,6 +185,10 @@ export default class CafeModel {
         return formData;
     }
 
+
+
+
+
     async getCafe(){
         await authAjax('GET', constants.PATH + `/api/v1/cafe/${this._id}`,
             null,
@@ -196,4 +201,6 @@ export default class CafeModel {
             }
         );
     }
+
+
 }

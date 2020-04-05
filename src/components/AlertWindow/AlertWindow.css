@@ -33,7 +33,7 @@
     justify-self: center;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 2%;
+    white-space: nowrap;
 }
 .apple-card-published-qr-container__QR-window_a{
     font-family: Montserrat, Arial;

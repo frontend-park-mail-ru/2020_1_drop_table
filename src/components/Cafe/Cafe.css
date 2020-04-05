@@ -2,7 +2,7 @@
 
 
 .new-cafe-page__decorate-container {
-    margin-left: 20%;
+    margin-left: 12%;
 }
 
 .new-cafe-page__decorate-container__text-field {
@@ -14,7 +14,6 @@
 .new-cafe-page__decorate-container__text-field__label-field{
     display: inline-block;
     vertical-align: center;
-    /*font-family: Montserrat;*/
     font-style: normal;
     font-weight: normal;
     overflow: auto;

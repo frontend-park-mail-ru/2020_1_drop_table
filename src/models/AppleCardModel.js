@@ -5,7 +5,7 @@ import {CardField} from "./CardField.js";
 import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import {ajaxForm} from "../utils/ajaxForm";
-import {AppleCardQrWindowComponent} from "../components/AppleCardQrWindow/AppleCardQrWindow";
+import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
 export class AppleCardModel {
 
@@ -135,7 +135,7 @@ export class AppleCardModel {
             "webServiceURL": "https://example.com/passes/",
             "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
             "barcode": {
-                "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
+                "message": `${constants.PATH}/points/<<CustomerID>>`,
                 "format": "PKBarcodeFormatQR",
                 "messageEncoding": "iso-8859-1"
             },
@@ -453,7 +453,7 @@ export class AppleCardModel {
                     console.log('editCard success', response);
                     if(response.data['QR'] && response.data['URL'] && publish){
                         console.log('window component');
-                        (new AppleCardQrWindowComponent( response.data['URL'], response.data['QR'])).render();
+                        (new AlertWindowComponent('Ваша карточка', response.data['URL'], response.data['QR'])).render();
                     }
                     // this._filUserData(response.data);
                     // this._saveUser();

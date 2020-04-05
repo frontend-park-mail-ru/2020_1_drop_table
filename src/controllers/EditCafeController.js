@@ -8,22 +8,25 @@ import FormValidation from "../modules/FormValidation";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 
 
-export default class CreateCafeController{
+export default class EditCafeController{
     constructor(cafeList, userModel, createCafeView) {
         this._cafeListModel = cafeList;
         this._userModel = userModel;
         this._createCafeView = createCafeView;
     }
 
-    async _addCafe(e) {
+    async _editCafe(e) {
+        console.log('editCafe');
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
         const photoInput = document.getElementById('upload');
         const image = document.getElementById('image').getAttribute('src');
 
-        const cafe = this._cafeListModel.createCafe();
 
-        console.log('created', cafe);
+        const cafe = this._cafeListModel.getCafeById(this._id);
+        console.log('get by id ', cafe);
+
+        cafe._id = this._id;
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
@@ -34,17 +37,20 @@ export default class CreateCafeController{
 
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
-                console.log('try create', photoInput.files[0], cafe, );
-                await this._cafeListModel.create(photoInput.files[0], cafe);
+                console.log('try editCafe', photoInput.files[0], cafe, this._id);
+                await this._cafeListModel.editCafe(photoInput.files[0], cafe, this._id);
             } catch (exception) {
-                console.log('catch try create', photoInput.files[0], cafe );
+                console.log('catch', photoInput.files[0], cafe, this._id);
+
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
 
     }
 
-    async _makeViewContext(){
+    async _makeViewContext(id){
+        const cafe = this._cafeListModel.getCafeById(id);
+
         return {
             header:{
                 type: null,
@@ -59,7 +65,7 @@ export default class CreateCafeController{
                 }
             },
             cafe: {
-                cafeName: 'Добавление кафе',
+                cafeName: 'Редактирование кафе',
                 imgSrc: '/images/test.jpg',
                 event: {
                     type: 'change',
@@ -71,6 +77,7 @@ export default class CreateCafeController{
                             type: 'text',
                             id: 'name',
                             data: ' ',
+                            inputPromise: cafe.name,
                             labelData: 'Название',
                             inputOption: 'required',
                         },
@@ -78,12 +85,14 @@ export default class CreateCafeController{
                             type: 'text',
                             id: 'address',
                             data: ' ',
+                            inputPromise: cafe.address,
                             labelData: 'Адрес',
                             inputOption: 'required',
                         },
                         {type: 'text',
                             id: 'description',
                             data: ' ',
+                            inputPromise: cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
                         },
@@ -91,7 +100,7 @@ export default class CreateCafeController{
                     submitValue: 'Готово',
                     event: {
                         type: 'submit',
-                        listener: this._addCafe.bind(this)
+                        listener: this._editCafe.bind(this)
                     },
                 },
             }
@@ -136,8 +145,9 @@ export default class CreateCafeController{
         };
     }
 
-    async control(){
-        this._createCafeView.context = await this._makeViewContext();
+    async control(id){
+        this._id = id;
+        this._createCafeView.context = await this._makeViewContext(id);
         this._createCafeView.render();
     }
 }
