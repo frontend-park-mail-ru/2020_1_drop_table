@@ -1,27 +1,38 @@
 import {router} from "../main/main";
 
-
+/** контроллер кафе */
 export default class CafePageController {
 
+    /**
+     * Инициализация CafePageController
+     * @param {CafeListModel} cafeListModel модель списка кафе
+     * @param {UserModel} userModel модель пользователя
+     * @param {CafePageView} cafePageView view кафе
+     */
     constructor(cafeListModel, userModel, cafePageView){
         this._cafeListModel = cafeListModel;
         this._userModel = userModel;
         this._cafePageView = cafePageView;
+
+        this._id = null;
     }
 
-    addStaffButtonClick(e){
+    /** Event добавление работника */
+    addStaffButtonClick(){
         this._userModel.addStaffQR(this._id);
     }
 
+    /** Event редактирование кафе */
     editCafeButtonClick(e){
         router._goTo(`/editCafe/${this._id}`);
     }
 
-    _headerAvatarListener(){
-        router._goTo('/profile');
-    }
-
-    async _makeContext(id){
+    /**
+     * Создание контекста для CafePageView
+     * @param {int} id идентификатор кафе
+     * @return {obj} созданный контекст
+     */
+    async _makeViewContext(id){
         this._id = id;
         const cafe = this._cafeListModel.getCafeById(id);
         let cafeContext = {
@@ -34,7 +45,7 @@ export default class CafePageController {
                 photo: this._userModel.photo,
                 event: {
                     type: 'click',
-                    listener: this._headerAvatarListener.bind(this)
+                    listener: () => {router._goTo('/profile')}
                 }
             }
         };
@@ -45,11 +56,12 @@ export default class CafePageController {
         return cafeContext;
     }
 
+    /** Запуск контроллера
+     * @param {int} id идентификатор кафе
+     */
     async control(id){
-        this._cafePageView.context = await this._makeContext(id);
+        this._cafePageView.context = await this._makeViewContext(id);
         this._cafePageView.render();
     }
-
-
 }
 
