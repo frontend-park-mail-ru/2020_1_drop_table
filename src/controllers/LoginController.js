@@ -11,7 +11,7 @@ export default class LoginController {
     /**
      * Инициализация LoginController
      * @param {UserModel} userModel модель пользователя
-     * @param {LoginView} loginView view для создания кафе
+     * @param {LoginView} loginView view для авторизации
      */
     constructor(userModel, loginView) {
         this._userModel = userModel;

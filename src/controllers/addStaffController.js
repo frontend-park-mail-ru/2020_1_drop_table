@@ -7,14 +7,26 @@ import {router} from "../main/main";
 import ServerExceptionHandler from "../modules/ServerExceptionHandler";
 import FormValidation from "../modules/FormValidation";
 
+/** контроллер добавления работника */
 export default class AddStaffController{
-    constructor(userModel, registerView,uuid) {
+
+    /**
+     * Инициализация AddStaffController
+     * @param {UserModel} userModel модель пользователя
+     * @param {RegisterView} registerView view регистрации
+     * @param {string} uuid иденитфикатор работника
+     */
+    constructor(userModel, registerView, uuid) {
         this._userModel = userModel;
         this._registerView = registerView;
         this._uuid = uuid;
     }
 
-    _makeContext(){
+    /**
+     * Создание контекста для RegisterView
+     * @return {obj} созданный контекст
+     */
+    _makeViewContext(){
         return {
             header: {
                 type: 'auth',
@@ -32,13 +44,14 @@ export default class AddStaffController{
                 login: {
                     event: {
                         type: 'click',
-                        listener: this._loginListener
+                        listener: () => {router._goTo('/login');}
                     }
                 }
             }
         }
     }
 
+    /** Event добавления работника */
     async _formListener(e) {
         e.preventDefault();
 
@@ -63,10 +76,11 @@ export default class AddStaffController{
        // }
     }
 
-    _loginListener(){
-        router._goTo('/login');
-    }
-
+    /**
+     * Создание контекста для FormValidation
+     * @param {Element} form элемент валидируеммой формы
+     * @return {Array} созданный контекст
+     */
     _makeValidateContext(form){
         return [
             {
@@ -105,6 +119,11 @@ export default class AddStaffController{
         ];
     }
 
+    /**
+     * Создание контекста для ServerExceptionHandler
+     * @param {Element} form вылидируемый элемент
+     * @return {obj} созданный контекст
+     */
     _makeExceptionContext(form){
         return {
             'given item already existed': [
@@ -126,9 +145,10 @@ export default class AddStaffController{
         };
     }
 
+    /** Запуск контроллера */
     control(){
         sessionStorage.clear();
-        this._registerView.context = this._makeContext();
+        this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }
 }

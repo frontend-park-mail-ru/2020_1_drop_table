@@ -3,8 +3,15 @@
 import {Router} from "../modules/Router";
 import {router} from "../main/main";
 
+/** контроллер списка работников */
 export default class StaffListController{
 
+    /**
+     * Инициализация StaffListController
+     * @param {StaffListModel} staffListModel модель списка работников
+     * @param {UserModel} userModel модель пользователя
+     * @param {StaffListView} staffListView view списка работников
+     */
     constructor(staffListModel, userModel, staffListView) {
         this._userModel = userModel;
         this._staffListModel = staffListModel;
@@ -15,17 +22,11 @@ export default class StaffListController{
         console.log('test ', this._staffListModel.ownerId )
     }
 
-    _headerAvatarListener(){
-        router._goTo('/profile');
-    }
-
-    // _cafeListButtonListener(){
-    //     Router.redirect('/createCafe')
-    // }
-
-
-
-    async _makeContext(){
+    /**
+     * Создание контекста для StaffListView
+     * @return {obj} созданный контекст
+     */
+    async _makeViewContext(){
 
         let staffListContext = {
             userData : await this._userModel.context ,
@@ -112,18 +113,20 @@ export default class StaffListController{
                 photo: null,
                 event: {
                     type: 'click',
-                    listener: this._headerAvatarListener.bind(this)
+                    listener: () => {router._goTo('/profile');}
                 }
             }
         };
         return staffListContext;
     }
 
-    addListeners(context){
-        const cafesButtons = document.getElementsByClassName('cafes-page__add-cafe-field__text-field');
-    }
+    // addListeners(context){
+    //     const cafesButtons = document.getElementsByClassName('cafes-page__add-cafe-field__text-field');
+    // }
+
+    /** Запуск контроллера */
     async control(){
-        this._staffListView.context = await this._makeContext();
+        this._staffListView.context = await this._makeViewContext();
         this._staffListView.render();
 
 

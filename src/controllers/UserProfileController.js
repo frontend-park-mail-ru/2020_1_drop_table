@@ -14,7 +14,7 @@ export default class UserProfileController{
     /**
      * Инициализация UserProfileController
      * @param {UserModel} userModel модель пользователя
-     * @param {UserProfileView} userProfileView view для создания кафе
+     * @param {UserProfileView} userProfileView view профиля
      */
     constructor(userModel, userProfileView){
         this._userModel = userModel;

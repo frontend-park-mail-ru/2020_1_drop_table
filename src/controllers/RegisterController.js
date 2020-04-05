@@ -13,7 +13,7 @@ export default class RegisterController{
     /**
      * Инициализация RegisterController
      * @param {UserModel} userModel модель пользователя
-     * @param {RegisterView} registerView view для создания кафе
+     * @param {RegisterView} registerView view для регистрации
      */
     constructor(userModel, registerView) {
         this._userModel = userModel;
