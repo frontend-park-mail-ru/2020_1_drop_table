@@ -15,10 +15,18 @@ export class StaffPageComponent {
     _renderTemplate(context) {
         for (let [name, staff] of Object.entries(context)) {
             let staffList = [];
-            for(let cafe of staff){
-                staffList.push(StaffCard(cafe));
+            if(staff) {
+                for (let staffItem of staff) {
+                    console.log('StaffHHAHA',staffItem);
+                    console.log('StaffHHAHA',staffItem.Photo);
+                    if(staffItem.Photo === null){
+                        console.log('Staff null',staffItem.Photo);
+                        staffItem.Photo = '/images/userpic.png'
+                        console.log('Staff photo',staffItem.Photo);
+                    }
+                    staffList.push(StaffCard(staffItem));
+                }
             }
-
             (new CafeStaffContainerComponent(this._parent)).render({name, staffList});
         }
         this._parent.innerHTML += StaffPage();

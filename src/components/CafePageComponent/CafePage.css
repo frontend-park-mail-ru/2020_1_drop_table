@@ -31,8 +31,8 @@
     width: 68%;
     background-color: #2b8aa3;
     position: absolute;
-    -webkit-filter: drop-shadow(5px 5px 5px #000);
-    filter: drop-shadow(5px 5px 5px #000);
+    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 }
 .cafe-page__cafe-info__image-container_img{
     object-fit: cover;
@@ -48,8 +48,8 @@
     height: 45%;
     width: 48%;
     background-color: #ffffff;
-    -webkit-filter: drop-shadow(5px 5px 5px #000);
-    filter: drop-shadow(5px 5px 5px #000);
+    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 display: table-column;
 }
 
@@ -176,3 +176,44 @@ display: table-column;
 
 }
 
+
+.add-staff-button{
+    width:16rem;
+    height: 8rem;
+    margin: 10px auto;
+    background-color: #fa9917;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-staff-button_h4{
+    font-family: Montserrat;
+    color: white;
+}
+
+.cafe-page__cafe-info__edit-button{
+    height: 3rem;
+    width: initial;
+    display: flex;
+    justify-content: center;
+    padding: auto 0;
+    flex-direction: column;
+    margin: auto auto;
+    position: absolute;
+    right: 5%;
+    bottom: -10%;
+    background-color: #007892;
+    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    padding: 0 1rem;
+    border-radius: 2%;
+    opacity: 90%;
+    cursor: pointer;
+}
+.cafe-page__cafe-info__edit-button:hover {
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+}
+
+.cafe-page__cafe-info__edit-button_span{
+    font-family: 'Montserrat',SansSerif;
+}

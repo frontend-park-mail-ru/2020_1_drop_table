@@ -7,8 +7,8 @@ import {authAjax} from "../utils/authAjax";
 
 export default class StaffModel { // дописать потом
 
-    constructor(listId) {
-        this._listId = listId;
+    constructor() {
+        // this._listId = listId;
         this._staffid = null;
         this._name = null;
         this._email = null;
@@ -80,12 +80,12 @@ export default class StaffModel { // дописать потом
     get context(){
         console.log('in context');
         let staffListData = sessionStorage.getItem('StaffList');
-        const staffData = JSON.parse(staffListData)[this._listId];
+        //const staffData = JSON.parse(staffListData)[this._listId];
         return staffData;
     }
 
     set listId(listId){
-        this._listId = listId;
+       // this._listId = listId;
     }
 
     set address(address){
@@ -149,7 +149,7 @@ export default class StaffModel { // дописать потом
         };
 
         let staffList = JSON.parse(sessionStorage.getItem('StaffList'));
-        staffList[this._listId] = data;
+        //staffList[this._listId] = data;
         sessionStorage.setItem('StaffList', JSON.stringify(staffList));
     }
 

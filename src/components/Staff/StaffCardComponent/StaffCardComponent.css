@@ -51,8 +51,12 @@
     font-family: 'Montserrat', SansSerif;
     display: flex;
     margin-left: 10%;
-
 }
+
 .staff-card-container__position-container_span{
     font-size: 1.2rem;
+
 }
+
+
+

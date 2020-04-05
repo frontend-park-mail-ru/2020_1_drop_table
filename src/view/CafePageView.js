@@ -20,6 +20,7 @@ export default class CafePageView extends BaseView {
             cardRedactorController.control();
         }
     }
+
     render(){
         this._app.innerHTML = '';
         (new Header(this._app)).render(this._context['header']);
@@ -27,8 +28,17 @@ export default class CafePageView extends BaseView {
         const profileElement = document.createElement('div');
         (new CafePageComponent(profileElement)).render(this._context['cafe']);
         this._app.appendChild(profileElement);
-        let button =  document.getElementsByClassName('apple-pass-button').item(0);
-        button.addEventListener('click',this.applePassButtonClick.bind(this));
+
+
+        const buttonApplePass =  document.getElementsByClassName('apple-pass-button').item(0);
+        buttonApplePass.addEventListener('click',this.applePassButtonClick.bind(this));
+
+
+        const buttonAddStaff =  document.getElementsByClassName('add-staff-button').item(0);
+        buttonAddStaff.addEventListener('click',this.context['add-staff-button']);
+
+        const buttonEditCafe =  document.getElementsByClassName('cafe-page__cafe-info__edit-button').item(0);
+        buttonEditCafe.addEventListener('click',this.context['cafe-page__cafe-info__edit-button']);
     }
 
 }

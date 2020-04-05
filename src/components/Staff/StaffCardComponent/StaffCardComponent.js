@@ -7,6 +7,10 @@ export class StaffCardComponent {
     }
 
     _renderTemplate(context) {
+
+        if(context.photo === ''){
+            context.photo = '/images/userpic.png'
+        }
         this._el.innerHTML += StaffCard(context);
     }
 

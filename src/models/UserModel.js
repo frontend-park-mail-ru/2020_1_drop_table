@@ -6,6 +6,7 @@ import {ajaxForm} from "../utils/ajaxForm";
 
 
 import {router} from "../main/main";
+import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
 export default class UserModel {
 
@@ -202,18 +203,38 @@ export default class UserModel {
 
     async addStaff(uuid) {
         const requestUrl = "/api/v1/add_staff?uuid=" + uuid;
+
+
         await ajax(constants.PATH + requestUrl,
             "POST",
-            {"name": await this.name, "email": await this.email, "password": await this.password},
+          {"name": await this.name, "email": await this.email, "password": await this.password},
             (response) => {
                 if (response.errors === null) {
-                    router._goTo('/');
-                    // Router.redirect("/"); //TODO редирект на кнопку с добавление кофе
+                    router._goTo('/profile');
+
                 } else {
                     throw response.errors[0].message;
                 }
             }
         );
+    }
+
+    async addStaffQR(cafeId) {
+        await ajax(constants.PATH + `/api/v1/staff/generateQr/${cafeId}`,
+            'GET',
+            {},
+            (response) => {
+                if(response.data == null){
+
+                } else {
+                    if (response.errors === null) {
+                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
+                    } else {
+                        throw response.errors;
+                    }
+                }
+            }
+        )
     }
 
 }

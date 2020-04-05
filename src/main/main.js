@@ -21,10 +21,19 @@ import LandingView from "../view/LandingView";
 import LandingController from "../controllers/LandingController";
 import StaffModel from "../models/StaffModel";
 import AddStaffController from "../controllers/addStaffController";
+import StaffListModel from "../models/StaffListModel";
+import EditCafeController from "../controllers/EditCafeController";
+import StaffMenuView from "../view/StaffMenuView";
+import StaffMenuController from "../controllers/StaffMenuController";
 
 
 let app = document.getElementById('application');
-// let newRouter = new NewRouter(root);
+
+const myOptions ={
+    historyMode: true,
+    caseInsensitive: false
+};
+export const router = new Router(myOptions);
 
 function doreg(){
     const userModel = new UserModel();
@@ -65,10 +74,10 @@ function doCreateCafe(){
     createCafeController.control();
 }
 function doStaff(){
-    const cafeList = new CafeListModel();
     const userModel = new UserModel();
+    const staffList = new StaffListModel();
     const staffListView = new StaffListView(app);
-    const staffListController = new StaffListController(cafeList, userModel, staffListView);
+    const staffListController = new StaffListController(staffList, userModel, staffListView);
     staffListController.control();
 }
 
@@ -82,6 +91,16 @@ function doCafe(req){
     cafePageController.control(id);
 }
 
+function doEditCafe(req){
+    const id = req.param.id;
+    console.log('in edit cafe');
+    const cafeListModel = new CafeListModel();
+    const userModel = new UserModel();
+    const editCafeView = new CreateCafeView();
+    const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
+    editCafeController.control(id);
+}
+
 function doLanding() {
     const landingModel = new LandingModel();
     const landingView = new LandingView(app);
@@ -89,18 +108,24 @@ function doLanding() {
     landingController.control();
 }
 
-function doAddStaff() {
-    const staffModel = new StaffModel();
-    const addStaffView = new RegisterView(app);
-    const addStaffController = new AddStaffController(staffModel, addStaffView);
+function doAddStaff(req) {
+    const uuid = req.query.get('uuid');
+    const userModel = new UserModel();
+    const addStaffView = new RegisterView(app, 'Регистрация работника');
+    const addStaffController = new AddStaffController(userModel, addStaffView,uuid);
     addStaffController.control();
 }
 
-const myOptions ={
-    historyMode: true,
-    caseInsensitive: false
-};
-export const router = new Router(myOptions);
+function doStaffMenu(req) {
+    const uuid = req.param.uuid;
+    console.log('uuid', uuid);
+    const staffMenuView = new StaffMenuView(app, uuid);
+    const staffMenuController = new StaffMenuController(staffMenuView);
+    staffMenuController.control();
+}
+
+
+
 
 router.get("/", doreg);
 router.get("/landing", doLanding).setName("Landing");
@@ -111,8 +136,10 @@ router.get("/profile", doProfile).setName("Profile");
 router.get("/createCafe", doCreateCafe).setName("CreateCafe");
 router.get("/staff", doStaff).setName("Staff");
 router.get('/cafe/{id}', doCafe).setName('Cafe');
-
+router.get('/editCafe/{id}', doEditCafe).setName('EditCafe');
 router.get("/addStaff", doAddStaff).setName("AddStaff");
+router.get("/points/{uuid}", doStaffMenu).setName("StaffMenu");
 
 router.init();
+
 

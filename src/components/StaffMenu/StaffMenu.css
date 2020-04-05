@@ -1,0 +1,83 @@
+.coffeeStacks{
+    max-height: 30vh;
+
+    overflow: scroll;
+
+    margin-bottom: 20px;
+
+    border-radius: 30px;
+    border: solid;
+    border-width: 2px;
+    border-color: rgb(211, 211, 211);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+.coffees{
+    font-size: 10vh;
+    text-align: center;
+
+    border-radius: 30px;
+    border: solid;
+    border-width: 2px;
+    border-color: rgb(211, 211, 211);
+    margin-bottom: 40px;
+
+    min-height: 10vh;
+    overflow: scroll;
+
+    max-height: 30vh;
+}
+
+body{
+    padding: 45px;
+}
+
+.main .buttonFlex{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 30vh;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+
+    justify-content: space-around;
+}
+
+.main .stackCoffeeButton{
+    -webkit-appearance: none;
+    height: 10vh;
+    width: 10vh;
+
+    border-radius: 10vh;
+
+    font-size: 5vh;
+
+    border: none;
+
+    margin: 10px;
+
+    background-color: crimson;
+}
+
+.main .buttonFlex button{
+    background-color: #454545;
+    color: white;
+
+    height: 12vh;
+    width: 100vw;
+
+    border: none;
+    border-radius: 25vh;
+
+    font-size: 10vh;
+    line-height: 10vh;
+
+
+}
