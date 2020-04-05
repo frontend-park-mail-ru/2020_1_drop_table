@@ -15,6 +15,11 @@ export async function ajaxForm(route, method, formData, callback) {
         credentials: 'include',
     };
 
+    const myCsrf = sessionStorage.getItem('Csrf');
+    if(myCsrf){
+        reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
+    }
+
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;
     }
@@ -25,6 +30,10 @@ export async function ajaxForm(route, method, formData, callback) {
     try {
         const response = await fetch(req);
         if (response.ok) {
+            const csrf = response.headers.get('Csrf');
+            if(csrf){
+                sessionStorage.setItem('Csrf', csrf);
+            }
             responseJson = await response.json();
         } else {
             throw new Error('Response not ok');
