@@ -1,15 +1,16 @@
-import './AppleCardQrWindow.css';
-import AppleCardQrWindow from './AppleCardQrWindow.hbs';
+import './AlertWindow.css';
+import AlertWindow from './AlertWindow.hbs';
 
-export class AppleCardQrWindowComponent {
-    constructor(cardLink, qrImage) {
+export class AlertWindowComponent {
+    constructor(text ,cardLink, qrImage) {
         this._el = document.getElementById('alert-field');
+        this._text = text;
         this._qrImage = qrImage;
         this._cardLink = cardLink;
     }
 
     _renderTemplate() {
-        this._el.innerHTML += AppleCardQrWindow({cardLink: this._cardLink ,qrImage: this._qrImage});
+        this._el.innerHTML += AlertWindow({text: this._text , cardLink: this._cardLink ,qrImage: this._qrImage});
         const background = document.getElementsByClassName('apple-card-published-qr-container').item(0);
         const app = document.getElementById('application');
         app.style.opacity = '50%';

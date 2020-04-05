@@ -6,6 +6,7 @@ import CafeModel from "./CafeModel";
 import {Router} from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
 import {router} from "../main/main";
+import {authAjax} from "../utils/authAjax";
 
 export default class CafeListModel{
 
@@ -97,14 +98,35 @@ export default class CafeListModel{
             await cafe.getFormData(photo),
             (response) => {
                 if (response.errors === null) {
+                    console.log('test error', cafe.getFormData(photo))
                     cafe.listId = this._cafeModelsList.length;
                     cafe.fillCafeData(response.data);
                     this._cafeModelsList.push(cafe);
                     router._goTo('/myCafes');
                 } else {
+
                     throw response.errors;
                 }
             }
         );
     }
+
+
+    async editCafe(photo = null, cafe, id){
+        await ajaxForm(constants.PATH + `/api/v1/cafe/${id}`,
+            'PUT',
+            await cafe.getFormData(photo),
+            (response) => {
+                if (response.errors === null) {
+                    alert('ok')
+                } else {
+
+                    throw response.errors;
+                }
+            }
+        );
+
+    }
+
+
 }

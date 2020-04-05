@@ -6,22 +6,26 @@ import StaffModel from "./StaffModel";
 import {Router} from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
 import {router} from "../main/main";
+import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
 
 export default class StaffListModel{
 
     constructor() {
+        this._ownerId = null;
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
+        console.log('constructor')
     }
 
     get context(){
+        console.log('context')
         return new Promise(async (resolve) => {
             await this._checkStaffList();
-            const cafeList = sessionStorage.getItem('CafeList');
-            if(cafeList){
-                resolve(JSON.parse(cafeList));
+            const staffList = sessionStorage.getItem('StaffList');
+            if(staffList){
+                resolve(JSON.parse(staffList));
             }
             resolve(null);
         });
@@ -42,6 +46,7 @@ export default class StaffListModel{
 
     async _checkStaffList(data){
         if(!data){
+            console.log('checkStaffList')
             await this.staffList();
         }
     }
@@ -62,28 +67,47 @@ export default class StaffListModel{
     }
 
     _constructStaff(staffListData){
-        staffListData.forEach((_, id) => {
-            const staff = new StaffModel(id);
-            this._staffModelsList.push(staff);
+        console.log('get staff ',staffListData)
+
+        Object.entries(staffListData).map((key, value) => {
+            console.log('cafe',key);
+
+            console.log('staff',value);
         });
+        // for (let [key, value] of staffListData) {
+        //     console.log('cafe', key);
+        //     if(value){
+        //         console.log('staff', value);
+        //     }
+        //
+        // }
+        // staffListData.forEach((_, id) => {
+        //     const staff = new StaffModel(id);
+        //     this._staffModelsList.push(staff);
+        // });
     }
 
     createStaff(){
         return new StaffModel();
     }
 
-    async StaffList() { //!!!
-        await ajax(constants.PATH + '/api/v1/staff',
+    async staffList() { //!!!
+        console.log('in staff list')
+        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/5`,
             'GET',
             {},
             (response) => {
-                if(response.data == null){
+
+                console.log(response)
+                if(response.data === null){
+                    console.log('get staff error',response.data)
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
                         this._saveStaffList(response.data);
                         this._constructStaff(response.data);
                     } else {
+                        console.log('throw error')
                         throw response.errors;
                     }
                 }
@@ -91,20 +115,23 @@ export default class StaffListModel{
         )
     }
 
-    async create(photo, staff) { //!!!!!!!!!!
-        await ajaxForm(constants.PATH + '/api/v1/staff',
-            'POST',
-            await staff.getFormData(photo),
+    async addStaffQR(cafeId) {
+        await ajax(constants.PATH + `/api/v1/staff/generateQr/${7}`,
+            'GET',
+            {},
             (response) => {
-                if (response.errors === null) {
-                    staff.listId = this._staffModelsList.length;
-                    staff.fillStaffData(response.data);
-                    this._staffModelsList.push(staff);
-                    router._goTo('/myCafes');
+                if(response.data == null){
+                    //router._goTo('/createCafe');
                 } else {
-                    throw response.errors;
+                    if (response.errors === null) {
+                        (new AlertWindowComponent( '', response.data)).render();
+                        // this._saveCafeList(response.data);
+                        // this._constructCafe(response.data);
+                    } else {
+                        throw response.errors;
+                    }
                 }
             }
-        );
+        )
     }
 }
