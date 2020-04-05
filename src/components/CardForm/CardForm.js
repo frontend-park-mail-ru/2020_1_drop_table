@@ -52,8 +52,6 @@ export default class CardFormComponent {
 
     }
 
-
-
     render(context) {
         this._parent.innerHTML = CardFormTemplate(context);
         this._renderInputs(context);
