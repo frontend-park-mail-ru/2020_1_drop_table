@@ -42,25 +42,26 @@ export default class AddStaffController{
     async _formListener(e) {
         e.preventDefault();
 
-        // let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
+        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
         // const validateContext = this._makeValidateContext(form);
         // const serverExceptionContext = this._makeExceptionContext(form);
 
         // if((new FormValidation(form)).validate(validateContext)){
-        //     this._userModel.email = form.elements['email'].value.toString();
-        //     this._userModel.password = form.elements['password'].value.toString();
-        //     this._userModel.name = form.elements['full-name'].value.toString();
+
+            this._userModel.email = form.elements['email'].value.toString();
+            this._userModel.password = form.elements['password'].value.toString();
+            this._userModel.name = form.elements['full-name'].value.toString();
 
             try {
                 console.log('test add staff controller try block' );
                 await this._userModel.addStaff(this._uuid);
 
             } catch (exception) {
-                console.log(exception);
+                console.log('exc',exception);
 
-                //(new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+                // (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
-       // }
+        //}
     }
 
     _loginListener(){
