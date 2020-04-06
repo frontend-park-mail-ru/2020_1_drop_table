@@ -1,8 +1,6 @@
 import './Header.scss'
 
 import headerTemplate from './Header.hbs';
-import {Router} from '../../modules/Router';
-import {router} from '../../main/main';
 
 /** Компонента хэдера */
 export default class Header{
@@ -79,7 +77,7 @@ export default class Header{
      * @param {obj} context некоторый контекст с информацией о хэдере
      * @private
      */
-    _renderHeader(context){
+    _renderHeader(){
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,

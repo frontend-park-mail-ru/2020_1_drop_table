@@ -1,7 +1,6 @@
 'use strict';
 import './CafePage.scss';
 import CafePageTemplate from './CafePage.hbs';
-import {CreateCardRedactor} from '../CardCreator/CardCreator'
 
 /** Компонент страницы кафе */
 export class CafePageComponent {

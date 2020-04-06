@@ -80,14 +80,14 @@ export default class CardRedactorController {
 
         let foregroundColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_foreground_input').item(0)
-        foregroundColorInput.addEventListener('input', function (e) {
+        foregroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
             context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b}`;
             context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         });
         let labelColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs__label_input').item(0)
-        labelColorInput.addEventListener('input', function (e) {
+        labelColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
             context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b}`;
             context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);

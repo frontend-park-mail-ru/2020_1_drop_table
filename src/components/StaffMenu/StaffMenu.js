@@ -27,7 +27,7 @@ export class StaffMenuComponent {
             } else {
                 throw response.errors;
             }
-        }).then(r => {
+        }).then(() => {
             console.log('then')
         });
     }
@@ -45,7 +45,7 @@ export class StaffMenuComponent {
             } else {
                 throw response.errors;
             }
-        }).then(r => {
+        }).then(() => {
             console.log('then')
         });
     }
@@ -63,7 +63,7 @@ export class StaffMenuComponent {
             } else {
                 throw response.errors;
             }
-        }).then(r => {
+        }).then(() => {
             console.log('then')
         });
     }
@@ -82,7 +82,7 @@ export class StaffMenuComponent {
             } else {
                 throw response.errors;
             }
-        }).then(r => {
+        }).then(() => {
             console.log('then')
         });
     }
@@ -113,7 +113,7 @@ export class StaffMenuComponent {
             } else {
                 throw response.errors;
             }
-        }).then(r => {
+        }).then(() => {
             console.log('then')
         });
     }
