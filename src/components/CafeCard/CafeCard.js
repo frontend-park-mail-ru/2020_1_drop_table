@@ -12,11 +12,11 @@ export class CafeCardComponent {
      * @param {int} id идентификатор кафе
      */
     constructor({
-                    el = document.getElementById('application'),
-                    imgSrc = 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
-                    name = 'Кафе',
-                    id = 0,
-                } = {}) {
+        el = document.getElementById('application'),
+        imgSrc = 'https://q-house.com.ua/image/cache/catalog/portfolio/rotang/qhouse_rotang_obekti%20(3)-425x260.jpg',
+        name = 'Кафе',
+        id = 0,
+    } = {}) {
         this._el = el;
         this._imgSrc = imgSrc;
         this._name = name;

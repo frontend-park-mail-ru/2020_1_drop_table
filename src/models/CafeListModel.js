@@ -1,11 +1,11 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import CafeModel from "./CafeModel";
-import {ajaxForm} from "../utils/ajaxForm";
-import {router} from "../main/main";
-import {authAjax} from "../utils/authAjax";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import CafeModel from './CafeModel';
+import {ajaxForm} from '../utils/ajaxForm';
+import {router} from '../main/main';
+import {authAjax} from '../utils/authAjax';
 
 /** Класс модели списка кафе */
 export default class CafeListModel{

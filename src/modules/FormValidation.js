@@ -21,7 +21,7 @@ export default class FormValidation extends BaseErrorHandler{
     _validateForm(context){
         context.forEach((obj) => {
             const errorMessage = obj.validate();
-            if(!!errorMessage){
+            if(errorMessage){
                 this._correct = false;
                 this._addError(obj.element, errorMessage);
             }

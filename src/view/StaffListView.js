@@ -1,10 +1,10 @@
 'use strict'
 
-import BaseView from "./BaseView";
-import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer";
-import {Router} from "../modules/Router";
-import Header from "../components/MainHeader/Header";
-import {StaffPageComponent} from "../components/Staff/StaffPageComponent/StaffPageComponent";
+import BaseView from './BaseView';
+import {CafesContainerComponent} from '../components/CafesContainer/CafesContainer';
+import {Router} from '../modules/Router';
+import Header from '../components/MainHeader/Header';
+import {StaffPageComponent} from '../components/Staff/StaffPageComponent/StaffPageComponent';
 
 /** view страницы с работниками */
 export default class StaffListView extends BaseView{

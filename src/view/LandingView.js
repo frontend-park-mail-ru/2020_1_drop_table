@@ -1,8 +1,8 @@
 'use strict';
 
-import {LandingComponent} from "../components/Landing/Landing";
-import Header from "../components/MainHeader/Header";
-import BaseView from "./BaseView";
+import {LandingComponent} from '../components/Landing/Landing';
+import Header from '../components/MainHeader/Header';
+import BaseView from './BaseView';
 
 /** view лэндинга */
 export default class LandingView extends BaseView {

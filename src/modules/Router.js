@@ -1,5 +1,5 @@
 'use strict'
-import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from "./Utils.js";
+import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from './Utils.js';
 
 let app = document.body;
 
@@ -35,8 +35,8 @@ class Router {
         }
         if(this._caseInsensitive) {
             uri = uri.toLowerCase()
-        };
-        uri = uri.startsWith("/") ? uri : `/${uri}`;
+        }
+        uri = uri.startsWith('/') ? uri : `/${uri}`;
         this.routes.forEach(route=>{
             if(route.uri === uri) throw new Error(`Conflicting routes. The route uri ${route.uri} already exists`);
         });
@@ -91,14 +91,14 @@ class Router {
 
 
     notFoundHandler(callback){
-        if(!Utils.isSet(callback)) throw new ArgNotFound("callback");
-        if(!Utils.isFunction(callback)) throw new ArgTypeError("callback", "function", callback);
+        if(!Utils.isSet(callback)) throw new ArgNotFound('callback');
+        if(!Utils.isFunction(callback)) throw new ArgTypeError('callback', 'function', callback);
 
         this._notFoundFunction = callback;
         return this;
     }
 
-    _goTo(url, data = {}, title =""){
+    _goTo(url, data = {}, title =''){
         window.history.pushState(data, title, url);
         return this.init();
     }
@@ -114,7 +114,7 @@ class Router {
                     let obj = {};
                     obj[parameterName] = {
                         sn: sn,
-                        regExp: "([^\\/]+)",
+                        regExp: '([^\\/]+)',
                         value: null
                     }
                     parameters.push(obj);
@@ -127,14 +127,14 @@ class Router {
 
     _proccessRegExp(route){
         let regExp = route.uri;
-        regExp = regExp.replace(/\//g, "\\/");
-        regExp = regExp.replace(/\./g, "\\.");
-        regExp = regExp.replace("/", "/?");
+        regExp = regExp.replace(/\//g, '\\/');
+        regExp = regExp.replace(/\./g, '\\.');
+        regExp = regExp.replace('/', '/?');
 
         if(this._containsParameter(route.uri)){
             regExp.replace(/{\w+}/g, (parameter)=>{
-                let parameterName = parameter.replace("{","");
-                parameterName = parameterName.replace("}","");
+                let parameterName = parameter.replace('{','');
+                parameterName = parameterName.replace('}','');
                 route.parameters.some((i)=>{
                     if(i[parameterName] !== undefined) {
                         regExp = regExp.replace(parameter, i[parameterName].regExp)
@@ -171,7 +171,7 @@ class Router {
     }
 
     _checkHistoryMode(){
-        if(!window.PopStateEvent && !"pushState" in history) return;
+        if(!window.PopStateEvent && !'pushState' in history) return;
         window.addEventListener('click', (e)=> {
             if (!(e.target instanceof HTMLAnchorElement || e.target instanceof HTMLImageElement)) {
                 return;
@@ -181,7 +181,7 @@ class Router {
             }
         });
 
-        window.addEventListener("popstate", (e)=>{
+        window.addEventListener('popstate', (e)=>{
             this.init();
         });
 

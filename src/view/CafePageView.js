@@ -1,9 +1,9 @@
-import Header from "../components/MainHeader/Header";
-import {CafePageComponent} from "../components/CafePageComponent/CafePage";
-import CardRedactorController from "../controllers/CardRedactorController";
-import CardRedactorView from "./CardRedactorView";
-import {AppleCardModel} from "../models/AppleCardModel";
-import BaseView from "./BaseView";
+import Header from '../components/MainHeader/Header';
+import {CafePageComponent} from '../components/CafePageComponent/CafePage';
+import CardRedactorController from '../controllers/CardRedactorController';
+import CardRedactorView from './CardRedactorView';
+import {AppleCardModel} from '../models/AppleCardModel';
+import BaseView from './BaseView';
 
 /** view страницы кафе */
 export default class CafePageView extends BaseView {

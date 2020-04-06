@@ -1,12 +1,12 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import StaffModel from "./StaffModel";
-import {Router} from "../modules/Router";
-import {ajaxForm} from "../utils/ajaxForm";
-import {router} from "../main/main";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import StaffModel from './StaffModel';
+import {Router} from '../modules/Router';
+import {ajaxForm} from '../utils/ajaxForm';
+import {router} from '../main/main';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
 /** Модель staff 3 рк */
 export default class StaffListModel{

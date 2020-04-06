@@ -1,12 +1,12 @@
 import {ajax} from '../utils/ajax';
 import {authAjax} from '../utils/authAjax'
-import {constants} from "../utils/constants";
-import Router from "../modules/Router";
-import {ajaxForm} from "../utils/ajaxForm";
+import {constants} from '../utils/constants';
+import Router from '../modules/Router';
+import {ajaxForm} from '../utils/ajaxForm';
 
 
-import {router} from "../main/main";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {router} from '../main/main';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
 /** Класс модели юзера */
 export default class UserModel {
@@ -128,7 +128,7 @@ export default class UserModel {
 
     /** Заполняет поля userModel из sessionStorage */
     _getUser() {
-        let userData = sessionStorage.getItem("user");
+        let userData = sessionStorage.getItem('user');
         if (userData) {
             userData = JSON.parse(userData);
             this._filUserData(userData);
@@ -138,15 +138,15 @@ export default class UserModel {
     /** Сохраняет поля userModel в sessionStorage */
     _saveUser() {
         const obj = {
-            "editedAt": this._editedAt,
-            "email": this._email,
-            "id": this._id,
-            "name": this._name,
-            "password": this._password,
-            "photo": this._photo
+            'editedAt': this._editedAt,
+            'email': this._email,
+            'id': this._id,
+            'name': this._name,
+            'password': this._password,
+            'photo': this._photo
         };
 
-        sessionStorage.setItem("user", JSON.stringify(obj));
+        sessionStorage.setItem('user', JSON.stringify(obj));
     }
 
     /**
@@ -227,41 +227,41 @@ export default class UserModel {
     /** Регистрация пользователя. */
     async register() {
         sessionStorage.clear();
-        await ajax(constants.PATH + "/api/v1/staff",
-            "POST",
-            {"name": await this.name, "email": await this.email, "password": await this.password, "isOwner":true},
+        await ajax(constants.PATH + '/api/v1/staff',
+            'POST',
+            {'name': await this.name, 'email': await this.email, 'password': await this.password, 'isOwner':true},
             (response) => {
-            if (response.errors === null) {
-                router._goTo('/myCafes');
-            } else {
-                throw response.errors;
-            }
-        });
+                if (response.errors === null) {
+                    router._goTo('/myCafes');
+                } else {
+                    throw response.errors;
+                }
+            });
     }
 
     /** Аунтификация пользователя. */
     async login() {
         sessionStorage.clear();
-        await authAjax("POST",
-            constants.PATH + "/api/v1/staff/login",
-            {"email": await this.email, "password": await this.password},
+        await authAjax('POST',
+            constants.PATH + '/api/v1/staff/login',
+            {'email': await this.email, 'password': await this.password},
             (response) => {
-            if (response.errors === null) {
-                console.log('replace to mycafe');
-                router._goTo('/profile')
-            } else {
-                alert();
-                throw response.errors;
-            }
-        });
+                if (response.errors === null) {
+                    console.log('replace to mycafe');
+                    router._goTo('/profile')
+                } else {
+                    alert();
+                    throw response.errors;
+                }
+            });
     }
 
     /** Добавление работника */
     async addStaff(uuid) {
-        const requestUrl = "/api/v1/add_staff?uuid=" + uuid;
+        const requestUrl = '/api/v1/add_staff?uuid=' + uuid;
         await ajax(constants.PATH + requestUrl,
-            "POST",
-          {"name": await this.name, "email": await this.email, "password": await this.password},
+            'POST',
+            {'name': await this.name, 'email': await this.email, 'password': await this.password},
             (response) => {
                 if (response.errors === null) {
                     router._goTo('/profile');

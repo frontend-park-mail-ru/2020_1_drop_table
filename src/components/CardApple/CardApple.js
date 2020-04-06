@@ -1,10 +1,10 @@
 'use strict';
 import './CardApple.scss';
 import CardApple from './CardApple.hbs';
-import {SecondaryFieldComponent} from "../AppleCardComponents/SecondaryFieldComponent/SecondaryField";
+import {SecondaryFieldComponent} from '../AppleCardComponents/SecondaryFieldComponent/SecondaryField';
 
-import {PrimaryFieldComponent} from "../AppleCardComponents/PrimaryFieldComponent/PrimaryField";
-import {CardHeaderComponent} from "../AppleCardComponents/CardHeaderComponent/CardHeader";
+import {PrimaryFieldComponent} from '../AppleCardComponents/PrimaryFieldComponent/PrimaryField';
+import {CardHeaderComponent} from '../AppleCardComponents/CardHeaderComponent/CardHeader';
 
 /** Компонент apple карточки */
 export class CardAppleComponent {

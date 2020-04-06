@@ -1,11 +1,11 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import {authAjax} from "../utils/authAjax";
-import {CafePageComponent} from "../components/CafePageComponent/CafePage";
-import {ajaxForm} from "../utils/ajaxForm";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import {authAjax} from '../utils/authAjax';
+import {CafePageComponent} from '../components/CafePageComponent/CafePage';
+import {ajaxForm} from '../utils/ajaxForm';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 // import {Router} from "../modules/Router";
 
 /** Класс модели кафе */

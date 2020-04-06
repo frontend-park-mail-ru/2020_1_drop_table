@@ -2,9 +2,9 @@ import './CafeStaffContainerComponent.scss';
 import '../StaffCardComponent/StaffCardComponent.scss';
 import CafeStaffContainer from './CafeStaffContainerComponent.hbs';
 import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs';
-import {Router} from "../../../modules/Router";
-import CafeCard from "../../CafeCard/CafeCard.hbs";
-import {StaffCardComponent} from "../StaffCardComponent/StaffCardComponent";
+import {Router} from '../../../modules/Router';
+import CafeCard from '../../CafeCard/CafeCard.hbs';
+import {StaffCardComponent} from '../StaffCardComponent/StaffCardComponent';
 
 /** Компонент контейнера работника */
 export class CafeStaffContainerComponent {

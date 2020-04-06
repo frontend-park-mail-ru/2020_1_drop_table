@@ -1,8 +1,8 @@
 'use strict';
 
-import RegisterComponent from "../components/Register/Register";
-import Header from "../components/MainHeader/Header";
-import BaseView from "./BaseView";
+import RegisterComponent from '../components/Register/Register';
+import Header from '../components/MainHeader/Header';
+import BaseView from './BaseView';
 
 /** view регистрации */
 export default class RegisterView extends BaseView {

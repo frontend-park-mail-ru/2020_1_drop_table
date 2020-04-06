@@ -1,9 +1,9 @@
 'use strict';
 
-import {Router} from "../modules/Router";
-import FormValidation from "../modules/FormValidation";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
-import {router} from "../main/main";
+import {Router} from '../modules/Router';
+import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import {router} from '../main/main';
 
 /** контроллер авторизации */
 export default class LoginController {

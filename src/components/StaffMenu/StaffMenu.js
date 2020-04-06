@@ -1,7 +1,7 @@
 import './StaffMenu.scss';
 import StaffMenu from './StaffMenu.hbs';
-import {constants} from "../../utils/constants";
-import {authAjax} from "../../utils/authAjax";
+import {constants} from '../../utils/constants';
+import {authAjax} from '../../utils/authAjax';
 
 
 export class StaffMenuComponent {
@@ -92,9 +92,9 @@ export class StaffMenuComponent {
             console.log('response data', response.data);
             if (response.errors === null) {
                 this.points = response.data;
-                document.getElementById("label").innerHTML = "☕️".repeat(response.data % 5);
+                document.getElementById('label').innerHTML = '☕️'.repeat(response.data % 5);
 
-                let e = document.getElementById("stacks");
+                let e = document.getElementById('stacks');
 
                 let child = e.lastElementChild;
 
@@ -103,12 +103,12 @@ export class StaffMenuComponent {
                     child = e.lastElementChild;
                 }
                 for (let i = 0; i < Math.floor(response.data / 5); i++) {
-                    let btn = document.createElement("button");
-                    let t = document.createTextNode("☕️");
+                    let btn = document.createElement('button');
+                    let t = document.createTextNode('☕️');
                     btn.addEventListener('click', this.changePointMinusStack);
                     btn.appendChild(t);
-                    btn.className = "stackCoffeeButton";
-                    document.getElementById("stacks").appendChild(btn);
+                    btn.className = 'stackCoffeeButton';
+                    document.getElementById('stacks').appendChild(btn);
                 }
             } else {
                 throw response.errors;
@@ -118,21 +118,21 @@ export class StaffMenuComponent {
         });
     }
 
-        _renderTemplate(){
-            this._el.innerHTML = StaffMenu();
-        }
-
-        render()
-        {
-            this._renderTemplate();
-            const buttonPlus = this._el.getElementsByClassName('buttonFlex__plus').item(0);
-            buttonPlus.addEventListener('click', this.changePointPlus.bind(this));
-            const buttonMinus = this._el.getElementsByClassName('buttonFlex__minus').item(0);
-            buttonMinus.addEventListener('click', this.changePointMinus.bind(this));
-            this.loadData();
-
-        }
+    _renderTemplate(){
+        this._el.innerHTML = StaffMenu();
     }
+
+    render()
+    {
+        this._renderTemplate();
+        const buttonPlus = this._el.getElementsByClassName('buttonFlex__plus').item(0);
+        buttonPlus.addEventListener('click', this.changePointPlus.bind(this));
+        const buttonMinus = this._el.getElementsByClassName('buttonFlex__minus').item(0);
+        buttonMinus.addEventListener('click', this.changePointMinus.bind(this));
+        this.loadData();
+
+    }
+}
 
 
 

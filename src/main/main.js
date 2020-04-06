@@ -1,30 +1,30 @@
-import Router from "../modules/Router";
+import Router from '../modules/Router';
 
 import UserProfileView from '../view/UserProfileView'
-import UserProfileController from "../controllers/UserProfileController";
-import UserModel from "../models/UserModel";
-import CafeListModel from "../models/CafeListModel";
-import CafeListView from "../view/CafeListView";
-import CreateCafeView from "../view/CreateCafeView";
-import CreateCafeController from "../controllers/CreateCafeController";
-import LoginView from "../view/LoginView";
-import LoginController from "../controllers/LoginController";
-import RegisterView from "../view/RegisterView";
-import RegisterController from "../controllers/RegisterController";
-import CafeListController from "../controllers/CafeListController";
-import CafePageController from "../controllers/CafePageContoller";
-import CafePageView from "../view/CafePageView";
-import StaffListView from "../view/StaffListView";
-import StaffListController from "../controllers/StaffListController";
-import LandingModel from "../models/LandingModel";
-import LandingView from "../view/LandingView";
-import LandingController from "../controllers/LandingController";
-import StaffModel from "../models/StaffModel";
-import AddStaffController from "../controllers/addStaffController";
-import StaffListModel from "../models/StaffListModel";
-import EditCafeController from "../controllers/EditCafeController";
-import StaffMenuView from "../view/StaffMenuView";
-import StaffMenuController from "../controllers/StaffMenuController";
+import UserProfileController from '../controllers/UserProfileController';
+import UserModel from '../models/UserModel';
+import CafeListModel from '../models/CafeListModel';
+import CafeListView from '../view/CafeListView';
+import CreateCafeView from '../view/CreateCafeView';
+import CreateCafeController from '../controllers/CreateCafeController';
+import LoginView from '../view/LoginView';
+import LoginController from '../controllers/LoginController';
+import RegisterView from '../view/RegisterView';
+import RegisterController from '../controllers/RegisterController';
+import CafeListController from '../controllers/CafeListController';
+import CafePageController from '../controllers/CafePageContoller';
+import CafePageView from '../view/CafePageView';
+import StaffListView from '../view/StaffListView';
+import StaffListController from '../controllers/StaffListController';
+import LandingModel from '../models/LandingModel';
+import LandingView from '../view/LandingView';
+import LandingController from '../controllers/LandingController';
+import StaffModel from '../models/StaffModel';
+import AddStaffController from '../controllers/addStaffController';
+import StaffListModel from '../models/StaffListModel';
+import EditCafeController from '../controllers/EditCafeController';
+import StaffMenuView from '../view/StaffMenuView';
+import StaffMenuController from '../controllers/StaffMenuController';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -32,8 +32,8 @@ if ('serviceWorker' in navigator) {
         .then((reg) => {
             console.log('Registration succeeded. Scope is ' + reg.scope);
         }).catch((error) => {
-        console.log('Registration failed with ' + error);
-    });
+            console.log('Registration failed with ' + error);
+        });
 }
 
 let app = document.getElementById('application');
@@ -43,18 +43,18 @@ export const router = new Router();
 /** Страница регистрации */
 function doreg(){
     const userModel = new UserModel();
-    const registerView = new RegisterView(app, "Регистрация");
+    const registerView = new RegisterView(app, 'Регистрация');
     const registerController = new RegisterController(userModel, registerView);
     registerController.control();
 }
 
 /** Страница авторизации */
 function dolog(){
-        console.log('in login');
-        const userModel = new UserModel();
-        const loginView = new LoginView(app);
-        const loginController = new LoginController(userModel, loginView);
-        loginController.control();
+    console.log('in login');
+    const userModel = new UserModel();
+    const loginView = new LoginView(app);
+    const loginController = new LoginController(userModel, loginView);
+    loginController.control();
 }
 
 /** Страница моих кафе */
@@ -145,18 +145,18 @@ function doStaffMenu(req) {
 
 
 /** Роуты роутера */
-router.get("/", doreg);
-router.get("/landing", doLanding);
-router.get("/reg", doreg);
-router.get("/login", dolog);
-router.get("/myCafes", doMyCafes);
-router.get("/profile", doProfile);
-router.get("/createCafe", doCreateCafe);
-router.get("/staff", doStaff);
+router.get('/', doreg);
+router.get('/landing', doLanding);
+router.get('/reg', doreg);
+router.get('/login', dolog);
+router.get('/myCafes', doMyCafes);
+router.get('/profile', doProfile);
+router.get('/createCafe', doCreateCafe);
+router.get('/staff', doStaff);
 router.get('/cafe/{id}', doCafe);
 router.get('/editCafe/{id}', doEditCafe);
-router.get("/addStaff", doAddStaff);
-router.get("/points/{uuid}", doStaffMenu);
+router.get('/addStaff', doAddStaff);
+router.get('/points/{uuid}', doStaffMenu);
 router.notFoundHandler(doLanding);
 
 router.init();

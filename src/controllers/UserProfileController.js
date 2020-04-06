@@ -1,12 +1,12 @@
 'use strict';
 
-import {handleImageUpload} from "../modules/imageUpload";
-import {validateForm} from "../modules/formValidator";
+import {handleImageUpload} from '../modules/imageUpload';
+import {validateForm} from '../modules/formValidator';
 
-import {router} from "../main/main";
+import {router} from '../main/main';
 
-import FormValidation from "../modules/FormValidation";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../modules/ServerExceptionHandler';
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -65,8 +65,8 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                          sessionStorage.clear();
-                           router._goTo('/login');
+                            sessionStorage.clear();
+                            router._goTo('/login');
                            
                         }
                     }

@@ -1,11 +1,11 @@
 'use strict';
 
-import {uuid} from "../utils/uuid";
-import {CardField} from "./CardField.js";
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import {ajaxForm} from "../utils/ajaxForm";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {uuid} from '../utils/uuid';
+import {CardField} from './CardField.js';
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import {ajaxForm} from '../utils/ajaxForm';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
 /** Модель карточки */
 export class AppleCardModel {
@@ -49,7 +49,7 @@ export class AppleCardModel {
               "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
                "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"}`;
 
-    };
+    }
 
     /**
      * Возвращает промис, который возвращает сырое представление карточки
@@ -203,41 +203,41 @@ export class AppleCardModel {
         console.log('json test', this._storeCard['headerFields']);
         let json = {
 
-            "formatVersion": 1,
-            "passTypeIdentifier": "pass.com.ssoboy",
-            "serialNumber": "ART",
-            "teamIdentifier": "WSULUSUQ63",
-            "webServiceURL": "https://example.com/passes/",
-            "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
-            "barcode": {
-                "message": `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
-                "format": "PKBarcodeFormatQR",
-                "messageEncoding": "iso-8859-1"
+            'formatVersion': 1,
+            'passTypeIdentifier': 'pass.com.ssoboy',
+            'serialNumber': 'ART',
+            'teamIdentifier': 'WSULUSUQ63',
+            'webServiceURL': 'https://example.com/passes/',
+            'authenticationToken': 'vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc',
+            'barcode': {
+                'message': `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
+                'format': 'PKBarcodeFormatQR',
+                'messageEncoding': 'iso-8859-1'
             },
-            "locations": [
+            'locations': [
                 {
-                    "longitude": -122.3748889,
-                    "latitude": 37.6189722
+                    'longitude': -122.3748889,
+                    'latitude': 37.6189722
                 },
                 {
-                    "longitude": -122.03118,
-                    "latitude": 37.33182
+                    'longitude': -122.03118,
+                    'latitude': 37.33182
                 }
             ],
 
 
-            "organizationName": this._organizationName,
-            "description": this._description,
-            "labelColor": this._labelColor,
-            "logoText": (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
-            "foregroundColor": this._foregroundColor,
-            "backgroundColor": this._backgroundColor,
-            "backFields": [],
-            "storeCard": {
-                "headerFields": [],
-                "primaryFields": [],
-                "secondaryFields": [],
-                "auxiliaryFields": [],
+            'organizationName': this._organizationName,
+            'description': this._description,
+            'labelColor': this._labelColor,
+            'logoText': (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
+            'foregroundColor': this._foregroundColor,
+            'backgroundColor': this._backgroundColor,
+            'backFields': [],
+            'storeCard': {
+                'headerFields': [],
+                'primaryFields': [],
+                'secondaryFields': [],
+                'auxiliaryFields': [],
             }
         };
 
@@ -305,21 +305,21 @@ export class AppleCardModel {
      */
     pushField(fieldType) {
         switch (fieldType) {
-            case 'HeaderField':
-                this._storeCard.headerFields.push(new CardField({'fieldType': 'HeaderField'}));
-                break;
+        case 'HeaderField':
+            this._storeCard.headerFields.push(new CardField({'fieldType': 'HeaderField'}));
+            break;
 
-            case 'PrimaryField':
-                this._storeCard.primaryFields.push(new CardField({'fieldType': 'PrimaryField'}));
-                break;
+        case 'PrimaryField':
+            this._storeCard.primaryFields.push(new CardField({'fieldType': 'PrimaryField'}));
+            break;
 
-            case 'SecondaryField':
-                this._storeCard.secondaryFields.push(new CardField({'fieldType': 'SecondaryField'}));
-                break;
+        case 'SecondaryField':
+            this._storeCard.secondaryFields.push(new CardField({'fieldType': 'SecondaryField'}));
+            break;
 
-            case 'AuxiliaryField':
-                this._storeCard.auxiliaryFields.push(new CardField({'fieldType': 'AuxiliaryField'}));
-                break;
+        case 'AuxiliaryField':
+            this._storeCard.auxiliaryFields.push(new CardField({'fieldType': 'AuxiliaryField'}));
+            break;
 
         }
     }
@@ -331,18 +331,18 @@ export class AppleCardModel {
      */
     removeField(fieldType, id) {
         switch (fieldType) {
-            case 'HeaderField':
-                this.removeFieldByTypeAndId('headerFields', id);
-                break;
-            case 'PrimaryField':
-                this.removeFieldByTypeAndId('primaryFields', id);
-                break;
-            case 'SecondaryField':
-                this.removeFieldByTypeAndId('secondaryFields', id);
-                break;
-            case 'AuxiliaryField':
-                this.removeFieldByTypeAndId('auxiliaryFields', id);
-                break;
+        case 'HeaderField':
+            this.removeFieldByTypeAndId('headerFields', id);
+            break;
+        case 'PrimaryField':
+            this.removeFieldByTypeAndId('primaryFields', id);
+            break;
+        case 'SecondaryField':
+            this.removeFieldByTypeAndId('secondaryFields', id);
+            break;
+        case 'AuxiliaryField':
+            this.removeFieldByTypeAndId('auxiliaryFields', id);
+            break;
         }
     }
 
@@ -355,52 +355,52 @@ export class AppleCardModel {
      */
     changeField(fieldType, id, type, text) {
         switch (fieldType) {
-            case 'HeaderField':
-                for (let i = 0; i < this._storeCard.headerFields.length; i++) {
-                    if (this._storeCard.headerFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.headerFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.headerFields[i].value = text;
-                        }
+        case 'HeaderField':
+            for (let i = 0; i < this._storeCard.headerFields.length; i++) {
+                if (this._storeCard.headerFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.headerFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.headerFields[i].value = text;
                     }
                 }
-                break;
-            case 'PrimaryField':
-                for (let i = 0; i < this._storeCard.primaryFields.length; i++) {
-                    if (this._storeCard.primaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.primaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.primaryFields[i].value = text;
-                        }
+            }
+            break;
+        case 'PrimaryField':
+            for (let i = 0; i < this._storeCard.primaryFields.length; i++) {
+                if (this._storeCard.primaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.primaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.primaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
 
-            case 'SecondaryField':
-                for (let i = 0; i < this._storeCard.secondaryFields.length; i++) {
-                    if (this._storeCard.secondaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.secondaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.secondaryFields[i].value = text;
-                        }
+        case 'SecondaryField':
+            for (let i = 0; i < this._storeCard.secondaryFields.length; i++) {
+                if (this._storeCard.secondaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.secondaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.secondaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
 
-            case 'AuxiliaryField':
-                for (let i = 0; i < this._storeCard.auxiliaryFields.length; i++) {
-                    if (this._storeCard.auxiliaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.auxiliaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.auxiliaryFields[i].value = text;
-                        }
+        case 'AuxiliaryField':
+            for (let i = 0; i < this._storeCard.auxiliaryFields.length; i++) {
+                if (this._storeCard.auxiliaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.auxiliaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.auxiliaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
         }
 
     }
@@ -449,11 +449,11 @@ export class AppleCardModel {
         } else {
             design.storeCard.primaryFields.forEach((primaryField)=>{
                 this._storeCard.primaryFields.push(new CardField({
-                'fieldType': 'PrimaryField',
-                'key': uuid(),
-                'label': primaryField.label,
-                'value': primaryField.value
-            }));
+                    'fieldType': 'PrimaryField',
+                    'key': uuid(),
+                    'label': primaryField.label,
+                    'value': primaryField.value
+                }));
             })
         }
 
@@ -492,7 +492,7 @@ export class AppleCardModel {
         console.log('icon ',context.icon);
 
         this._organizationName = design.organizationName;
-        this._description = design.description;;
+        this._description = design.description;
         this._labelColor = design.labelColor;
         this._logoText = design.logoText;
         this._foregroundColor = design.foregroundColor;
@@ -522,7 +522,7 @@ export class AppleCardModel {
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
-                       this._fillCardData(response.data);
+                        this._fillCardData(response.data);
                     } else {
                         throw response.errors;
                     }

@@ -1,11 +1,11 @@
 'use strict';
 
-import CardCreator from "../components/CardCreator/CardCreator.hbs";
-import CardFormComponent from "../components/CardForm/CardForm";
-import {CardAppleComponent} from "../components/CardApple/CardApple";
+import CardCreator from '../components/CardCreator/CardCreator.hbs';
+import CardFormComponent from '../components/CardForm/CardForm';
+import {CardAppleComponent} from '../components/CardApple/CardApple';
 import '../components/CardCreator/CardCreator.scss'
 
-import BaseView from "./BaseView";
+import BaseView from './BaseView';
 
 /** view редактора крточки */
 export default class CardRedactorView extends BaseView{

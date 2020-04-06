@@ -1,4 +1,4 @@
-import {router} from "../main/main";
+import {router} from '../main/main';
 
 /** контроллер кафе */
 export default class CafePageController {

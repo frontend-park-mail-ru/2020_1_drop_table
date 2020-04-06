@@ -11,8 +11,8 @@ export default class CardRedactorController {
      * @param {CardRedactorView} cardRedactorView view редактора карточки
      */
     constructor(appleCardModel, cardRedactorView){
-         this._appleCard = appleCardModel;
-         this._cardRedactorView = cardRedactorView;
+        this._appleCard = appleCardModel;
+        this._cardRedactorView = cardRedactorView;
     }
 
     /** Запуск контроллера */
@@ -73,9 +73,9 @@ export default class CardRedactorController {
         let backgroundColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_background_input').item(0)
         backgroundColorInput.addEventListener('input', function () {
-                let res = hexToRgb(this.value);
-                context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
+            let res = hexToRgb(this.value);
+            context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b}`;
+            context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
         }, false);
 
         let foregroundColorInput
@@ -83,14 +83,14 @@ export default class CardRedactorController {
         foregroundColorInput.addEventListener('input', function (e) {
             let res = hexToRgb(this.value);
             context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
+            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         });
         let labelColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs__label_input').item(0)
         labelColorInput.addEventListener('input', function (e) {
             let res = hexToRgb(this.value);
             context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
+            context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
         })
 
 

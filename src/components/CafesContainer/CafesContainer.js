@@ -2,8 +2,7 @@ import './CafesContainer.scss';
 import '../CafeCard/CafeCard.scss';
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
-import {Router} from "../../modules/Router";
-import {router} from "../../main/main";
+import {router} from '../../main/main';
 
 /** Компонент списка кафе */
 export class CafesContainerComponent {

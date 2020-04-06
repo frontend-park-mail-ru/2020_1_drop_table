@@ -1,10 +1,10 @@
 'use strict';
 
-import BaseView from "./BaseView";
-import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer";
-import {Router} from "../modules/Router";
-import Header from "../components/MainHeader/Header";
-import {router} from "../main/main";
+import BaseView from './BaseView';
+import {CafesContainerComponent} from '../components/CafesContainer/CafesContainer';
+import {Router} from '../modules/Router';
+import Header from '../components/MainHeader/Header';
+import {router} from '../main/main';
 
 /** View страницы со списком кафе */
 export default class CafeListView extends BaseView{

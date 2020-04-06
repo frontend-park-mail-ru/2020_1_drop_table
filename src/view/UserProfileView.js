@@ -1,8 +1,8 @@
 'use strict';
 
-import Header from "../components/MainHeader/Header";
-import ProfileComponent from "../components/Profile/Profile";
-import BaseView from "./BaseView";
+import Header from '../components/MainHeader/Header';
+import ProfileComponent from '../components/Profile/Profile';
+import BaseView from './BaseView';
 
 /** view страницы профиля */
 export default class UserProfileView extends BaseView {

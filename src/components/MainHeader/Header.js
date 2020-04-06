@@ -1,8 +1,8 @@
 import './Header.scss'
 
 import headerTemplate from './Header.hbs';
-import {Router} from "../../modules/Router";
-import {router} from "../../main/main";
+import {Router} from '../../modules/Router';
+import {router} from '../../main/main';
 
 /** Компонента хэдера */
 export default class Header{

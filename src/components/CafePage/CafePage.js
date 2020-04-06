@@ -1,6 +1,6 @@
-import {authAjax} from "../../utils/authAjax";
-import {constants} from "../../utils/constants";
-import {CafePageComponent} from "../CafePageComponent/CafePage";
+import {authAjax} from '../../utils/authAjax';
+import {constants} from '../../utils/constants';
+import {CafePageComponent} from '../CafePageComponent/CafePage';
 
 
 export function CreateCafePage(app, id) { //TODO Remove

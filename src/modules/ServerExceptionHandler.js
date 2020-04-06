@@ -1,4 +1,4 @@
-import {router} from "../main/main";
+import {router} from '../main/main';
 import BaseErrorHandler from './BaseErrorHandler'
 
 /** Обработчик ошибок сервера */

@@ -1,8 +1,8 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import {authAjax} from "../utils/authAjax";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import {authAjax} from '../utils/authAjax';
 
 /** Класс модели рабочего 3 рк*/
 export default class StaffModel { // дописать потом
@@ -18,7 +18,7 @@ export default class StaffModel { // дописать потом
         this._isowner = null;
         this._cafeid = null;
 
-       // this._loadStaff();
+        // this._loadStaff();
     }
 
     get address(){
@@ -85,7 +85,7 @@ export default class StaffModel { // дописать потом
     }
 
     set listId(listId){
-       // this._listId = listId;
+        // this._listId = listId;
     }
 
     set address(address){

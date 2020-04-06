@@ -1,8 +1,8 @@
 'use strict';
 
-import {Router} from "../modules/Router";
+import {Router} from '../modules/Router';
 
-import {router} from "../main/main";
+import {router} from '../main/main';
 
 /** контроллер лэндинга */
 export default class LandingController {
