@@ -38,7 +38,10 @@ export default class EditCafeController{
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
-        cafe.photo = image;
+        if(image){
+            cafe.photo = image;
+        }
+
 
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
@@ -46,7 +49,7 @@ export default class EditCafeController{
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
                 console.log('try editCafe', photoInput.files[0], cafe, this._id);
-                await this._cafeListModel.editCafe(photoInput.files[0], cafe, this._id);
+                await this._cafeListModel.editCafe(cafe, this._id);
             } catch (exception) {
                 console.log('catch', photoInput.files[0], cafe, this._id);
 
@@ -78,7 +81,7 @@ export default class EditCafeController{
             },
             cafe: {
                 cafeName: 'Редактирование кафе',
-                imgSrc: '/images/test.jpg',
+                imgSrc: cafe.photo?cafe.photo:'/images/test.jpg', //todo ПОФИКСИТЬ ПРОМИС
                 event: {
                     type: 'change',
                     listener: handleImageUpload
