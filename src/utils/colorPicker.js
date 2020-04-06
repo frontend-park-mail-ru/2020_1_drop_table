@@ -31,8 +31,8 @@ let log = Math.log;
 let round = Math.round;
 let floor = Math.floor;
 /**
- * @desc Parse a css unit string - either regular int or a percentage number
- * @param str - css unit string
+ * @desc Parse a scss unit string - either regular int or a percentage number
+ * @param str - scss unit string
  * @param max - max unit value, used for calculating percentages
  */
 
@@ -228,79 +228,8 @@ IroColor.hsvToHsl = function hsvToHsl (hsv) {
         l: l * 50
     };
 };
-/**
- * @desc Convert hsl object to hsv
- * @param hsl - hsl object
- */
-
-
-// IroColor.hslToHsv = function hslToHsv (hsl) {
-//     let l = hsl.l * 2;
-//     let s = hsl.s * (l <= 100 ? l : 200 - l) / 100; // Avoid division by zero when l + s is near 0
-//
-//     let saturation = l + s < 1e-9 ? 0 : 2 * s / (l + s);
-//     return {
-//         h: hsl.h,
-//         s: saturation * 100,
-//         v: (l + s) / 2
-//     };
-// };
-/**
- * @desc Convert a kelvin temperature to an approx, RGB value
- * @param kelvin - kelvin temperature
- */
-
-
-// IroColor.kelvinToRgb = function kelvinToRgb (kelvin) {
-//     let temp = kelvin / 100;
-//     let r, g, b;
-//
-//     if (temp < 66) {
-//         r = 255;
-//         g = -155.25485562709179 - 0.44596950469579133 * (g = temp - 2) + 104.49216199393888 * log(g);
-//         b = temp < 20 ? 0 : -254.76935184120902 + 0.8274096064007395 * (b = temp - 10) + 115.67994401066147 * log(b);
-//     } else {
-//         r = 351.97690566805693 + 0.114206453784165 * (r = temp - 55) - 40.25366309332127 * log(r);
-//         g = 325.4494125711974 + 0.07943456536662342 * (g = temp - 50) - 28.0852963507957 * log(g);
-//         b = 255;
-//     }
-//
-//     return {
-//         r: floor(r),
-//         g: floor(g),
-//         b: floor(b)
-//     };
-// };
-/**
- * @desc Convert an RGB color to an approximate kelvin temperature
- * @param kelvin - kelvin temperature
- */
-
-
-// IroColor.rgbToKelvin = function rgbToKelvin (rgb) {
-//     let r = rgb.r;
-//     let b = rgb.b;
-//     let eps = 0.4;
-//     let minTemp = KELVIN_MIN;
-//     let maxTemp = KELVIN_MAX;
-//     let temp;
-//
-//     while (maxTemp - minTemp > eps) {
-//         temp = (maxTemp + minTemp) * 0.5;
-//         let rgb$1 = IroColor.kelvinToRgb(temp);
-//
-//         if (rgb$1.b / rgb$1.r >= b / r) {
-//             maxTemp = temp;
-//         } else {
-//             minTemp = temp;
-//         }
-//     }
-//
-//     return temp;
-// };
 
 prototypeAccessors.hsv.get = function () {
-    // value is cloned to allow changes to be made to the values before passing them back
     let value = this.$;
     return {
         h: value.h,
@@ -1512,10 +1441,8 @@ let index = {
     ui: {
         h: h,
         ComponentBase: IroComponentBase,
-        // Handle: IroHandle,
         Slider: IroSlider,
         Wheel: IroWheel,
-        // Box: IroBox,
     },
 
 };

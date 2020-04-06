@@ -12,7 +12,6 @@ class Router {
         this.routes = [];
         this.path =  this._requestPath();
 
-        //default options
         let defOptions = {
             caseInsensitive: true,
             historyMode: false
@@ -28,14 +27,7 @@ class Router {
 
 
     get(uri, callback, thisArg){
-        if(!Utils.isSet(uri)) throw new ArgNotFound("uri")
-        if(!Utils.isSet(callback)) throw new ArgNotFound("callback");
-
-        if(!Utils.isString(uri)) throw new ArgTypeError("uri", "string", uri);
-        if(!Utils.isFunction(callback)) throw new ArgTypeError("callback", "function", callback);
-
         thisArg = thisArg instanceof Router ? undefined : thisArg;
-
         let route = {
             uri: null,
             callback: null,
@@ -45,7 +37,6 @@ class Router {
             name: null,
             current: false
         }
-
         if(this._caseInsensitive) {
             uri = uri.toLowerCase()
         };
@@ -93,17 +84,6 @@ class Router {
         return this;
     }
 
-    setName(name){
-        if(!Utils.isSet(name)) throw new ArgNotFound("name");
-        if(!Utils.isString(name)) throw new ArgTypeError("name", "string", name);
-
-        let targetRoute = this.routes[this.routes.length - 1];
-        this.routes.forEach((route)=>{
-            if(route.name === name) throw new Error(`Duplicate naming. A route with name ${name} already exists`);
-        })
-        targetRoute.name = name;
-        return this;
-    }
 
     init(){
         this.routes.forEach((route)=>{
@@ -112,21 +92,25 @@ class Router {
 
         let found = false;
         let routerObj = {
-            pathFor: (name, parameter)=>{
-                return this._pathFor(name, parameter);
-            },
+
 
             goTo: (url, data, title)=>{
+
                 return this._goTo(url, data, title);
             },
 
             historyMode: this._historyMode
         };
+
+
+
         this.routes.some((route)=>{
+
             if(this._requestPath().match(route.regExp)) {
+
+
                 route.current = true;
                 found = true;
-
                 let request = {};
                 request.param = this._processRequestParameters(route);
                 request.query = this.query;
@@ -142,6 +126,7 @@ class Router {
             request.uri = window.location.pathname;
             return this._notFoundFunction(request, routerObj);
         }
+
     }
 
 
@@ -154,9 +139,7 @@ class Router {
     }
 
     _goTo(url, data = {}, title =""){
-        if(!Utils.isSet(url)) throw new ArgNotFound("url");
-        if(!Utils.isString(url)) throw new ArgTypeError("url", "string", url);
-        if(Utils.isEmpty(url)) throw new TypeError("url cannot be empty");
+
 
         if(!this._historyMode){
             let storage = window.localStorage;
@@ -166,40 +149,6 @@ class Router {
 
         window.history.pushState(data, title, url);
         return this.init();
-    }
-
-    _pathFor(name, parameters = {}){
-        if(!Utils.isSet(name)) throw new ArgNotFound("name");
-        if(!Utils.isString(name)) throw new ArgTypeError("name", "string", string);
-        if(Utils.isEmpty(name)) throw new TypeError("name cannot be empty");
-        let nameFound = false;
-        let uri;
-        this.routes.some(route=>{
-            if(route.name === name){
-                nameFound = true;
-                uri = route.uri;
-                if(this._containsParameter(uri)){
-
-                    if(!Utils.isSet(paramaters)) throw new ArgNotFound("parameters");
-                    if(!Utils.isObject(parameters)) throw new ArgTypeError("parameters", "object", parameters);
-                    if(Utils.isEmpty(parameters)) throw new TypeError("parameters cannot be empty");
-                    let array  = [];
-                    for(let value of route.uri.match(/\{(\w+)\}/g)){
-                        value = value.replace("{","");
-                        value = value.replace("}","");
-                        array.push(value);
-                    }
-                    if(array.length !== Object.getOwnPropertyNames(parameters).length) throw new Error(`The route with name [${name}] contains ${array.length} parameters. ${Object.getOwnPropertyNames(parameters).length} given`)
-                    for(let parameter in parameters){
-                        if (!array.includes(parameter)) throw new Error(`Invalid parameter name [${parameter}]`);
-                        let r = new RegExp(`{${parameter}}`,"g");
-                        uri = uri.replace(r, parameters[parameter]);
-                    }
-                }
-            }
-        });
-        if (!nameFound) throw new Error(`Invalid route name [${name}]`);
-        return uri;
     }
 
     _proccessParameters(uri){
@@ -213,7 +162,7 @@ class Router {
                     let obj = {};
                     obj[parameterName] = {
                         sn: sn,
-                        regExp: "([^\\/]+)", // catch any word except '/' forward slash
+                        regExp: "([^\\/]+)",
                         value: null
                     }
                     parameters.push(obj);
@@ -226,15 +175,11 @@ class Router {
 
     _proccessRegExp(route){
         let regExp = route.uri;
-
-        // escape special characters
         regExp = regExp.replace(/\//g, "\\/");
         regExp = regExp.replace(/\./g, "\\.");
         regExp = regExp.replace("/", "/?");
 
         if(this._containsParameter(route.uri)){
-
-            //replace uri parameters with their regular expression
             regExp.replace(/{\w+}/g, (parameter)=>{
                 let parameterName = parameter.replace("{","");
                 parameterName = parameterName.replace("}","");
@@ -275,8 +220,15 @@ class Router {
 
     _checkHistoryMode(){
         if(!this._historyMode) return;
-
-        if(!window.PopStateEvent && !"pushState" in history) return; // check for support of popstate event and pushstate in browser
+        if(!window.PopStateEvent && !"pushState" in history) return;
+        window.addEventListener('click', (e)=> {
+            if (!(e.target instanceof HTMLAnchorElement || e.target instanceof HTMLImageElement)) {
+                return;
+            } else if (e.target instanceof HTMLAnchorElement) {
+                e.preventDefault();
+                this._goTo(e.target.pathname);
+            }
+        });
 
         window.addEventListener("popstate", (e)=>{
             this.init();

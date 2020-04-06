@@ -1,4 +1,4 @@
-import './CafeCard.css';
+import './CafeCard.scss';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 
 export class CafeCardComponent {

@@ -3,7 +3,7 @@
 import CardCreator from "../components/CardCreator/CardCreator.hbs";
 import CardFormComponent from "../components/CardForm/CardForm";
 import {CardAppleComponent} from "../components/CardApple/CardApple";
-import '../components/CardCreator/CardCreator.css'
+import '../components/CardCreator/CardCreator.scss'
 import colorPicker from "../utils/colorPicker";
 import {picker} from '../utils/cardRedactorUtils'
 import BaseView from "./BaseView";

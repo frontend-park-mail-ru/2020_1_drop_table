@@ -1,5 +1,5 @@
 'use strict';
-import './CafePage.css';
+import './CafePage.scss';
 import CafePageTemplate from './CafePage.hbs';
 import {CreateCardRedactor} from '../CardCreator/CardCreator'
 

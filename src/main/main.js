@@ -133,20 +133,19 @@ function doStaffMenu(req) {
 }
 
 
-
-
 router.get("/", doreg);
-router.get("/landing", doLanding).setName("Landing");
-router.get("/reg", doreg).setName("Reg");
-router.get("/login", dolog).setName("Login");
-router.get("/myCafes", doMyCafes).setName("MyCafes");
-router.get("/profile", doProfile).setName("Profile");
-router.get("/createCafe", doCreateCafe).setName("CreateCafe");
-router.get("/staff", doStaff).setName("Staff");
-router.get('/cafe/{id}', doCafe).setName('Cafe');
-router.get('/editCafe/{id}', doEditCafe).setName('EditCafe');
-router.get("/addStaff", doAddStaff).setName("AddStaff");
-router.get("/points/{uuid}", doStaffMenu).setName("StaffMenu");
+router.get("/landing", doLanding);
+router.get("/reg", doreg);
+router.get("/login", dolog);
+router.get("/myCafes", doMyCafes);
+router.get("/profile", doProfile);
+router.get("/createCafe", doCreateCafe);
+router.get("/staff", doStaff);
+router.get('/cafe/{id}', doCafe);
+router.get('/editCafe/{id}', doEditCafe);
+router.get("/addStaff", doAddStaff);
+router.get("/points/{uuid}", doStaffMenu);
+router.notFoundHandler(doLanding);
 
 router.init();
 

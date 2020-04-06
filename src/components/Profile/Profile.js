@@ -1,6 +1,6 @@
 'use strict';
 
-import './Profile.css';
+import './Profile.scss';
 import ProfileTemplate from './Profile.hbs';
 import Form from '../Form/Form.js';
 

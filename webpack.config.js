@@ -1,4 +1,9 @@
 let path = require('path');
+
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const autoprefixer = require('autoprefixer');
+
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -13,11 +18,12 @@ module.exports = {
                 use: ['babel-loader']
             },
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader']
+                    use: ['css-loader', 'sass-loader']
                 })
+
             },
             {
                 test: /\.(png|svg|jpg|gif|ico)$/,

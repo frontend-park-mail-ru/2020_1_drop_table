@@ -25,13 +25,12 @@
 }
 
 .card-redactor-container__card-form__image-picker_img{
-    max-height: 112px;
-    max-width: 330px;
+    height: 112px;
+    width: 330px;
 }
 .card-redactor-container__card-form__image-picker_img-avatar{
-    height: 100%;
-    width: 100%;
-    max-width: 100px;
+    height: 100px;
+    width: 100px;
 }
 
 @media ( min-width : 600px ) {

@@ -85,12 +85,12 @@
 
 .form-field {
     font-family: 'FuturaBookCTT Normal', arial;
-    width: 25%;
-    margin: 0 auto;
+    margin: 0 25%;
     padding-bottom: 5%;
 }
 
 .form-field__submit {
+    -webkit-appearance: none;
     font-weight: bolder;
     font-size: 1.5rem;
     color: white;

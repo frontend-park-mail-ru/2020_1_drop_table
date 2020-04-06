@@ -1,5 +1,5 @@
 'use strict';
-import './CardApple.css';
+import './CardApple.scss';
 import CardApple from './CardApple.hbs';
 import {SecondaryFieldComponent} from "../AppleCardComponents/SecondaryFieldComponent/SecondaryField";
 

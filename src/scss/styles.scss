@@ -6,5 +6,8 @@
 
 html *
 {
-    font-family: 'Montserrat',SansSerif;
+
+}
+input[type=text], input[type=submit], textarea{
+    -webkit-appearance: none;
 }
