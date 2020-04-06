@@ -10,5 +10,4 @@ export default class LandingModel { // Пока пустой и статичны
     constructor() {
 
     }
-
 }
