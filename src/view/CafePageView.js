@@ -37,12 +37,13 @@ export default class CafePageView extends BaseView {
         this._app.appendChild(profileElement);
 
 
-        const buttonApplePass =  document.getElementsByClassName('apple-pass-button').item(0);
+        const buttonApplePass =  document.getElementsByClassName('buttons__apple-pass-button').item(0);
         buttonApplePass.addEventListener('click',this.applePassButtonClick.bind(this));
+        console.log('1',buttonApplePass)
 
-
-        const buttonAddStaff =  document.getElementsByClassName('add-staff-button').item(0);
+        const buttonAddStaff =  document.getElementsByClassName('buttons__add-staff-button').item(0);
         buttonAddStaff.addEventListener('click',this.context['add-staff-button']);
+        console.log('2',buttonAddStaff)
 
         const buttonEditCafe =  document.getElementsByClassName('cafe-page__cafe-info__edit-button').item(0);
         buttonEditCafe.addEventListener('click',this.context['cafe-page__cafe-info__edit-button']);

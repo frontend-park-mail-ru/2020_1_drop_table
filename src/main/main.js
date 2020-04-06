@@ -37,11 +37,7 @@ if ('serviceWorker' in navigator) {
 
 let app = document.getElementById('application');
 
-const myOptions ={
-    historyMode: true,
-    caseInsensitive: false
-};
-export const router = new Router(myOptions);
+export const router = new Router();
 
 function doreg(){
     const userModel = new UserModel();

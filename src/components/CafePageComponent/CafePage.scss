@@ -6,157 +6,169 @@
     display: flex;
     padding: 0 10% 10% 10%;
     justify-content: space-around;
-    /*font-family: Montserrat;*/
     min-width: 972px;
     min-height: 675px;
+
+    &__cafe-info{
+        min-width: 972px;
+        min-height: 675px;
+        width: 972px;
+        height: 675px;
+        position: relative;
+
+        &__image-container{
+            z-index: 2;
+            top:4%;
+            left:0;
+            height: 71%;
+            width: 68%;
+            position: absolute;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+
+            &_img{
+                object-fit: cover;
+                height: 100%;
+                width:100%
+            }
+        }
+        &__description-container{
+            z-index: 3;
+            position: absolute;
+            bottom: 0;
+            right:15%;
+            height: 45%;
+            width: 48%;
+            background-color: #ffffff;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            display: table-column;
+
+            &_h4{
+                font-size: 3rem;
+                font-weight: bold;
+                padding: 0 10% 0 10%;
+                margin-bottom: 0;
+            }
+            &__align-div{
+                display: table-cell;
+                height:100%;
+                width: 100%;
+                font-size: 16px;
+                line-height: 24px;
+                white-space: normal;
+                word-break: break-word;
+
+                &__relative-div{
+                    height: 100%;
+                    padding: 5px;
+                    position: relative;
+                    display: inline-block;
+
+                    &_p{
+                        text-decoration: none;
+                        height:10em;
+                        padding: 0 10px;
+                        display: block;
+                        overflow-y: scroll;
+                    }
+                }
+
+            }
+        }
+
+        &__name-container{
+            position: absolute;
+            z-index: 1;
+            top:0;
+            right:0;
+            left:60%;
+            height:29%;
+            width:43%;
+            background-color: #1e768f;
+            display: flex;
+            align-items: center;
+
+            &_span{
+                margin: auto 5% auto 25%;
+                color: white;
+                transform: translateY(-50%);
+                font-weight: bold;
+                font-size: 3rem;
+                overflow: hidden;
+            }
+        }
+        &__time-container{
+            position: absolute;
+            left:5%;
+            bottom: 0;
+            height: 25%;
+            width:20%;
+            background-color: #ffffff;
+            font-size: 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &__time{
+                /*border: 1px solid black;*/
+                height: 100%;
+                padding-top:0;
+                &__strip{
+                    height: 0.2rem;
+                    width:80%;
+                    padding: 0 10% 0 10%;
+                    background-color: black;
+                }
+                &__span{
+
+                }
+            }
+        }
+
+        &__address-container{
+            position: absolute;
+            right: -20%;
+            bottom: 10%;
+            height: 10%;
+            width: 50%;
+            transform: rotate(90deg);
+
+            &_span{
+                transform: rotate(90deg);
+            }
+        }
+
+        &__edit-button{
+            height: 3rem;
+            width: initial;
+            display: flex;
+            justify-content: center;
+            padding: auto 0;
+            flex-direction: column;
+            margin: auto auto;
+            position: absolute;
+            right: 5%;
+            bottom: -10%;
+            background-color: #007892;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            padding: 0 1rem;
+            border-radius: 2%;
+            opacity: 90%;
+            cursor: pointer;
+
+            &:hover{
+                filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+            }
+            &_span{
+                font-family: 'Montserrat',SansSerif;
+            }
+        }
+
+    }
 }
-.cafe-page__cafe-info{
-    min-width: 972px;
-    min-height: 675px;
-    /*height: 100%;*/
-    /*width: 100%;*/
-    width: 972px;
-    height: 675px;
-    position: relative;
-    /*border: 2px solid black;*/
-}
 
-
-
-.cafe-page__cafe-info__image-container{
-    z-index: 2;
-    top:4%;
-    left:0;
-    height: 71%;
-    width: 68%;
-    background-color: #2b8aa3;
-    position: absolute;
-    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-}
-.cafe-page__cafe-info__image-container_img{
-    object-fit: cover;
-    height: 100%;
-    width:100%
-}
-
-.cafe-page__cafe-info__description-container{
-    z-index: 3;
-    position: absolute;
-    bottom: 0;
-    right:15%;
-    height: 45%;
-    width: 48%;
-    background-color: #ffffff;
-    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-display: table-column;
-}
-
-.cafe-page__cafe-info__description-container_h4{
-    font-size: 3rem;
-    font-weight: bold;
-    padding: 0 10% 0 10%;
-    margin-bottom: 0;
-}
-
-.cafe-page__cafe-info__description-container__align-div{
-    display: table-cell;
-    height:100%;
-    width: 100%;
-    font-size: 16px;
-    line-height: 24px;
-    white-space: normal;
-    word-break: break-word;
-
-
-}
-.cafe-page__cafe-info__description-container__align-div__relative-div{
-    height: 100%;
-    padding: 5px;
-    position: relative;
-    display: inline-block;
-
-}
-.cafe-page__cafe-info__description-container__align-div__relative-div_p{
-    text-decoration: none;
-    height:10em;
-    padding: 0 10px;
-    display: block;
-    overflow-y: scroll;
-
-
-}
-
-
-
-.cafe-page__cafe-info__name-container{
-    position: absolute;
-    z-index: 1;
-    top:0;
-    right:0;
-    left:60%;
-    height:29%;
-    width:43%;
-    background-color: #1e768f;
-    display: flex;
-    /*justify-content: center;*/
-    align-items: center;
-
-}
-.cafe-page__cafe-info__name-container_span{
-    margin: auto 5% auto 25%;
-    color: white;
-    transform: translateY(-50%);
-    font-weight: bold;
-    font-size: 3rem;
-    /*padding-left: 30%;*/
-    overflow: hidden;
-}
-.cafe-page__cafe-info__time-container{
-    position: absolute;
-    left:5%;
-    bottom: 0;
-    height: 25%;
-    width:20%;
-    background-color: #ffffff;
-    font-size: 5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-
-}
-.cafe-page__cafe-info__time-container__time{
-    /*border: 1px solid black;*/
-    height: 100%;
-    padding-top:0;
-}
-
-.cafe-page__cafe-info__time-container__time__strip{
-    height: 0.2rem;
-    width:80%;
-    padding: 0 10% 0 10%;
-    background-color: black;
-}
-.cafe-page__cafe-info__time-container__time__span{
-
-}
-
-
-.cafe-page__cafe-info__address-container{
-    position: absolute;
-    right: -20%;
-    bottom: 10%;
-    height: 10%;
-    width: 50%;
-    transform: rotate(90deg);
-}
-.cafe-page__cafe-info__address-container_span{
-    transform: rotate(90deg);
-}
-
-.apple-pass-button{
+.buttons__apple-pass-button{
     width:16rem;
     height: 8rem;
     margin: 10px auto;
@@ -164,10 +176,11 @@ display: table-column;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.apple-pass-button_h4{
-    font-family: Montserrat;
-    color: white;
+    &_h4{
+        font-family: Montserrat;
+        color: white;
+    }
+
 }
 
 .card-creator-container{
@@ -175,9 +188,7 @@ display: table-column;
     height: 100%;
 
 }
-
-
-.add-staff-button{
+.buttons__add-staff-button{
     width:16rem;
     height: 8rem;
     margin: 10px auto;
@@ -185,35 +196,10 @@ display: table-column;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.add-staff-button_h4{
-    font-family: Montserrat;
-    color: white;
-}
-
-.cafe-page__cafe-info__edit-button{
-    height: 3rem;
-    width: initial;
-    display: flex;
-    justify-content: center;
-    padding: auto 0;
-    flex-direction: column;
-    margin: auto auto;
-    position: absolute;
-    right: 5%;
-    bottom: -10%;
-    background-color: #007892;
-    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    padding: 0 1rem;
-    border-radius: 2%;
-    opacity: 90%;
-    cursor: pointer;
-}
-.cafe-page__cafe-info__edit-button:hover {
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+    &_h4{
+        font-family: Montserrat;
+        color: white;
+    }
 }
 
-.cafe-page__cafe-info__edit-button_span{
-    font-family: 'Montserrat',SansSerif;
-}
+

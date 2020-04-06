@@ -4,8 +4,7 @@ import CardCreator from "../components/CardCreator/CardCreator.hbs";
 import CardFormComponent from "../components/CardForm/CardForm";
 import {CardAppleComponent} from "../components/CardApple/CardApple";
 import '../components/CardCreator/CardCreator.scss'
-import colorPicker from "../utils/colorPicker";
-import {picker} from '../utils/cardRedactorUtils'
+
 import BaseView from "./BaseView";
 
 /** view редактора крточки */
@@ -26,9 +25,6 @@ export default class CardRedactorView extends BaseView{
         this.cardFormComp = new CardFormComponent(left);
         this.cardAppleComp = new CardAppleComponent(right);
 
-        this.colorWheelBackground = new colorPicker.ColorPicker("#background-color", picker);
-        this.colorWheelForeground = new colorPicker.ColorPicker("#foreground-color", picker);
-        this.colorWheelLabel = new colorPicker.ColorPicker("#label-color", picker);
     }
 
     /** Отрисовка редактора крточки */

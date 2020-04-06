@@ -32,6 +32,11 @@ export class CardAppleComponent {
         container.innerHTML = '';
         (new CardHeaderComponent(container)).render(headerData);
 
+        const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
+        if(headerData.logoImageSrc){
+            avatarCardImage.style.display = 'flex';
+        }
+
     }
 
 

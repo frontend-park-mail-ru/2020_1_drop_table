@@ -96,9 +96,6 @@ if (Object.setPrototypeOf){
     ArgumentTypeError.__proto__ = Error;
 }
 
-// QueryParams class constants
-
-
 var KEYS = [];
 var QUERIES = [];
 var QUERY_STRING = "";

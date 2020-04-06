@@ -5,33 +5,40 @@
     display: flex;
     flex-direction: column;
 }
-.card-redactor-container__card-form__decorate-text{
-    display: flex;
-    justify-content: space-around;
+
+.card-redactor-container__card-form {
+    &__decorate-text {
+        display: flex;
+        justify-content: space-around;
+        &_h4 {
+            font-family: 'FuturaBookCTT Normal', arial;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+    }
+    &__image-picker{
+        height: 112px;
+        width: 100%;
+        padding-bottom: 5%;
+        justify-content: space-around;
+        display: flex;
+        object-fit: cover;
+
+        &_img{
+            height: 112px;
+            width: 330px;
+
+            &-avatar{
+                height: 100px;
+                width: 100px;
+                object-fit: cover;
+            }
+        }
+    }
+
 }
 
-.card-redactor-container__card-form__decorate-text_h4{
-    font-family: 'FuturaBookCTT Normal', arial;
-    font-size: 3rem;
-    font-weight: bold;
-}
 
-.card-redactor-container__card-form__image-picker{
-    height: 112px;
-    width: 100%;
-    padding-bottom: 5%;
-    justify-content: space-around;
-    display: flex;
-}
-
-.card-redactor-container__card-form__image-picker_img{
-    height: 112px;
-    width: 330px;
-}
-.card-redactor-container__card-form__image-picker_img-avatar{
-    height: 100px;
-    width: 100px;
-}
 
 @media ( min-width : 600px ) {
     .card-redactor-container {
@@ -42,17 +49,20 @@
         margin: 0 auto;
         padding: 0 10%;
         justify-content: space-between;
-    }
-    .card-redactor-container__card-form {
-        -webkit-flex: 1;
-        flex: 1;
-        background: none;
-    }
 
-    .card-redactor-container__card-model {
-        margin-top: 15%;
-    }
+        &__card-form {
+            -webkit-flex: 1;
+            flex: 1;
+            background: none;
+            &__image-picker__input{
+                width: 1px;
+            }
 
+        }
+        &__card-model {
+            margin-top: 15%;
+        }
+    }
 
 }
 
@@ -61,41 +71,77 @@
     margin-right: 1rem ;
     margin-left: 1rem ;
     flex-direction: column;
-}
+    &_color-picker{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem ;
+        margin-left: 0.5rem ;
+        color: #000;
+        background: #fff;
+        -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        width: -moz-available;
+        &_span{
+            font-size: 1rem;
+            /*font-family: Montserrat;*/
+            justify-self: center;
+        }
+        &_container{
+            justify-self: center;
+        }
 
-.card-color-pickers-container_color-picker{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    margin-right: 0.5rem ;
-    margin-left: 0.5rem ;
-    color: #000;
-    background: #fff;
-    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    width: -moz-available;
-}
+        &__inputs{
+            display: flex;
+            justify-content: space-between;
 
+            &__background{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                &_span{
 
-.card-color-pickers-container_color-picker_span{
-    font-size: 1rem;
-    /*font-family: Montserrat;*/
-    justify-self: center;
-}
-.card-color-pickers-container_color-picker_container{
-    justify-self: center;
+                }
+                &_input{
+                    margin: 0 auto;
+                }
+            }
+            &__foreground{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                &_span{
+
+                }
+                &_input{
+                    margin: 0 auto;
+                }
+              }
+            &__label{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+
+                &_span{
+
+                }
+                &_input{
+                    margin: 0 auto;
+                }
+
+            }
+
+        }
+
+    }
 }
 .center-picker{
     display: flex;
     justify-content: space-around;
 
     margin: 1rem;
-}
-
-.card-redactor-container__card-form__image-picker__input{
-    width: 1px;
 }
 
 

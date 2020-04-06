@@ -27,6 +27,7 @@ export default class EditCafeController{
         console.log('editCafe');
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
+        console.log('form', form);
         const photoInput = document.getElementById('upload');
         const image = document.getElementById('image').getAttribute('src');
 
@@ -38,9 +39,10 @@ export default class EditCafeController{
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
-        if(image){
-            cafe.photo = image;
-        }
+
+        // if(image){
+        //     cafe.photo = image;
+        // }
 
 
         const validateContext = this._makeValidateContext(form);
@@ -49,9 +51,9 @@ export default class EditCafeController{
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
                 console.log('try editCafe', photoInput.files[0], cafe, this._id);
-                await this._cafeListModel.editCafe(cafe, this._id);
+                await this._cafeListModel.editCafe(photoInput.files[0], cafe, this._id);
             } catch (exception) {
-                console.log('catch', photoInput.files[0], cafe, this._id);
+                console.log('catch', exception);
 
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
@@ -81,7 +83,8 @@ export default class EditCafeController{
             },
             cafe: {
                 cafeName: 'Редактирование кафе',
-                imgSrc: cafe.photo?cafe.photo:'/images/test.jpg', //todo ПОФИКСИТЬ ПРОМИС
+                imgSrcPromise: cafe.photo,
+                imgSrc: '/images/test.jpg',
                 event: {
                     type: 'change',
                     listener: handleImageUpload

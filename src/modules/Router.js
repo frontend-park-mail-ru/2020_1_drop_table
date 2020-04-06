@@ -1,27 +1,23 @@
-import CafeListModel from "../models/CafeListModel";
-import CafeListView from "../view/CafeListView";
-import UserModel from "../models/UserModel";
-import CafeListController from "../controllers/CafeListController";
-
+'use strict'
 import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from "./Utils.js";
 
 let app = document.body;
 
 class Router {
-    constructor(options){
+    constructor(){
         this.routes = [];
         this.path =  this._requestPath();
 
         let defOptions = {
-            caseInsensitive: true,
-            historyMode: false
+            caseInsensitive: false,
+            historyMode: true
         };
-        let mergedOptions = {...defOptions, ...options};
+        let mergedOptions = {...defOptions};
         for(let key in mergedOptions){
             this[`_${key}`] = mergedOptions[key];
         }
         this._checkHistoryMode();
-        this.query = new QueryParams(null, this._historyMode);
+        this.query = new QueryParams(null, true);
         return this;
     }
 
@@ -53,38 +49,6 @@ class Router {
         return this;
     }
 
-    where(name, regExp){
-
-        //validate type
-        if(!Utils.isSet(name)) throw new ArgNotFound("name");
-        if(!Utils.isSet(regExp)) throw new ArgNotFound("regExp");
-        if(!Utils.isString(name)) throw new ArgTypeError("name", "string", name);
-        if(!Utils.isString(regExp)) throw new ArgTypeError("regExp", "string", regExp);
-
-        let route = this.routes[this.routes.length - 1]; // the target route
-
-        //if paramaters exists for this route
-        if (route.parameters.length === 0) throw new Error(`No Parameters Found: Could not set paramater regExpression for [${route.uri}] because the route has no parameters`);
-
-        regExp = regExp.replace(/\(/g,"\\(");
-        regExp = regExp.replace(/\)/g,"\\)");
-
-        regExp = `(${regExp}+)`;
-
-        let parameterFound = false;
-        route.parameters.forEach((parameter, index)=>{
-            if(parameter[name] !== undefined){
-                parameterFound = true;
-                parameter[name].regExp = regExp;
-            }
-        });
-
-        if(!parameterFound) throw new Error(`Invalid Parameter: Could not set paramater regExpression for [${route.uri}] because the parameter [${name}] does not exist`);
-
-        return this;
-    }
-
-
     init(){
         this.routes.forEach((route)=>{
             this._proccessRegExp(route);
@@ -92,14 +56,10 @@ class Router {
 
         let found = false;
         let routerObj = {
-
-
             goTo: (url, data, title)=>{
-
                 return this._goTo(url, data, title);
             },
-
-            historyMode: this._historyMode
+            historyMode: true
         };
 
 
@@ -139,14 +99,6 @@ class Router {
     }
 
     _goTo(url, data = {}, title =""){
-
-
-        if(!this._historyMode){
-            let storage = window.localStorage;
-            storage.setItem("pushState", data);
-            return window.location.href= url;
-        }
-
         window.history.pushState(data, title, url);
         return this.init();
     }
@@ -219,7 +171,6 @@ class Router {
     }
 
     _checkHistoryMode(){
-        if(!this._historyMode) return;
         if(!window.PopStateEvent && !"pushState" in history) return;
         window.addEventListener('click', (e)=> {
             if (!(e.target instanceof HTMLAnchorElement || e.target instanceof HTMLImageElement)) {
