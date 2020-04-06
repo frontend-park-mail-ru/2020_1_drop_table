@@ -6,12 +6,22 @@ import '../StaffContainerComponent/CafeStaffContainerComponent.css';
 
 import {CafeStaffContainerComponent} from '../StaffContainerComponent/CafeStaffContainerComponent'
 
+/**  Компонент страницы работника */
 export class StaffPageComponent {
 
+    /**
+     * Инициализация компонента страницы работника
+     * @param {Element} parent элемент в кором будет размещаеться компонент
+     */
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
     }
 
+    /**
+     * Отрисовка шаблона компонента
+     * @param {obj} context контекст с информацией компоненте
+     * @private
+     */
     _renderTemplate(context) {
         for (let [name, staff] of Object.entries(context)) {
             let staffList = [];
@@ -32,6 +42,10 @@ export class StaffPageComponent {
         this._parent.innerHTML += StaffPage();
     }
 
+    /**
+     * Отрисовка компонента
+     * @param {obj} context контекст с информацией компоненте
+     */
     render(context) {
         this._renderTemplate(context);
     }
