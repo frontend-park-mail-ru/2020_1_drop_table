@@ -2,13 +2,20 @@
 
 import {getContextByClass} from '../utils/cardRedactorUtils'
 
+/** Контроллер редактирования карточки */
 export default class CardRedactorController {
 
+    /**
+     * Инициализация контроллер редактирования карточки
+     * @param {AppleCardModel} appleCardModel модель карточки
+     * @param {CardRedactorView} cardRedactorView view редактора карточки
+     */
     constructor(appleCardModel, cardRedactorView){
          this._appleCard = appleCardModel;
          this._cardRedactorView = cardRedactorView;
     }
 
+    /** Запуск контроллера */
     async control(){
         this._appleCard.context = await this._makeContext();
         this._cardRedactorView._appleCard = this._appleCard;
@@ -19,6 +26,12 @@ export default class CardRedactorController {
         this.addColorPickerListeners(this);
 
     }
+
+    /**
+     * Создание контекста для CardRedactorView
+     * @return {Promise<{appleCard: any}>}
+     * @private
+     */
     async _makeContext(){
         let appleCardContext = {
             appleCard: await this._appleCard.context
@@ -26,6 +39,7 @@ export default class CardRedactorController {
         return appleCardContext;
     }
 
+    /** Event, выполняющийся при нажатии на кнопку */
     editTextInputListener(e) {
         const target = e.target;
         this._appleCard.changeField(
@@ -39,8 +53,10 @@ export default class CardRedactorController {
         this.addImageListeners()
     }
 
-
-
+    /**
+     * Добавление лисенеров для color pickers
+     * @param {obj} context контекст необходимый для создания color pickers
+     */
     addColorPickerListeners(context) {
         context._cardRedactorView.colorWheelBackground.on('color:change', function (color, changes) {
             context._appleCard._backgroundColor = color.rgbString;
@@ -59,7 +75,7 @@ export default class CardRedactorController {
     }
 
 
-
+    /**Добавление листенеров на зполя карточки */
     addCardFieldsListeners() {
         const labelInputs = document.getElementsByClassName('labelField');
         const valueInputs = document.getElementsByClassName('valueField');
@@ -81,6 +97,7 @@ export default class CardRedactorController {
     }
 
     //todo пофиксить, когда будут новые ручки с сервера
+    /** Добавление листенеров для публикации */
     addSavePublishListeners(){
         const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
         submitSave.addEventListener('click', (e) => {
@@ -138,6 +155,7 @@ export default class CardRedactorController {
         });
     }
 
+    /** Добавление полей карты */
     addCardField(e) {
         const parent = e.target.parentNode.parentNode;
         this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
@@ -148,6 +166,7 @@ export default class CardRedactorController {
         this.addSavePublishListeners();
     }
 
+    /** Удаление полей карты */
     removeAppleCardField(e) {
         const parent = e.target.parentNode.parentNode;
         this._appleCard.removeField(getContextByClass(parent.getAttribute('class')), parent.getAttribute('id'));
@@ -156,10 +175,9 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
-
-
     }
 
+    /** Добавление листенеров на изображения */
     addImageListeners(){
         const stripInput = document.getElementById('uploadStrip');
         const stripImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);
