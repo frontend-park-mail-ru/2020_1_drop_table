@@ -7,9 +7,13 @@ import {constants} from "../utils/constants";
 import {ajaxForm} from "../utils/ajaxForm";
 import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
+/** Модель карточки */
 export class AppleCardModel {
 
-
+    /**
+     * Инициализация модели карточки
+     * @param {int} cafeId идентификатор кафе
+     */
     constructor(cafeId) {
         this._cafeId = cafeId;
         this._icon = null;
@@ -47,8 +51,10 @@ export class AppleCardModel {
 
     };
 
-
-
+    /**
+     * Возвращает промис, который возвращает сырое представление карточки
+     * @return {Promise<{obj}>}
+     */
     get context() {
         return new Promise(async (resolve) => {
             await this.getCard();
@@ -60,70 +66,139 @@ export class AppleCardModel {
         });
     }
 
+    /**
+     * Устанавливает контекст
+     * @param {obj} context контекст модели
+     */
     set context(context) {
 
     }
 
+    /**
+     * Получить название организации
+     * @return {string|null}
+     */
     get organizationName() {
         return this._organizationName;
     }
 
+    /**
+     * Устанавливает название организации
+     * @param {string} value название организации
+     */
     set organizationName(value) {
         this._organizationName = value;
     }
 
+    /**
+     * Получить описание кафе
+     * @return {string|null}
+     */
     get description() {
         return this._description;
     }
 
+    /**
+     * Устанавливает описание кафе
+     * @param {string} value описание кафе
+     */
     set description(value) {
         this._description = value;
     }
 
+    /**
+     * Получить цвет label карточки
+     * @return {string|null}
+     */
     get labelColor() {
         return this._labelColor;
     }
 
+    /**
+     * Устанавливает цвет label карточки
+     * @param {string} value цвет label карточки
+     */
     set labelColor(value) {
         this._labelColor = value;
     }
 
+    /**
+     * Получить текст логотипа
+     * @return {string|null}
+     */
     get logoText() {
         return this._logoText;
     }
 
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
     set logoText(value) {
         this._logoText = value;
     }
 
+    /**
+     * Получить цвет переднего плана карточки
+     * @return {string|null}
+     */
     get foregroundColor() {
         return this._foregroundColor;
     }
 
+    /**
+     * Устанавливает цвет переднего плана карточки
+     * @param {string}  цвет переднего плана карточки
+     */
     set foregroundColor(value) {
         this._foregroundColor = value;
     }
 
+    /**
+     * Получить цвет фона карточки
+     * @return {string|null}
+     */
     get backgroundColor() {
         return this._backgroundColor;
     }
 
+    /**
+     * Устанавливает цвет фона карточки
+     * @param {string} цвет фона карточки
+     */
     set backgroundColor(value) {
         this._backgroundColor = value;
     }
 
+    /**
+     * Получить поля хэдера карточки
+     * @return {Array|null}
+     */
     get headerFields() {
         return this._headerFields;
     }
 
+    /**
+     * Устанавливает поля хэдера карточки
+     * @param {Array} поля хэдера карточки
+     */
     set headerFields(value) {
         this._headerFields = value;
     }
 
+    /**
+     * Удаляет поле карточки по его id и типу
+     * @param {string} type тип поля
+     * @param {int} id идентификатор поля
+     */
     removeFieldByTypeAndId(type, id) {
         this._storeCard[type] = this._storeCard[type].filter(field => field._id !== id);
     }
 
+    /**
+     * Возвращает карточку в виде json
+     * @return {obj}
+     */
     getAsJson() {
         console.log('json test', this._storeCard['headerFields']);
         let json = {
@@ -184,6 +259,10 @@ export class AppleCardModel {
         return json;
     }
 
+    /**
+     * Возвращает карточку как formData
+     * @return {FormData}
+     */
     getAsFormData() {
         let fd = {
             stripImageSrc: this._strip,
@@ -220,6 +299,10 @@ export class AppleCardModel {
         return fd;
     }
 
+    /**
+     * Добавить поле в карточку
+     * @param {string} fieldType тип добавляемого поля
+     */
     pushField(fieldType) {
         switch (fieldType) {
             case 'HeaderField':
@@ -241,6 +324,11 @@ export class AppleCardModel {
         }
     }
 
+    /**
+     * Удалить поле карточки
+     * @param {string} fieldType тип поля
+     * @param {int} id иденитфикатор поля
+     */
     removeField(fieldType, id) {
         switch (fieldType) {
             case 'HeaderField':
@@ -258,6 +346,13 @@ export class AppleCardModel {
         }
     }
 
+    /**
+     * Изменить поле
+     * @param {string} fieldType тип поля
+     * @param {int} id идентификатор поля
+     * @param {string} type тип поля
+     * @param {string} text текст поля
+     */
     changeField(fieldType, id, type, text) {
         switch (fieldType) {
             case 'HeaderField':
@@ -310,6 +405,11 @@ export class AppleCardModel {
 
     }
 
+    /**
+     * Создание базовой карточки
+     * @param {obj} design нектороый контекст карточки
+     * @private
+     */
     _fillStoreCardByDesign(design){
 
         // логотекст считаем за 0 хедер поле
@@ -374,11 +474,13 @@ export class AppleCardModel {
                 }));
             })
         }
-
-
-
-
     }
+
+    /**
+     * Заполнение полей карточки из контекста
+     * @param {obj} context контекст карточки
+     * @private
+     */
     _fillCardData(context){
 
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
@@ -405,6 +507,10 @@ export class AppleCardModel {
         this._fillStoreCardByDesign(design);
     }
 
+    /**
+     * Получение карточки
+     * @return {Promise<void>}
+     */
     async getCard() {
         await ajax(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?published=true&design_only=true`,
             'GET',
@@ -425,6 +531,12 @@ export class AppleCardModel {
         )
     }
 
+    /**
+     * Создание formData для создания карточки
+     * @param {Array} images картинки
+     * @return {Promise<FormData>}
+     * @private
+     */
     async _makeFormData(images) {
         let formData = new FormData();
         const data = this.getAsJson();
@@ -442,6 +554,12 @@ export class AppleCardModel {
     }
 
 
+    /**
+     * Изменение карточки
+     * @param {Array} images
+     * @param publish
+     * @return {Promise<void>}
+     */
     async editCard(images, publish) {
         const formData = await this._makeFormData(images);
 
@@ -463,7 +581,6 @@ export class AppleCardModel {
                 }
             }
         );
-
     }
 }
 
