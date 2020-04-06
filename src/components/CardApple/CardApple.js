@@ -1,5 +1,5 @@
 'use strict';
-import './CardApple.css';
+import './CardApple.scss';
 import CardApple from './CardApple.hbs';
 import {SecondaryFieldComponent} from "../AppleCardComponents/SecondaryFieldComponent/SecondaryField";
 
@@ -53,6 +53,11 @@ export class CardAppleComponent {
         let container = this._parent.getElementsByClassName('card__header').item(0);
         container.innerHTML = '';
         (new CardHeaderComponent(container)).render(headerData);
+
+        const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
+        if(headerData.logoImageSrc){
+            avatarCardImage.style.display = 'flex';
+        }
 
     }
 

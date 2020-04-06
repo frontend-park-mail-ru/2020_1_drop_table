@@ -10,6 +10,7 @@ class Utils {
         return Object.prototype.toString.call(variable) === "[object String]";
     }
 
+
     /**
      * Проверка на число
      * @param variable значение
@@ -33,6 +34,7 @@ class Utils {
      * @param variable значение
      * @return {boolean} результат проверки на массив
      */
+
     isArray(variable){
         return Object.prototype.toString.call(variable) === "[object Array]";
     }
@@ -175,9 +177,6 @@ if (Object.setPrototypeOf){
     ArgumentTypeError.__proto__ = Error;
 }
 
-// QueryParams class constants
-
-
 var KEYS = [];
 var QUERIES = [];
 var QUERY_STRING = "";
@@ -233,9 +232,6 @@ class QueryParams {
         }
     }
 
-    keys(){
-        return KEYS;
-    }
 
     has(key){
         key = DECODE_KEY(key);
@@ -247,10 +243,6 @@ class QueryParams {
         return this.has(key) ? GET_PARAM(key) : null;
     }
 
-    getAll(key) {
-        key = DECODE_KEY(key);
-        return this.has(key) ? GET_PARAM(key).split(',') : [];
-    }
 
     toString (){
         let string = "";
@@ -265,21 +257,6 @@ class QueryParams {
         return string;
     }
 
-    append(key, value){
-        if(!Utils.isSet(key)) throw new ArgNotFound("key");
-        key = DECODE_KEY(key);
-        value = Utils.isSet(value) ? DECODE(value) : true;
-
-        let index = KEYS.push(key) - 1;
-        QUERIES[index] = {
-            [key]: value
-        }
-        QUERY_STRING = QUERY_STRING ? this.toString() : true;
-        if(HISTORY_MODE){
-            window.history.pushState('', '', this.toString());
-        }
-        return GET_PARAM(key, index);
-    }
 
     set(key, value){
         if(!Utils.isSet(key)) throw new ArgNotFound("key");
@@ -306,22 +283,7 @@ class QueryParams {
         return GET_PARAM(key, index);
     }
 
-    delete(key){
-        if(!Utils.isSet(key)) throw new ArgNotFound("key");
-        key = DECODE_KEY(key);
-        if(!this.has(key)) return this.has(key); // definitely returns false if key doesn't exist
 
-        let index = KEYS.indexOf(key);
-        let value = QUERIES[index][key];
-        KEYS.splice(index, 1);
-        QUERIES.splice(index, 1);
-
-        QUERY_STRING = QUERY_STRING ? this.toString() : true;
-        if(HISTORY_MODE){
-            window.history.pushState('', '', this.toString());
-        }
-        return value;
-    }
 
 }
 

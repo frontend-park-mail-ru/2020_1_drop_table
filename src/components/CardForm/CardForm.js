@@ -1,7 +1,7 @@
 'use strict';
 
-import './CardForm.css';
-// import  './imagePicker.css'
+import './CardForm.scss';
+// import  './imagePicker.scss'
 import CardFormTemplate from './CardForm.hbs';
 import InputComponent from '../Input/Input'
 
@@ -69,16 +69,39 @@ export default class CardFormComponent {
         });
     }
 
+
     /**
      * Отрисовка полей карточки
      * @param {obj} context некоторый контекст с информацией о компоненте
      * @private
      */
+
+    _renderImages(context){
+        const strip = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);
+        const logo = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img-avatar').item(0);
+
+        if(context.stripImageSrc) {
+            strip.src = context.stripImageSrc;
+        } else{
+            strip.backgroundColor = context.backgroundColor;
+        }
+        if(context.logoImageSrc) {
+            logo.src = context.logoImageSrc;
+        }else{
+            logo.backgroundColor = context.backgroundColor;
+        }
+
+
+    }
+
+
     _renderInputs(context) {
         this._renderHeaderInputs(context);
         this._renderPrimaryInputs(context);
         this._renderSecondaryInputs(context);
         this._renderAuxiliaryFields(context);
+        this._renderImages(context)
+
 
     }
 

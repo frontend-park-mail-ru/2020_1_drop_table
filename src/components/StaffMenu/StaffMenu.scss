@@ -40,13 +40,11 @@ body{
 
 .main .buttonFlex{
     display: flex;
-    flex-direction: column;
     width: 100vw;
     height: 30vh;
     position: absolute;
     bottom: 40px;
     left: 0;
-
     justify-content: space-around;
 }
 
@@ -67,7 +65,7 @@ body{
 }
 
 .main .buttonFlex button{
-    background-color: #454545;
+    background-color: #2b8aa3;
     color: white;
 
     height: 12vh;

@@ -1,5 +1,5 @@
 'use strict';
-import './Login.css';
+import './Login.scss';
 import LoginTemplate from '../Register/RegisterTopBar.hbs';
 import LoginFormTemplate from './Login.hbs';
 

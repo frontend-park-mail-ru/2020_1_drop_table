@@ -1,3 +1,2 @@
-import './CardCreator.css'
+import './CardCreator.scss'
 
-//TODO REMOVE

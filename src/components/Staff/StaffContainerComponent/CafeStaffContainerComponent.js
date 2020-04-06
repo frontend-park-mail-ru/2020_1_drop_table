@@ -1,5 +1,5 @@
-import './CafeStaffContainerComponent.css';
-import '../StaffCardComponent/StaffCardComponent.css';
+import './CafeStaffContainerComponent.scss';
+import '../StaffCardComponent/StaffCardComponent.scss';
 import CafeStaffContainer from './CafeStaffContainerComponent.hbs';
 import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs';
 import {Router} from "../../../modules/Router";

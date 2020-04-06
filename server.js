@@ -10,8 +10,6 @@ app.use(express.static('dist'));
 
 const port = 3000;
 
-
-
 app.all('*', function(req, res, next) {
 
     res.sendFile(__dirname + '/dist/index.html');

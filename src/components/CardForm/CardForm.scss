@@ -18,10 +18,7 @@
     display:flex;
     flex-direction: column;
     max-width: 100%;
-    /*margin-right: 1rem ;*/
-    /*margin-left: 1rem ;*/
     margin-bottom: 2rem;
-
     border-radius: 0.5rem;
     color: #000;
     background: #fff;
@@ -33,44 +30,36 @@
 
 
 .HeaderFieldsContainer, .PrimaryFieldsContainer{
+    width: available;
     width: -moz-available;
 }
-/*.HeaderFieldsContainer{*/
-/*    max-width: 40%;*/
-/*}*/
 .card-form__buttons{
     display: flex;
-}
-.card-form__buttons__save{
-    border-radius: 0.5rem;
-    border-width: 0;
-    width: 50%;
-    color: white;
-    background-color: #1e768f;
-    opacity: 75%;
-    margin: 1rem;
-    height: 4rem;
-    font-size: 1.5rem;
 
-}
-.card-form__buttons__save:hover{
+    &__save{
+        border-radius: 0.5rem;
+        border-width: 0;
+        width: 50%;
+        color: white;
+        background-color: #1e768f;
+        opacity: 75%;
+        margin: 1rem;
+        height: 4rem;
+        font-size: 1.5rem;
 
-}
+    }
 
-.card-form__buttons__publish{
-    border-radius: 0.5rem;
-    border-width: 0;
-    width: 50%;
-    color: white;
-    background-color: #1e768f;
-    margin: 1rem;
-    font-size: 1.5rem;
-    height: 4rem;
+    &__publish{
+        border-radius: 0.5rem;
+        border-width: 0;
+        width: 50%;
+        color: white;
+        background-color: #1e768f;
+        margin: 1rem;
+        font-size: 1.5rem;
+        height: 4rem;
+    }
 }
-.card-form__buttons__publish:hover{
-
-}
-
 
 .card-top{
     display: flex;

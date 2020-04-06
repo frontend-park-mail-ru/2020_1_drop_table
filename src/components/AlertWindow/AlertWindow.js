@@ -1,4 +1,4 @@
-import './AlertWindow.css';
+import './AlertWindow.scss';
 import AlertWindow from './AlertWindow.hbs';
 
 /** Компонент всплывающего окна */

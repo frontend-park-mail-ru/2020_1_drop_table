@@ -17,22 +17,25 @@ body{
     max-height: 425px;
     max-width: 630px;
     font-size: 2.5rem;
-}
-.cafe-card-container__image-container{
+
+  &__image-container{
     cursor: pointer;
     width: 100%;
     height: auto;
-}
-.cafe-card-container__image-container_img{
-    float: left;
-    position: absolute;
-    object-fit: cover;
-    width: 80%;
-    height: 100%;
-    left: 0;
-    top: 0;
-}
-.cafe-card-container__name-container{
+
+    &_img{
+      float: left;
+      position: absolute;
+      object-fit: cover;
+      width: 80%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+
+  }
+
+  &__name-container {
     cursor: pointer;
     float: right;
     background-color: #ffffff;
@@ -45,25 +48,33 @@ body{
     top: 50%;
     position: absolute;
     display: flex;
+    flex-direction: column;
+
+    &__strip{
+      width: 100%;
+      height: 12%;
+      background-color: #1e768f;
+    }
+
+    &___text-field{
+
+      &_h4{
+
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /*font-family: Montserrat;*/
+        color: #000000;
+        transform: translate(-50%, -50%);
+
+      }
+
+    }
+
+  }
 
 }
-.cafe-card-container__name-container__strip{
-    width: 100%;
-    height: 12%;
-    background-color: #1e768f;
 
-}
-
-.cafe-card-container__name-container__text-field_h4{
-
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    /*font-family: Montserrat;*/
-    color: #000000;
-    transform: translate(-50%, -50%);
-
-}
 
 
