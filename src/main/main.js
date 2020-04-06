@@ -26,6 +26,7 @@ import EditCafeController from "../controllers/EditCafeController";
 import StaffMenuView from "../view/StaffMenuView";
 import StaffMenuController from "../controllers/StaffMenuController";
 
+/** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
         .then((reg) => {
@@ -43,6 +44,7 @@ const myOptions ={
 };
 export const router = new Router(myOptions);
 
+/** Страница регистрации */
 function doreg(){
     const userModel = new UserModel();
     const registerView = new RegisterView(app, "Регистрация");
@@ -50,6 +52,7 @@ function doreg(){
     registerController.control();
 }
 
+/** Страница авторизации */
 function dolog(){
         console.log('in login');
         const userModel = new UserModel();
@@ -57,6 +60,8 @@ function dolog(){
         const loginController = new LoginController(userModel, loginView);
         loginController.control();
 }
+
+/** Страница моих кафе */
 function doMyCafes(){
     const cafeList = new CafeListModel();
     const userModel = new UserModel();
@@ -65,6 +70,7 @@ function doMyCafes(){
     cafeListController.control();
 }
 
+/** Страница профиля */
 function doProfile(){
     console.log('in profile');
     const user = new UserModel();
@@ -73,14 +79,16 @@ function doProfile(){
     userProfileController.control();
 }
 
+/** Страница создания кафе */
 function doCreateCafe(){
-
     const cafeList = new CafeListModel();
     const userModel = new UserModel(router);
     const createCafeView = new CreateCafeView();
     const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
     createCafeController.control();
 }
+
+/** Страница добавления работника */
 function doStaff(){
     const userModel = new UserModel();
     const staffList = new StaffListModel();
@@ -89,6 +97,7 @@ function doStaff(){
     staffListController.control();
 }
 
+/** Страница кафе */
 function doCafe(req){
     const id = req.param.id;
     console.log('in cafe');
@@ -99,6 +108,7 @@ function doCafe(req){
     cafePageController.control(id);
 }
 
+/** Страница изменения кафе */
 function doEditCafe(req){
     const id = req.param.id;
     console.log('in edit cafe');
@@ -109,6 +119,7 @@ function doEditCafe(req){
     editCafeController.control(id);
 }
 
+/** Страница лэндинга */
 function doLanding() {
     const landingModel = new LandingModel();
     const landingView = new LandingView(app);
@@ -116,6 +127,7 @@ function doLanding() {
     landingController.control();
 }
 
+/** Страница добавления работника */
 function doAddStaff(req) {
     const uuid = req.query.get('uuid');
     const userModel = new UserModel();
@@ -124,6 +136,7 @@ function doAddStaff(req) {
     addStaffController.control();
 }
 
+/** Страница меню работника */
 function doStaffMenu(req) {
     const uuid = req.param.uuid;
     console.log('uuid', uuid);
@@ -134,7 +147,7 @@ function doStaffMenu(req) {
 
 
 
-
+/** Роуты роутера */
 router.get("/", doreg);
 router.get("/landing", doLanding).setName("Landing");
 router.get("/reg", doreg).setName("Reg");
