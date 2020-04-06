@@ -1,6 +1,6 @@
 'use strict';
 
-import './Decorator.css';
+import './Decorator.scss';
 import DecoratorTemplate from './Decorator.hbs';
 
 /** Компонент декоратора страницы*/

@@ -1,0 +1,127 @@
+/*Декоратор*/
+
+
+.new-cafe-page__decorate-container {
+    margin-left: 12%;
+    &__text-field {
+        width: 60%;
+        height: 50%;
+        padding-top: 5%;
+
+        &__label-field{
+            display: inline-block;
+            vertical-align: center;
+            font-style: normal;
+            font-weight: normal;
+            overflow: auto;
+            margin: auto;
+            top: 0;
+            left: 2rem;
+            bottom: 0;
+            right: 2rem;
+            width: 100%;
+
+            &-span{
+                width: 100%;
+                height: 100%;
+                font-family: 'FuturaDemiCTT Normal', arial;
+                font-style: normal;
+                font-size: 3rem;
+            }
+        }
+    }
+}
+
+/*Форма*/
+
+@media only screen and (max-width: 680px) {
+    .cafeFormField {
+        width: 75%;
+    }
+}
+
+.new-cafe-page__outer__sub {
+    float: left;
+    justify-content: space-between;
+    height: 50%;
+    width: 50%;
+
+
+    &__form-container {
+        width: 100%;
+
+        &__form-field {
+            font-family: 'FuturaBookCTT Normal', arial;
+            width: 50%;
+            padding-bottom: 5%;
+            float: left;
+        }
+    }
+
+
+    /*контейнер с фоткой кафе*/
+    &__image-container {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 2rem;
+        margin-left: 25%;
+
+        &__photo-container {
+            text-align: center;
+            padding-right: 20%;
+
+
+            &__image-picker {
+                width: 100%;
+                border-radius: 5px;
+                display: block;
+                transition: border 300ms ease;
+                cursor: pointer;
+                text-align: center;
+
+                &_img {
+                    width: 100%;
+                    display: block;
+                    object-fit: cover;
+                    max-width: 800px;
+                    max-height: 300px;
+                }
+
+                &_input {
+                    display: block;
+                    font-family: 'FuturaBookCTT Normal', arial, serif;
+                }
+
+                &_span {
+                    color: black;
+                }
+
+            }
+        }
+
+    }
+}
+
+
+
+
+@media only screen and (max-width: 680px) {
+    .new-cafe-page__outer__sub__image-container {
+        display: table;
+        justify-content: space-between;
+        padding-bottom: 2rem;
+    }
+
+}
+
+
+
+input[type=file] {
+    outline: 0;
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+

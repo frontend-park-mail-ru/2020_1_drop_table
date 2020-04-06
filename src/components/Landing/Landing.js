@@ -1,5 +1,5 @@
 'use strict';
-import './Landing.css';
+import './Landing.scss';
 import LandingTemplate from './Landing.hbs';
 
 /** Компонента страницы лендинга */

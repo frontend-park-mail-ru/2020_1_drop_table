@@ -1,8 +1,8 @@
-import './StaffPageComponent.css';
+import './StaffPageComponent.scss';
 import StaffPage from './StaffPageComponent.hbs';
 import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs'
 
-import '../StaffContainerComponent/CafeStaffContainerComponent.css';
+import '../StaffContainerComponent/CafeStaffContainerComponent.scss';
 
 import {CafeStaffContainerComponent} from '../StaffContainerComponent/CafeStaffContainerComponent'
 

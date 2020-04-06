@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+
+.cafe-page{
+    font-family: 'Montserrat',SansSerif;
+    height: 100%;
+    display: flex;
+    padding: 0 10% 10% 10%;
+    justify-content: space-around;
+    min-width: 972px;
+    min-height: 675px;
+
+    &__cafe-info{
+        min-width: 972px;
+        min-height: 675px;
+        width: 972px;
+        height: 675px;
+        position: relative;
+
+        &__image-container{
+            z-index: 2;
+            top:4%;
+            left:0;
+            height: 71%;
+            width: 68%;
+            position: absolute;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+
+            &_img{
+                object-fit: cover;
+                height: 100%;
+                width:100%
+            }
+        }
+        &__description-container{
+            z-index: 3;
+            position: absolute;
+            bottom: 0;
+            right:15%;
+            height: 45%;
+            width: 48%;
+            background-color: #ffffff;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            display: table-column;
+
+            &_h4{
+                font-size: 3rem;
+                font-weight: bold;
+                padding: 0 10% 0 10%;
+                margin-bottom: 0;
+            }
+            &__align-div{
+                display: table-cell;
+                height:100%;
+                width: 100%;
+                font-size: 16px;
+                line-height: 24px;
+                white-space: normal;
+                word-break: break-word;
+
+                &__relative-div{
+                    height: 100%;
+                    padding: 5px;
+                    position: relative;
+                    display: inline-block;
+
+                    &_p{
+                        text-decoration: none;
+                        height:10em;
+                        padding: 0 10px;
+                        display: block;
+                        overflow-y: scroll;
+                    }
+                }
+
+            }
+        }
+
+        &__name-container{
+            position: absolute;
+            z-index: 1;
+            top:0;
+            right:0;
+            left:60%;
+            height:29%;
+            width:43%;
+            background-color: #1e768f;
+            display: flex;
+            align-items: center;
+
+            &_span{
+                margin: auto 5% auto 25%;
+                color: white;
+                transform: translateY(-50%);
+                font-weight: bold;
+                font-size: 3rem;
+                overflow: hidden;
+            }
+        }
+        &__time-container{
+            position: absolute;
+            left:5%;
+            bottom: 0;
+            height: 25%;
+            width:20%;
+            background-color: #ffffff;
+            font-size: 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &__time{
+                /*border: 1px solid black;*/
+                height: 100%;
+                padding-top:0;
+                &__strip{
+                    height: 0.2rem;
+                    width:80%;
+                    padding: 0 10% 0 10%;
+                    background-color: black;
+                }
+                &__span{
+
+                }
+            }
+        }
+
+        &__address-container{
+            position: absolute;
+            right: -20%;
+            bottom: 10%;
+            height: 10%;
+            width: 50%;
+            transform: rotate(90deg);
+
+            &_span{
+                transform: rotate(90deg);
+            }
+        }
+
+        &__edit-button{
+            height: 3rem;
+            width: initial;
+            display: flex;
+            justify-content: center;
+            padding: auto 0;
+            flex-direction: column;
+            margin: auto auto;
+            position: absolute;
+            right: 5%;
+            bottom: -10%;
+            background-color: #007892;
+            -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            padding: 0 1rem;
+            border-radius: 2%;
+            opacity: 90%;
+            cursor: pointer;
+
+            &:hover{
+                filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+            }
+            &_span{
+                font-family: 'Montserrat',SansSerif;
+            }
+        }
+
+    }
+}
+
+.buttons__apple-pass-button{
+    width:16rem;
+    height: 8rem;
+    margin: 10px auto;
+    background-color: #007892;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_h4{
+        font-family: Montserrat;
+        color: white;
+    }
+
+}
+
+.card-creator-container{
+    width: 100%;
+    height: 100%;
+
+}
+.buttons__add-staff-button{
+    width:16rem;
+    height: 8rem;
+    margin: 10px auto;
+    background-color: #fa9917;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &_h4{
+        font-family: Montserrat;
+        color: white;
+    }
+}
+
+

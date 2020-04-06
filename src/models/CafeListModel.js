@@ -3,7 +3,6 @@
 import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import CafeModel from "./CafeModel";
-import {Router} from "../modules/Router";
 import {ajaxForm} from "../utils/ajaxForm";
 import {router} from "../main/main";
 import {authAjax} from "../utils/authAjax";
@@ -145,15 +144,14 @@ export default class CafeListModel{
     }
 
     /** Изменение кафе */
-    async editCafe(photo = null, cafe, id){
+    async editCafe(photo, cafe, id){
         await ajaxForm(constants.PATH + `/api/v1/cafe/${id}`,
             'PUT',
             await cafe.getFormData(photo),
             (response) => {
                 if (response.errors === null) {
-                    alert('ok')
+                    router._goTo(`/myCafes`);
                 } else {
-
                     throw response.errors;
                 }
             }

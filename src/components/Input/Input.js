@@ -1,6 +1,6 @@
 'use strict';
 
-import './Input.css';
+import './Input.scss';
 import InputTemplate from './Input.hbs';
 
 /** Компонент формы карточки */

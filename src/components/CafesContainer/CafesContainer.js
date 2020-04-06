@@ -1,5 +1,5 @@
-import './CafesContainer.css';
-import '../CafeCard/CafeCard.css';
+import './CafesContainer.scss';
+import '../CafeCard/CafeCard.scss';
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";
@@ -56,8 +56,7 @@ export class CafesContainerComponent {
                 cardName.addEventListener('click', function (e) {
                     const cardIdStr = card.getAttribute('id');
                     const cardId = cardIdStr.slice(1, cardIdStr.length);
-                    // Router.redirect(`/Cafe/${cardId}`);
-                    window.location.replace(`/cafe/${cardId}`)
+                    router._goTo(`/cafe/${cardId}`)
 
                 });
             }

@@ -1,4 +1,4 @@
-import './StaffMenu.css';
+import './StaffMenu.scss';
 import StaffMenu from './StaffMenu.hbs';
 import {constants} from "../../utils/constants";
 import {authAjax} from "../../utils/authAjax";

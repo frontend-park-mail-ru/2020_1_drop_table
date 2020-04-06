@@ -1,1 +1,1 @@
-import './CardCreator.css'
+import './CardCreator.scss'

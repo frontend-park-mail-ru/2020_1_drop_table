@@ -1,4 +1,4 @@
-import './StaffCardComponent.css';
+import './StaffCardComponent.scss';
 import StaffCard from './StaffCardComponent.hbs';
 
 export class StaffCardComponent {

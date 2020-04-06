@@ -1,7 +1,8 @@
-import './Header.css'
+import './Header.scss'
 
 import headerTemplate from './Header.hbs';
 import {Router} from "../../modules/Router";
+import {router} from "../../main/main";
 
 /** Компонента хэдера */
 export default class Header{
@@ -27,6 +28,7 @@ export default class Header{
             {href: '/staff', text: 'Работники'},
 
         ];
+
     }
 
     /**
@@ -69,6 +71,7 @@ export default class Header{
                 context['exit']['event']['listener']);
         }
 
+
     }
 
     /**
@@ -84,8 +87,8 @@ export default class Header{
             menuList: this._menuList,
             avatarImageSrc: this._avatar
         };
-
         this._head.innerHTML = headerTemplate(headerData);
+
     }
 
     /**
@@ -106,6 +109,11 @@ export default class Header{
         }
     }
 
+    redirect(e){
+        console.log('eee',e.test);
+        //router._goTo(e.route);
+    }
+
     /**
      * Отрисовка хэдера
      * @param {obj} context некоторый контекст с информацией о хэдере
@@ -118,7 +126,17 @@ export default class Header{
         this._renderHeader(context);
         this._parent.appendChild(this._head);
 
+        const hrefs = document.getElementsByClassName('page-header__nav__menu_list_a');
+        console.log('hrefs', hrefs);
+        console.log('menu', this._menuList);
+
+        for(let i = 0 ; i < this._menuList.length;i++){
+            hrefs.item(i).test = this._menuList[i].href;
+            hrefs.item(i).addEventListener('click', this.redirect, false);
+        }
+
         this._addListeners(context);
+
         this._renderAvatar(context);
     }
 }
