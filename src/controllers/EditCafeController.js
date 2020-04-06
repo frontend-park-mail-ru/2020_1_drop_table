@@ -29,8 +29,6 @@ export default class EditCafeController{
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
         console.log('form', form);
         const photoInput = document.getElementById('upload');
-        const image = document.getElementById('image').getAttribute('src');
-
 
         const cafe = this._cafeListModel.getCafeById(this._id);
         console.log('get by id ', cafe);

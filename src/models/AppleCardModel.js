@@ -56,13 +56,14 @@ export class AppleCardModel {
      * @return {Promise<{obj}>}
      */
     get context() {
-        return new Promise(async (resolve) => {
-            await this.getCard();
-            const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
-            if (cafeCard) {
-                resolve(JSON.parse(cafeCard));
-            }
-            resolve(null);
+        return new Promise((resolve) => {
+            this.getCard().then(()=>{
+                const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
+                if (cafeCard) {
+                    resolve(JSON.parse(cafeCard));
+                }
+                resolve(null);
+            });
         });
     }
 

@@ -1,7 +1,5 @@
 'use strict';
 
-import {validateForm} from '../modules/formValidator';
-import {showError} from '../modules/formValidator';
 import {router} from '../main/main';
 
 import FormValidation from '../modules/FormValidation';

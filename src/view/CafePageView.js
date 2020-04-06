@@ -16,7 +16,7 @@ export default class CafePageView extends BaseView {
         super(app);
     }
 
-    applePassButtonClick (e) { //TODO move to controller
+    applePassButtonClick () { //TODO move to controller
         let container = document.getElementsByClassName('card-creator-container').item(0);
         if( container.innerHTML.toString().length <= 2 ){
             console.log('cafe context: ', this._context['cafe'].id);

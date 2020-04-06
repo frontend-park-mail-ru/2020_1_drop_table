@@ -1,7 +1,6 @@
 'use strict';
 
 import {handleImageUpload} from '../modules/imageUpload';
-import {validateForm} from '../modules/formValidator';
 
 import {router} from '../main/main';
 
@@ -174,7 +173,7 @@ export default class UserProfileController{
      */
     _makeExceptionContext(form){
         return {
-            'pq: duplicate key value violates unique constraint \"staff_email_key\"': [
+            'pq: duplicate key value violates unique constraint "staff_email_key"': [
                 'Пользователь с такой почтой уже существует',
                 form['email']
             ],
