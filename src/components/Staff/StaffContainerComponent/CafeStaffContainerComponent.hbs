@@ -1,0 +1,37 @@
+<div class="cafe-with-staff-container">
+
+    <div class="cafe-with-staff-container__cafe-name">
+<!--        <div class="cafe-with-staff-container__cafe-name__strip"></div>-->
+        <span class="cafe-with-staff-container__cafe-with-staff-container_span">{{name}}</span>
+    </div>
+
+    <div class="cafe-staff-container">
+
+        <div class="cafe-staff-container__design">
+            <div class="cafe-staff-container__design__long-strip"></div>
+            <div class="cafe-staff-container__design__medium-strip"></div>
+            <div class="cafe-staff-container__design__short-strip"></div>
+        </div>
+
+        {{#each staffList}}
+            {{{this}}}
+        {{/each}}
+
+        <div class="staff-page__add-staff-field">
+
+            <div class="staff-page__add-staff-field__text-field">
+                <span class="staff-page__add-staff-field__text-field_span">Добавить сотрудника</span>
+            </div>
+            <div class="staff-page__add-staff-field__text-strip">
+            </div>
+            <div class="staff-page__add-staff-field__add-button" id="{{id}}">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+

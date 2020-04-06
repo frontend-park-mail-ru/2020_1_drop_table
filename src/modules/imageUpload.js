@@ -1,3 +1,4 @@
+/** Обработка загрузки изображения */
 export function handleImageUpload() {
     let image = document.getElementById('upload').files[0];
     let reader = new FileReader();

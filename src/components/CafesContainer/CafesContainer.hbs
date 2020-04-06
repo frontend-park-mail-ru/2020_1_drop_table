@@ -1,15 +1,42 @@
-<div class="myCafesContainer">
-    <div class="row">
-        <div class="columnLeft">
+<div class="cafes-page">
+    {{#unless noCafes}}
+<div class="cafes-page__all-cafes-container">
+
+    <div class="cafes-page__all-cafes-container__row">
+        <div class="cafes-page__all-cafes-container__row_left-column">
             {{#each firstCol}}
                 {{{this}}}
             {{/each}}
         </div>
-        <div class="columnRight">
+
+        <div class="cafes-page__all-cafes-container__row_right-column">
             {{#each secCol}}
                 {{{this}}}
             {{/each}}
         </div>
     </div>
 </div>
+    {{/unless}}
+
+
+    {{#if noCafes}}
+        <div class="cafes-page__no-cafes-container">
+            <div class="cafes-page__no-cafes-container__text-field">
+                <span class="cafes-page__no-cafes-container__text-field_span" >Вы пока не добавили кафе:( </span>
+            </div>
+        </div>
+    {{/if}}
+
+<div class="cafes-page__add-cafe-field">
+
+    <div class="cafes-page__add-cafe-field__text-field">
+        <span class="cafes-page__add-cafe-field__text-field_span">Новое кафе</span>
+    </div>
+    <div class="cafes-page__add-cafe-field__text-strip">
+    </div>
+    <div class="cafes-page__add-cafe-field__add-button">
+    </div>
+
+</div>
+
 </div>

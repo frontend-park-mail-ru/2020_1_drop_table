@@ -1,90 +1,163 @@
-import {renderRegister} from '../components/register/register';
-import {renderBlankHeader, renderHeader} from '../components/header/header';
-import {renderLogin} from '../components/login/login';
-import {createCafes} from '../components/myCafePage/creation';
-import {createUserProfilePage} from '../components/userProphilePage/creation';
-import {createNewCafePage} from '../components/AddCafePage/creation';
+import Router from '../modules/Router';
 
+import UserProfileView from '../view/UserProfileView'
+import UserProfileController from '../controllers/UserProfileController';
+import UserModel from '../models/UserModel';
+import CafeListModel from '../models/CafeListModel';
+import CafeListView from '../view/CafeListView';
+import CreateCafeView from '../view/CreateCafeView';
+import CreateCafeController from '../controllers/CreateCafeController';
+import LoginView from '../view/LoginView';
+import LoginController from '../controllers/LoginController';
+import RegisterView from '../view/RegisterView';
+import RegisterController from '../controllers/RegisterController';
+import CafeListController from '../controllers/CafeListController';
+import CafePageController from '../controllers/CafePageContoller';
+import CafePageView from '../view/CafePageView';
+import StaffListView from '../view/StaffListView';
+import StaffListController from '../controllers/StaffListController';
+import LandingModel from '../models/LandingModel';
+import LandingView from '../view/LandingView';
+import LandingController from '../controllers/LandingController';
+import AddStaffController from '../controllers/addStaffController';
+import StaffListModel from '../models/StaffListModel';
+import EditCafeController from '../controllers/EditCafeController';
+import StaffMenuView from '../view/StaffMenuView';
+import StaffMenuController from '../controllers/StaffMenuController';
 
-const app = document.body;
-
-
-let routes = [
-    {
-        url: '', callback: function () {
-            app.innerHTML = '';
-            app.appendChild(renderHeader());
-            createCafes();
-        }
-    }
-];
-
-
-function getUrl() {
-    return window.location.hash.substr(1);
+/** Регистрация сервис воркера */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
+        .then((reg) => {
+            console.log('Registration succeeded. Scope is ' + reg.scope);
+        }).catch((error) => {
+            console.log('Registration failed with ' + error);
+        });
 }
 
-function Routing() {
-    let url = getUrl();
-    let route = routes[0];
-    routes.forEach(item => {
-        if (url === item.url) {
-            route = item;
-        }
-    });
-    route.callback();
+let app = document.getElementById('application');
+
+export const router = new Router();
+
+/** Страница регистрации */
+function doreg(){
+    const userModel = new UserModel();
+    const registerView = new RegisterView(app, 'Регистрация');
+    const registerController = new RegisterController(userModel, registerView);
+    registerController.control();
+}
+
+/** Страница авторизации */
+function dolog(){
+    console.log('in login');
+    const userModel = new UserModel();
+    const loginView = new LoginView(app);
+    const loginController = new LoginController(userModel, loginView);
+    loginController.control();
+}
+
+/** Страница моих кафе */
+function doMyCafes(){
+    const cafeList = new CafeListModel();
+    const userModel = new UserModel();
+    const cafeListView = new CafeListView(app);
+    const cafeListController = new CafeListController(cafeList, userModel, cafeListView);
+    cafeListController.control();
+}
+
+/** Страница профиля */
+function doProfile(){
+    console.log('in profile');
+    const user = new UserModel();
+    const userProfileView = new UserProfileView(app);
+    const userProfileController = new UserProfileController(user, userProfileView);
+    userProfileController.control();
+}
+
+/** Страница создания кафе */
+function doCreateCafe(){
+    const cafeList = new CafeListModel();
+    const userModel = new UserModel(router);
+    const createCafeView = new CreateCafeView();
+    const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
+    createCafeController.control();
+}
+
+/** Страница добавления работника */
+function doStaff(){
+    const userModel = new UserModel();
+    const staffList = new StaffListModel();
+    const staffListView = new StaffListView(app);
+    const staffListController = new StaffListController(staffList, userModel, staffListView);
+    staffListController.control();
+}
+
+/** Страница кафе */
+function doCafe(req){
+    const id = req.param.id;
+    console.log('in cafe');
+    const cafeListModel = new CafeListModel();
+    const userModel = new UserModel();
+    const cafePageView = new CafePageView();
+    const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
+    cafePageController.control(id);
+}
+
+/** Страница изменения кафе */
+function doEditCafe(req){
+    const id = req.param.id;
+    console.log('in edit cafe');
+    const cafeListModel = new CafeListModel();
+    const userModel = new UserModel();
+    const editCafeView = new CreateCafeView();
+    const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
+    editCafeController.control(id);
+}
+
+/** Страница лэндинга */
+function doLanding() {
+    const landingModel = new LandingModel();
+    const landingView = new LandingView(app);
+    const landingController = new LandingController(landingModel, landingView);
+    landingController.control();
+}
+
+/** Страница добавления работника */
+function doAddStaff(req) {
+    const uuid = req.query.get('uuid');
+    const userModel = new UserModel();
+    const addStaffView = new RegisterView(app, 'Регистрация работника');
+    const addStaffController = new AddStaffController(userModel, addStaffView,uuid);
+    addStaffController.control();
+}
+
+/** Страница меню работника */
+function doStaffMenu(req) {
+    const uuid = req.param.uuid;
+    console.log('uuid', uuid);
+    const staffMenuView = new StaffMenuView(app, uuid);
+    const staffMenuController = new StaffMenuController(staffMenuView);
+    staffMenuController.control();
 }
 
 
-window.addEventListener('popstate', Routing);
 
 
-setTimeout(Routing, 0);
+/** Роуты роутера */
+router.get('/', doreg);
+router.get('/landing', doLanding);
+router.get('/reg', doreg);
+router.get('/login', dolog);
+router.get('/myCafes', doMyCafes);
+router.get('/profile', doProfile);
+router.get('/createCafe', doCreateCafe);
+router.get('/staff', doStaff);
+router.get('/cafe/{id}', doCafe);
+router.get('/editCafe/{id}', doEditCafe);
+router.get('/addStaff', doAddStaff);
+router.get('/points/{uuid}', doStaffMenu);
+router.notFoundHandler(doLanding);
+
+router.init();
 
 
-routes.push({
-
-    url: 'reg', callback: () => {
-        app.innerHTML = '';
-        app.appendChild(renderBlankHeader());
-        app.appendChild(renderRegister());
-
-    }
-});
-routes.push({
-    url: 'login', callback: () => {
-        app.innerHTML = '';
-        app.appendChild(renderBlankHeader());
-        app.appendChild(renderLogin());
-    }
-
-});
-
-routes.push({
-    url: 'myCafe', callback: () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader());
-        createCafes();
-    }
-
-});
-
-routes.push({
-    url: 'profile', callback: () => {
-        app.innerHTML = '';
-        let up = document.createElement('div');
-        createUserProfilePage(up);
-        app.appendChild(renderHeader());
-        app.appendChild(up);
-    }
-
-});
-
-routes.push({
-    url: 'createCafe', callback: () => {
-        app.innerHTML = '';
-        app.appendChild(renderHeader());
-        createNewCafePage();
-    }
-
-});
