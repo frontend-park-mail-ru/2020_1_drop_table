@@ -4,7 +4,7 @@ import {ajax} from "../utils/ajax";
 import {constants} from "../utils/constants";
 import {authAjax} from "../utils/authAjax";
 
-/** Класс модели рабочего */
+/** Класс модели рабочего 3 рк*/
 export default class StaffModel { // дописать потом
 
     constructor() {

@@ -5,20 +5,36 @@ import CafeCard from '../CafeCard/CafeCard.hbs';
 import {Router} from "../../modules/Router";
 import {router} from "../../main/main";
 
+/** Компонент списка кафе */
 export class CafesContainerComponent {
 
+    /**
+     * Инициализация компоненты списка кафе
+     * @param {Element} parent элемент в кором будет размещаеться список кафе
+     */
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
         this._firstColumn = null;
         this._secondColumn = null;
     }
 
+    /**
+     * Формирование контекста для шаблона
+     * @param {obj} context контекст нужный для отрисовки компонента
+     * @private
+     */
     _makeData(context){
         let center = context.length / 2;
         this._firstColumn = context.slice(0, center);
         this._secondColumn = context.slice(center);
     }
 
+    /**
+     * Обрезание динного названия
+     * @param {string} name произвольная строка
+     * @return {string} обрезанная строка
+     * @private
+     */
     _cropName(name){
         if(name.length>10){
             return name.slice(0,8).concat('...')
@@ -26,6 +42,11 @@ export class CafesContainerComponent {
         return name;
     }
 
+    /**
+     * Отрисовка шаблона
+     * @param {obj} context контекст нужный для отрисовки компонента
+     * @private
+     */
     _renderTemplate(context) {
 
         let fc = this._firstColumn.map(({photo = photo, name = name, id = id} = {}) => {
@@ -61,12 +82,11 @@ export class CafesContainerComponent {
                 });
             }
         }
-
     }
 
+    /** Отрисовка компоненты списка кафе */
     render(context) {
         this._makeData(context);
         this._renderTemplate(context);
     }
-
 }

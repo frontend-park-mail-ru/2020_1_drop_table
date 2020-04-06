@@ -2,8 +2,13 @@ import {uuid} from "../utils/uuid";
 import InputComponent from '../components/Input/Input'
 import {AppleCardModel} from "./AppleCardModel";
 
+/** Модель карточки */
 export class CardField{
 
+    /**
+     * Инициализация модели карточки
+     * @param {obj} cardFieldData контекст карточки
+     */
     constructor(cardFieldData){
         this._id = uuid();
         this._fieldType = cardFieldData.fieldType;
@@ -12,32 +17,58 @@ export class CardField{
         this._value = cardFieldData.value ? cardFieldData.value : 'value';
     }
 
-
+    /**
+     * Получить uuid
+     * @return {string} uuid
+     */
     get key() {
         return this._key;
     }
 
+    /**
+     * Установить uuid
+     * @param {string} value uuid
+     */
     set key(value) {
         this._key = value;
     }
 
+    /**
+     * Получить label карточки
+     * @return {obj.label|string}
+     */
     get label() {
         return this._label;
     }
 
+    /**
+     * Установить label карточки
+     * @param value
+     */
     set label(value) {
         this._label = value;
     }
 
+    /**
+     * Получить значение карточки
+     * @return {obj.value|string|}
+     */
     get value() {
         return this._value;
     }
 
+    /**
+     * Установить значение карточки
+     * @param {obj.value|string|} value значение карточки
+     */
     set value(value) {
         this._value = value;
     }
 
-
+    /**
+     * получить карточку ка json
+     * @return {obj}
+     */
     getAsJson(){
         return {
             "key" : this._key,
@@ -46,13 +77,22 @@ export class CardField{
         }
     }
 
+    /**
+     * Установить значение полей карточки
+     * @param {obj} cardFieldData контекст карточки
+     */
     set(cardFieldData){
         this._key = cardFieldData.key;
         this._label = cardFieldData.label;
         this._value = cardFieldData.value;
     }
 
-
+    /**
+     * Возвращает карточку как FromData
+     * @param i
+     * @param inputOnly
+     * @return {FormData}
+     */
     getAsFormData(i, inputOnly){
 
         let data = {

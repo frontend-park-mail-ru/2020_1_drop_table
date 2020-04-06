@@ -8,7 +8,7 @@ import {ajaxForm} from "../utils/ajaxForm";
 import {router} from "../main/main";
 import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
 
-
+/** Модель staff 3 рк */
 export default class StaffListModel{
 
     constructor() {
