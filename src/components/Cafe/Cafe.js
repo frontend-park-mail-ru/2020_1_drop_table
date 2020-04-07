@@ -33,8 +33,11 @@ export default class CafeComponent {
 
     async _handlePromises(context){
         const photo = await context.imgSrcPromise;
+
         let img = this._parent.getElementsByClassName('new-cafe-page__outer__sub__image-container__photo-container__image-picker_img').item(0);
-        img.src = photo;
+        if(photo) {
+            img.src = photo;
+        }
     }
 
     /**

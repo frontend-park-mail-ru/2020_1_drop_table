@@ -26,7 +26,6 @@ export default class Header{
             {href: '/createCafe', text: 'Добавить'},
             {href: '/statistics', text: 'Статистика'},
             {href: '/staff', text: 'Работники'},
-
         ];
 
     }
@@ -59,17 +58,17 @@ export default class Header{
      * @private
      */
     _addListeners(context){
-        if (this._hasAvatar) {
-            let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
-            avatar.addEventListener(context['avatar']['event']['type'],
-                context['avatar']['event']['listener']);
-        }
+        // if (this._hasAvatar) {
+        //     let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
+        //     avatar.addEventListener(context['avatar']['event']['type'],
+        //         context['avatar']['event']['listener']);
+        // }
 
-        if (this._hasExit) {
-            let exit = this._head.getElementsByClassName('page-header__h4').item(0);
-            exit.addEventListener(context['exit']['event']['type'],
-                context['exit']['event']['listener']);
-        }
+        // if (this._hasExit) {
+        //     let exit = this._head.getElementsByClassName('page-header__h4').item(0);
+        //     exit.addEventListener(context['exit']['event']['type'],
+        //         context['exit']['event']['listener']);
+        // }
 
 
     }
@@ -79,7 +78,7 @@ export default class Header{
      * @param {obj} context некоторый контекст с информацией о хэдере
      * @private
      */
-    _renderHeader(context){
+    _renderHeader(){
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
@@ -99,7 +98,7 @@ export default class Header{
     _renderAvatar(context){
         if(this._hasAvatar && context['avatar']['photo']){
             context['avatar']['photo'].then((photo) => {
-                let avatarElement = this._parent.getElementsByClassName('page-header__avatar_img').item(0);
+                let avatarElement = this._parent.getElementsByClassName('nav-links__link-container_img').item(0);
                 if(photo) {
                     avatarElement.src = photo;
                 }
@@ -123,17 +122,17 @@ export default class Header{
         this._head.className = 'header';
 
         this._setProperties(context);
-        this._renderHeader(context);
+        this._renderHeader();
         this._parent.appendChild(this._head);
 
         const hrefs = document.getElementsByClassName('page-header__nav__menu_list_a');
         console.log('hrefs', hrefs);
         console.log('menu', this._menuList);
 
-        for(let i = 0 ; i < this._menuList.length;i++){
-            hrefs.item(i).test = this._menuList[i].href;
-            hrefs.item(i).addEventListener('click', this.redirect, false);
-        }
+        // for(let i = 0 ; i < this._menuList.length;i++){
+        //     hrefs.item(i).test = this._menuList[i].href;
+        //     hrefs.item(i).addEventListener('click', this.redirect, false);
+        // }
 
         this._addListeners(context);
 

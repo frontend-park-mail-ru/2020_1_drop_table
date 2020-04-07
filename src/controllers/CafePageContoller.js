@@ -23,7 +23,7 @@ export default class CafePageController {
     }
 
     /** Event редактирование кафе */
-    editCafeButtonClick(e){
+    editCafeButtonClick(){
         router._goTo(`/editCafe/${this._id}`);
     }
 

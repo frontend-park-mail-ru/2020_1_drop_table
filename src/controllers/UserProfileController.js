@@ -67,7 +67,7 @@ export default class UserProfileController{
                         listener: () => {
                             sessionStorage.clear();
                             router._goTo('/login');
-                           
+
                         }
                     }
                 }
@@ -100,16 +100,14 @@ export default class UserProfileController{
                         {
                             type: 'password',
                             id: 'password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
+                            data: 'Пароль',
                             labelData: 'Пароль',
                             inputOption: 'required',
                         },
                         {
                             type: 'password',
                             id: 're-password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
+                            data: 'Пароль',
                             labelData: 'Повторите пароль',
                             inputOption: 'required',
                         },

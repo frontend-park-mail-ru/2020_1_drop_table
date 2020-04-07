@@ -25,6 +25,10 @@ export default class CardRedactorController {
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
 
+        let cardRedactorBottom =
+            document.getElementsByClassName('card').item(0);
+        cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+
     }
 
     /**
@@ -74,22 +78,25 @@ export default class CardRedactorController {
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_background_input').item(0)
         backgroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
-            context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b}`;
+            context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
         }, false);
 
         let foregroundColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_foreground_input').item(0)
-        foregroundColorInput.addEventListener('input', function (e) {
+        foregroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
-            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b}`;
+            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
+
             context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         });
         let labelColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs__label_input').item(0)
-        labelColorInput.addEventListener('input', function (e) {
+        labelColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
-            context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b}`;
+            console.log('test1',`rgb(${res.r},${res.g},${res.b})`)
+            console.log('test2',context._appleCard._backgroundColor)
+            context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
         })
 

@@ -1,7 +1,7 @@
 'use strict';
 import './CafePage.scss';
 import CafePageTemplate from './CafePage.hbs';
-import {CreateCardRedactor} from '../CardCreator/CardCreator'
+
 
 /** Компонент страницы кафе */
 export class CafePageComponent {
@@ -19,8 +19,8 @@ export class CafePageComponent {
      * @param {string} name название кафе
      */
     _cropName(name){
-        if(name.length>20){
-            return name.slice(0,18).concat('...')
+        if(name.length>12){
+            return name.slice(0,10).concat('...')
         }
         return name;
     }
