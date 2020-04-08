@@ -1,6 +1,4 @@
-import {uuid} from "../utils/uuid";
-import InputComponent from '../components/Input/Input'
-import {AppleCardModel} from "./AppleCardModel";
+import {uuid} from '../utils/uuid';
 
 /** Модель карточки */
 export class CardField{
@@ -71,9 +69,9 @@ export class CardField{
      */
     getAsJson(){
         return {
-            "key" : this._key,
-            "label" : this._label,
-            "value" : this._value
+            'key' : this._key,
+            'label' : this._label,
+            'value' : this._value
         }
     }
 

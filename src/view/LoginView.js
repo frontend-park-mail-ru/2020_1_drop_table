@@ -1,8 +1,8 @@
 'use strict';
 
-import LoginComponent from "../components/Login/Login";
-import Header from "../components/MainHeader/Header";
-import BaseView from "./BaseView";
+import LoginComponent from '../components/Login/Login';
+import Header from '../components/MainHeader/Header';
+import BaseView from './BaseView';
 
 /** view login */
 export default class LoginView extends BaseView {

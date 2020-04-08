@@ -1,6 +1,6 @@
 'use strict';
 import CardHeader from './CardHeader.hbs';
-import {HeaderFieldComponent} from "../HeaderFieldComponent/HeaderField";
+import {HeaderFieldComponent} from '../HeaderFieldComponent/HeaderField';
 
 /** Компонент хэдера карточки */
 export class CardHeaderComponent {

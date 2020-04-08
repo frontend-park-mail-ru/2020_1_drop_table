@@ -1,12 +1,11 @@
 'use strict';
 
-import {handleImageUpload} from "../modules/imageUpload";
-import {validateForm} from "../modules/formValidator";
+import {handleImageUpload} from '../modules/imageUpload';
 
-import {router} from "../main/main";
+import {router} from '../main/main';
 
-import FormValidation from "../modules/FormValidation";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../modules/ServerExceptionHandler';
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -65,9 +64,9 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                          sessionStorage.clear();
-                           router._goTo('/login');
-                           
+                            sessionStorage.clear();
+                            router._goTo('/login');
+
                         }
                     }
                 }
@@ -100,16 +99,14 @@ export default class UserProfileController{
                         {
                             type: 'password',
                             id: 'password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
+                            data: 'Пароль',
                             labelData: 'Пароль',
                             inputOption: 'required',
                         },
                         {
                             type: 'password',
                             id: 're-password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
+                            data: 'Пароль',
                             labelData: 'Повторите пароль',
                             inputOption: 'required',
                         },
@@ -174,7 +171,7 @@ export default class UserProfileController{
      */
     _makeExceptionContext(form){
         return {
-            'pq: duplicate key value violates unique constraint \"staff_email_key\"': [
+            'pq: duplicate key value violates unique constraint "staff_email_key"': [
                 'Пользователь с такой почтой уже существует',
                 form['email']
             ],

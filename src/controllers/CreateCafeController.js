@@ -1,11 +1,11 @@
 'use strict';
 
-import {handleImageUpload} from "../modules/imageUpload";
+import {handleImageUpload} from '../modules/imageUpload';
 
-import {router} from "../main/main";
+import {router} from '../main/main';
 
-import FormValidation from "../modules/FormValidation";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../modules/ServerExceptionHandler';
 
 /** контроллер создания кафе */
 export default class CreateCafeController{

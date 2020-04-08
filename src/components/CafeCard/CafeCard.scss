@@ -56,15 +56,13 @@ body{
       background-color: #1e768f;
     }
 
-    &___text-field{
+    &__text-field{
 
       &_h4{
-
         margin: 0;
         position: absolute;
         top: 50%;
         left: 50%;
-        /*font-family: Montserrat;*/
         color: #000000;
         transform: translate(-50%, -50%);
 

@@ -1,12 +1,7 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import {authAjax} from "../utils/authAjax";
-import {CafePageComponent} from "../components/CafePageComponent/CafePage";
-import {ajaxForm} from "../utils/ajaxForm";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
-// import {Router} from "../modules/Router";
+import {constants} from '../utils/constants';
+import {authAjax} from '../utils/authAjax';
 
 /** Класс модели кафе */
 export default class CafeModel {
@@ -31,9 +26,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает адресс кафе
      */
     get address(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._address);
-            resolve(this._address);
+        return new Promise((resolve) => {
+            this._checkCafe(this._address).then(()=>{
+                resolve(this._address);
+            });
         });
     }
 
@@ -42,9 +38,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает время закрытия кафе
      */
     get closeTime(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._closeTime);
-            resolve(this._closeTime);
+        return new Promise((resolve) => {
+            this._checkCafe(this._closeTime).then(()=>{
+                resolve(this._closeTime);
+            });
         });
     }
 
@@ -53,9 +50,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает описание кафе
      */
     get description(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._description);
-            resolve(this._description);
+        return new Promise((resolve) => {
+            this._checkCafe(this._description).then(()=>{
+                resolve(this._description);
+            });
         });
     }
 
@@ -64,9 +62,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает id кафе
      */
     get id(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._id);
-            resolve(this._id);
+        return new Promise((resolve) => {
+            this._checkCafe(this._id).then(()=>{
+                resolve(this._id);
+            });
         });
     }
 
@@ -75,9 +74,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает название кафе
      */
     get name(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._name);
-            resolve(this._name);
+        return new Promise((resolve) => {
+            this._checkCafe(this._name).then(()=>{
+                resolve(this._name);
+            });
         });
     }
 
@@ -86,9 +86,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает время открытия кафе
      */
     get openTime(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._openTime);
-            resolve(this._openTime);
+        return new Promise((resolve) => {
+            this._checkCafe(this._openTime).then(()=>{
+                resolve(this._openTime);
+            });
         });
     }
 
@@ -97,9 +98,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает id владельца кафе
      */
     get ownerID(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._ownerID);
-            resolve(this._ownerID);
+        return new Promise((resolve) => {
+            this._checkCafe(this._ownerID).then(()=>{
+                resolve(this._ownerID);
+            });
         });
     }
 
@@ -108,9 +110,10 @@ export default class CafeModel {
      * @return {Promise} промис, который возвращает фото кафе
      */
     get photo(){
-        return new Promise(async (resolve) => {
-            await this._checkCafe(this._photo);
-            resolve(this._photo);
+        return new Promise((resolve) => {
+            this._checkCafe(this._photo).then(()=>{
+                resolve(this._photo);
+            });
         });
     }
 

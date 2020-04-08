@@ -1,7 +1,7 @@
 'use strict';
 
-import BaseView from "./BaseView";
-import {StaffMenuComponent} from "../components/StaffMenu/StaffMenu";
+import BaseView from './BaseView';
+import {StaffMenuComponent} from '../components/StaffMenu/StaffMenu';
 
 /** view страницы с меню работника */
 export default class StaffMenuView extends BaseView {
