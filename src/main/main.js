@@ -1,4 +1,4 @@
-import Router from '../modules/Router';
+import Router from '../utils/Router';
 
 import UserProfileView from '../view/UserProfileView'
 import UserProfileController from '../controllers/UserProfileController';

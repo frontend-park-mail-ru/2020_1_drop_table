@@ -1,8 +1,8 @@
 'use strict';
 
 import {router} from '../main/main';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
-import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
 
 /** контроллер добавления работника */
 export default class AddStaffController{
