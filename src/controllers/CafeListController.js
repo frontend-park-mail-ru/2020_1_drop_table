@@ -1,6 +1,5 @@
 'use strict';
 
-import {Router} from '../modules/Router';
 import {router} from '../main/main';
 
 /** контроллер списка кафе */

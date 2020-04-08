@@ -1,6 +1,4 @@
 import {uuid} from '../utils/uuid';
-import InputComponent from '../components/Input/Input'
-import {AppleCardModel} from './AppleCardModel';
 
 /** Модель карточки */
 export class CardField{

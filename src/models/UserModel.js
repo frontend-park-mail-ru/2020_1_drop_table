@@ -1,7 +1,6 @@
 import {ajax} from '../utils/ajax';
 import {authAjax} from '../utils/authAjax'
 import {constants} from '../utils/constants';
-import Router from '../modules/Router';
 import {ajaxForm} from '../utils/ajaxForm';
 
 
@@ -28,9 +27,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает время редактирования.
      */
     get editedAt() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._editedAt);
-            resolve(this._editedAt);
+        return new Promise((resolve) => {
+            this._checkUser(this._editedAt).then(()=>{
+                resolve(this._editedAt);
+            });
         });
     }
 
@@ -39,9 +39,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает email.
      */
     get email() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._email);
-            resolve(this._email);
+        return new Promise((resolve) => {
+            this._checkUser(this._email).then(()=>{
+                resolve(this._email);
+            });
         });
     }
 
@@ -50,9 +51,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает id.
      */
     get id() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._id);
-            resolve(this._id);
+        return new Promise((resolve) => {
+            this._checkUser(this._id).then(()=>{
+                resolve(this._id);
+            });
         });
     }
 
@@ -61,9 +63,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает name.
      */
     get name() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._name);
-            resolve(this._name);
+        return new Promise((resolve) => {
+            this._checkUser(this._name).then(()=>{
+                resolve(this._name);
+            });
         });
     }
 
@@ -72,9 +75,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает password.
      */
     get password() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._password);
-            resolve(this._password);
+        return new Promise((resolve) => {
+            this._checkUser(this._password).then(()=>{
+                resolve(this._password);
+            });
         });
     }
 
@@ -83,9 +87,10 @@ export default class UserModel {
      * @return {Promise} промис, который возвращает photo.
      */
     get photo() {
-        return new Promise(async (resolve) => {
-            await this._checkUser(this._photo);
-            resolve(this._photo);
+        return new Promise((resolve) => {
+            this._checkUser(this._photo).then(()=>{
+                resolve(this._photo);
+            });
         });
     }
 
@@ -279,9 +284,7 @@ export default class UserModel {
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-
-                } else {
+                if(response.data != null){
                     if (response.errors === null) {
                         (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
                     } else {

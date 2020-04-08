@@ -1,6 +1,5 @@
 'use strict';
 
-import {ajax} from '../utils/ajax';
 import {constants} from '../utils/constants';
 import {authAjax} from '../utils/authAjax';
 
@@ -22,65 +21,73 @@ export default class StaffModel { // дописать потом
     }
 
     get address(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._address);
-            resolve(this._address);
+        return new Promise((resolve) => {
+            this._checkStaff(this._address).then(()=>{
+                resolve(this._address);
+            });
         });
     }
 
     get closeTime(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._closeTime);
-            resolve(this._closeTime);
+        return new Promise((resolve) => {
+            this._checkStaff(this._closeTime).then(()=>{
+                resolve(this._closeTime);
+            });
         });
     }
 
     get description(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._description);
-            resolve(this._description);
+        return new Promise((resolve) => {
+            this._checkStaff(this._description).then(()=>{
+                resolve(this._description);
+            });
         });
     }
 
     get id(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._id);
-            resolve(this._id);
+        return new Promise((resolve) => {
+            this._checkStaff(this._id).then(()=>{
+                resolve(this._id);
+            });
         });
     }
 
     get name(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._name);
-            resolve(this._name);
+        return new Promise((resolve) => {
+            this._checkStaff(this._name).then(()=>{
+                resolve(this._name);
+            });
         });
     }
 
     get openTime(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._openTime);
-            resolve(this._openTime);
+        return new Promise((resolve) => {
+            this._checkStaff(this._openTime).then(()=>{
+                resolve(this._openTime);
+            });
         });
     }
 
     get ownerID(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._ownerID);
-            resolve(this._ownerID);
+        return new Promise((resolve) => {
+            this._checkStaff(this._ownerID).then(()=>{
+                resolve(this._ownerID);
+            });
         });
     }
 
     get photo(){
-        return new Promise(async (resolve) => {
-            await this._checkStaff(this._photo);
-            resolve(this._photo);
+        return new Promise((resolve) => {
+            this._checkStaff(this._photo).then(()=>{
+                resolve(this._photo);
+            });
         });
     }
 
     get context(){
         console.log('in context');
         let staffListData = sessionStorage.getItem('StaffList');
-        //const staffData = JSON.parse(staffListData)[this._listId];
+        const staffData = JSON.parse(staffListData)[this._listId];
         return staffData;
     }
 
@@ -149,7 +156,7 @@ export default class StaffModel { // дописать потом
         };
 
         let staffList = JSON.parse(sessionStorage.getItem('StaffList'));
-        //staffList[this._listId] = data;
+        staffList[this._listId] = data;
         sessionStorage.setItem('StaffList', JSON.stringify(staffList));
     }
 

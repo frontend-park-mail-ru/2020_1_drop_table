@@ -1,7 +1,6 @@
-'use strict'
-import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from './Utils.js';
+'use strict';
 
-let app = document.body;
+import {Utils, ArgumentNotFoundError as ArgNotFound, ArgumentTypeError as ArgTypeError, QueryParams} from './Utils.js';
 
 class Router {
     constructor(){
@@ -78,7 +77,7 @@ class Router {
 
                 return route.callback.call(route.thisArg, request, routerObj);
             }
-        },this)
+        },this);
 
         if(!found){
             if(!this._notFoundFunction) return;
@@ -171,7 +170,7 @@ class Router {
     }
 
     _checkHistoryMode(){
-        if(!window.PopStateEvent && !'pushState' in history) return;
+        if(!window.PopStateEvent && !('pushState' in history)) return;
         window.addEventListener('click', (e)=> {
             if (!(e.target instanceof HTMLAnchorElement || e.target instanceof HTMLImageElement)) {
                 return;
@@ -181,7 +180,7 @@ class Router {
             }
         });
 
-        window.addEventListener('popstate', (e)=>{
+        window.addEventListener('popstate', ()=>{
             this.init();
         });
 

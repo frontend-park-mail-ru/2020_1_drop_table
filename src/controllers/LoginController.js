@@ -1,6 +1,5 @@
 'use strict';
 
-import {Router} from '../modules/Router';
 import FormValidation from '../modules/FormValidation';
 import ServerExceptionHandler from '../modules/ServerExceptionHandler';
 import {router} from '../main/main';

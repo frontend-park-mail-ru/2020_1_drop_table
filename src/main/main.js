@@ -19,7 +19,6 @@ import StaffListController from '../controllers/StaffListController';
 import LandingModel from '../models/LandingModel';
 import LandingView from '../view/LandingView';
 import LandingController from '../controllers/LandingController';
-import StaffModel from '../models/StaffModel';
 import AddStaffController from '../controllers/addStaffController';
 import StaffListModel from '../models/StaffListModel';
 import EditCafeController from '../controllers/EditCafeController';

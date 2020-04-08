@@ -24,7 +24,7 @@ export default class LandingView extends BaseView {
     }
 
     /** Отрисовка страницы лэндинга */
-    render(context){
+    render(){
         this._app.innerHTML = '';
         (new Header(this._app)).render(this._context['header']);
         this._renderLanding();
