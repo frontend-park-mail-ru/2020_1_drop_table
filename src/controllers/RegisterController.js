@@ -1,11 +1,9 @@
 'use strict';
 
-import {validateForm} from "../modules/formValidator";
-import {showError} from "../modules/formValidator";
-import {router} from "../main/main";
+import {router} from '../main/main';
 
-import FormValidation from "../modules/FormValidation";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 
 /** контроллер регистрации */
 export default class RegisterController{

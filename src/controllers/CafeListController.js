@@ -1,7 +1,6 @@
 'use strict';
 
-import {Router} from "../modules/Router";
-import {router} from "../main/main";
+import {router} from '../main/main';
 
 /** контроллер списка кафе */
 export default class CafeListController{

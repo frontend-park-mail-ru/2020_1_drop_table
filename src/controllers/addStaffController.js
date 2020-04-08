@@ -1,11 +1,8 @@
 'use strict';
 
-import {validateForm} from "../modules/formValidator";
-import {showError} from "../modules/formValidator";
-import {Router} from "../modules/Router";
-import {router} from "../main/main";
-import ServerExceptionHandler from "../modules/ServerExceptionHandler";
-import FormValidation from "../modules/FormValidation";
+import {router} from '../main/main';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
 
 /** контроллер добавления работника */
 export default class AddStaffController{

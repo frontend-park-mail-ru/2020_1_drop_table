@@ -1,9 +1,9 @@
-import {authAjax} from "../../utils/authAjax";
-import {constants} from "../../utils/constants";
-import {CafePageComponent} from "../CafePageComponent/CafePage";
+import {authAjax} from '../../utils/authAjax';
+import {constants} from '../../utils/constants';
+import {CafePageComponent} from '../CafePageComponent/CafePage';
 
 
-export function CreateCafePage(app, id) {
+export function CreateCafePage(app, id) { //TODO Remove
 
     authAjax('GET',constants.PATH+`/api/v1/cafe/${id}`,null
         , (response) => {

@@ -1,10 +1,9 @@
 'use strict';
 
-import BaseView from "./BaseView";
-import {CafesContainerComponent} from "../components/CafesContainer/CafesContainer";
-import {Router} from "../modules/Router";
-import Header from "../components/MainHeader/Header";
-import {router} from "../main/main";
+import BaseView from './BaseView';
+import {CafesContainerComponent} from '../components/CafesContainer/CafesContainer';
+import Header from '../components/MainHeader/Header';
+import {router} from '../main/main';
 
 /** View страницы со списком кафе */
 export default class CafeListView extends BaseView{
@@ -26,8 +25,9 @@ export default class CafeListView extends BaseView{
         (new CafesContainerComponent(cafesContainer)).render(context);
         this._app.appendChild(cafesContainer);
 
-        let buttonAddCafe = document.getElementsByClassName('cafes-page__add-cafe-field__add-button').item(0);
-        buttonAddCafe.addEventListener('click',function (e) {
+        let buttonAddCafe = document.getElementsByClassName(
+            'cafes-page__add-cafe-field__add-button').item(0);
+        buttonAddCafe.addEventListener('click',function () {
             router._goTo('/createCafe');
         }) // Need move to CafesContainerComponent
     }

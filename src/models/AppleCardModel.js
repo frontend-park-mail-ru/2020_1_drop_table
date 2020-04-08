@@ -1,15 +1,19 @@
 'use strict';
 
-import {uuid} from "../utils/uuid";
-import {CardField} from "./CardField.js";
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import {ajaxForm} from "../utils/ajaxForm";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {uuid} from '../utils/uuid';
+import {CardField} from './CardField.js';
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import {ajaxForm} from '../utils/ajaxForm';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
+/** Модель карточки */
 export class AppleCardModel {
 
-
+    /**
+     * Инициализация модели карточки
+     * @param {int} cafeId идентификатор кафе
+     */
     constructor(cafeId) {
         this._cafeId = cafeId;
         this._icon = null;
@@ -45,124 +49,196 @@ export class AppleCardModel {
               "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
                "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"}`;
 
-    };
+    }
 
-
-
+    /**
+     * Возвращает промис, который возвращает сырое представление карточки
+     * @return {Promise<{obj}>}
+     */
     get context() {
-        return new Promise(async (resolve) => {
-            await this.getCard();
-            const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
-            if (cafeCard) {
-                resolve(JSON.parse(cafeCard));
-            }
-            resolve(null);
+        return new Promise((resolve) => {
+            this.getCard().then(()=>{
+                const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
+                if (cafeCard) {
+                    resolve(JSON.parse(cafeCard));
+                }
+                resolve(null);
+            });
         });
     }
 
+    /**
+     * Устанавливает контекст
+     * @param {obj} context контекст модели
+     */
     set context(context) {
 
     }
 
+    /**
+     * Получить название организации
+     * @return {string|null}
+     */
     get organizationName() {
         return this._organizationName;
     }
 
+    /**
+     * Устанавливает название организации
+     * @param {string} value название организации
+     */
     set organizationName(value) {
         this._organizationName = value;
     }
 
+    /**
+     * Получить описание кафе
+     * @return {string|null}
+     */
     get description() {
         return this._description;
     }
 
+    /**
+     * Устанавливает описание кафе
+     * @param {string} value описание кафе
+     */
     set description(value) {
         this._description = value;
     }
 
+    /**
+     * Получить цвет label карточки
+     * @return {string|null}
+     */
     get labelColor() {
         return this._labelColor;
     }
 
+    /**
+     * Устанавливает цвет label карточки
+     * @param {string} value цвет label карточки
+     */
     set labelColor(value) {
         this._labelColor = value;
     }
 
+    /**
+     * Получить текст логотипа
+     * @return {string|null}
+     */
     get logoText() {
         return this._logoText;
     }
 
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
     set logoText(value) {
         this._logoText = value;
     }
 
+    /**
+     * Получить цвет переднего плана карточки
+     * @return {string|null}
+     */
     get foregroundColor() {
         return this._foregroundColor;
     }
 
+    /**
+     * Устанавливает цвет переднего плана карточки
+     * @param {string}  цвет переднего плана карточки
+     */
     set foregroundColor(value) {
         this._foregroundColor = value;
     }
 
+    /**
+     * Получить цвет фона карточки
+     * @return {string|null}
+     */
     get backgroundColor() {
         return this._backgroundColor;
     }
 
+    /**
+     * Устанавливает цвет фона карточки
+     * @param {string} цвет фона карточки
+     */
     set backgroundColor(value) {
         this._backgroundColor = value;
     }
 
+    /**
+     * Получить поля хэдера карточки
+     * @return {Array|null}
+     */
     get headerFields() {
         return this._headerFields;
     }
 
+    /**
+     * Устанавливает поля хэдера карточки
+     * @param {Array} поля хэдера карточки
+     */
     set headerFields(value) {
         this._headerFields = value;
     }
 
+    /**
+     * Удаляет поле карточки по его id и типу
+     * @param {string} type тип поля
+     * @param {int} id идентификатор поля
+     */
     removeFieldByTypeAndId(type, id) {
         this._storeCard[type] = this._storeCard[type].filter(field => field._id !== id);
     }
 
+    /**
+     * Возвращает карточку в виде json
+     * @return {obj}
+     */
     getAsJson() {
         console.log('json test', this._storeCard['headerFields']);
         let json = {
 
-            "formatVersion": 1,
-            "passTypeIdentifier": "pass.com.ssoboy",
-            "serialNumber": "ART",
-            "teamIdentifier": "WSULUSUQ63",
-            "webServiceURL": "https://example.com/passes/",
-            "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc",
-            "barcode": {
-                "message": `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
-                "format": "PKBarcodeFormatQR",
-                "messageEncoding": "iso-8859-1"
+            'formatVersion': 1,
+            'passTypeIdentifier': 'pass.com.ssoboy',
+            'serialNumber': 'ART',
+            'teamIdentifier': 'WSULUSUQ63',
+            'webServiceURL': 'https://example.com/passes/',
+            'authenticationToken': 'vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc',
+            'barcode': {
+                'message': `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
+                'format': 'PKBarcodeFormatQR',
+                'messageEncoding': 'iso-8859-1'
             },
-            "locations": [
+            'locations': [
                 {
-                    "longitude": -122.3748889,
-                    "latitude": 37.6189722
+                    'longitude': -122.3748889,
+                    'latitude': 37.6189722
                 },
                 {
-                    "longitude": -122.03118,
-                    "latitude": 37.33182
+                    'longitude': -122.03118,
+                    'latitude': 37.33182
                 }
             ],
 
 
-            "organizationName": this._organizationName,
-            "description": this._description,
-            "labelColor": this._labelColor,
-            "logoText": (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
-            "foregroundColor": this._foregroundColor,
-            "backgroundColor": this._backgroundColor,
-            "backFields": [],
-            "storeCard": {
-                "headerFields": [],
-                "primaryFields": [],
-                "secondaryFields": [],
-                "auxiliaryFields": [],
+            'organizationName': this._organizationName,
+            'description': this._description,
+            'labelColor': this._labelColor,
+            'logoText': (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
+            'foregroundColor': this._foregroundColor,
+            'backgroundColor': this._backgroundColor,
+            'backFields': [],
+            'storeCard': {
+                'headerFields': [],
+                'primaryFields': [],
+                'secondaryFields': [],
+                'auxiliaryFields': [],
             }
         };
 
@@ -184,6 +260,10 @@ export class AppleCardModel {
         return json;
     }
 
+    /**
+     * Возвращает карточку как formData
+     * @return {FormData}
+     */
     getAsFormData() {
         let fd = {
             stripImageSrc: this._strip,
@@ -220,96 +300,117 @@ export class AppleCardModel {
         return fd;
     }
 
+    /**
+     * Добавить поле в карточку
+     * @param {string} fieldType тип добавляемого поля
+     */
     pushField(fieldType) {
         switch (fieldType) {
-            case 'HeaderField':
-                this._storeCard.headerFields.push(new CardField({'fieldType': 'HeaderField'}));
-                break;
+        case 'HeaderField':
+            this._storeCard.headerFields.push(new CardField({'fieldType': 'HeaderField'}));
+            break;
 
-            case 'PrimaryField':
-                this._storeCard.primaryFields.push(new CardField({'fieldType': 'PrimaryField'}));
-                break;
+        case 'PrimaryField':
+            this._storeCard.primaryFields.push(new CardField({'fieldType': 'PrimaryField'}));
+            break;
 
-            case 'SecondaryField':
-                this._storeCard.secondaryFields.push(new CardField({'fieldType': 'SecondaryField'}));
-                break;
+        case 'SecondaryField':
+            this._storeCard.secondaryFields.push(new CardField({'fieldType': 'SecondaryField'}));
+            break;
 
-            case 'AuxiliaryField':
-                this._storeCard.auxiliaryFields.push(new CardField({'fieldType': 'AuxiliaryField'}));
-                break;
+        case 'AuxiliaryField':
+            this._storeCard.auxiliaryFields.push(new CardField({'fieldType': 'AuxiliaryField'}));
+            break;
 
         }
     }
 
+    /**
+     * Удалить поле карточки
+     * @param {string} fieldType тип поля
+     * @param {int} id иденитфикатор поля
+     */
     removeField(fieldType, id) {
         switch (fieldType) {
-            case 'HeaderField':
-                this.removeFieldByTypeAndId('headerFields', id);
-                break;
-            case 'PrimaryField':
-                this.removeFieldByTypeAndId('primaryFields', id);
-                break;
-            case 'SecondaryField':
-                this.removeFieldByTypeAndId('secondaryFields', id);
-                break;
-            case 'AuxiliaryField':
-                this.removeFieldByTypeAndId('auxiliaryFields', id);
-                break;
+        case 'HeaderField':
+            this.removeFieldByTypeAndId('headerFields', id);
+            break;
+        case 'PrimaryField':
+            this.removeFieldByTypeAndId('primaryFields', id);
+            break;
+        case 'SecondaryField':
+            this.removeFieldByTypeAndId('secondaryFields', id);
+            break;
+        case 'AuxiliaryField':
+            this.removeFieldByTypeAndId('auxiliaryFields', id);
+            break;
         }
     }
 
+    /**
+     * Изменить поле
+     * @param {string} fieldType тип поля
+     * @param {int} id идентификатор поля
+     * @param {string} type тип поля
+     * @param {string} text текст поля
+     */
     changeField(fieldType, id, type, text) {
         switch (fieldType) {
-            case 'HeaderField':
-                for (let i = 0; i < this._storeCard.headerFields.length; i++) {
-                    if (this._storeCard.headerFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.headerFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.headerFields[i].value = text;
-                        }
+        case 'HeaderField':
+            for (let i = 0; i < this._storeCard.headerFields.length; i++) {
+                if (this._storeCard.headerFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.headerFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.headerFields[i].value = text;
                     }
                 }
-                break;
-            case 'PrimaryField':
-                for (let i = 0; i < this._storeCard.primaryFields.length; i++) {
-                    if (this._storeCard.primaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.primaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.primaryFields[i].value = text;
-                        }
+            }
+            break;
+        case 'PrimaryField':
+            for (let i = 0; i < this._storeCard.primaryFields.length; i++) {
+                if (this._storeCard.primaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.primaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.primaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
 
-            case 'SecondaryField':
-                for (let i = 0; i < this._storeCard.secondaryFields.length; i++) {
-                    if (this._storeCard.secondaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.secondaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.secondaryFields[i].value = text;
-                        }
+        case 'SecondaryField':
+            for (let i = 0; i < this._storeCard.secondaryFields.length; i++) {
+                if (this._storeCard.secondaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.secondaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.secondaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
 
-            case 'AuxiliaryField':
-                for (let i = 0; i < this._storeCard.auxiliaryFields.length; i++) {
-                    if (this._storeCard.auxiliaryFields[i]._id === id) {
-                        if (type === 'labelField') {
-                            this._storeCard.auxiliaryFields[i].label = text;
-                        } else if (type === 'valueField') {
-                            this._storeCard.auxiliaryFields[i].value = text;
-                        }
+        case 'AuxiliaryField':
+            for (let i = 0; i < this._storeCard.auxiliaryFields.length; i++) {
+                if (this._storeCard.auxiliaryFields[i]._id === id) {
+                    if (type === 'labelField') {
+                        this._storeCard.auxiliaryFields[i].label = text;
+                    } else if (type === 'valueField') {
+                        this._storeCard.auxiliaryFields[i].value = text;
                     }
                 }
-                break;
+            }
+            break;
         }
 
     }
 
+    /**
+     * Создание базовой карточки
+     * @param {obj} design нектороый контекст карточки
+     * @private
+     */
     _fillStoreCardByDesign(design){
 
         // логотекст считаем за 0 хедер поле
@@ -349,11 +450,11 @@ export class AppleCardModel {
         } else {
             design.storeCard.primaryFields.forEach((primaryField)=>{
                 this._storeCard.primaryFields.push(new CardField({
-                'fieldType': 'PrimaryField',
-                'key': uuid(),
-                'label': primaryField.label,
-                'value': primaryField.value
-            }));
+                    'fieldType': 'PrimaryField',
+                    'key': uuid(),
+                    'label': primaryField.label,
+                    'value': primaryField.value
+                }));
             })
         }
 
@@ -374,11 +475,13 @@ export class AppleCardModel {
                 }));
             })
         }
-
-
-
-
     }
+
+    /**
+     * Заполнение полей карточки из контекста
+     * @param {obj} context контекст карточки
+     * @private
+     */
     _fillCardData(context){
 
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
@@ -390,7 +493,7 @@ export class AppleCardModel {
         console.log('icon ',context.icon);
 
         this._organizationName = design.organizationName;
-        this._description = design.description;;
+        this._description = design.description;
         this._labelColor = design.labelColor;
         this._logoText = design.logoText;
         this._foregroundColor = design.foregroundColor;
@@ -405,6 +508,10 @@ export class AppleCardModel {
         this._fillStoreCardByDesign(design);
     }
 
+    /**
+     * Получение карточки
+     * @return {Promise<void>}
+     */
     async getCard() {
         await ajax(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?published=true&design_only=true`,
             'GET',
@@ -416,7 +523,7 @@ export class AppleCardModel {
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
-                       this._fillCardData(response.data);
+                        this._fillCardData(response.data);
                     } else {
                         throw response.errors;
                     }
@@ -425,6 +532,12 @@ export class AppleCardModel {
         )
     }
 
+    /**
+     * Создание formData для создания карточки
+     * @param {Array} images картинки
+     * @return {Promise<FormData>}
+     * @private
+     */
     async _makeFormData(images) {
         let formData = new FormData();
         const data = this.getAsJson();
@@ -442,6 +555,12 @@ export class AppleCardModel {
     }
 
 
+    /**
+     * Изменение карточки
+     * @param {Array} images
+     * @param publish
+     * @return {Promise<void>}
+     */
     async editCard(images, publish) {
         const formData = await this._makeFormData(images);
 
@@ -463,7 +582,6 @@ export class AppleCardModel {
                 }
             }
         );
-
     }
 }
 

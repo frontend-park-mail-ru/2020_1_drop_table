@@ -11,7 +11,7 @@
         display: flex;
         justify-content: space-around;
         &_h4 {
-            font-family: 'FuturaBookCTT Normal', arial;
+            font-family: 'Montserrat', arial;
             font-size: 3rem;
             font-weight: bold;
         }
@@ -19,9 +19,12 @@
     &__image-picker{
         height: 112px;
         width: 100%;
-        padding-bottom: 5%;
+        padding-bottom: 15%;
         justify-content: space-around;
         display: flex;
+        flex-direction: column-reverse;
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+
         object-fit: cover;
 
         &_img{
@@ -29,18 +32,28 @@
             width: 330px;
 
             &-avatar{
-                height: 100px;
-                width: 100px;
+                height: 112px;
+                width: 112px;
                 object-fit: cover;
             }
         }
     }
 
 }
+.card-redactor-container__card-model{
+}
+
+
 
 
 
 @media ( min-width : 600px ) {
+
+    .card-redactor-container__card-form__image-picker{
+        flex-direction: unset;
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    }
+
     .card-redactor-container {
         /*width: 100%;*/
         display: -webkit-flex;
@@ -60,7 +73,8 @@
 
         }
         &__card-model {
-            margin-top: 15%;
+            margin-top: 10%;
+
         }
     }
 

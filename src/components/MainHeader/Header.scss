@@ -1,83 +1,134 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
-.page-header {
+
+.page-header{
+    padding: 20px;
+}
+
+.nav {
     font-family: 'Montserrat',Arial;
-    font-size: 1.5rem;
-    align-items: center;
+    width: 100%;
+    position: relative;
+
+}
+
+.nav-header {
+    display: inline;
+    width: 15%;
+}
+
+.nav-header_img{
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    margin: auto;
+}
+.nav__btn {
+    display: none;
+}
+
+.nav-links {
     display: flex;
-    max-height: 5%;
-    /*margin-top: 1.5em;*/
-    margin-right: 1em;
-    margin-left: 1em;
-    &__nav {
-        flex: 1;
-        &__menu {
-            display: flex;
-            justify-content: space-around;
-            &_list {
-                padding-left: 1em;
-                padding-right: 1em;
-                white-space:nowrap;
-                list-style: none;
-                &_a{
-                    color: black;
-                    text-decoration: none;
-                    &:hover{
-                        text-decoration: underline;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-    }
-    &__logo-container{
+    float: right;
+    font-size: 18px;
+    background: white;
+    z-index: 5;
+    justify-content: space-between;
+    width: 85%;
+    opacity: 95%;
+}
 
-        &_img{
-            margin-top: 1.5em;
-            height: 100px;
-            width: 100px;
-            object-fit: cover;
-        }
+.nav-links__link-container {
+    display: flex;
+    text-decoration: none;
+    color: #000000;
+    height: 100px;
+}
+.nav-links__link-container-avatar {
+    display: flex;
+    text-decoration: none;
+    color: #000000;
+}
 
+
+.nav-links__link-container_a{
+    margin: auto;
+    white-space: nowrap;
+    text-decoration: none;
+    color: black;
+    padding: 0 10px;
+}
+.nav-links__link-container_a:hover{
+    text-decoration: underline;
+}
+
+.nav-links__link-container_img {
+    display: inline-block;
+    max-height: 100px;
+    max-width: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#nav-check {
+    display: none;
+}
+
+@media (max-width:900px) {
+    .nav__btn {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 50%;
     }
-    &__avatar{
+    .nav__btn_label {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+    }
+
+    .nav__btn_label_span {
+        display: block;
+        width: 25px;
+        height: 10px;
+        border-top: 2px solid #000000;
+    }
+    .nav-links {
+        position: absolute;
         display: flex;
-        align-items: flex-start;
-        justify-content: space-around;
+        flex-direction: column-reverse;
 
-        &_img{
-            margin-left: 1rem;
-            height: 5rem;
-            width: 5rem;
-            border-radius: 50%;
-            cursor: pointer;
-            object-fit: cover;
-        }
-
-        &_span{
-            font-size: 1.5rem;
-            cursor: pointer;
-            object-fit: cover;
-            align-self: center;
-            margin-top: auto;
-            margin-bottom: auto;
-            &:hover {
-                text-decoration: underline;
-                cursor: pointer;
-            }
-        }
+        transition: all 0.3s ease-in;
+        overflow-y: hidden;
+        left: 0;
+        width: 100%;
     }
-    &__h4{
-        width:80px;
-        white-space:nowrap;
-        cursor: pointer;
-        font-weight: bold;
-        color: black;
+    .nav-links__link-container {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        margin-top: 10%;
     }
 
-    &__header-right{
-        width: 25%;
+
+
+
+    .nav-links__link-container_img  {
+        display: inline-block;
+        max-height: 100px;
+        max-width: 100px;
+        margin-top: 10px;
+    }
+
+    #nav-check:not(:checked) ~ .nav-links {
+        height: 0px;
+    }
+   #nav-check:checked ~ .nav-links {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
     }
 
 }
+
 

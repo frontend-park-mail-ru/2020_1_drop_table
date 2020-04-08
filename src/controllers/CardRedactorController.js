@@ -2,13 +2,20 @@
 
 import {getContextByClass} from '../utils/cardRedactorUtils'
 
+/** Контроллер редактирования карточки */
 export default class CardRedactorController {
 
+    /**
+     * Инициализация контроллер редактирования карточки
+     * @param {AppleCardModel} appleCardModel модель карточки
+     * @param {CardRedactorView} cardRedactorView view редактора карточки
+     */
     constructor(appleCardModel, cardRedactorView){
-         this._appleCard = appleCardModel;
-         this._cardRedactorView = cardRedactorView;
+        this._appleCard = appleCardModel;
+        this._cardRedactorView = cardRedactorView;
     }
 
+    /** Запуск контроллера */
     async control(){
         this._appleCard.context = await this._makeContext();
         this._cardRedactorView._appleCard = this._appleCard;
@@ -18,7 +25,17 @@ export default class CardRedactorController {
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
 
+        let cardRedactorBottom =
+            document.getElementsByClassName('card').item(0);
+        cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+
     }
+
+    /**
+     * Создание контекста для CardRedactorView
+     * @return {Promise<{appleCard: any}>}
+     * @private
+     */
     async _makeContext(){
         let appleCardContext = {
             appleCard: await this._appleCard.context
@@ -26,6 +43,7 @@ export default class CardRedactorController {
         return appleCardContext;
     }
 
+    /** Event, выполняющийся при нажатии на кнопку */
     editTextInputListener(e) {
         const target = e.target;
         this._appleCard.changeField(
@@ -39,8 +57,10 @@ export default class CardRedactorController {
         this.addImageListeners()
     }
 
-
-
+    /**
+     * Добавление лисенеров для color pickers
+     * @param {obj} context контекст необходимый для создания color pickers
+     */
     addColorPickerListeners(context) {
 
         function hexToRgb(hex) {
@@ -57,31 +77,34 @@ export default class CardRedactorController {
         let backgroundColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_background_input').item(0)
         backgroundColorInput.addEventListener('input', function () {
-                let res = hexToRgb(this.value);
-                context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
+            let res = hexToRgb(this.value);
+            context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
+            context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
         }, false);
 
         let foregroundColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs_foreground_input').item(0)
-        foregroundColorInput.addEventListener('input', function (e) {
+        foregroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
-            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
+            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
+
+            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         });
         let labelColorInput
             = document.getElementsByClassName('card-color-pickers-container_color-picker__inputs__label_input').item(0)
-        labelColorInput.addEventListener('input', function (e) {
+        labelColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
-            context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b}`;
-                context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
+            console.log('test1',`rgb(${res.r},${res.g},${res.b})`)
+            console.log('test2',context._appleCard._backgroundColor)
+            context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
+            context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
         })
 
 
     }
 
 
-
+    /**Добавление листенеров на зполя карточки */
     addCardFieldsListeners() {
         const labelInputs = document.getElementsByClassName('labelField');
         const valueInputs = document.getElementsByClassName('valueField');
@@ -103,6 +126,7 @@ export default class CardRedactorController {
     }
 
     //todo пофиксить, когда будут новые ручки с сервера
+    /** Добавление листенеров для публикации */
     addSavePublishListeners(){
         const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
         submitSave.addEventListener('click', (e) => {
@@ -160,6 +184,7 @@ export default class CardRedactorController {
         });
     }
 
+    /** Добавление полей карты */
     addCardField(e) {
         const parent = e.target.parentNode.parentNode;
         this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
@@ -170,6 +195,7 @@ export default class CardRedactorController {
         this.addSavePublishListeners();
     }
 
+    /** Удаление полей карты */
     removeAppleCardField(e) {
         const parent = e.target.parentNode.parentNode;
         this._appleCard.removeField(getContextByClass(parent.getAttribute('class')), parent.getAttribute('id'));
@@ -178,10 +204,9 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
-
-
     }
 
+    /** Добавление листенеров на изображения */
     addImageListeners(){
         const stripInput = document.getElementById('uploadStrip');
         const stripImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);

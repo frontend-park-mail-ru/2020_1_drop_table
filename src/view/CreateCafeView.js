@@ -1,8 +1,8 @@
 'use strict';
 
-import Header from "../components/MainHeader/Header";
-import CafeComponent from "../components/Cafe/Cafe";
-import BaseView from "./BaseView";
+import Header from '../components/MainHeader/Header';
+import CafeComponent from '../components/Cafe/Cafe';
+import BaseView from './BaseView';
 
 /** view создания кафе */
 export default class CreateCafeView extends BaseView{

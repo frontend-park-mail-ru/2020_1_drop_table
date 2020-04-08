@@ -1,14 +1,11 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import StaffModel from "./StaffModel";
-import {Router} from "../modules/Router";
-import {ajaxForm} from "../utils/ajaxForm";
-import {router} from "../main/main";
-import {AlertWindowComponent} from "../components/AlertWindow/AlertWindow";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import StaffModel from './StaffModel';
+import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
-
+/** Модель staff 3 рк */
 export default class StaffListModel{
 
     constructor() {
@@ -20,21 +17,23 @@ export default class StaffListModel{
     }
 
     get context(){
-        console.log('context')
-        return new Promise(async (resolve) => {
-            await this._checkStaffList();
-            const staffList = sessionStorage.getItem('StaffList');
-            if(staffList){
-                resolve(JSON.parse(staffList));
-            }
-            resolve(null);
+        console.log('context');
+        return new Promise((resolve) => {
+            this._checkStaffList().then(()=>{
+                const staffList = sessionStorage.getItem('StaffList');
+                if(staffList){
+                    resolve(JSON.parse(staffList));
+                }
+                resolve(null);
+            });
         });
     }
 
     get isEmpty(){
-        return new Promise(async (resolve) => {
-            await this._checkStaffList();
-            resolve(!this._staffModelsList.length);
+        return new Promise((resolve) => {
+            this._checkStaffList().then(()=>{
+                resolve(!this._staffModelsList.length);
+            });
         });
     }
 
@@ -117,7 +116,7 @@ export default class StaffListModel{
     }
 
     /** создание qr работника */
-    async addStaffQR(cafeId) {
+    async addStaffQR() {
         await ajax(constants.PATH + `/api/v1/staff/generateQr/${7}`,
             'GET',
             {},

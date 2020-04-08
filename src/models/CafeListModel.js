@@ -1,11 +1,10 @@
 'use strict';
 
-import {ajax} from "../utils/ajax";
-import {constants} from "../utils/constants";
-import CafeModel from "./CafeModel";
-import {ajaxForm} from "../utils/ajaxForm";
-import {router} from "../main/main";
-import {authAjax} from "../utils/authAjax";
+import {ajax} from '../utils/ajax';
+import {constants} from '../utils/constants';
+import CafeModel from './CafeModel';
+import {ajaxForm} from '../utils/ajaxForm';
+import {router} from '../main/main';
 
 /** Класс модели списка кафе */
 export default class CafeListModel{
@@ -22,13 +21,14 @@ export default class CafeListModel{
      * @return {Promise} промис, который возвращает сырое представление модели
      */
     get context(){
-        return new Promise(async (resolve) => {
-            await this._checkCafeList();
-            const cafeList = sessionStorage.getItem('CafeList');
-            if(cafeList){
-                resolve(JSON.parse(cafeList));
-            }
-            resolve(null);
+        return new Promise((resolve) => {
+            this._checkCafeList().then(()=>{
+                const cafeList = sessionStorage.getItem('CafeList');
+                if(cafeList){
+                    resolve(JSON.parse(cafeList));
+                }
+                resolve(null);
+            });
         });
     }
 
@@ -37,9 +37,10 @@ export default class CafeListModel{
      * @return {Promise} промис, который возвращает пуст или не пуст cafeModelList
      */
     get isEmpty(){
-        return new Promise(async (resolve) => {
-            await this._checkCafeList();
-            resolve(!this._cafeModelsList.length);
+        return new Promise((resolve) => {
+            this._checkCafeList().then(()=>{
+                resolve(!this._cafeModelsList.length);
+            });
         });
     }
 

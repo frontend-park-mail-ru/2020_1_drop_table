@@ -1,86 +1,94 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
 .user-profile{
+    font-family: 'Montserrat',SansSerif;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
-    &__header{
-        height: 30%;
-        width: 100%;
-        &__logo-container{
-            width: 10rem;
-            height: 10rem;
-            object-fit: cover;
-            text-align: center;
-            padding-left: 10%;
-            float: left;
+.user-profile__header{
+    display: flex;
+    height: 25%;
+    justify-content: flex-start;
+}
 
-            &_image-picker{
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                display: block;
-                cursor: pointer;
-                text-align: center;
-                &_img{
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
+.user-profile__header__logo-container{
+    float: left;
+}
 
-                }
-                &_span {
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
-                    color: black;
-                }
-            }
-        }
-    }
+.user-profile__header__logo-container_image-picker{
+    width: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
 
-    &__form-container{
-        font-family: 'Montserrat',SansSerif;
-        padding-top: 5%;
-        width: 100%;
-        height: 50%
-    }
-
-    &__decorate-container{
-        width: 30%;
-        height: 100%;
-        margin-left: 35%;
-        /*margin-top: 10%;*/
-        font-family: Montserrat;
-        font-weight: bold;
-        font-size: 3rem;
-        white-space: nowrap ;
-
-        &__text-field{
-
-        }
-        &__strip{
-            width:15rem;
-            height: 0.5rem;
-            padding-left: 10%;
-            background-color: #1e768f;
-
-        }
-    }
-
-    &__form-container{
-        &__form-field{
-            font-family: 'Montserrat',SansSerif;
-            margin: 0 40%;
-            /*bottom: 20%;*/
-        }
-    }
+.user-profile__header__logo-container_image-picker_img{
+    border-radius: 50%;
+    height: 10vw;
+    width: 10vw;
+    min-width: 75px;
+    min-height: 75px;
+    margin: 0 auto;
+    object-fit: cover;
 
 }
 
-@media (max-width: 700px) {
-    .user-profile__form-container__form-field{
-       font-family: 'Montserrat',SansSerif;
-        margin: 0% 15%;
-        padding-top: 15rem;
-        bottom: 20%;
-    }
+.user-profile__header__logo-container_image-picker_span{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    color: black;
 }
 
+.user-profile__header__logo-container_image-picker_input{
+
+}
+
+.user-profile__header__decorate-container{
+    width: 30%;
+    height: 100%;
+    font-weight: bold;
+    font-size: 4.5vw;
+    white-space: nowrap ;
+}
+
+.user-profile__header___decorate-container__text-field{
+
+}
+
+.user-profile__header___decorate-container__text-field_span{
+
+}
+
+.user-profile__header___decorate-container__strip{
+    width: 33vw;
+    height: 0.5rem;
+    padding-left: 10%;
+    background-color: #1e768f;
+}
+
+
+
+.user-profile__form-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.user-profile__form-container__form-field{
+        min-width: 40%;
+        width: 50vh;
+
+}
+
+@media (max-width: 500px) {
+    .user-profile__header{
+        flex-direction: column-reverse;
+    }
+}

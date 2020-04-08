@@ -54,6 +54,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: default;
 }
 
 .header-fields-container{
@@ -71,9 +72,11 @@
 
     &_span_label{
         font-size: 1rem;
+        cursor: default;
     }
     &_span_value{
         font-size:1.25rem;
+        cursor: default;
     }
 
 }
@@ -100,10 +103,12 @@
             &_spanValue{
                 font-size: 4.5rem;
                 margin-left: 1rem;
+                cursor: default;
             }
             &_spanLabel{
                 font-size: 1.5rem;
                 margin-left: 1rem;
+                cursor: default;
             }
         }
     }
@@ -134,10 +139,12 @@
             &_spanValue{
                 font-size: 4.5rem;
                 margin-left: 1rem;
+                cursor: default;
             }
             &_spanLabel{
                 font-size: 1.5rem;
                 margin-left: 1rem;
+                cursor: default;
             }
         }
 
@@ -148,9 +155,11 @@
         margin: 0 1rem;
         &_spanLabel{
             font-size: 1rem;
+            cursor: default;
         }
         &_spanValue{
             font-size: 1.5rem;
+            cursor: default;
 
         }
     }
@@ -161,10 +170,12 @@
 
         &_spanLabel{
             font-size: 0.9rem;
+            cursor: default;
         }
 
         &_spanValue{
             font-size: 1.4rem;
+            cursor: default;
         }
     }
 
@@ -202,9 +213,5 @@
     top: 10%;
 }
 
-/*.card-form__submit{*/
-/*    font-size: 2rem;*/
-/*    !*font-family: Montserrat;*!*/
-/*}*/
 
 

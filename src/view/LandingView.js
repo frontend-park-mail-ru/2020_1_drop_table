@@ -1,8 +1,8 @@
 'use strict';
 
-import {LandingComponent} from "../components/Landing/Landing";
-import Header from "../components/MainHeader/Header";
-import BaseView from "./BaseView";
+import {LandingComponent} from '../components/Landing/Landing';
+import Header from '../components/MainHeader/Header';
+import BaseView from './BaseView';
 
 /** view лэндинга */
 export default class LandingView extends BaseView {
@@ -24,7 +24,7 @@ export default class LandingView extends BaseView {
     }
 
     /** Отрисовка страницы лэндинга */
-    render(context){
+    render(){
         this._app.innerHTML = '';
         (new Header(this._app)).render(this._context['header']);
         this._renderLanding();
