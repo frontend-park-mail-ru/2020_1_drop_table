@@ -2,19 +2,10 @@
     {{#unless noCafes}}
 <div class="cafes-page__all-cafes-container">
 
-    <div class="cafes-page__all-cafes-container__row">
-        <div class="cafes-page__all-cafes-container__row_left-column">
-            {{#each firstCol}}
-                {{{this}}}
-            {{/each}}
-        </div>
+    {{#each cafes}}
+        {{{this}}}
+    {{/each}}
 
-        <div class="cafes-page__all-cafes-container__row_right-column">
-            {{#each secCol}}
-                {{{this}}}
-            {{/each}}
-        </div>
-    </div>
 </div>
     {{/unless}}
 

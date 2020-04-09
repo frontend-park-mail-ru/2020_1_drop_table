@@ -4,27 +4,9 @@
     font-family: 'Montserrat',SansSerif;
 
     &__all-cafes-container{
-        /*padding-right: auto;*/
-        padding-left: 15%;
-        /*padding-top: 10%;*/
-        &__row{
-            &:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-            &_left-column {
-                float: left;
-                width: 50%;
-            }
-            &_right-column {
-                padding-top: 8rem;
-                float: left;
-                width: 50%;
-            }
-
-        }
-
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     &__add-cafe-field{
@@ -102,24 +84,9 @@
 
 @media(max-width: 1250px){
 
-    .cafes-page {
-        &__all-cafes-container {
-            padding-right: 100%;
-            padding-left: 25%;
 
-            &__row {
-                padding-top: 10rem;
 
-                &_right-column {
-                    padding-top: 22rem;
-                    float: right;
-                    width: 50%;
-                    right: 50%
-                }
-            }
-        }
 
-    }
     .cafes-page__add-cafe-field__text-strip{
         width: 70%;
     }
