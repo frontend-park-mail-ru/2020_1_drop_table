@@ -1,4 +1,4 @@
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import {CafePageComponent} from '../components/CafePageComponent/CafePage';
 import CardRedactorController from '../controllers/CardRedactorController';
 import CardRedactorView from './CardRedactorView';

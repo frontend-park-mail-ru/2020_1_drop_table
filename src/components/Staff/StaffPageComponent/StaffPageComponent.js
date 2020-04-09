@@ -27,12 +27,8 @@ export class StaffPageComponent {
             let staffList = [];
             if(staff) {
                 for (let staffItem of staff) {
-                    console.log('StaffHHAHA',staffItem);
-                    console.log('StaffHHAHA',staffItem.Photo);
-                    if(staffItem.Photo === null){
-                        console.log('Staff null',staffItem.Photo);
-                        staffItem.Photo = '/images/userpic.png'
-                        console.log('Staff photo',staffItem.Photo);
+                    if(!staffItem.Photo){
+                        staffItem.Photo = '/images/userpic.png';
                     }
                     staffList.push(StaffCard(staffItem));
                 }

@@ -6,6 +6,7 @@ import {ajax} from '../utils/ajax';
 import {constants} from '../utils/constants';
 import {ajaxForm} from '../utils/ajaxForm';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
+import {LoadingComponent} from '../components/Loading/Loading';
 
 /** Модель карточки */
 export class AppleCardModel {
@@ -563,7 +564,8 @@ export class AppleCardModel {
      */
     async editCard(images, publish) {
         const formData = await this._makeFormData(images);
-
+        const loading = new LoadingComponent();
+        loading.render();
         await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=${publish.toString()}`, //todo make await
             'PUT',
             formData,
@@ -572,14 +574,20 @@ export class AppleCardModel {
                     console.log('editCard success', response);
                     if(response.data['QR'] && response.data['URL'] && publish){
                         console.log('window component');
-                        (new AlertWindowComponent('Ваша карточка', response.data['URL'], response.data['QR'])).render();
+                        loading.remove();
+                        (new AlertWindowComponent('Ваша карточка опубликована', response.data['URL'], response.data['QR'])).render();
+
+                    } else if(response.data['QR'] && response.data['URL'] && !publish) {
+                        loading.remove();
+                        (new AlertWindowComponent('Ваша карточка сохранена',  response.data['URL'], response.data['QR'])).render();
                     }
-                    // this._filUserData(response.data);
-                    // this._saveUser();
                 } else {
+                    loading.remove();
                     console.log('error ', response.errors);
                     throw response.errors;
                 }
+
+
             }
         );
     }

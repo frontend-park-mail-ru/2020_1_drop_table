@@ -2,7 +2,7 @@
 
 import BaseView from './BaseView';
 import {CafesContainerComponent} from '../components/CafesContainer/CafesContainer';
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import {router} from '../main/main';
 
 /** View страницы со списком кафе */

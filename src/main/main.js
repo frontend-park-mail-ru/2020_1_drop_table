@@ -77,19 +77,21 @@ function doProfile(){
 /** Страница создания кафе */
 function doCreateCafe(){
     const cafeList = new CafeListModel();
-    const userModel = new UserModel(router);
+    const userModel = new UserModel();//router
     const createCafeView = new CreateCafeView();
     const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
+    console.log('test228', );
     createCafeController.control();
 }
 
 /** Страница добавления работника */
 function doStaff(){
     const userModel = new UserModel();
-    const staffList = new StaffListModel();
-    const staffListView = new StaffListView(app);
-    const staffListController = new StaffListController(staffList, userModel, staffListView);
+    const staffListModel = new StaffListModel(userModel);
+    const staffListView = new StaffListView();
+    const staffListController = new StaffListController(staffListModel, staffListView);
     staffListController.control();
+
 }
 
 /** Страница кафе */

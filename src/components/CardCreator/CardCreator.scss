@@ -14,12 +14,13 @@
             font-family: 'Montserrat', arial;
             font-size: 3rem;
             font-weight: bold;
+            margin: 1rem 0;
         }
     }
     &__image-picker{
         height: 112px;
         width: 100%;
-        padding-bottom: 15%;
+        padding-bottom: 5%;
         justify-content: space-around;
         display: flex;
         flex-direction: column-reverse;
@@ -82,8 +83,7 @@
 
 .card-color-pickers-container{
     display: flex;
-    margin-right: 1rem ;
-    margin-left: 1rem ;
+
     flex-direction: column;
     &_color-picker{
         display: flex;
@@ -100,7 +100,6 @@
         width: -moz-available;
         &_span{
             font-size: 1rem;
-            /*font-family: Montserrat;*/
             justify-self: center;
         }
         &_container{
@@ -109,7 +108,7 @@
 
         &__inputs{
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
 
             &__background{
                 display: flex;

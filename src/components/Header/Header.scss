@@ -69,6 +69,10 @@
     margin: 0 auto;
     border-radius: 50%;
     object-fit: cover;
+    height: 8vw;
+    width: 8vw;
+    min-width: 50px;
+    min-height: 50px;
 }
 
 #nav-check {

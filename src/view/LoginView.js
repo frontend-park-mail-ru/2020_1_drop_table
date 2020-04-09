@@ -1,7 +1,7 @@
 'use strict';
 
 import LoginComponent from '../components/Login/Login';
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import BaseView from './BaseView';
 
 /** view login */

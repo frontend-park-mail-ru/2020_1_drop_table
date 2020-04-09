@@ -69,12 +69,15 @@
     width: 100%;
     align-items: end;
     margin-top: -10%;
+    margin-right: 1rem;
 
     &_span_label{
+        margin-right: auto;
         font-size: 1rem;
         cursor: default;
     }
     &_span_value{
+        margin-right: auto;
         font-size:1.25rem;
         cursor: default;
     }
@@ -99,15 +102,15 @@
             display: flex;
             flex-direction: column;
             color: white;
+            margin-left: 1rem;
+            margin-right: 1rem;
 
             &_spanValue{
                 font-size: 4.5rem;
-                margin-left: 1rem;
                 cursor: default;
             }
             &_spanLabel{
                 font-size: 1.5rem;
-                margin-left: 1rem;
                 cursor: default;
             }
         }
@@ -210,7 +213,7 @@
 
 .card-with-submit{
     position: sticky;
-    top: 10%;
+    top: 5%;
 }
 
 

@@ -31,7 +31,6 @@ export default class CreateCafeController{
 
         const cafe = this._cafeListModel.createCafe();
 
-        console.log('created', cafe);
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
@@ -42,10 +41,8 @@ export default class CreateCafeController{
 
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
-                console.log('try create', photoInput.files[0], cafe, );
                 await this._cafeListModel.create(photoInput.files[0], cafe);
             } catch (exception) {
-                console.log('catch try create', photoInput.files[0], cafe );
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }

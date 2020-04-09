@@ -1,7 +1,7 @@
 'use strict'
 
 import BaseView from './BaseView';
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import {StaffPageComponent} from '../components/Staff/StaffPageComponent/StaffPageComponent';
 
 /** view страницы с работниками */

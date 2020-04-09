@@ -19,9 +19,10 @@ export class StaffCardComponent {
      */
     _renderTemplate(context) {
 
-        if(context.photo === ''){
+        if(!context.photo){
             context.photo = '/images/userpic.png'
         }
+        console.log('тест фотки ', context.photo);
         this._el.innerHTML += StaffCard(context);
     }
 

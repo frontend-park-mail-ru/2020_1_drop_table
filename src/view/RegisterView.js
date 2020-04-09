@@ -1,7 +1,7 @@
 'use strict';
 
 import RegisterComponent from '../components/Register/Register';
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import BaseView from './BaseView';
 
 /** view регистрации */

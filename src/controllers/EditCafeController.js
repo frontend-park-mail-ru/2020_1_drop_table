@@ -24,10 +24,8 @@ export default class EditCafeController{
 
     /** Event измененич кафе */
     async _editCafe(e) {
-        console.log('editCafe');
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
-        console.log('form', form);
         const photoInput = document.getElementById('upload');
 
         const cafe = this._cafeListModel.getCafeById(this._id);
@@ -48,11 +46,8 @@ export default class EditCafeController{
 
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
-                console.log('try editCafe', photoInput.files[0], cafe, this._id);
                 await this._cafeListModel.editCafe(photoInput.files[0], cafe, this._id);
             } catch (exception) {
-                console.log('catch', exception);
-
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }

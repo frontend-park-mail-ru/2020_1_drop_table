@@ -11,14 +11,10 @@ export default class StaffListController{
      * @param {UserModel} userModel модель пользователя
      * @param {StaffListView} staffListView view списка работников
      */
-    constructor(staffListModel, userModel, staffListView) {
-        this._userModel = userModel;
+    constructor(staffListModel, staffListView) {
+
         this._staffListModel = staffListModel;
         this._staffListView = staffListView;
-
-        console.log('test ', this._userModel.id);
-        this._staffListModel.ownerId = this._userModel.id;
-        console.log('test ', this._staffListModel.ownerId )
     }
 
     /**
@@ -28,7 +24,6 @@ export default class StaffListController{
     async _makeViewContext(){
 
         let staffListContext = {
-            userData : await this._userModel.context ,
             staffList : await this._staffListModel.context
 
             // staffList: {
@@ -119,15 +114,17 @@ export default class StaffListController{
         return staffListContext;
     }
 
-    // addListeners(context){
-    //     const cafesButtons = document.getElementsByClassName('cafes-page__add-cafe-field__text-field');
+    // async _addListeners(){
+    //     let staffAddButtons = document.getElementsByClassName('staff-page__add-staff-field__add-button');
+    //     for(let i = 0; i < staffAddButtons.length; i++){
+    //         staffAddButtons.item(i).addEventListener('click', await this._staffListModel.addStaffQR)
+    //     }
     // }
 
     /** Запуск контроллера */
     async control(){
         this._staffListView.context = await this._makeViewContext();
         this._staffListView.render();
-
-
+        //this._addListeners()
     }
 }
