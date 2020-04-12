@@ -20,7 +20,7 @@ export default class Header{
         this._hasExit = false;
 
         this._menuList = [
-            {href: '/myCafes', text: 'Мои кафе'},
+            {href: '/myCafes', text: 'Мои заведения'},
             {href: '/createCafe', text: 'Добавить'},
             {href: '/statistics', text: 'Статистика'},
             {href: '/staff', text: 'Работники'},

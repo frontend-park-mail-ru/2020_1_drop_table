@@ -1,5 +1,4 @@
 <div class="cafes-page">
-    {{#unless noCafes}}
 <div class="cafes-page__all-cafes-container">
 
     {{#each cafes}}
@@ -7,21 +6,11 @@
     {{/each}}
 
 </div>
-    {{/unless}}
-
-
-    {{#if noCafes}}
-        <div class="cafes-page__no-cafes-container">
-            <div class="cafes-page__no-cafes-container__text-field">
-                <span class="cafes-page__no-cafes-container__text-field_span" >Вы пока не добавили кафе:( </span>
-            </div>
-        </div>
-    {{/if}}
 
 <div class="cafes-page__add-cafe-field">
 
     <div class="cafes-page__add-cafe-field__text-field">
-        <span class="cafes-page__add-cafe-field__text-field_span">Новое кафе</span>
+        <span class="cafes-page__add-cafe-field__text-field_span"></span>
     </div>
     <div class="cafes-page__add-cafe-field__text-strip">
     </div>

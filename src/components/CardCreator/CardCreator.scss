@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
-
+@import '../../scss/themes.scss';
 .redactor{
     font-family: 'Montserrat',SansSerif;
     display: flex;
@@ -93,8 +93,12 @@
         border-radius: 0.5rem;
         margin-right: 0.5rem ;
         margin-left: 0.5rem ;
-        color: #000;
-        background: #fff;
+        @include themify($themes){
+            color: themed('textColor');
+        }
+        @include themify($themes){
+            background-color: themed('backgroundColor');
+        }
         -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         width: -moz-available;

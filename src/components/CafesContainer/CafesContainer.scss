@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+@import '../../scss/themes.scss';
 
 .cafes-page{
     font-family: 'Montserrat',SansSerif;
+    display: flex;
+    flex-direction: column;
 
     &__all-cafes-container{
         display: flex;
@@ -22,35 +25,46 @@
 
         &__text-field{
             align-self: flex-end;
-            margin-right: 30%;
+            margin-right: 20vw;
 
             &_span{
-                /*font-family: Montserrat;*/
                 font-size: 2rem;
                 width:40%;
             }
         }
         &__text-strip{
-            width: 45%;
+            width: 50%;
+            min-width: 220px;
             height:0.5em;
-            background-color: #fa9917;
             align-self: flex-end;
+
+            @include themify($themes) {
+                background-color: themed('accentColor');
+            }
         }
 
         &__add-button{
-            width: 26vh;
-            height: 13vh;
-            background-color: #ffffff;
+            width: 18vw;
+            height: 9vw;
+            min-width: 120px;
+            min-height: 60px;
+            max-width: 360px;
+            max-height: 180px;
+
             border-radius: 50% 50% 0 0 / 100% 100% 0 0;
             transform: rotate(180deg);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
-            margin-right: 30%;
+            margin-right: 24vw;
             align-self: flex-end;
             cursor: pointer;
 
             background-image: url(/images/plus.svg);
             background-size: cover;
             background-position-y: center;
+
+            @include themify($themes) {
+                background-color: themed('addButtonColor');
+            }
 
             &:hover{
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
@@ -87,14 +101,14 @@
 
 
 
-    .cafes-page__add-cafe-field__text-strip{
-        width: 70%;
-    }
-    .cafes-page__add-cafe-field__add-button{
-
-        width: 20vh;
-        height: 10vh;
-    }
+    //.cafes-page__add-cafe-field__text-strip{
+    //    width: 70%;
+    //}
+    //.cafes-page__add-cafe-field__add-button{
+    //
+    //    width: 20vw;
+    //    height: 10vw;
+    //}
 
 
 }

@@ -1,0 +1,74 @@
+
+
+@mixin themify($themes) {
+  @each $theme, $map in $themes {
+    .theme-#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
+
+$themes: (
+        light: (
+                backgroundColor: #ffffff,
+
+                alertBackgroundColor: #ffffff,
+
+                cafeCardBackgroundColor: #ffffff,
+
+
+                textColor: #000000,
+
+                timeStripColor:#000000,
+
+                buttonTextColor: #ffffff,
+
+                addButtonColor: #ffffff,
+
+                mainColor: #2b8aa3,
+
+                secondaryColor: #1e768f,
+
+                accentColor:#fa9917,
+
+                errorColor:#ff1813,
+
+        ),
+        dark: (
+
+                backgroundColor: #000000,
+
+                alertBackgroundColor: rgba(0, 0, 0, 0.47),
+
+                cafeCardBackgroundColor: #000000,
+
+
+                textColor: #d8dbdb,
+
+                timeStripColor:#d8dbdb,
+
+                buttonTextColor: rgb(255, 255, 255),
+
+                addButtonColor: #fa9917,
+
+                mainColor: rgba(250, 153, 23, 0.99),
+
+                secondaryColor: #fa9917,
+
+                accentColor:#007892,
+
+                errorColor:#ff1813,
+
+        ),
+);
+

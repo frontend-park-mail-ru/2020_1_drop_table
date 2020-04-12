@@ -75,11 +75,14 @@
         margin-right: auto;
         font-size: 1rem;
         cursor: default;
+        white-space: nowrap;
+
     }
     &_span_value{
         margin-right: auto;
         font-size:1.25rem;
         cursor: default;
+        white-space: nowrap;
     }
 
 }
@@ -108,10 +111,12 @@
             &_spanValue{
                 font-size: 4.5rem;
                 cursor: default;
+                white-space: nowrap;
             }
             &_spanLabel{
                 font-size: 1.5rem;
                 cursor: default;
+                white-space: nowrap;
             }
         }
     }
@@ -143,11 +148,13 @@
                 font-size: 4.5rem;
                 margin-left: 1rem;
                 cursor: default;
+                white-space: nowrap;
             }
             &_spanLabel{
                 font-size: 1.5rem;
                 margin-left: 1rem;
                 cursor: default;
+                white-space: nowrap;
             }
         }
 
@@ -159,10 +166,12 @@
         &_spanLabel{
             font-size: 1rem;
             cursor: default;
+            white-space: nowrap;
         }
         &_spanValue{
             font-size: 1.5rem;
             cursor: default;
+            white-space: nowrap;
 
         }
     }
@@ -174,11 +183,13 @@
         &_spanLabel{
             font-size: 0.9rem;
             cursor: default;
+            white-space: nowrap;
         }
 
         &_spanValue{
             font-size: 1.4rem;
             cursor: default;
+            white-space: nowrap;
         }
     }
 

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
-
+@import '../../scss/themes.scss';
 
 .decorate-container {
     width: 100%;
@@ -43,14 +43,18 @@
                     width: 10rem;
                     height: 0.2rem;
                     left: 50%;
-                    background-color: #1e768f;
+                    @include themify($themes){
+                        background-color: themed('mainColor');
+                    }
                 }
 
                 &__circle {
                     width: 2.5rem;
                     height: 2.5rem;
                     left: 60%;
-                    background-color: #1e768f;
+                    @include themify($themes){
+                        background-color: themed('mainColor');
+                    }
                     border-radius: 50%;
                 }
             }
@@ -81,8 +85,12 @@
         -webkit-appearance: none;
         font-weight: bolder;
         font-size: 1.5rem;
-        color: white;
-        background-color: #1e768f;
+        @include themify($themes){
+            color: themed('buttonTextColor');
+        }
+        @include themify($themes){
+            background-color: themed('mainColor');
+        }
         margin-top: 2rem;
         width: 100%;
         height: 6rem;
@@ -93,8 +101,12 @@
 
 
         &:active {
-            color: white;
-            background: #1e768f;
+            @include themify($themes){
+                color: themed('buttonTextColor');
+            }
+            @include themify($themes){
+                background: themed('mainColor');
+            }
         }
     }
 
@@ -109,7 +121,9 @@
             left: 0;
             -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
-            color: rgb(0, 0, 0);
+            @include themify($themes){
+                color: themed('textColor');
+            }
             pointer-events: none;
             -webkit-transition: all 0.15s ease-out 0s;
             transition: all 0.15s ease-out 0s;
@@ -124,7 +138,9 @@
             width: 100%;
             padding-bottom: 2%;
             background: none;
-            color: #000000;
+            @include themify($themes){
+                color: themed('textColor');
+            }
             padding-top: 5%;
             font-size: 1rem;
         }

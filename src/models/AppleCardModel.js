@@ -37,12 +37,12 @@ export class AppleCardModel {
         "barcode": {"format": "PKBarcodeFormatQR",
      "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
       "messageEncoding": "iso-8859-1"},
-       "logoText": "Это",
+       "logoText": "Название",
         "locations": [{"latitude": 37.6189722, "longitude": -122.3748889}, {"latitude": 37.33182, "longitude": -122.03118}],
          "storeCard": {
-         "headerFields": [{"key": "_676325044", "label": "твоя", "value": "классная"}],
-          "primaryFields": [{"key": "_768436380", "label": "Попробуй", "value": "карточка"}],
-          "secondaryFields": [{"key": "_768436380", "label": "отредактировать", "value": "её"}]
+         "headerFields": [{"key": "_676325044", "label": "Карта", "value": "лояльности"}],
+          "primaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}],
+          "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
            "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
             "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
@@ -490,8 +490,6 @@ export class AppleCardModel {
 
         this._icon = context.icon;
         this._strip = context.strip;
-
-        console.log('icon ',context.icon);
 
         this._organizationName = design.organizationName;
         this._description = design.description;

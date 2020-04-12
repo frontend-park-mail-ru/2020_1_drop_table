@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
+@import '../../scss/themes.scss';
+
 .cafe-page{
     font-family: 'Montserrat',SansSerif;
     height: 100%;
     display: flex;
     padding: 0 10% 10% 10%;
     justify-content: space-around;
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
 
 
     &__cafe-info{
@@ -37,7 +42,9 @@
             right:15%;
             height: 45%;
             width: 48%;
-            background-color: #ffffff;
+            @include themify($themes){
+                background-color: themed('cafeCardBackgroundColor');
+            }
             -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             display: table-column;
@@ -85,13 +92,17 @@
             left:60%;
             height:29%;
             width:43%;
-            background-color: #1e768f;
+            @include themify($themes){
+                background-color: themed('mainColor');
+            }
             display: flex;
             align-items: center;
 
             &_span{
                 margin: auto 5% auto 25%;
-                color: white;
+                @include themify($themes){
+                    color: themed('buttonTextColor');
+                }
                 transform: translateY(-50%);
                 font-weight: bold;
                 font-size: 3vw;
@@ -105,11 +116,15 @@
             bottom: 0;
             height: 25%;
             width:20%;
-            background-color: #ffffff;
             font-size: 7vw;
             display: flex;
             justify-content: center;
             align-items: center;
+
+            @include themify($themes){
+                background-color: themed('cafeCardBackgroundColor');
+            }
+
             &__time{
                 /*border: 1px solid black;*/
                 height: 100%;
@@ -119,6 +134,10 @@
                     width:80%;
                     padding: 0 10% 0 10%;
                     background-color: black;
+
+                    @include themify($themes){
+                        background-color: themed('timeStripColor');
+                    }
                 }
                 &__span{
                     cursor: default;
@@ -152,12 +171,15 @@
             position: absolute;
             right: 5%;
             bottom: -7vw;
-            background-color: #007892;
             -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             border-radius: 2%;
             opacity: 90%;
             cursor: pointer;
+
+            @include themify($themes){
+                background-color: themed('mainColor');
+            }
 
             &:hover{
                 filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
@@ -177,13 +199,19 @@
     width:16rem;
     height: 8rem;
     margin: 10px auto;
-    background-color: #007892;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
+
     &_h4{
         font-family: Montserrat;
-        color: white;
+        @include themify($themes){
+            color: themed('buttonTextColor');
+        }
         cursor: pointer;
     }
     &:hover{
@@ -202,13 +230,18 @@
     width:16rem;
     height: 8rem;
     margin: 10px auto;
-    background-color: #fa9917;
+    @include themify($themes){
+        background-color: themed('accentColor');
+    }
     display: flex;
     justify-content: center;
     align-items: center;
     &_h4{
         font-family: Montserrat;
-        color: white;
+
+        @include themify($themes){
+            color: themed('buttonTextColor');
+        }
         cursor: pointer;
 
     }

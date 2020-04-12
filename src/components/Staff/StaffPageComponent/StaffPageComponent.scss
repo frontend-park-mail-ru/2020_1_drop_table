@@ -1,3 +1,5 @@
+@import '../../../scss/themes.scss';
+
 .staff-page-container{
     width:100%;
     height: 100%;
@@ -12,6 +14,9 @@
 
 
 .staff-page-container__QR-window{
+    @include themify($themes){
+        background-color: themed('backgroundColor');
+    }
     position: absolute;
     justify-self: center;
     top:25%;
@@ -22,8 +27,6 @@
     flex-direction: column;
     justify-content: center;
     max-width: 80%;
-
-    background-color: white;
     border-radius: 0.5rem;
     -webkit-filter: drop-shadow(5px 5px 5px #000);
     filter: drop-shadow(5px 5px 5px #000);

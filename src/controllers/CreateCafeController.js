@@ -68,7 +68,7 @@ export default class CreateCafeController{
                 }
             },
             cafe: {
-                cafeName: 'Добавление кафе',
+                cafeName: 'Добавление заведения',
                 imgSrc: '/images/test.jpg',
                 event: {
                     type: 'change',
