@@ -43,7 +43,7 @@
             height: 45%;
             width: 48%;
             @include themify($themes){
-                background-color: themed('cafeCardBackgroundColor');
+                background-color: themed('cafeCardColor');
             }
             -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
@@ -116,31 +116,31 @@
             bottom: 0;
             height: 25%;
             width:20%;
-            font-size: 7vw;
+            font-size: 4vw;
             display: flex;
             justify-content: center;
             align-items: center;
 
             @include themify($themes){
-                background-color: themed('cafeCardBackgroundColor');
+                background-color: themed('backgroundColor');
             }
 
             &__time{
-                /*border: 1px solid black;*/
                 height: 100%;
                 padding-top:0;
                 &__strip{
                     height: 0.2rem;
                     width:80%;
                     padding: 0 10% 0 10%;
-                    background-color: black;
-
                     @include themify($themes){
                         background-color: themed('timeStripColor');
                     }
                 }
-                &__span{
+                &_span{
                     cursor: default;
+                    @include themify($themes){
+                        color: themed('textColor');
+                    }
                 }
             }
         }
@@ -188,12 +188,20 @@
                 padding: 10px;
                 font-family: 'Montserrat',SansSerif;
                 cursor: pointer;
+                @include themify($themes){
+                    color: themed('textColor');
+                }
             }
         }
 
     }
 }
 
+.buttons{
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
 .buttons__apple-pass-button{
     -webkit-appearance: none;
     width:16rem;

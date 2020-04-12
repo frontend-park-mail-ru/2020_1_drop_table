@@ -26,6 +26,9 @@
                 height: 100%;
                 font-style: normal;
                 font-size: 3rem;
+                @include themify($themes){
+                    color: themed('textColor');
+                }
             }
         }
         &__dec-field {
@@ -127,14 +130,17 @@
             pointer-events: none;
             -webkit-transition: all 0.15s ease-out 0s;
             transition: all 0.15s ease-out 0s;
-            top: -0.5rem;
+            top: 0.5rem;
             font-size: 1rem;
         }
 
         &_input {
 
             border: none;
-            border-bottom: solid 2px #000000;
+            border-bottom: solid 2px;
+            @include themify($themes){
+                border-color: themed('textColor');
+            }
             width: 100%;
             padding-bottom: 2%;
             background: none;
@@ -151,11 +157,17 @@
         padding-top: 2rem;
         display: inline-block;
         text-align: center;
+        @include themify($themes){
+            color: themed('textColor');
+        }
 
         &__login-span {
             display: block;
             word-wrap: break-word;
             cursor: pointer;
+            @include themify($themes){
+                color: themed('textColor');
+            }
         }
     }
 }

@@ -25,6 +25,9 @@
                 font-weight: bold;
                 font-size: 5vw;
                 margin-left: 30px;
+                @include themify($themes){
+                    color: themed('textColor');
+                }
             }
         }
     }

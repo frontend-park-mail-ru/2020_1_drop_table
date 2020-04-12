@@ -50,26 +50,7 @@ export default class Header{
         }
     }
 
-    /**
-     * Добавление листенеров на элементы
-     * @param {obj} context некоторый контекст с информацией о хэдере
-     * @private
-     */
-    _addListeners(context){
-        // if (this._hasAvatar) {
-        //     let avatar = this._head.getElementsByClassName('page-header__avatar').item(0);
-        //     avatar.addEventListener(context['avatar']['event']['type'],
-        //         context['avatar']['event']['listener']);
-        // }
 
-        // if (this._hasExit) {
-        //     let exit = this._head.getElementsByClassName('page-header__h4').item(0);
-        //     exit.addEventListener(context['exit']['event']['type'],
-        //         context['exit']['event']['listener']);
-        // }
-
-
-    }
 
     /**
      * Отрисовка хэдера
@@ -80,7 +61,7 @@ export default class Header{
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
-            logoImageSrc: 'https://sun9-30.userapi.com/c857120/v857120674/ded2f/D5blv62-tno.jpg',
+            logoImageSrc: '/images/logo.png',
             menuList: this._menuList,
             avatarImageSrc: this._avatar
         };
@@ -121,18 +102,8 @@ export default class Header{
 
         this._setProperties(context);
         this._renderHeader();
+
         this._parent.appendChild(this._head);
-
-        const hrefs = document.getElementsByClassName('page-header__nav__menu_list_a');
-        console.log('hrefs', hrefs);
-        console.log('menu', this._menuList);
-
-        // for(let i = 0 ; i < this._menuList.length;i++){
-        //     hrefs.item(i).test = this._menuList[i].href;
-        //     hrefs.item(i).addEventListener('click', this.redirect, false);
-        // }
-
-        this._addListeners(context);
 
         this._renderAvatar(context);
     }

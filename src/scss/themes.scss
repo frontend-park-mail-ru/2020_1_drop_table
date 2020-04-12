@@ -21,10 +21,13 @@
 $themes: (
         light: (
                 backgroundColor: #ffffff,
-
                 alertBackgroundColor: #ffffff,
 
-                cafeCardBackgroundColor: #ffffff,
+
+
+                cafeCardColor: #ffffff,
+
+                cafeCardNameBackgroundColor: #ffffff,
 
 
                 textColor: #000000,
@@ -48,24 +51,26 @@ $themes: (
 
                 backgroundColor: #000000,
 
-                alertBackgroundColor: rgba(0, 0, 0, 0.47),
+                alertBackgroundColor: #f9f7f7e6,
 
-                cafeCardBackgroundColor: #000000,
+                cafeCardColor: #f9f7f7e6,
+
+                cafeCardNameBackgroundColor: #ffffff,
 
 
                 textColor: #d8dbdb,
 
-                timeStripColor:#d8dbdb,
+                timeStripColor:#f9f7f7e6,
 
                 buttonTextColor: rgb(255, 255, 255),
 
-                addButtonColor: #fa9917,
+                addButtonColor: #f9f7f7e6,
 
-                mainColor: rgba(250, 153, 23, 0.99),
+                mainColor: #2b8aa3b8,
 
-                secondaryColor: #fa9917,
+                secondaryColor: #1e768f,
 
-                accentColor:#007892,
+                accentColor:#fa991782,
 
                 errorColor:#ff1813,
 

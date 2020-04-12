@@ -2,9 +2,14 @@
 @import '../../scss/themes.scss';
 
 
+
+
 .page-header{
    //margin: 20px;
     padding-bottom: 20px;
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
 }
 
 .nav {
@@ -126,7 +131,10 @@
         display: block;
         width: 25px;
         height: 10px;
-        border-top: 2px solid #000000;
+        border-top: 2px solid;
+        @include themify($themes){
+            border-color: themed('textColor');
+        }
     }
     .nav-links {
         position: absolute;

@@ -15,7 +15,10 @@
         font-size: 1rem;
 
         border: none;
-        border-bottom: solid 2px #000000;
+        border-bottom: solid;
+        @include themify($themes){
+            border-color: themed('textColor');
+        }
         width: 100%;
         padding-bottom: 2%;
         padding-top: 5%;

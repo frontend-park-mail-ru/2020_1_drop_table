@@ -13,8 +13,10 @@
     margin-bottom: 0.5rem;
     width: 80%;
     height:1.5rem;
-
-    border: solid 2px #000000;
+    border: solid 2px;
+    @include themify($themes){
+        border-color: themed('textColor');
+    }
 
 }
 
@@ -32,7 +34,10 @@
     /*width: 25px;*/
     height: 25px;
     border-radius: 25px;
-    border: 2px solid #1e768f;
+    border: 2px solid ;
+    @include themify($themes){
+        border-color: themed('mainColor');
+    }
     @include themify($themes){
         background-color: themed('mainColor');
     }

@@ -35,6 +35,10 @@
     min-height: 75px;
     margin: 0 auto;
     object-fit: cover;
+    border: 1px solid;
+    @include themify($themes){
+        border-color: themed('textColor');
+    }
 
 }
 
@@ -64,7 +68,9 @@
 }
 
 .user-profile__header___decorate-container__text-field_span{
-
+    @include themify($themes){
+        color: themed('textColor');
+    }
 }
 
 .user-profile__header___decorate-container__strip{

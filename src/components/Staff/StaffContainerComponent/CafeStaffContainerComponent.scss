@@ -1,3 +1,4 @@
+@import '../../../scss/themes.scss';
 .cafe-with-staff-container{
     display: grid;
     grid-template-columns: 5% 1fr;
@@ -48,6 +49,9 @@
     .cafe-with-staff-container__cafe-with-staff-container_span{
         font-family: Montserrat , SansSerif ;
         font-size: 4rem;
+        @include themify($themes){
+            color: themed('textColor');
+        }
     }
 
 
@@ -88,7 +92,10 @@
 }
 
 .cafe-staff-container__design__long-strip{
-    background-color: #1e768f;
+    border: 1px solid;
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
     height: 0.4rem;
     width: 100%;
     margin-bottom: 0.4rem;
@@ -97,13 +104,17 @@
 }
 
 .cafe-staff-container__design__medium-strip{
-    background-color: #1e768f;
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
     height: 0.3rem;
     width: 70%;
     margin-bottom: 0.3rem;
 }
 .cafe-staff-container__design__short-strip{
-    background-color: #1e768f;
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
     height: 0.2rem;
     width: 40%;
     margin-bottom: 0.2rem;
@@ -127,7 +138,9 @@
 .staff-page__add-staff-field__text-strip{
     width:40em;
     height:0.5em;
-    background-color: #fa9917;
+    @include themify($themes){
+        background-color: themed('accentColor');
+    }
     align-self: flex-end;
 
 }
@@ -140,7 +153,9 @@
 .staff-page__add-staff-field__add-button{
     width: 14em;
     height: 7em;
-    background-color: #ffffff;
+    @include themify($themes){
+        background-color: themed('addButtonColor');
+    }
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     transform: rotate(180deg);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
@@ -156,7 +171,6 @@
 .staff-page__add-staff-field__add-button:hover{
     width: 14em;
     height: 7em;
-    background-color: #ffffff;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     transform: rotate(180deg);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
