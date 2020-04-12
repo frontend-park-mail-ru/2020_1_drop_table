@@ -5,7 +5,6 @@
 
 
 .page-header{
-   //margin: 20px;
     padding-bottom: 20px;
     @include themify($themes){
         background: themed('backgroundColor');
@@ -150,7 +149,7 @@
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
-        margin-top: 10%;
+        margin:  10% 0 ;
         &:hover{
             text-decoration: underline;
         }
