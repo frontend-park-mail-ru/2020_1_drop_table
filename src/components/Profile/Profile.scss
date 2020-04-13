@@ -103,3 +103,56 @@
         flex-direction: column-reverse;
     }
 }
+
+.user-profile__header__utils{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.switch{
+    position: relative;
+    display: block;
+    width: 90px;
+    height: 55px;
+    margin-right:20px;
+}
+.slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background-color: white;
+    //border: 1px solid #141414;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+    transition: .5s;
+}
+.slider:before{
+    position: absolute;
+    content: "";
+    //bottom: 14px;
+    top: 2.3px;
+    left: 2px;
+    background: radial-gradient(#FFF76B 0%, #FFF845 30%, #FFDA4E 50%, #FB8933 100%);
+    transition: .5s;
+}
+.switch input{
+    display: none;
+}
+input:checked + .slider{
+    background-color: #141414;
+    //border: 3px solid white;
+}
+input:checked + .slider:before{
+    transform: translateX(35.5px);
+    background: radial-gradient(rgba(255,255,255,0.75) 0%, rgba(127,127,127,0.5) 90%, #000 100%);
+    //background: url(http://errazib.com/img/dark_moon.png) no-repeat center;
+    //background-size:cover;
+}
+.slider.round{
+    border-radius: 35px;
+}
+.slider.round:before{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}

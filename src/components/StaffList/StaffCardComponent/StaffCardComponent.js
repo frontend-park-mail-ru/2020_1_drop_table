@@ -22,7 +22,6 @@ export class StaffCardComponent {
         if(!context.photo){
             context.photo = '/images/userpic.png'
         }
-        console.log('тест фотки ', context.photo);
         this._el.innerHTML += StaffCard(context);
     }
 

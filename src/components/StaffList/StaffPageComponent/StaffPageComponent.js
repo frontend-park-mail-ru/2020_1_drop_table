@@ -33,7 +33,10 @@ export class StaffPageComponent {
                     staffList.push(StaffCard(staffItem));
                 }
             }
-            (new CafeStaffContainerComponent(this._parent)).render({name, staffList});
+            const cafeId = name.split(',')[0];
+            const cafeName = name.split(',')[1];
+
+            (new CafeStaffContainerComponent(this._parent)).render({name: cafeName, staffList: staffList, id:cafeId});
         }
         this._parent.innerHTML += StaffPage();
     }

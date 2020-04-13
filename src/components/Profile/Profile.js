@@ -27,6 +27,11 @@ export default class ProfileComponent {
             context['event']['type'],
             context['event']['listener']
         );
+
+        const switchTheme = document.getElementsByClassName('switch').item(0);
+        switchTheme.addEventListener('click', function (){
+
+        })
     }
 
     /**

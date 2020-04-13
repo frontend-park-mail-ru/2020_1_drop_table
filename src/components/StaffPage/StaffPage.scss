@@ -1,0 +1,207 @@
+@import '../../scss/themes.scss';
+
+.staff-page{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.staff-page__top{
+  margin-bottom: 50px ;
+}
+
+.staff-page__top__design{
+  z-index: 0;
+  position: absolute;
+  height: 100%;
+  width: 99%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.staff-page__top__design__work{
+  margin-right: 2rem;
+}
+.staff-page__top__design__work__position{
+  font-family: Montserrat,sans-serif;
+  font-size: 2rem;
+}
+
+.staff-page__top__design__long-strip{
+  border: 1px solid;
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+  height: 0.4rem;
+  width: 100%;
+  margin-bottom: 0.4rem;
+
+
+}
+
+.staff-page__top__design__medium-strip{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+  height: 0.3rem;
+  width: 70%;
+  margin-bottom: 0.3rem;
+}
+.staff-page__top__design__short-strip{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+  height: 0.2rem;
+  width: 40%;
+  margin-bottom: 0.2rem;
+}
+
+.staff-page__top__user-container{
+
+}
+
+
+
+.staff-page__top__user-container__user-image-container{
+  display: flex;
+  justify-content: start;
+  padding-bottom: 1.2rem;
+}
+.staff-page__top__user-container_user-image-container__image-square{
+
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 10%;
+  z-index: 2;
+
+}
+.staff-page__top__user-container__user-image-container__image-square_img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid;
+  @include themify($themes){
+    border-color: themed('textColor');
+  }
+}
+
+.staff-page__top__user-container__name-container{
+  display: flex;
+  margin-left: 10%;
+  flex-direction: column;
+  margin-bottom: 3rem;
+
+}
+
+.staff-page__top__user-container__name-container_span{
+  font-family: 'Montserrat', SansSerif;
+  font-size: 2rem;
+  word-wrap: break-word;
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}
+
+.staff-page__top__user-container__name-container__strip{
+  @include themify($themes){
+    background-color: themed('accentColor');
+  }
+  height: 0.5rem;
+  width: 25%;
+}
+
+.staff-page__statistics-container{
+  width: 100%;
+  margin: 0 auto;
+
+}
+.staff-page__statistics-container__title{
+  height: 100px;
+  width:60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+.staff-page__statistics-container__title_h4{
+  font-family: Montserrat,sans-serif;
+  font-size: 2rem;
+}
+.staff-page__statistics-container__graph-container{
+  height:40vw;
+  width:60vw;
+  background-color: rgba(51, 51, 51, 0.5);
+  margin: 50px auto;
+}
+
+.staff-page__recent-actions{
+  display: flex;
+  flex-direction: column;
+}
+.staff-page__recent-actions__title{
+  height: 100px;
+  width:60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+}
+.staff-page__recent-actions__title_h4{
+  font-family: Montserrat,sans-serif;
+  font-size: 2rem;
+}
+
+.staff-page__recent-actions__actions-container{
+    margin: 50px auto;
+    display: flex;
+
+}
+
+.staff-page__recent-actions__actions-container__date-container{
+  justify-self: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.staff-page__recent-actions__actions-container__date-container_span{
+  font-family: Montserrat, sans-serif;
+  font-size: 5rem;
+  color: #1e768f;
+}
+
+.staff-page__recent-actions__actions-container__actions{
+  width: 60vw;
+  height:40vw;
+  justify-self: center;
+  background-color: #333333a8;
+
+}
+
+.staff-page__redactor{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 50px auto
+}
+.staff-page__redactor__button-fire {
+  background-color: #B7202B;
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.15));
+  width: 300px;
+  height: 100px;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  &:hover{
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+  }
+}
+
+.staff-page__redactor__button-fire_span{
+  font-family: Montserrat,sans-serif;
+  margin: auto;
+
+}
+

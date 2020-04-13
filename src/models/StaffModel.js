@@ -6,124 +6,107 @@ import {authAjax} from '../utils/authAjax';
 /** Класс модели рабочего 3 рк*/
 export default class StaffModel { // дописать потом
 
-    constructor() {
-        // this._listId = listId;
-        this._staffid = null;
-        this._name = null;
-        this._email = null;
-        this.password = null; //потом убрать стоит
-        this._editdat = null;
-        this._photo = null;
-        this._isowner = null;
-        this._cafeid = null;
+    constructor(staff) {
 
-        // this._loadStaff();
+        this._StaffId = staff.StaffId;
+        this._StaffName = staff.StaffName;
+        this._Position = staff.Position? staff.Position: 'Работает';
+        this._CafeId = staff.CafeId;
+        this._CafeName = staff.CafeName;
+        this._Photo = staff.Photo? staff.Photo : '/images/userpic.png';
+        //this._loadStaff();
     }
 
-    get address(){
+    get StaffId(){
         return new Promise((resolve) => {
-            this._checkStaff(this._address).then(()=>{
-                resolve(this._address);
+            this._checkStaff(this._StaffId).then(()=>{
+                resolve(this._StaffId);
             });
         });
     }
 
-    get closeTime(){
+    get StaffName(){
         return new Promise((resolve) => {
-            this._checkStaff(this._closeTime).then(()=>{
-                resolve(this._closeTime);
+            this._checkStaff(this._StaffName).then(()=>{
+                resolve(this._StaffName);
             });
         });
     }
 
-    get description(){
+    get Position(){
         return new Promise((resolve) => {
-            this._checkStaff(this._description).then(()=>{
-                resolve(this._description);
+            this._checkStaff(this._Position).then(()=>{
+                resolve(this._Position);
             });
         });
     }
 
-    get id(){
+    get CafeId(){
         return new Promise((resolve) => {
-            this._checkStaff(this._id).then(()=>{
-                resolve(this._id);
+            this._checkStaff(this._CafeId).then(()=>{
+                resolve(this._CafeId);
             });
         });
     }
 
-    get name(){
+    get CafeName(){
         return new Promise((resolve) => {
-            this._checkStaff(this._name).then(()=>{
-                resolve(this._name);
+            this._checkStaff(this._CafeName).then(()=>{
+                resolve(this._CafeName);
             });
         });
     }
 
-    get openTime(){
+    get Photo(){
         return new Promise((resolve) => {
-            this._checkStaff(this._openTime).then(()=>{
-                resolve(this._openTime);
+            this._checkStaff(this._Photo).then(()=>{
+                resolve(this._Photo);
             });
         });
     }
 
-    get ownerID(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._ownerID).then(()=>{
-                resolve(this._ownerID);
-            });
-        });
-    }
 
-    get photo(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._photo).then(()=>{
-                resolve(this._photo);
-            });
-        });
-    }
 
     get context(){
-        console.log('in context');
         let staffListData = sessionStorage.getItem('StaffList');
         const staffData = JSON.parse(staffListData)[this._listId];
         return staffData;
     }
 
     set listId(listId){
-        // this._listId = listId;
+        this._listId = listId;
     }
 
-    set address(address){
-        this._address = address.toString();
+    set StaffId(StaffId){
+        this._StaffId = StaffId.toString();
         this._saveStaff();
     }
 
-    set closeTime(closeTime){
-        this._closeTime = closeTime.toString();
+    set StaffName(StaffName){
+        this._StaffName = StaffName.toString();
         this._saveStaff();
     }
 
-    set description(description){
-        this._description = description.toString();
+    set Position(Position){
+        this._Position = Position.toString();
         this._saveStaff();
     }
 
-    set name(name){
-        this._name = name.toString();
+    set CafeId(CafeId){
+        this._CafeId = CafeId.toString();
         this._saveStaff();
     }
 
-    set openTime(openTime){
-        this._openTime = openTime.toString();
+    set CafeName(CafeName){
+        this._CafeName = CafeName.toString();
         this._saveStaff();
     }
 
-    set photo(photo){
-        this._photo = photo.toString();
+    set Photo(Photo){
+        this._Photo = Photo.toString();
         this._saveStaff();
     }
+
 
     async _checkStaff(data){
         if(!data){
@@ -132,7 +115,6 @@ export default class StaffModel { // дописать потом
     }
 
     _loadStaff(){
-        console.log('load staff');
         let staffListData = sessionStorage.getItem('StaffList');
         if (staffListData && this._listId != null) {
             const staffData = JSON.parse(staffListData)[this._listId];
@@ -145,14 +127,12 @@ export default class StaffModel { // дописать потом
     _saveStaff(){
 
         const data = {
-            'address': this._address,
-            'closeTime': this._closeTime,
-            'description': this._description,
-            'id': this._id,
-            'name': this._name,
-            'openTime': this._openTime,
-            'ownerID': this._ownerID,
-            'photo': this._photo
+            'StaffId': this._StaffId,
+            'StaffName': this._StaffName,
+            'Position': this._Position,
+            'CafeId': this._CafeId,
+            'CafeName': this._CafeName,
+            'Photo': this._Photo,
         };
 
         let staffList = JSON.parse(sessionStorage.getItem('StaffList'));
@@ -161,45 +141,24 @@ export default class StaffModel { // дописать потом
     }
 
     fillStaffData(context){
-        console.log('fill staffData');
-        this._address = context['address'];
-        this._closeTime = context['closeTime'];
-        this._description = context['description'];
-        this._id = context['id'];
-        this._name = context['name'];
-        this._openTime = context['openTime'];
-        this._ownerID = context['ownerID'];
-        this._photo = context['photo'];
+        this._StaffId = context['StaffId'];
+        this._StaffName = context['StaffName'];
+        this._Position = context['Position'];
+        this._CafeId = context['CafeId'];
+        this._CafeName = context['CafeName'];
+        this._Photo = context['Photo'];
         this._saveStaff();
     }
 
-    async getFormData(photo){
-        console.log('get FormData');
-        let formData = new FormData();
 
-        let data = {
-            'name': await this.name,
-            'address': await this.address,
-            'description': await this.description
-        };
-
-        if (photo) {
-            formData.append('photo', photo);
-        } else {
-            data['photo'] = await this.photo;
-        }
-
-        formData.append('jsonData', JSON.stringify(data));
-        return formData;
-    }
 
     /** Получение работника */
     async getStaff(){
-        await authAjax('GET', constants.PATH + `/api/v1/staff/${this._id}`,
+        await authAjax('GET', constants.PATH + `/api/v1/staff/${this._StaffId}`,
             null,
             (response) => {
                 if (response.errors === null) {
-                    console.log('getStaff ', response.data);
+
                     this.fillStaffData(response.data);
                 } else {
                     throw response.errors;

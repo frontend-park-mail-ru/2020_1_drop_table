@@ -26,77 +26,6 @@ export default class StaffListController{
         let staffListContext = {
             staffList : await this._staffListModel.context
 
-            // staffList: {
-            //
-            //     'Кафе у Бритни': [
-            //         {
-            //             staffID: '1',
-            //             photo:'https://i.pinimg.com/474x/e3/1b/52/e31b529370b3c841c11cf2a7d4ee9d53--stress-humor-britney-spears.jpg',
-            //             name: 'Бритни Спирс1',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '2',
-            //             photo:'https://i.pinimg.com/474x/e3/1b/52/e31b529370b3c841c11cf2a7d4ee9d53--stress-humor-britney-spears.jpg',
-            //             name: 'Бритни Спирс2',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '3',
-            //             photo:'https://i.pinimg.com/474x/e3/1b/52/e31b529370b3c841c11cf2a7d4ee9d53--stress-humor-britney-spears.jpg',
-            //             name: 'Бритни Спирс3',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '4',
-            //             photo:'https://i.pinimg.com/474x/e3/1b/52/e31b529370b3c841c11cf2a7d4ee9d53--stress-humor-britney-spears.jpg',
-            //             name: 'Бритни Спирс4',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //     ],
-            //
-            //     'Кафе у Фекалиса': [
-            //         {
-            //             staffID: '5',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис5',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '6',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис6',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '7',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис7',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '8',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис8',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //         {
-            //             staffID: '9',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис9',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //     ],
-            //     'Кафе одиночество': [
-            //         {
-            //             staffID: '10',
-            //             photo:'https://lastfm.freetls.fastly.net/i/u/ar0/a91fc5e0de5ee3ea7688e0f386999f79.jpg',
-            //             name: 'Мистер Фекалис10',
-            //             position: 'Официант и еще какая-то должность.Мастерски готовит суши и гречку с котлетами'
-            //         },
-            //     ],
-            //
-            // }
             // await = this._staffListModel.context
         };
 
@@ -114,17 +43,39 @@ export default class StaffListController{
         return staffListContext;
     }
 
-    // async _addListeners(){
-    //     let staffAddButtons = document.getElementsByClassName('staff-page__add-staff-field__add-button');
-    //     for(let i = 0; i < staffAddButtons.length; i++){
-    //         staffAddButtons.item(i).addEventListener('click', await this._staffListModel.addStaffQR)
-    //     }
-    // }
+    _addStaffQR(){
+        this.staffListModel.addStaffQR(this.id);
+    }
+    _redirectStaff(){
+        router._goTo(`/staff/${this.id}`)
+    }
+
+
+    async _addListeners(){
+
+        let addButtons = document.getElementsByClassName('cafe-staff-container__add-staff-container__button');
+        for(let i = 0; i < addButtons.length; i++){
+            const context = {
+                staffListModel : this._staffListModel,
+                id : addButtons.item(i).getAttribute('id').split('-')[1]
+            };
+            addButtons.item(i).addEventListener('click',this._addStaffQR.bind(context))
+        }
+        
+        let staffCards = document.getElementsByClassName('staff-card-container');
+        for(let i = 0; i < staffCards.length; i++){
+            const context = {
+                id : staffCards.item(i).getAttribute('id').split('-')[1]
+            };
+            staffCards.item(i).addEventListener('click',this._redirectStaff.bind(context))
+        }
+
+    }
 
     /** Запуск контроллера */
     async control(){
         this._staffListView.context = await this._makeViewContext();
         this._staffListView.render();
-        //this._addListeners()
+        this._addListeners()
     }
 }

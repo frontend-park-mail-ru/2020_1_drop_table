@@ -2,7 +2,7 @@
 
 import BaseView from './BaseView';
 import Header from '../components/Header/Header';
-import {StaffPageComponent} from '../components/Staff/StaffPageComponent/StaffPageComponent';
+import {StaffPageComponent} from '../components/StaffList/StaffPageComponent/StaffPageComponent';
 
 /** view страницы с работниками */
 export default class StaffListView extends BaseView{

@@ -29,7 +29,6 @@ export default class EditCafeController{
         const photoInput = document.getElementById('upload');
 
         const cafe = this._cafeListModel.getCafeById(this._id);
-        console.log('get by id ', cafe);
 
         cafe._id = this._id;
         cafe.name = form.elements['name'].value;

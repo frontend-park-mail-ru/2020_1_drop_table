@@ -3,27 +3,39 @@ import Router from '../utils/Router';
 import UserProfileView from '../view/UserProfileView'
 import UserProfileController from '../controllers/UserProfileController';
 import UserModel from '../models/UserModel';
+
 import CafeListModel from '../models/CafeListModel';
 import CafeListView from '../view/CafeListView';
+import CafeListController from '../controllers/CafeListController';
+
 import CreateCafeView from '../view/CreateCafeView';
 import CreateCafeController from '../controllers/CreateCafeController';
+import EditCafeController from '../controllers/EditCafeController';
+
 import LoginView from '../view/LoginView';
 import LoginController from '../controllers/LoginController';
 import RegisterView from '../view/RegisterView';
 import RegisterController from '../controllers/RegisterController';
-import CafeListController from '../controllers/CafeListController';
+
 import CafePageController from '../controllers/CafePageContoller';
 import CafePageView from '../view/CafePageView';
+
+
 import StaffListView from '../view/StaffListView';
+import StaffPageView from '../view/StaffPageView';
 import StaffListController from '../controllers/StaffListController';
+
+
 import LandingModel from '../models/LandingModel';
 import LandingView from '../view/LandingView';
 import LandingController from '../controllers/LandingController';
+
 import AddStaffController from '../controllers/addStaffController';
 import StaffListModel from '../models/StaffListModel';
-import EditCafeController from '../controllers/EditCafeController';
+
 import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
+import StaffPageController from '../controllers/StaffPageController';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -80,12 +92,11 @@ function doCreateCafe(){
     const userModel = new UserModel();//router
     const createCafeView = new CreateCafeView();
     const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
-    console.log('test228', );
     createCafeController.control();
 }
 
 /** Страница добавления работника */
-function doStaff(){
+function doStaffPage(){
     const userModel = new UserModel();
     const staffListModel = new StaffListModel(userModel);
     const staffListView = new StaffListView();
@@ -108,7 +119,6 @@ function doCafe(req){
 /** Страница изменения кафе */
 function doEditCafe(req){
     const id = req.param.id;
-    console.log('in edit cafe');
     const cafeListModel = new CafeListModel();
     const userModel = new UserModel();
     const editCafeView = new CreateCafeView();
@@ -136,10 +146,21 @@ function doAddStaff(req) {
 /** Страница меню работника */
 function doStaffMenu(req) {
     const uuid = req.param.uuid;
-    console.log('uuid', uuid);
     const staffMenuView = new StaffMenuView(app, uuid);
     const staffMenuController = new StaffMenuController(staffMenuView);
     staffMenuController.control();
+}
+
+function doStaffById(req){
+    const id = req.param.id;
+
+    const userModel = new UserModel();
+    const staffListModel = new StaffListModel(userModel);
+    const staffPageView = new StaffPageView();
+    console.log('view in main', staffPageView);
+    const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
+
+    staffPageController.control(id);
 }
 
 
@@ -148,15 +169,22 @@ function doStaffMenu(req) {
 /** Роуты роутера */
 router.get('/', doreg);
 router.get('/landing', doLanding);
+
 router.get('/reg', doreg);
 router.get('/login', dolog);
-router.get('/myCafes', doMyCafes);
 router.get('/profile', doProfile);
+
+router.get('/myCafes', doMyCafes);
 router.get('/createCafe', doCreateCafe);
-router.get('/staff', doStaff);
 router.get('/cafe/{id}', doCafe);
 router.get('/editCafe/{id}', doEditCafe);
+
+router.get('/staff', doStaffPage);
+router.get('/staff/{id}', doStaffById);
 router.get('/addStaff', doAddStaff);
+
+
+
 router.get('/points/{uuid}', doStaffMenu);
 router.notFoundHandler(doLanding);
 

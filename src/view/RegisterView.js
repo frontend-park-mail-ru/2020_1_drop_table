@@ -15,7 +15,6 @@ export default class RegisterView extends BaseView {
     constructor(app, topBarText) {
         super(app);
         this._topBarText = topBarText;
-        console.log('test regview', topBarText )
     }
 
     /** Отрисовка регистрации */

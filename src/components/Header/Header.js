@@ -77,10 +77,10 @@ export default class Header{
     _renderAvatar(context){
         if(this._hasAvatar && context['avatar']['photo']){
             context['avatar']['photo'].then((photo) => {
-                let avatarElement = this._parent.getElementsByClassName('nav-links__link-container_img').item(0);
-                if(photo) {
-                    avatarElement.src = photo;
-                }
+                //let avatarElement = this._parent.getElementsByClassName('nav-links__link-container_img').item(0);
+                // if(photo) {
+                //     avatarElement.src = photo;
+                // }
             }, (exception) => {
                 alert(exception[0].message); //TODO сделать обработку ошибки
             });
