@@ -41,6 +41,11 @@
         }
       }
     }
+    &__edit-button {
+      @include themify($themes){
+        background-color: themed('mainColor');
+      }
+    }
   }
 }
 .buttons{
