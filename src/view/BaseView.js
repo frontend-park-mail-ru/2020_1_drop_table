@@ -1,3 +1,4 @@
+import '../scss/styles.scss';
 
 /** Базовая view */
 export default class BaseView{

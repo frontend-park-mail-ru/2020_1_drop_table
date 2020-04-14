@@ -5,19 +5,18 @@ import {constants} from '../utils/constants';
 import StaffModel from './StaffModel';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
+
 /** Модель staff 3 рк */
 export default class StaffListModel{
 
-    constructor() {
-        this._ownerId = null;
+    constructor(userModel) {
+        this._userModel = userModel;
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
-        console.log('constructor')
     }
 
     get context(){
-        console.log('context');
         return new Promise((resolve) => {
             this._checkStaffList().then(()=>{
                 const staffList = sessionStorage.getItem('StaffList');
@@ -39,13 +38,12 @@ export default class StaffListModel{
 
     getStaffById(id){
         return this._staffModelsList.find((staff) => {
-            return staff._id == id;
+            return staff._StaffId == id;
         });
     }
 
     async _checkStaffList(data){
         if(!data){
-            console.log('checkStaffList')
             await this.staffList();
         }
     }
@@ -65,25 +63,29 @@ export default class StaffListModel{
         sessionStorage.setItem('StaffList', JSON.stringify(data));
     }
 
-    _constructStaff(staffListData){
-        console.log('get staff ',staffListData)
+    _constructStaff(staffListData){ //todo создавать сотрудников
+        for (let [key, value] of Object.entries(staffListData)) {
+            console.log('test1')
+            if(value) {
+                value.forEach((staffVal) => {
+                    const staff = new StaffModel(staffVal);
+                    this._staffModelsList.push(staff);
+                });
+            }
+        }
 
-        Object.entries(staffListData).map((key, value) => {
-            console.log('cafe',key);
-
-            console.log('staff',value);
-        });
-        // for (let [key, value] of staffListData) {
-        //     console.log('cafe', key);
-        //     if(value){
-        //         console.log('staff', value);
-        //     }
-        //
-        // }
-        // staffListData.forEach((_, id) => {
-        //     const staff = new StaffModel(id);
-        //     this._staffModelsList.push(staff);
+        // staffListData.toArray().forEach((_, key) => {
+        //     const cafe = new StaffModel(id);
+        //     this._staffModelsList.push(cafe);
         // });
+        //
+        //
+        // staffListData.toArray().forEach((_, id) => {
+        //     const cafe = new StaffModel(id);
+        //     this._staffModelsList.push(cafe);
+        // });
+
+
     }
 
     createStaff(){
@@ -92,22 +94,21 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        console.log('in staff list')
-        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/5`,
+        let id = await this._userModel.id;
+        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${id}`,
             'GET',
             {},
             (response) => {
 
-                console.log(response)
                 if(response.data === null){
                     console.log('get staff error',response.data)
-                    //router._goTo('/createCafe');
+
                 } else {
                     if (response.errors === null) {
                         this._saveStaffList(response.data);
                         this._constructStaff(response.data);
                     } else {
-                        console.log('throw error')
+                        console.log('throw error');
                         throw response.errors;
                     }
                 }
@@ -116,8 +117,11 @@ export default class StaffListModel{
     }
 
     /** создание qr работника */
-    async addStaffQR() {
-        await ajax(constants.PATH + `/api/v1/staff/generateQr/${7}`,
+    async addStaffQR(id) {
+        if(!id){
+            id = await this._userModel.id; // выдает null
+        }
+        await ajax(constants.PATH + `/api/v1/staff/generateQr/${id}`,
             'GET',
             {},
             (response) => {
@@ -125,7 +129,7 @@ export default class StaffListModel{
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
-                        (new AlertWindowComponent( '', response.data)).render();
+                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
                         // this._saveCafeList(response.data);
                         // this._constructCafe(response.data);
                     } else {

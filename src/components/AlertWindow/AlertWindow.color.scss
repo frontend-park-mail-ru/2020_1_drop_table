@@ -1,0 +1,8 @@
+@import '../../scss/themes.scss';
+
+.apple-card-published-qr-container__QR-window {
+  @include themify($themes) {
+    background-color: themed('alertBackgroundColor');
+
+  }
+}

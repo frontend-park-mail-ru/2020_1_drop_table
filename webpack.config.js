@@ -5,6 +5,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const ExtractNormalCSS = new ExtractTextPlugin('style.css');
+const ExtractColorCSS = new ExtractTextPlugin('style_color.css');
+
 module.exports = {
     entry: './src/main/main.js',
     module: {
@@ -16,13 +19,24 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
+                exclude:/\.color\.scss$/,
+                use: ExtractNormalCSS.extract({
                     fallback: 'style-loader',
                     use: ['css-loader', 'sass-loader'],
 
                 })
 
             },
+
+            {
+                test: /\.color\.scss$/,
+                use:ExtractColorCSS.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader'],
+                })
+
+            },
+
             {
                 test: /\.css$/,
                 use: ['style-loader', 'postcss-loader'],
@@ -64,6 +78,7 @@ module.exports = {
             },
         ]
     },
+
     resolve: {
         // modules: ["node_modules"],
         extensions: ['*', '.js']
@@ -79,12 +94,13 @@ module.exports = {
         hot: true
     },
     plugins: [
-        new ExtractTextPlugin('style.css'),
+        ExtractNormalCSS,
+        ExtractColorCSS,
         new HtmlWebpackPlugin({
             hash: true,
             filename: 'index.html',
             template: './src/html/index.html',
-            favicon: './src/images/logo.ico'
+            favicon: './src/images/logo.png'
         }),
         new CopyWebpackPlugin([
             {from:'src/images',to:'images'},

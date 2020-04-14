@@ -1,8 +1,11 @@
 import './StaffPageComponent.scss';
+import './StaffPageComponent.color.scss';
+
 import StaffPage from './StaffPageComponent.hbs';
 import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs'
 
 import '../StaffContainerComponent/CafeStaffContainerComponent.scss';
+import '../StaffContainerComponent/CafeStaffContainerComponent.color.scss';
 
 import {CafeStaffContainerComponent} from '../StaffContainerComponent/CafeStaffContainerComponent'
 
@@ -27,17 +30,16 @@ export class StaffPageComponent {
             let staffList = [];
             if(staff) {
                 for (let staffItem of staff) {
-                    console.log('StaffHHAHA',staffItem);
-                    console.log('StaffHHAHA',staffItem.Photo);
-                    if(staffItem.Photo === null){
-                        console.log('Staff null',staffItem.Photo);
-                        staffItem.Photo = '/images/userpic.png'
-                        console.log('Staff photo',staffItem.Photo);
+                    if(!staffItem.Photo){
+                        staffItem.Photo = '/images/userpic.png';
                     }
                     staffList.push(StaffCard(staffItem));
                 }
             }
-            (new CafeStaffContainerComponent(this._parent)).render({name, staffList});
+            const cafeId = name.split(',')[0];
+            const cafeName = name.split(',')[1];
+
+            (new CafeStaffContainerComponent(this._parent)).render({name: cafeName, staffList: staffList, id:cafeId});
         }
         this._parent.innerHTML += StaffPage();
     }

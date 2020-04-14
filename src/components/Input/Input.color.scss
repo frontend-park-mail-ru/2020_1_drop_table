@@ -1,0 +1,20 @@
+@import '../../scss/themes.scss';
+.labelField , .valueField{
+    @include themify($themes){
+        border-color: themed('textColor');
+    }
+}
+.field-button {
+    @include themify($themes){
+        border-color: themed('mainColor');
+    }
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
+    @include themify($themes){
+        color: themed('buttonTextColor');
+    }
+}
+
+
+

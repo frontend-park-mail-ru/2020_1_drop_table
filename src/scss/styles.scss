@@ -1,13 +1,27 @@
 
-@import '/src/fonts';
-
+//@import '/src/fonts';
+@import '../scss/themes.scss';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
 
-html *
-{
 
+*{
+    transition: background 0.5s ease;
+}
+#body{
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
+#container{
+    @include themify($themes){
+        background: themed('backgroundColor');
+
+    }
 }
 input[type=text], input[type=submit], textarea{
     -webkit-appearance: none;
+}
+input[type=submit]{
+    border: none;
 }

@@ -1,3 +1,4 @@
+@import '../../../scss/themes.scss';
 .cafe-with-staff-container{
     display: grid;
     grid-template-columns: 5% 1fr;
@@ -13,15 +14,12 @@
     }
 
     .cafe-with-staff-container__cafe-name{
-        /*height: 5%;*/
-        /*!*transform: rotate(270deg);*!*/
-        /*display: flex;*/
-        /*justify-content: start;*/
-        /*white-space: nowrap;*/
+
     }
     .cafe-with-staff-container__cafe-with-staff-container_span{
         font-family: Montserrat, SansSerif;
         font-size: 2rem;
+        word-wrap: break-word;
     }
 
 
@@ -35,7 +33,6 @@
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex;
-
         height: 5%;
         transform: rotate(270deg);
         justify-content: flex-end;
@@ -43,6 +40,8 @@
         margin: 80%;
         white-space: nowrap;
         padding: 100% 0;
+
+
     }
 
 
@@ -50,6 +49,9 @@
     .cafe-with-staff-container__cafe-with-staff-container_span{
         font-family: Montserrat , SansSerif ;
         font-size: 4rem;
+        @include themify($themes){
+            color: themed('textColor');
+        }
     }
 
 
@@ -64,16 +66,12 @@
     background-color: black;
 }
 
-/*.cafe-with-staff-container__cafe-with-staff-container_span{*/
-/*    font-family: "Montserrat";*/
-/*    font-size: 1rem;*/
-/*}*/
-
 
 .cafe-staff-container{
     display: flex;
     flex-direction: row;
     flex-flow: wrap;
+    justify-content: space-between;
     /*justify-content: center;*/
 }
 
@@ -89,7 +87,7 @@
 }
 
 .cafe-staff-container__design__long-strip{
-    background-color: #1e768f;
+    border: 1px solid;
     height: 0.4rem;
     width: 100%;
     margin-bottom: 0.4rem;
@@ -98,13 +96,11 @@
 }
 
 .cafe-staff-container__design__medium-strip{
-    background-color: #1e768f;
     height: 0.3rem;
     width: 70%;
     margin-bottom: 0.3rem;
 }
 .cafe-staff-container__design__short-strip{
-    background-color: #1e768f;
     height: 0.2rem;
     width: 40%;
     margin-bottom: 0.2rem;
@@ -128,7 +124,6 @@
 .staff-page__add-staff-field__text-strip{
     width:40em;
     height:0.5em;
-    background-color: #fa9917;
     align-self: flex-end;
 
 }
@@ -141,7 +136,6 @@
 .staff-page__add-staff-field__add-button{
     width: 14em;
     height: 7em;
-    background-color: #ffffff;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     transform: rotate(180deg);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
@@ -157,7 +151,6 @@
 .staff-page__add-staff-field__add-button:hover{
     width: 14em;
     height: 7em;
-    background-color: #ffffff;
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     transform: rotate(180deg);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
@@ -174,6 +167,34 @@
     align-self: flex-end;
     margin-right: 25em;
     font-size: 1rem;
+}
+
+.cafe-staff-container__add-staff-container{
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    min-width: 150px;
+    min-height: 300px;
+    margin: 2% auto;
+    padding: 2%;
+    z-index: 1;
+    background-color: #DCDBDBCF;
+    justify-content: center;
+}
+.cafe-staff-container__add-staff-container__button{
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.78);
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.15));
+}
+.cafe-staff-container__add-staff-container__button:hover{
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+}
+.cafe-staff-container__add-staff-container__button_img{
+    height: 100px;
+    width: 100px;
 }
 
 

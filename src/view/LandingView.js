@@ -1,7 +1,7 @@
 'use strict';
 
 import {LandingComponent} from '../components/Landing/Landing';
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import BaseView from './BaseView';
 
 /** view лэндинга */

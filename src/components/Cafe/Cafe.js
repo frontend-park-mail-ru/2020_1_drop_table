@@ -1,6 +1,7 @@
 'use strict';
 
 import './Cafe.scss';
+import './Cafe.color.scss';
 import CafeTemplate from './Cafe.hbs';
 import Form from '../Form/Form.js';
 

@@ -1,0 +1,44 @@
+@import '../../scss/themes.scss';
+
+.staff-page__top__design__long-strip{
+
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+
+}
+
+.staff-page__top__design__medium-strip{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+
+}
+.staff-page__top__design__short-strip{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+
+}
+
+
+
+.staff-page__top__user-container__user-image-container__image-square_img{
+  @include themify($themes){
+    border-color: themed('textColor');
+  }
+}
+
+.staff-page__top__user-container__name-container_span{
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}
+
+.staff-page__top__user-container__name-container__strip{
+  @include themify($themes){
+    background-color: themed('accentColor');
+  }
+}
+
+

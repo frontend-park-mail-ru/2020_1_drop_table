@@ -1,38 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+@import '../../scss/themes.scss';
 
 .cafes-page{
     font-family: 'Montserrat',SansSerif;
+    display: flex;
+    flex-direction: column;
 
     &__all-cafes-container{
-        /*padding-right: auto;*/
-        padding-left: 15%;
-        /*padding-top: 10%;*/
-        &__row{
-            &:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-            &_left-column {
-                float: left;
-                width: 50%;
-            }
-            &_right-column {
-                padding-top: 8rem;
-                float: left;
-                width: 50%;
-            }
-
-        }
-
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        min-height: 60vh;
     }
 
     &__add-cafe-field{
         float: right;
         width:100%;
         height:200px;
-        margin: 1rem 0 1rem auto;
-        padding-bottom: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -40,35 +24,40 @@
 
         &__text-field{
             align-self: flex-end;
-            margin-right: 30%;
+            margin-right: 20vw;
 
             &_span{
-                /*font-family: Montserrat;*/
                 font-size: 2rem;
                 width:40%;
             }
         }
         &__text-strip{
-            width: 45%;
+            width: 50%;
+            min-width: 220px;
             height:0.5em;
-            background-color: #fa9917;
             align-self: flex-end;
+
         }
 
         &__add-button{
-            width: 26vh;
-            height: 13vh;
-            background-color: #ffffff;
+            width: 18vw;
+            height: 9vw;
+            min-width: 120px;
+            min-height: 60px;
+            max-width: 360px;
+            max-height: 180px;
+
             border-radius: 50% 50% 0 0 / 100% 100% 0 0;
             transform: rotate(180deg);
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
-            margin-right: 30%;
+            margin-right: 24vw;
             align-self: flex-end;
             cursor: pointer;
 
             background-image: url(/images/plus.svg);
             background-size: cover;
             background-position-y: center;
+
 
             &:hover{
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
@@ -101,33 +90,6 @@
 
 
 @media(max-width: 1250px){
-
-    .cafes-page {
-        &__all-cafes-container {
-            padding-right: 100%;
-            padding-left: 25%;
-
-            &__row {
-                padding-top: 10rem;
-
-                &_right-column {
-                    padding-top: 22rem;
-                    float: right;
-                    width: 50%;
-                    right: 50%
-                }
-            }
-        }
-
-    }
-    .cafes-page__add-cafe-field__text-strip{
-        width: 70%;
-    }
-    .cafes-page__add-cafe-field__add-button{
-
-        width: 20vh;
-        height: 10vh;
-    }
 
 
 }

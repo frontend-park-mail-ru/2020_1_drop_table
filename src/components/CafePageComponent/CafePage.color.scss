@@ -1,0 +1,75 @@
+@import '../../scss/themes.scss';
+
+.cafe-page {
+  @include themify($themes) {
+    background: themed('backgroundColor');
+  }
+
+  &__cafe-info{
+    &__description-container {
+      @include themify($themes) {
+        background-color: themed('cafeCardColor');
+      }
+    }
+
+    &__name-container{
+      @include themify($themes){
+        background-color: themed('mainColor');
+      }
+      &_span{
+        @include themify($themes){
+          color: themed('buttonTextColor');
+        }
+
+      }
+    }
+    &__time-container{
+      @include themify($themes){
+        background-color: themed('backgroundColor');
+      }
+
+      &__time{
+        &__strip{
+          @include themify($themes){
+            background-color: themed('timeStripColor');
+          }
+        }
+        &_span{
+          @include themify($themes){
+            color: themed('textColor');
+          }
+        }
+      }
+    }
+    &__edit-button {
+      @include themify($themes){
+        background-color: themed('mainColor');
+      }
+    }
+  }
+}
+.buttons{
+  @include themify($themes){
+    background: themed('backgroundColor');
+  }
+}
+.buttons__apple-pass-button{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+  &_h4{
+    @include themify($themes){
+      color: themed('buttonTextColor');
+    }
+  }
+}
+.buttons__add-staff-button{
+  @include themify($themes){
+    background-color: themed('accentColor');
+  }
+  &_h4{
+    @include themify($themes){
+      color: themed('buttonTextColor');
+    }
+  }
+}

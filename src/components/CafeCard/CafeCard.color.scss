@@ -1,0 +1,14 @@
+@import '../../scss/themes.scss';
+
+.cafe-card-container {
+  @include themify($themes) {
+    background-color: themed('backgroundColor');
+  }
+
+  &__name-container {
+    @include themify($themes) {
+      background-color: themed('cafeCardNameBackgroundColor');
+    }
+  }
+
+}

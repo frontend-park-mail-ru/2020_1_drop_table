@@ -1,4 +1,5 @@
 import './StaffCardComponent.scss';
+import './StaffCardComponent.color.scss';
 import StaffCard from './StaffCardComponent.hbs';
 
 /** Компонент карточки работника */
@@ -19,7 +20,7 @@ export class StaffCardComponent {
      */
     _renderTemplate(context) {
 
-        if(context.photo === ''){
+        if(!context.photo){
             context.photo = '/images/userpic.png'
         }
         this._el.innerHTML += StaffCard(context);
