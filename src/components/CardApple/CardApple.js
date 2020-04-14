@@ -70,17 +70,20 @@ export class CardAppleComponent {
         const fieldsContainer = this._parent.getElementsByClassName('card__header__fields').item(0);
         const secondaryValues = fieldsContainer.getElementsByClassName('card__header__fields__secondary_spanValue');
         const headerValues = document.getElementsByClassName('header-field_span_value');
+
         const primaryFields = document.getElementsByClassName('card__header__fields__primary');
 
         for ( let i = 0; i < secondaryValues.length; i++ ){
             secondaryValues.item(i).style.color = foregroundColor;
         }
-        for ( let i = 1; i < headerValues.length; i++ ){
+        for ( let i = 0; i < headerValues.length; i++ ){ // 0=>1
             headerValues.item(i).style.color = foregroundColor;
         }
         for ( let i = 0; i < primaryFields.length; i++ ){
             primaryFields.item(i).style.color = foregroundColor;
         }
+        const headerLabel = document.getElementsByClassName('card__header__field_span').item(0);
+        headerLabel.style.color = foregroundColor;
     }
 
     /**

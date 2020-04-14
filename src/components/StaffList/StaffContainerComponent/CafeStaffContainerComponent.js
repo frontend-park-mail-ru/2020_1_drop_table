@@ -1,5 +1,9 @@
 import './CafeStaffContainerComponent.scss';
+import './CafeStaffContainerComponent.color.scss';
+
 import '../StaffCardComponent/StaffCardComponent.scss';
+import '../StaffCardComponent/StaffCardComponent.color.scss';
+
 import CafeStaffContainer from './CafeStaffContainerComponent.hbs';
 
 /** Компонент контейнера работника */

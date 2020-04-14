@@ -24,7 +24,6 @@ export async function authAjax(method, route, body, callback) {
         };
     }
     const myCsrf = sessionStorage.getItem('Csrf');
-    console.log('myCSRF auth', myCsrf)
     if(myCsrf){
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
         //req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
@@ -35,10 +34,7 @@ export async function authAjax(method, route, body, callback) {
     let responseJson = null;
     try {
         const response = await fetch(req);
-
-
         if (response.ok) {
-            console.log('resp auth ok');
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);

@@ -1,8 +1,9 @@
+@import '../../../scss/themes.scss';
 .staff-card-container{
     display: flex;
     flex-direction: column;
     max-width: 300px;
-    margin: 2%;
+    margin: 2% auto;
     padding: 2%;
     z-index: 1;
 }
@@ -26,6 +27,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border: 1px solid;
 }
 
 .staff-card-container__name-container{
@@ -39,10 +41,10 @@
 .staff-card-container__name-container_span{
     font-family: 'Montserrat', SansSerif;
     font-size: 2rem;
+    word-wrap: break-word;
 }
 
 .staff-card-container__name-container__strip{
-    background-color: #fa9917;
     height: 0.5rem;
     width: 25%;
 }
@@ -55,6 +57,7 @@
 
 .staff-card-container__position-container_span{
     font-size: 1.2rem;
+    word-wrap: break-word;
 
 }
 

@@ -4,6 +4,7 @@ import CardCreator from '../components/CardCreator/CardCreator.hbs';
 import CardFormComponent from '../components/CardForm/CardForm';
 import {CardAppleComponent} from '../components/CardApple/CardApple';
 import '../components/CardCreator/CardCreator.scss'
+import '../components/CardCreator/CardCreator.color.scss'
 
 import BaseView from './BaseView';
 

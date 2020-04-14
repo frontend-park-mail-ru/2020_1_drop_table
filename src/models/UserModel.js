@@ -239,7 +239,6 @@ export default class UserModel {
             (response) => {
                 if (response.errors === null) {
                     router._goTo('/profile');
-
                 } else {
                     throw response.errors[0].message;
                 }

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
-
+@import '../../scss/themes.scss';
 
 .decorate-container {
     width: 100%;
@@ -43,14 +43,12 @@
                     width: 10rem;
                     height: 0.2rem;
                     left: 50%;
-                    background-color: #1e768f;
                 }
 
                 &__circle {
                     width: 2.5rem;
                     height: 2.5rem;
                     left: 60%;
-                    background-color: #1e768f;
                     border-radius: 50%;
                 }
             }
@@ -81,8 +79,6 @@
         -webkit-appearance: none;
         font-weight: bolder;
         font-size: 1.5rem;
-        color: white;
-        background-color: #1e768f;
         margin-top: 2rem;
         width: 100%;
         height: 6rem;
@@ -93,8 +89,6 @@
 
 
         &:active {
-            color: white;
-            background: #1e768f;
         }
     }
 
@@ -109,22 +103,20 @@
             left: 0;
             -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
-            color: rgb(0, 0, 0);
             pointer-events: none;
             -webkit-transition: all 0.15s ease-out 0s;
             transition: all 0.15s ease-out 0s;
-            top: -0.5rem;
+            top: 0.5rem;
             font-size: 1rem;
         }
 
         &_input {
 
             border: none;
-            border-bottom: solid 2px #000000;
+            border-bottom: solid 2px;
             width: 100%;
             padding-bottom: 2%;
             background: none;
-            color: #000000;
             padding-top: 5%;
             font-size: 1rem;
         }
@@ -140,6 +132,7 @@
             display: block;
             word-wrap: break-word;
             cursor: pointer;
+
         }
     }
 }
@@ -193,8 +186,6 @@
         padding-bottom: 2rem;
 
     }
-
-
 
 }
 

@@ -1,0 +1,62 @@
+
+@import '../../scss/themes.scss';
+
+.page-header{
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
+
+.nav-header {
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
+
+.nav-header_h4{
+    @include themify($themes){
+        color: themed('textColor');
+    }
+
+}
+
+.nav-links {
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
+
+.nav-links__link-container {
+
+    @include themify($themes){
+        color: themed('textColor');
+    }
+
+}
+.nav-links__link-container-avatar {
+
+    @include themify($themes){
+        color: themed('textColor');
+    }
+}
+
+
+.nav-links__link-container_a{
+
+    @include themify($themes){
+        color: themed('textColor');
+    }
+
+}
+
+
+@media (max-width:900px) {
+
+    .nav__btn_label_span {
+        @include themify($themes){
+            border-color: themed('textColor');
+        }
+    }
+}
+
+

@@ -11,8 +11,8 @@ export class CardField{
         this._id = uuid();
         this._fieldType = cardFieldData.fieldType;
         this._key = uuid();
-        this._label = cardFieldData.label ? cardFieldData.label: 'label' ;
-        this._value = cardFieldData.value ? cardFieldData.value : 'value';
+        this._label = cardFieldData.label ? cardFieldData.label: 'Добавьте' ;
+        this._value = cardFieldData.value ? cardFieldData.value : 'текст';
     }
 
     /**
@@ -98,7 +98,7 @@ export class CardField{
             id: this._id,
             labelID: uuid(),
             fieldName: 'Header',
-            labelData: 'ЛогоТекст',
+            labelData: 'Название',
             labelText: this._label,
             button: null,
             buttonsymbol: null,
@@ -112,8 +112,8 @@ export class CardField{
                 valueID: uuid(),
 
                 fieldName: this._fieldType,
-                labelData: 'Лейбл',
-                valueData: 'Валуе',
+                labelData: 'Надпись',
+                valueData: 'Подпись',
                 labelText: this._label,
                 valueText: this._value,
                 button: null,

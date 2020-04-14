@@ -63,7 +63,6 @@ export default class AddStaffController{
             this._userModel.name = form.elements['full-name'].value.toString();
 
             try {
-                console.log('test add staff controller try block' );
                 await this._userModel.addStaff(this._uuid);
 
             } catch (exception) {

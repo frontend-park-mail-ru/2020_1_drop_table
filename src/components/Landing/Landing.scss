@@ -323,6 +323,19 @@
 }
 
 
+.landing-page__teaser{
+    width: 100%;
+    display: flex;
+
+}
+#video_background{
+    width: 50%;
+    margin: auto;
+}
+
+
+
+
 .landing-page__coupon-and-card-coupon{
     display: flex;
     /*border: 1px solid black;*/
@@ -341,6 +354,16 @@
 }
 
 @media (max-width: 480px) {
+
+
+    .landing-page__teaser{
+        width: 100%;
+        display: flex;
+
+    }
+    #video_background{
+        width: inherit;
+    }
 
     .landing-page__coupon-and-card{
         display: flex;

@@ -1,0 +1,24 @@
+@import '../../../scss/themes.scss';
+.staff-card-container__user-image-container__image-square_img{
+    @include themify($themes){
+        border-color: themed('textColor');
+    }
+}
+
+
+.staff-card-container__name-container_span{
+    @include themify($themes){
+        color: themed('textColor');
+    }
+}
+
+.staff-card-container__name-container__strip{
+    @include themify($themes){
+        background-color: themed('accentColor');
+    }
+}
+
+
+
+
+

@@ -1,6 +1,7 @@
 'use strict';
 
 import './Form.scss';
+import './Form.color.scss';
 import FormTemplate from './Form.hbs';
 
 /** Компонент формы */

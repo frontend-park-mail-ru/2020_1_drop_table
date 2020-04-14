@@ -1,6 +1,6 @@
 'use strict';
 
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import ProfileComponent from '../components/Profile/Profile';
 import BaseView from './BaseView';
 
