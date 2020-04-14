@@ -13,7 +13,6 @@ const cacheUrls = [
     '/createCafe',
     '/staff',
     '/addStaff',
-    '/myCafes',
 
     '/bundle.js',
     '/index.html',
@@ -62,9 +61,11 @@ const cacheUrls = [
 ];
 
 /** Обработчик установки Service worker */
-this.addEventListener('install', async (event) => {
-    const cache = await event.waitUntil(caches.open(CACHE_NAME));
-    return cache.addAll(cacheUrls);
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(cacheUrls))
+    );
 });
 
 /** Обработчик запроса (fetch) для Service worker */
