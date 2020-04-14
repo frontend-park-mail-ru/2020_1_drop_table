@@ -62,10 +62,10 @@ module.exports = {
                 test: /\.hbs$/,
                 loader: "handlebars-loader"
             },
-            {
-                test: /\.worker\.js$/,
-                use: { loader: 'worker-loader' }
-            }
+            // {
+            //     test: /\.worker\.js$/,
+            //     use: { loader: 'worker-loader' }
+            // }
         ]
     },
     resolve: {
