@@ -5,6 +5,9 @@
 
 
 
+*{
+    transition: background 0.5s ease;
+}
 #body{
     @include themify($themes){
         background: themed('backgroundColor');
@@ -13,6 +16,7 @@
 #container{
     @include themify($themes){
         background: themed('backgroundColor');
+
     }
 }
 input[type=text], input[type=submit], textarea{

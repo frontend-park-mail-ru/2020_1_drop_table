@@ -30,18 +30,28 @@ export default class ProfileComponent {
             context['event']['listener']
         );
 
+        const switcher = this._parent.getElementsByClassName('switchTheme').item(0);
+        const app = document.getElementsByTagName('html').item(0);
+
+        if(app.className.toString() === 'theme-dark'){
+            switcher.checked = false;
+        } else if(app.className.toString() === 'theme-light'){
+            switcher.checked = true;
+        }
+
         const switchTheme = this._parent.getElementsByClassName('switch').item(0);
-        //console.log('testik',switchTheme);
         switchTheme.addEventListener('click', function (e){
             e.preventDefault();
-            const app = document.getElementsByTagName('body').item(0);
+
 
             console.log('testik',app.getAttribute('class'));
 
             if(app.className.toString() === 'theme-dark'){
                 app.className = 'theme-light'
+                switcher.checked = true;
             } else if(app.className.toString() === 'theme-light'){
                 app.className = 'theme-dark'
+                switcher.checked = false;
             }
 
         })
