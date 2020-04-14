@@ -22,7 +22,7 @@ export default class CafeListModel{
     get context(){
         return new Promise((resolve) => {
             this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeListJson);
+                resolve(this._cafeListJson ? this._cafeListJson : []);
             });
         });
     }
