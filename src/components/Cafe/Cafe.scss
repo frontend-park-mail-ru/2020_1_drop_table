@@ -1,4 +1,4 @@
-@import '../../scss/themes.scss';
+//@import '../../scss/themes.scss';
 
 
 .new-cafe-page__decorate-container {
@@ -25,9 +25,6 @@
                 font-weight: bold;
                 font-size: 5vw;
                 margin-left: 30px;
-                @include themify($themes){
-                    color: themed('textColor');
-                }
             }
         }
     }
@@ -80,9 +77,6 @@
 
 }
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_span{
-    @include themify($themes) {
-        color: themed('textColor');
-    }
 
 }
 

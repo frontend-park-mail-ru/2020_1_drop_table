@@ -1,4 +1,5 @@
 import './CafeCard.scss';
+import './CafeCard.color.scss';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 
 /** Компонент карточки кафе */

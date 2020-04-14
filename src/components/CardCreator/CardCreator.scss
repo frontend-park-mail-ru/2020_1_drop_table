@@ -15,10 +15,6 @@
             font-size: 3rem;
             font-weight: bold;
             margin: 1rem 0;
-            @include themify($themes){
-                color: themed('textColor');
-            }
-
         }
     }
     &__image-picker{
@@ -98,10 +94,6 @@
         margin-right: 0.5rem ;
         margin-left: 0.5rem ;
         color: black;
-
-        @include themify($themes){
-            background-color: themed('cafeCardColor');
-        }
         -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         width: -moz-available;

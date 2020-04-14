@@ -65,10 +65,13 @@ export default class StaffListModel{
 
     _constructStaff(staffListData){ //todo создавать сотрудников
         for (let [key, value] of Object.entries(staffListData)) {
-            value.forEach((staffVal) => {
-                const staff = new StaffModel(staffVal);
-                this._staffModelsList.push(staff);
-            });
+            console.log('test1')
+            if(value) {
+                value.forEach((staffVal) => {
+                    const staff = new StaffModel(staffVal);
+                    this._staffModelsList.push(staff);
+                });
+            }
         }
 
         // staffListData.toArray().forEach((_, key) => {

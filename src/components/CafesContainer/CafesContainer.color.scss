@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+@import '../../scss/themes.scss';
+
+.cafes-page{
+    &__add-cafe-field{
+        &__text-strip{
+            @include themify($themes) {
+                background-color: themed('accentColor');
+            }
+        }
+        &__add-button{
+            @include themify($themes) {
+                background-color: themed('addButtonColor');
+            }
+        }
+    }
+}

@@ -5,8 +5,12 @@
 
 
 
-
-.body{
+#body{
+    @include themify($themes){
+        background: themed('backgroundColor');
+    }
+}
+#container{
     @include themify($themes){
         background: themed('backgroundColor');
     }

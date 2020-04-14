@@ -1,14 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
-@import '../../scss/themes.scss';
-
-
-
-
 .page-header{
     padding-bottom: 20px;
-    @include themify($themes){
-        background: themed('backgroundColor');
-    }
 }
 
 .nav {
@@ -22,9 +14,6 @@
 .nav-header {
     display: flex;
     width: 20%;
-    @include themify($themes){
-        background: themed('backgroundColor');
-    }
 }
 
 .nav-header_img{
@@ -38,10 +27,6 @@
     cursor: pointer;
     white-space: nowrap;
     text-decoration: none;
-    @include themify($themes){
-        color: themed('textColor');
-    }
-
 }
 
 
@@ -53,9 +38,6 @@
 .nav-links {
     display: flex;
     font-size: 1.5vw; //todo подобрать подходящий
-    @include themify($themes){
-        background: themed('backgroundColor');
-    }
     justify-content: flex-end;
     width: 85%;
     opacity: 95%;
@@ -66,18 +48,12 @@
 .nav-links__link-container {
     display: flex;
     text-decoration: none;
-    @include themify($themes){
-        color: themed('textColor');
-    }
     height: 100px;
     margin: 0 2rem;
 }
 .nav-links__link-container-avatar {
     display: flex;
     text-decoration: none;
-    @include themify($themes){
-        color: themed('textColor');
-    }
 }
 
 
@@ -85,9 +61,6 @@
     margin: auto;
     white-space: nowrap;
     text-decoration: none;
-    @include themify($themes){
-        color: themed('textColor');
-    }
     padding: 0 10px;
 }
 .nav-links__link-container_a:hover{
@@ -131,9 +104,6 @@
         width: 25px;
         height: 10px;
         border-top: 2px solid;
-        @include themify($themes){
-            border-color: themed('textColor');
-        }
     }
     .nav-links {
         position: absolute;

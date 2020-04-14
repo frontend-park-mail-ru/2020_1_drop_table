@@ -1,4 +1,5 @@
 import './StaffCardComponent.scss';
+import './StaffCardComponent.color.scss';
 import StaffCard from './StaffCardComponent.hbs';
 
 /** Компонент карточки работника */

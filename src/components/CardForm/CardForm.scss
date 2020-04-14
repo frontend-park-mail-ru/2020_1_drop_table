@@ -23,12 +23,6 @@
     max-width: 100%;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
-    @include themify($themes){
-        color: black;
-    }
-    @include themify($themes){
-        background-color: themed('cafeCardColor');
-    }
     -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 
@@ -47,12 +41,6 @@
         border-radius: 0.5rem;
         border-width: 0;
         width: 50%;
-        @include themify($themes){
-            color: themed('backgroundColor');
-        }
-        @include themify($themes){
-            background-color: themed('mainColor');
-        }
         opacity: 75%;
         margin: 1rem;
         height: 4rem;
@@ -69,12 +57,6 @@
         border-radius: 0.5rem;
         border-width: 0;
         width: 50%;
-        @include themify($themes){
-            color: themed('backgroundColor');
-        }
-        @include themify($themes){
-            background-color: themed('mainColor');
-        }
         margin: 1rem;
         font-size: 1.5rem;
         height: 4rem;

@@ -1,0 +1,60 @@
+@import '../../../scss/themes.scss';
+@media(max-width: 820px) {
+    .cafe-with-staff-container__cafe-with-staff-container_span{
+        @include themify($themes){
+            color: themed('textColor');
+        }
+    }
+
+
+}
+
+@media(min-width: 820px) {
+
+    .cafe-with-staff-container__cafe-with-staff-container_span{
+        @include themify($themes){
+            color: themed('textColor');
+        }
+    }
+}
+
+
+
+
+
+
+
+.cafe-staff-container__design__long-strip{
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
+}
+
+.cafe-staff-container__design__medium-strip{
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
+}
+.cafe-staff-container__design__short-strip{
+    @include themify($themes){
+        background-color: themed('mainColor');
+    }
+}
+
+
+.staff-page__add-staff-field__text-strip{
+    @include themify($themes){
+        background-color: themed('accentColor');
+    }
+
+
+}
+
+.staff-page__add-staff-field__add-button{
+
+    @include themify($themes) {
+        background-color: themed('addButtonColor');
+    }
+}
+
+

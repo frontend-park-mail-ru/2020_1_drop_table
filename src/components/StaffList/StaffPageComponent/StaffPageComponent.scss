@@ -14,9 +14,6 @@
 
 
 .staff-page-container__QR-window{
-    @include themify($themes){
-        background-color: themed('backgroundColor');
-    }
     position: absolute;
     justify-self: center;
     top:25%;

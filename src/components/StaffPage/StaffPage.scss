@@ -1,4 +1,4 @@
-@import '../../scss/themes.scss';
+
 
 .staff-page{
   display: flex;
@@ -30,9 +30,6 @@
 
 .staff-page__top__design__long-strip{
   border: 1px solid;
-  @include themify($themes){
-    background-color: themed('mainColor');
-  }
   height: 0.4rem;
   width: 100%;
   margin-bottom: 0.4rem;
@@ -41,17 +38,11 @@
 }
 
 .staff-page__top__design__medium-strip{
-  @include themify($themes){
-    background-color: themed('mainColor');
-  }
   height: 0.3rem;
   width: 70%;
   margin-bottom: 0.3rem;
 }
 .staff-page__top__design__short-strip{
-  @include themify($themes){
-    background-color: themed('mainColor');
-  }
   height: 0.2rem;
   width: 40%;
   margin-bottom: 0.2rem;
@@ -84,9 +75,6 @@
   height: 100%;
   object-fit: cover;
   border: 1px solid;
-  @include themify($themes){
-    border-color: themed('textColor');
-  }
 }
 
 .staff-page__top__user-container__name-container{
@@ -101,15 +89,9 @@
   font-family: 'Montserrat', SansSerif;
   font-size: 2rem;
   word-wrap: break-word;
-  @include themify($themes){
-    color: themed('textColor');
-  }
 }
 
 .staff-page__top__user-container__name-container__strip{
-  @include themify($themes){
-    background-color: themed('accentColor');
-  }
   height: 0.5rem;
   width: 25%;
 }

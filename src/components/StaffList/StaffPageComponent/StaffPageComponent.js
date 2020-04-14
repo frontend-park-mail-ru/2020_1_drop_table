@@ -1,8 +1,11 @@
 import './StaffPageComponent.scss';
+import './StaffPageComponent.color.scss';
+
 import StaffPage from './StaffPageComponent.hbs';
 import StaffCard from '../StaffCardComponent/StaffCardComponent.hbs'
 
 import '../StaffContainerComponent/CafeStaffContainerComponent.scss';
+import '../StaffContainerComponent/CafeStaffContainerComponent.color.scss';
 
 import {CafeStaffContainerComponent} from '../StaffContainerComponent/CafeStaffContainerComponent'
 

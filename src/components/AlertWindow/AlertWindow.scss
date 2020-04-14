@@ -1,4 +1,4 @@
-@import '../../scss/themes.scss';
+
 .apple-card-published-qr-container{
     width:100%;
     height: 100%;
@@ -23,9 +23,6 @@
         -webkit-filter: drop-shadow(5px 5px 5px #000);
         filter: drop-shadow(5px 5px 5px #000);
 
-        @include themify($themes){
-            background-color: themed('alertBackgroundColor');
-        }
 
         &_h4{
             font-family: Montserrat, Arial, serif;

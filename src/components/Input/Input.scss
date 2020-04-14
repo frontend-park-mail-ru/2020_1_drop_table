@@ -14,9 +14,6 @@
     width: 80%;
     height:1.5rem;
     border: solid 2px;
-    @include themify($themes){
-        border-color: themed('textColor');
-    }
 
 }
 
@@ -31,19 +28,9 @@
 
 .field-button {
     width: 100px;
-    /*width: 25px;*/
     height: 25px;
     border-radius: 25px;
     border: 2px solid ;
-    @include themify($themes){
-        border-color: themed('mainColor');
-    }
-    @include themify($themes){
-        background-color: themed('mainColor');
-    }
-    @include themify($themes){
-        color: themed('buttonTextColor');
-    }
     transition: width 0.7s;
     overflow: hidden;
 }

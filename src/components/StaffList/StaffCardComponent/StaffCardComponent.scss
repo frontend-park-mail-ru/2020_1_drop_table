@@ -28,9 +28,6 @@
     height: 100%;
     object-fit: cover;
     border: 1px solid;
-    @include themify($themes){
-        border-color: themed('textColor');
-    }
 }
 
 .staff-card-container__name-container{
@@ -45,15 +42,9 @@
     font-family: 'Montserrat', SansSerif;
     font-size: 2rem;
     word-wrap: break-word;
-    @include themify($themes){
-        color: themed('textColor');
-    }
 }
 
 .staff-card-container__name-container__strip{
-    @include themify($themes){
-        background-color: themed('accentColor');
-    }
     height: 0.5rem;
     width: 25%;
 }

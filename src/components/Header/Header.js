@@ -1,5 +1,5 @@
 import './Header.scss'
-
+import './Header.color.scss'
 import headerTemplate from './Header.hbs';
 
 /** Компонента хэдера */

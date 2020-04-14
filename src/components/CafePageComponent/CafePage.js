@@ -1,5 +1,6 @@
 'use strict';
 import './CafePage.scss';
+import './CafePage.color.scss';
 import CafePageTemplate from './CafePage.hbs';
 
 

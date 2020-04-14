@@ -1,7 +1,8 @@
 'use strict';
 
 import './CardForm.scss';
-// import  './imagePicker.scss'
+import './CardForm.color.scss';
+
 import CardFormTemplate from './CardForm.hbs';
 import InputComponent from '../Input/Input'
 

@@ -1,24 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 
-@import '../../scss/themes.scss';
-
 .cafe-page{
     font-family: 'Montserrat',SansSerif;
     height: 100%;
     display: flex;
     padding: 0 10% 10% 10%;
     justify-content: space-around;
-    @include themify($themes){
-        background: themed('backgroundColor');
-    }
-
-
     &__cafe-info{
-
         width: 70vw;
         height: 40vw;
         position: relative;
-
         &__image-container{
             z-index: 2;
             top:4%;
@@ -42,9 +33,6 @@
             right:15%;
             height: 45%;
             width: 48%;
-            @include themify($themes){
-                background-color: themed('cafeCardColor');
-            }
             -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
             display: table-column;
@@ -92,17 +80,11 @@
             left:60%;
             height:29%;
             width:43%;
-            @include themify($themes){
-                background-color: themed('mainColor');
-            }
             display: flex;
             align-items: center;
 
             &_span{
                 margin: auto 5% auto 25%;
-                @include themify($themes){
-                    color: themed('buttonTextColor');
-                }
                 transform: translateY(-50%);
                 font-weight: bold;
                 font-size: 3vw;
@@ -121,10 +103,6 @@
             justify-content: center;
             align-items: center;
 
-            @include themify($themes){
-                background-color: themed('backgroundColor');
-            }
-
             &__time{
                 height: 100%;
                 padding-top:0;
@@ -132,15 +110,9 @@
                     height: 0.2rem;
                     width:80%;
                     padding: 0 10% 0 10%;
-                    @include themify($themes){
-                        background-color: themed('timeStripColor');
-                    }
                 }
                 &_span{
                     cursor: default;
-                    @include themify($themes){
-                        color: themed('textColor');
-                    }
                 }
             }
         }
@@ -177,9 +149,6 @@
             opacity: 90%;
             cursor: pointer;
 
-            @include themify($themes){
-                background-color: themed('mainColor');
-            }
 
             &:hover{
                 filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
@@ -188,20 +157,12 @@
                 padding: 10px;
                 font-family: 'Montserrat',SansSerif;
                 cursor: pointer;
-                @include themify($themes){
-                    color: themed('textColor');
-                }
             }
         }
 
     }
 }
 
-.buttons{
-    @include themify($themes){
-        background: themed('backgroundColor');
-    }
-}
 .buttons__apple-pass-button{
     -webkit-appearance: none;
     width:16rem;
@@ -211,21 +172,13 @@
     justify-content: center;
     align-items: center;
 
-    @include themify($themes){
-        background-color: themed('mainColor');
-    }
-
     &_h4{
         font-family: Montserrat;
-        @include themify($themes){
-            color: themed('buttonTextColor');
-        }
         cursor: pointer;
     }
     &:hover{
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
     }
-
 }
 
 .card-creator-container{
@@ -238,20 +191,12 @@
     width:16rem;
     height: 8rem;
     margin: 10px auto;
-    @include themify($themes){
-        background-color: themed('accentColor');
-    }
     display: flex;
     justify-content: center;
     align-items: center;
     &_h4{
         font-family: Montserrat;
-
-        @include themify($themes){
-            color: themed('buttonTextColor');
-        }
         cursor: pointer;
-
     }
     &:hover{
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));

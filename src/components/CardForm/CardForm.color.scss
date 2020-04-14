@@ -1,0 +1,37 @@
+@import '../../scss/themes.scss';
+
+.HeaderFieldsContainer,
+.PrimaryFieldsContainer,
+.SecondaryFieldsContainer,
+.AuxiliaryFieldsContainer{
+    @include themify($themes){
+        color: black;
+    }
+    @include themify($themes){
+        background-color: themed('cafeCardColor');
+    }
+}
+
+
+
+.card-form__buttons{
+    &__save{
+        @include themify($themes){
+            color: themed('backgroundColor');
+        }
+        @include themify($themes){
+            background-color: themed('mainColor');
+        }
+    }
+
+    &__publish{
+        @include themify($themes){
+            color: themed('backgroundColor');
+        }
+        @include themify($themes){
+            background-color: themed('mainColor');
+        }
+    }
+}
+
+

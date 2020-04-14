@@ -1,6 +1,8 @@
 'use strict';
 
 import './Profile.scss';
+import './Profile.color.scss';
+
 import ProfileTemplate from './Profile.hbs';
 import Form from '../Form/Form.js';
 
@@ -28,8 +30,19 @@ export default class ProfileComponent {
             context['event']['listener']
         );
 
-        const switchTheme = document.getElementsByClassName('switch').item(0);
-        switchTheme.addEventListener('click', function (){
+        const switchTheme = this._parent.getElementsByClassName('switch').item(0);
+        //console.log('testik',switchTheme);
+        switchTheme.addEventListener('click', function (e){
+            e.preventDefault();
+            const app = document.getElementsByTagName('body').item(0);
+
+            console.log('testik',app.getAttribute('class'));
+
+            if(app.className.toString() === 'theme-dark'){
+                app.className = 'theme-light'
+            } else if(app.className.toString() === 'theme-light'){
+                app.className = 'theme-dark'
+            }
 
         })
     }

@@ -1,5 +1,10 @@
 import './CafesContainer.scss';
+import './CafesContainer.color.scss';
+
+
 import '../CafeCard/CafeCard.scss';
+import '../CafeCard/CafeCard.color.scss';
+
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 import {router} from '../../main/main';

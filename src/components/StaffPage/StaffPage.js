@@ -1,5 +1,6 @@
 'use strict';
 import './StaffPage.scss';
+import './StaffPage.color.scss';
 import StaffPageTemplate from './StaffPage.hbs';
 
 export class StaffPageComponent {
