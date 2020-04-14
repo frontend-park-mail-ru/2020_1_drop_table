@@ -68,14 +68,24 @@ this.addEventListener('install', async (event) => {
 });
 
 /** Обработчик запроса (fetch) для Service worker */
-this.addEventListener('fetch', (event) => {
-    alert('fetch');
-    event.respondWith(
-        caches.match(event.request).then(function(cachedResponse) {
-            if (cachedResponse && !navigator.onLine) {
-                return cachedResponse;
-            }
-            return fetch(event.request);
-        })
-    );
+self.addEventListener('fetch', function(event) {
+    event.respondWith(fromCache(event.request));
+    event.waitUntil(update(event.request));
 });
+
+/** Получаем данные из Cache */
+function fromCache(request) {
+    return caches.open(CACHE_NAME).then((cache) =>
+        cache.match(request).then((matching) =>
+            matching || Promise.reject('no-match')
+        ));
+}
+
+/** Делаем запрос на обновление данных в cache */
+function update(request) {
+    return caches.open(CACHE_NAME).then((cache) =>
+        fetch(request).then((response) =>
+            cache.put(request, response)
+        )
+    );
+}
