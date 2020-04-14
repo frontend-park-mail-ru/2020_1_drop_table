@@ -7,8 +7,7 @@ import {authAjax} from '../utils/authAjax';
 export default class CafeModel {
 
     /** Инициализация модели */
-    constructor(listId) {
-        this._listId = listId;
+    constructor(context) {
         this._id = null;
         this._address = null;
         this._closeTime = null;
@@ -17,8 +16,7 @@ export default class CafeModel {
         this._openTime = null;
         this._ownerID = null;
         this._photo = null;
-
-        this._loadCafe();
+        this.fillCafeData(context);
     }
 
     /**
@@ -122,17 +120,11 @@ export default class CafeModel {
      * @return {obj} объект с полями cafeModel
      */
     get context(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        const cafeData = JSON.parse(cafeListData)[this._listId];
-        return cafeData;
-    }
-
-    /**
-     * Устанавливает значение listId
-     * @param {int} listId
-     */
-    set listId(listId){
-        this._listId = listId;
+        return new Promise((resolve) => {
+            this._checkCafe(this._name).then(()=>{
+                resolve(this.makeContext());
+            });
+        });
     }
 
     /**
@@ -141,7 +133,6 @@ export default class CafeModel {
      */
     set address(address){
         this._address = address.toString();
-        this._saveCafe();
     }
 
     /**
@@ -150,7 +141,6 @@ export default class CafeModel {
      */
     set closeTime(closeTime){
         this._closeTime = closeTime.toString();
-        this._saveCafe();
     }
 
     /**
@@ -159,7 +149,6 @@ export default class CafeModel {
      */
     set description(description){
         this._description = description.toString();
-        this._saveCafe();
     }
 
     /**
@@ -168,7 +157,6 @@ export default class CafeModel {
      */
     set name(name){
         this._name = name.toString();
-        this._saveCafe();
     }
 
     /**
@@ -177,7 +165,6 @@ export default class CafeModel {
      */
     set openTime(openTime){
         this._openTime = openTime.toString();
-        this._saveCafe();
     }
 
     /**
@@ -186,7 +173,6 @@ export default class CafeModel {
      */
     set photo(photo){
         this._photo = photo.toString();
-        this._saveCafe();
     }
 
     /**
@@ -199,49 +185,34 @@ export default class CafeModel {
         }
     }
 
-    /** Заполняет поля cafeModel из sessionStorage */
-    _loadCafe(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData && this._listId != null) {
-            const cafeData = JSON.parse(cafeListData)[this._listId];
-            if(cafeData){
-                this.fillCafeData(cafeData);
-            }
-        }
-    }
-
-    /** Сохраняет поля cafeModel в sessionStorage */
-    _saveCafe(){
-        const data = {
-            'address': this._address,
-            'closeTime': this._closeTime,
-            'description': this._description,
-            'id': this._id,
-            'name': this._name,
-            'openTime': this._openTime,
-            'ownerID': this._ownerID,
-            'photo': this._photo
-        };
-
-        let cafeList = JSON.parse(sessionStorage.getItem('CafeList'));
-        cafeList[this._listId] = data;
-        sessionStorage.setItem('CafeList', JSON.stringify(cafeList));
-    }
-
     /**
      * Заполняет поля userModel из объекта context
      * @param {obj} context
      */
     fillCafeData(context){
-        this._address = context['address'];
-        this._closeTime = context['closeTime'];
-        this._description = context['description'];
-        this._id = context['id'];
-        this._name = context['name'];
-        this._openTime = context['openTime'];
-        this._ownerID = context['ownerID'];
-        this._photo = context['photo'];
-        this._saveCafe();
+        if(context) {
+            this._address = context['address'];
+            this._closeTime = context['closeTime'];
+            this._description = context['description'];
+            this._id = context['id'];
+            this._name = context['name'];
+            this._openTime = context['openTime'];
+            this._ownerID = context['ownerID'];
+            this._photo = context['photo'];
+        }
+    }
+
+    makeContext(){
+        return {
+            address: this._address,
+            closeTime: this._closeTime,
+            description: this._description,
+            id: this._id,
+            name: this._name,
+            openTime: this._openTime,
+            ownerID: this._ownerID,
+            photo: this._photo,
+        }
     }
 
     /**

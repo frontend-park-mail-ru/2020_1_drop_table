@@ -12,8 +12,7 @@ export default class CafeListModel{
     /** Инициализация модели */
     constructor() {
         this._cafeModelsList = [];
-        const cafeListData = this._loadCafeList();
-        this._constructCafe(cafeListData);
+        this._cafeListJson = null;
     }
 
     /**
@@ -22,12 +21,8 @@ export default class CafeListModel{
      */
     get context(){
         return new Promise((resolve) => {
-            this._checkCafeList().then(()=>{
-                const cafeList = sessionStorage.getItem('CafeList');
-                if(cafeList){
-                    resolve(JSON.parse(cafeList));
-                }
-                resolve(null);
+            this._checkCafeList(this._cafeListJson).then(()=>{
+                resolve(this._cafeListJson);
             });
         });
     }
@@ -38,7 +33,7 @@ export default class CafeListModel{
      */
     get isEmpty(){
         return new Promise((resolve) => {
-            this._checkCafeList().then(()=>{
+            this._checkCafeList(this._cafeListJson).then(()=>{
                 resolve(!this._cafeModelsList.length);
             });
         });
@@ -50,14 +45,18 @@ export default class CafeListModel{
      * @return {CafeModel} объект CafeModel с нужным id
      */
     getCafeById(id){
-        return this._cafeModelsList.find((cafe) => {
-            return cafe._id == id;
+        return new Promise((resolve) => {
+            this._checkCafeList(this._cafeListJson).then(()=>{
+                resolve(this._cafeModelsList.find((cafe) => {
+                    return cafe._id == id;
+                }));
+            });
         });
     }
 
     /**
      * Проверяет существование поля data
-     * @param {string|null} data
+     * @param {int|string|null} data
      */
     async _checkCafeList(data){
         if(!data){
@@ -65,34 +64,10 @@ export default class CafeListModel{
         }
     }
 
-    /** Заполняет поля cafeModelList из sessionStorage
-     * @return {Array} Возвращает список кафе из CafelListModel
-     */
-    _loadCafeList(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData) {
-            cafeListData = JSON.parse(cafeListData);
-            return cafeListData;
-        } else {
-            this._saveCafeList([]);
-            return [];
-        }
-    }
-
-    /**
-     * Сохраняет поля cafeListModel в sessionStorage
-     * @param {obj} data объект для сохранения
-     */
-    _saveCafeList(data){
-        sessionStorage.setItem('CafeList', JSON.stringify(data));
-    }
-
-    /** Конструирует cafeModel из  cafeListData
-     * @param {Array} cafeListData сырое представление списка кафе
-     */
-    _constructCafe(cafeListData){
-        cafeListData.forEach((_, id) => {
-            const cafe = new CafeModel(id);
+    /** Конструирует cafeModel из cafeListJson */
+    _constructCafe(){
+        this._cafeListJson.forEach((cafeContext) => {
+            const cafe = new CafeModel(cafeContext);
             this._cafeModelsList.push(cafe);
         });
     }
@@ -114,8 +89,8 @@ export default class CafeListModel{
                     //router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
-                        this._saveCafeList(response.data);
-                        this._constructCafe(response.data);
+                        this._cafeListJson = response.data;
+                        this._constructCafe();
                     } else {
                         throw response.errors;
                     }
@@ -131,13 +106,10 @@ export default class CafeListModel{
             await cafe.getFormData(photo),
             (response) => {
                 if (response.errors === null) {
-                    console.log('test error', cafe.getFormData(photo))
-                    cafe.listId = this._cafeModelsList.length;
                     cafe.fillCafeData(response.data);
                     this._cafeModelsList.push(cafe);
                     router._goTo('/myCafes');
                 } else {
-
                     throw response.errors;
                 }
             }

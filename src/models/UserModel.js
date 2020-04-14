@@ -3,7 +3,6 @@ import {authAjax} from '../utils/authAjax'
 import {constants} from '../utils/constants';
 import {ajaxForm} from '../utils/ajaxForm';
 
-
 import {router} from '../main/main';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
@@ -18,8 +17,6 @@ export default class UserModel {
         this._name = null;
         this._password = null;
         this._photo = null;
-
-        this._getUser();
     }
 
     /**
@@ -100,7 +97,6 @@ export default class UserModel {
      */
     set email(email) {
         this._email = email.toString();
-        this._saveUser();
     }
 
     /**
@@ -109,7 +105,6 @@ export default class UserModel {
      */
     set name(name) {
         this._name = name.toString();
-        this._saveUser();
     }
 
     /**
@@ -118,7 +113,6 @@ export default class UserModel {
      */
     set password(password) {
         this._password = password.toString();
-        this._saveUser();
     }
 
     /**
@@ -129,29 +123,6 @@ export default class UserModel {
         if(!data){
             await this.getOwner();
         }
-    }
-
-    /** Заполняет поля userModel из sessionStorage */
-    _getUser() {
-        let userData = sessionStorage.getItem('user');
-        if (userData) {
-            userData = JSON.parse(userData);
-            this._filUserData(userData);
-        }
-    }
-
-    /** Сохраняет поля userModel в sessionStorage */
-    _saveUser() {
-        const obj = {
-            'editedAt': this._editedAt,
-            'email': this._email,
-            'id': this._id,
-            'name': this._name,
-            'password': this._password,
-            'photo': this._photo
-        };
-
-        sessionStorage.setItem('user', JSON.stringify(obj));
     }
 
     /**
@@ -203,7 +174,6 @@ export default class UserModel {
             (response) => {
                 if (response.errors === null) {
                     this._filUserData(response.data);
-                    this._saveUser();
                 } else {
                     throw response.errors;
                 }
@@ -220,7 +190,6 @@ export default class UserModel {
             (response) => {
                 if (response.errors === null) {
                     this._filUserData(response.data);
-                    this._saveUser();
                 } else {
                     throw response.errors;
                 }
