@@ -28,8 +28,9 @@ export default class EditCafeController{
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
         const photoInput = document.getElementById('upload');
 
-        const cafe = this._cafeListModel.getCafeById(this._id);
-
+        const cafe = await this._cafeListModel.getCafeById(this._id);
+        console.log('get by id ', cafe);
+      
         cafe._id = this._id;
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
@@ -58,7 +59,7 @@ export default class EditCafeController{
      * @return {obj} созданный контекст
      */
     async _makeViewContext(id){
-        const cafe = this._cafeListModel.getCafeById(id);
+        const cafe = await this._cafeListModel.getCafeById(id);
 
         return {
             header:{

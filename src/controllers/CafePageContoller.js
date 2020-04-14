@@ -34,10 +34,9 @@ export default class CafePageController {
      */
     async _makeViewContext(id){
         this._id = id;
-        const cafe = this._cafeListModel.getCafeById(id);
-
+        const cafe = await this._cafeListModel.getCafeById(id);
         let cafeContext = {
-            'cafe': cafe.context
+            'cafe': await cafe.context
         };
 
         cafeContext['header'] = {
