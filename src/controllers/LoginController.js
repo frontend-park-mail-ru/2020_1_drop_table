@@ -1,7 +1,7 @@
 'use strict';
 
-import FormValidation from '../modules/FormValidation';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import {router} from '../main/main';
 
 /** контроллер авторизации */
