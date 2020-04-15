@@ -30,7 +30,6 @@ export default class LandingController {
 
     /** Запуск контроллера */
     control(){
-        sessionStorage.clear();
         this._landingView.context = this._makeViewContext();
         this._landingView.render();
     }

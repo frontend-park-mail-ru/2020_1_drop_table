@@ -37,15 +37,15 @@ import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
 import StaffPageController from '../controllers/StaffPageController';
 
-/** Регистрация сервис воркера */
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
-        .then((reg) => {
-            console.log('Registration succeeded. Scope is ' + reg.scope);
-        }).catch((error) => {
-            console.log('Registration failed with ' + error);
-        });
-}
+// /** Регистрация сервис воркера */
+// if ('serviceWorker' in navigator) {
+//     navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
+//         .then((reg) => {
+//             console.log('Registration succeeded. Scope is ' + reg.scope);
+//         }).catch((error) => {
+//             console.log('Registration failed with ' + error);
+//         });
+// }
 
 let app = document.getElementById('application');
 
@@ -167,7 +167,7 @@ function doStaffById(req){
 
 
 /** Роуты роутера */
-router.get('/', doreg);
+router.get('/', dolog);
 router.get('/landing', doLanding);
 
 router.get('/reg', doreg);

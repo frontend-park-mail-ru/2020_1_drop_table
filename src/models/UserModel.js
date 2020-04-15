@@ -17,6 +17,23 @@ export default class UserModel {
         this._name = null;
         this._password = null;
         this._photo = null;
+        this._Position = null;
+        this._isOwner = null;
+    }
+
+    get isOwner() {
+        return new Promise((resolve) => {
+            this._checkUser(this._isOwner).then(()=>{
+                resolve(this._isOwner);
+            });
+        });
+    }
+    get Position() {
+        return new Promise((resolve) => {
+            this._checkUser(this._Position).then(()=>{
+                resolve(this._Position);
+            });
+        });
     }
 
     /**
@@ -91,6 +108,14 @@ export default class UserModel {
         });
     }
 
+    set isOwner(isOwner) {
+        this._isOwner = isOwner;
+    }
+
+    set Position(Position) {
+        this._Position = Position.toString();
+    }
+
     /**
      * Устанавливает значение email
      * @param {string} email
@@ -135,20 +160,22 @@ export default class UserModel {
         let data = {
             'name': await this.name,
             'email': await this.email,
-            'password': await this.password,
+            'Position': await this.Position,
         };
-
         if (photo) {
             formData.append('photo', photo);
         } else {
+            console.log('else in fd');
             data = {
                 'name': await this.name,
                 'email': await this.email,
-                'password': await this.password,
-                'photo': await this.photo
-            }
-        }
+                'photo': await this.photo,
+                'Position': await this.Position,
+            };
+            console.log('else in fd', data);
 
+        }
+        console.log('append data',JSON.stringify(data));
         formData.append('jsonData', JSON.stringify(data));
         return formData;
     }
@@ -162,8 +189,10 @@ export default class UserModel {
         this._email = data['email'];
         this._id = data['id'];
         this._name = data['name'];
-        this._password = data['password'];
+        this._Position = data['Position'];
+        this._isOwner = data['isOwner'];
         this._photo = data['photo']? data['photo']:'/images/userpic.png';
+
     }
 
     /** Получение информации о текущем пользователе. */
@@ -173,8 +202,10 @@ export default class UserModel {
             {},
             (response) => {
                 if (response.errors === null) {
+                    console.log('get staff', response);
                     this._filUserData(response.data);
                 } else {
+                    router._goTo('/login');
                     throw response.errors;
                 }
             }
@@ -184,11 +215,13 @@ export default class UserModel {
     /** Изменение информации о текущем пользователе. */
     async editOwner(photo = null){
         const formData = await this._makeFormData(photo);
+
         await ajaxForm(constants.PATH+'/api/v1/staff/' + await this.id,
             'PUT',
             formData,
             (response) => {
                 if (response.errors === null) {
+                    console.log('edit resp',response);
                     this._filUserData(response.data);
                 } else {
                     throw response.errors;
@@ -200,10 +233,14 @@ export default class UserModel {
 
     /** Регистрация пользователя. */
     async register() {
-        sessionStorage.clear();
         await ajax(constants.PATH + '/api/v1/staff',
             'POST',
-            {'name': await this.name, 'email': await this.email, 'password': await this.password, 'isOwner':true},
+            {'name': await this.name,
+                'email': await this.email,
+                'password': await this.password,
+                'isOwner':true,
+                'Position':'Владелец'
+            },
             (response) => {
                 if (response.errors === null) {
                     router._goTo('/myCafes');
@@ -215,7 +252,7 @@ export default class UserModel {
 
     /** Аунтификация пользователя. */
     async login() {
-        sessionStorage.clear();
+
         await authAjax('POST',
             constants.PATH + '/api/v1/staff/login',
             {'email': await this.email, 'password': await this.password},
@@ -240,6 +277,25 @@ export default class UserModel {
                 if (response.errors === null) {
                     router._goTo('/profile');
                 } else {
+                    console.log('добавление стаффа:',response);
+                    router._goTo('/login');
+                    throw response.errors[0].message;
+                }
+            }
+        );
+    }
+    /** Добавление работника */
+    async fireStaff(id) {
+        const requestUrl = `/api/v1/staff/delete_staff/${id}`;
+        await ajax(constants.PATH + requestUrl,
+            'POST',
+            null,
+            (response) => {
+                if (response.errors === null) {
+                    router._goTo('/staff');
+                } else {
+                    console.log('удаление стаффа:',response);
+                    router._goTo('/login');
                     throw response.errors[0].message;
                 }
             }

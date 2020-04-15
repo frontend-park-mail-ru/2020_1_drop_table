@@ -33,7 +33,9 @@ export default class UserProfileController{
         if ((new FormValidation(form)).validate(validateContext)) {
             this._userModel.name = form.elements['full-name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
-            this._userModel.password = form.elements['password'].value.toString();
+            this._userModel.Position = form.elements['Position'].value.toString();
+
+            // this._userModel.password = form.elements['password'].value.toString();
 
             try {
                 await this._userModel.editOwner(photo);
@@ -64,7 +66,6 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            sessionStorage.clear();
                             router._goTo('/login');
 
                         }
@@ -83,7 +84,7 @@ export default class UserProfileController{
                         {
                             type: 'text',
                             id: 'full-name',
-                            data: 'name',
+                            data: 'Имя',
                             inputPromise: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
@@ -91,24 +92,19 @@ export default class UserProfileController{
                         {
                             type: 'email',
                             id: 'email',
-                            data: 'email',
+                            data: 'Почта',
                             inputPromise: this._userModel.email,
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
-                            type: 'password',
-                            id: 'password',
-                            data: 'Пароль',
-                            labelData: 'Пароль',
+                            type: 'text',
+                            id: 'Position',
+                            data: 'Должность',
+                            inputPromise: this._userModel.Position,
+                            labelData: 'Должность',
                             inputOption: 'required',
-                        },
-                        {
-                            type: 'password',
-                            id: 're-password',
-                            data: 'Пароль',
-                            labelData: 'Повторите пароль',
-                            inputOption: 'required',
+                            readOnly: this._userModel.isOwner?'':'readOnly'
                         },
                     ],
                     submitValue: 'Готово',
@@ -146,21 +142,14 @@ export default class UserProfileController{
                 }
             },
             {
-                element: form.elements['password'],
+                element: form.elements['Position'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 8){
-                        return 'Пароль слишком короткий';
+                    if(form.elements['Position'].value.toString().length < 4){
+                        return 'Должность слишком короткая';
                     }
                 }
             },
-            {
-                element: form.elements['re-password'],
-                validate: () => {
-                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
-                        return 'Пароли не совпадают';
-                    }
-                }
-            },
+
         ];
     }
 
@@ -175,13 +164,17 @@ export default class UserProfileController{
                 'Пользователь с такой почтой уже существует',
                 form['email']
             ],
-            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
-                'Минимальная длинна пароля 8 символов',
-                form['password']
-            ],
+            // 'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
+            //     'Минимальная длинна пароля 8 символов',
+            //     form['password']
+            // ],
             'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'min\' tag': [
                 'Имя слишком короткое',
                 form['full-name']
+            ],
+            'Key: \'Staff.Position\' Error:Field validation for \'Position\' failed on the \'min\' tag': [
+                'Должность слишком короткая',
+                form['Position']
             ],
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
