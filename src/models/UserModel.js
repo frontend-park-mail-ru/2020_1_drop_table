@@ -205,6 +205,7 @@ export default class UserModel {
             'POST',
             {'name': await this.name, 'email': await this.email, 'password': await this.password, 'isOwner':true},
             (response) => {
+                console.log('response', response);
                 if (response.errors === null) {
                     router._goTo('/myCafes');
                 } else {
