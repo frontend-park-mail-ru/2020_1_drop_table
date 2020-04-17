@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'eloyalty';
+const cacheName = 'eloyalty-v1';
 
 /** Urls поддерживающие кэширование */
 const cacheUrls = [
@@ -51,39 +51,184 @@ const cacheUrls = [
     '/images/userpic.png',
 ];
 
+let complicatedRequestQueue = [];
+let plainRequestQueue = [];
 
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(function(cache) {
-            return cache.addAll(cacheUrls);
-        }).then(function() {
-            return self.skipWaiting();
-        })
-    );
+    event.waitUntil(async () => {
+        const cache = await caches.open(cacheName);
+        await cache.addAll(cacheUrls);
+        return self.skipWaiting();
+    });
 });
 
-self.addEventListener('activate', function() {
-    return self.clients.claim();
+self.addEventListener('activate', (event) => {
+    event.waitUntil(self.clients.claim());
 });
 
 self.addEventListener('fetch', (event) => {
-    event.respondWith(fetch(event.request));
+    if(event.request.method === 'GET'){
+        if(navigator.onLine){
+            event.respondWith(onlineHandler(event.request, event.clientId));
+        } else {
+            event.respondWith(offlineHandler(event.request));
+        }
+    }
 });
 
+async function onlineHandler(request, clientId) {
+    handlePlainRequestQueue(plainRequestQueue, clientId);
+    const match = await fromCache(request);
+    if(match){
+        if(!plainRequestQueue.some(obj => {
+            return obj.url === request.url;
+        })){
+            plainRequestQueue.push(request);
+        }
+        return match;
+    } else {
+        return handleFetch(request, clientId);
+    }
+}
+
+async function offlineHandler(request) {
+    const match = await fromCache(request);
+    if(match){
+        console.log(plainRequestQueue);
+        if(!plainRequestQueue.some(obj => {
+            return obj.url === request.url;
+        })){
+            plainRequestQueue.push(request);
+        }
+        return match;
+    } else {
+        return null; // TODO OFFLINE WORKING
+    }
+}
+
+async function fromCache(request){
+    const cache = await caches.open(cacheName);
+    return await cache.match(request);
+}
+
+async function handleFetch(request, clientId){
+    const response = await fetch(request);
+    const [responseNoCsrf, csrf] = await removeResponseCsrfHeader(response.clone());
+    await setCsrf(csrf, clientId);
+    if(responseNoCsrf && responseNoCsrf.ok){
+        const cache = await caches.open(cacheName);
+        await cache.put(request, responseNoCsrf.clone());
+    }
+    return response;
+}
+
+async function setCsrf(csrf, clientId){
+    if (clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    if(csrf) {
+        client.postMessage({
+            Csrf: csrf
+        });
+    }
+}
+
+async function handlePlainRequestQueue(requestQueue, clientId){
+    while(requestQueue.length){
+        const request = requestQueue.shift();
+        handleFetch(request, clientId);
+    }
+}
+
+async function removeResponseCsrfHeader(response){
+    if(response && response.headers && response.headers.get('Csrf')){
+        let headersCopy = constructHeaders(response);
+        headersCopy.delete('Csrf');
+        const responseCopy = await constructResponse(response, headersCopy);
+        return [responseCopy, response.headers.get('Csrf')];
+    }
+    return [response, null];
+}
+
+async function constructResponse(response, headers){
+    const blobResponse = await response.blob();
+    return new Response(blobResponse, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: headers ? headers : response.headers
+    });
+}
+
+function constructHeaders(response){
+    let headers = new Headers();
+    for (let keyValue of response.headers.entries()) {
+        headers.append(...keyValue);
+    }
+    return headers;
+}
+
+
+
+//
 // async function fromCache(request) {
-//     const cache = await caches.open(CACHE_NAME);
-//     const match = await cache.match(request);
-//     const ret = match || await update(request);
-//     console.log(request.url, ret);
-//     return (ret);
+//     const cache = await caches.open(cacheName);
+//     return await cache.match(request);
 // }
 //
-// async function update(request) {
-//     const cache = await caches.open(CACHE_NAME);
-//     const response = await fetch(request.clone());
-//     console.log(request.method);
-//     if(response && response.ok && request.method == 'GET'){
+// async function handlePlainResponse(request, response){
+//     const cache = await caches.open(cacheName);
+//     if(response && response.ok) {
 //         await cache.put(request, response.clone());
 //     }
 //     return response;
 // }
+//
+// async function handlePlainRequestQueue(requestQueue){
+//     while(requestQueue.length){
+//         const request = requestQueue.shift();
+//         const response = await removeResponseCorsHeader(await fetch(request));
+//         handlePlainResponse(request, response);
+//     }
+// }
+//
+// function constructHeaders(response){
+//     let headers = new Headers();
+//     for (let keyValue of response.headers.entries()) {
+//         headers.append(...keyValue);
+//     }
+//     return headers;
+// }
+//
+// async function constructResponse(response, headers){
+//     const blobResponse = await response.blob();
+//     return new Response(blobResponse, {
+//         status: response.status,
+//         statusText: response.statusText,
+//         headers: headers ? headers : response.headers
+//     });
+// }
+//
+// async function removeResponseCorsHeader(response){
+//     console.log('response', response);
+//     if(response && response.headers && response.headers.get('Csrf')){
+//         let headersCopy = constructHeaders(response);
+//         headersCopy.delete('Csrf');
+//         const responseCopy = constructResponse(response, headersCopy);
+//         return responseCopy;
+//     }
+//     return response;
+// }
+
+
+//
+// async function update(request) {
+//     const cache = await caches.open(CACHE_NAME);
+//     const response = await fetch(request.clone());
+//     console.log(request);
+//     if(request.method == 'GET' && response && response.ok){
+//         await cache.put(request, response.clone());
+//     }
+//     return response;
+// }
+
