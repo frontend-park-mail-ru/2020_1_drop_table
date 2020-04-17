@@ -19,13 +19,20 @@ export class LoyaltyRedactorComponent {
         const normalButtonState = `width: 50px; height: 50px; transition: height 0.5s linear 0s; border-radius: 50%;
             transition: border-radius 0.25s linear 0.25s`;
 
-        const clickButtonState = `border-radius: 15px  15px 15px 15px;height: 300px; transition: height 0.5s linear 0s;`;
+        const clickButtonState = `border-radius: 15px  15px 0 0;height: 300px; transition: height 0.5s linear 0s;`;
 
 
         const normalDescrState = `width: 0px; height: 0px; transition: height 0.5s linear 0s; transition: width 0.25s linear 0s;`;
-        const clickDescrState = `width: 250px; height: 250px; transition: height 0.5s linear 0s; transition: width 0.5s linear 0s;`;
+        const clickDescrState = `width: 250px;
+         height: 250px;
+          transition: height 1s linear 0s;
+           // transition: width 1s linear 0s;
+           `;
 
-        const clickDescrCenterState = `width: 50px; height: 265px; transition: height 1s linear 0s; transition: width 0.5s linear 0s;`;
+        const clickDescrCenterState = `width: 50px;
+         height: 265px;
+          transition: height 1s linear 0s;
+           transition: width 1s linear 0s;`;
 
         const buttons = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__button');
         const descrCenter = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center');

@@ -44,10 +44,10 @@
         position: absolute;
         border-radius: 50%;
         margin: 10px auto;
-        background-color: #8f8f8f;
+        background-color: #ffffff;
         width: 50px;
         height: 50px;
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
         top:0;
         left:0;
         z-index: 1;
@@ -55,7 +55,7 @@
 
       &__description-center{
         position: absolute;
-        background-color: #8f8f8f;
+        background-color: #ffffff;
         width: 0px;
         height: 0px;
         top:50px;
@@ -65,26 +65,26 @@
 
       &__description-right{
         position: absolute;
-        background-color: #8f8f8f;
+        background-color: #ffffff;
         width: 0px;
         height: 0px;
         top:65px;
         right:-35px;
         z-index:2;
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-        border-radius: 15px  15px 15px 15px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+        //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         overflow: hidden;
       }
       &__description-left{
         position: absolute;
-        background-color: #8f8f8f;
+        background-color: #ffffff;
         width: 0px;
         height: 0px;
         top:65px;
         left:15px;
         z-index:2;
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-        border-radius: 15px  15px 15px 15px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+        //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         overflow: hidden;
       }
     }

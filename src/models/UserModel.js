@@ -205,7 +205,7 @@ export default class UserModel {
                     console.log('get staff', response);
                     this._filUserData(response.data);
                 } else {
-                    router._goTo('/login');
+                    // router._goTo('/login');
                     throw response.errors;
                 }
             }
