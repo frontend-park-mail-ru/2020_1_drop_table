@@ -1,0 +1,97 @@
+
+
+
+@keyframes showCard {
+  /* You could think of as "step 1" */
+  0% {
+    border-radius: 15px  15px 0 0;
+    transition: height 0.5s ease-in;
+  }
+  /* You could think of as "step 2" */
+  100% {
+    border-radius: 50%;
+
+  }
+}
+
+@keyframes  hideCard {
+  /* You could think of as "step 1" */
+  0% {
+    width: 50px;
+    height: 50px;
+    transition: height 0.5s ease-in;
+  }
+  /* You could think of as "step 2" */
+  100% {
+    border-radius: 50%;
+  }
+}
+
+
+.loyalty-redactor{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  &__buttons-field{
+    width:100%;
+    display: flex;
+    justify-content: space-around;
+
+    &__loyalty-field{
+      position: relative;
+      &__button{
+        position: absolute;
+        border-radius: 50%;
+        margin: 10px auto;
+        background-color: #8f8f8f;
+        width: 50px;
+        height: 50px;
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        top:0;
+        left:0;
+        z-index: 1;
+      }
+
+      &__description-center{
+        position: absolute;
+        background-color: #8f8f8f;
+        width: 0px;
+        height: 0px;
+        top:50px;
+        left:0;
+        z-index:3;
+      }
+
+      &__description-right{
+        position: absolute;
+        background-color: #8f8f8f;
+        width: 0px;
+        height: 0px;
+        top:65px;
+        right:-35px;
+        z-index:2;
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        border-radius: 15px  15px 15px 15px;
+        overflow: hidden;
+      }
+      &__description-left{
+        position: absolute;
+        background-color: #8f8f8f;
+        width: 0px;
+        height: 0px;
+        top:65px;
+        left:15px;
+        z-index:2;
+        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        border-radius: 15px  15px 15px 15px;
+        overflow: hidden;
+      }
+    }
+
+
+  }
+
+
+}
+

@@ -152,7 +152,7 @@ export default class RegisterController{
     /** Запуск контроллера */
     control(){
         this._registerView.context = this._makeViewContext();
-        this._tryAuth();
+        //this._tryAuth();
         this._registerView.render();
     }
 }
