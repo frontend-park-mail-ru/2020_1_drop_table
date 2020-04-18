@@ -17,54 +17,52 @@ export default class StaffModel { // дописать потом
     }
 
     get StaffId(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._StaffId).then(()=>{
                 resolve(this._StaffId);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
 
     get StaffName(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._StaffName).then(()=>{
                 resolve(this._StaffName);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
 
     get Position(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._Position).then(()=>{
                 resolve(this._Position);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
 
     get CafeId(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._CafeId).then(()=>{
                 resolve(this._CafeId);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
 
     get CafeName(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._CafeName).then(()=>{
                 resolve(this._CafeName);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
 
     get Photo(){
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             this._checkStaff(this._Photo).then(()=>{
                 resolve(this._Photo);
-            });
+            }).catch((err) => {reject(err)});
         });
     }
-
-
 
     get context(){
         let staffListData = sessionStorage.getItem('StaffList');
@@ -149,15 +147,12 @@ export default class StaffModel { // дописать потом
         this._saveStaff();
     }
 
-
-
     /** Получение работника */
     async getStaff(){
         await authAjax('GET', constants.PATH + `/api/v1/staff/${this._StaffId}`,
             null,
             (response) => {
                 if (response.errors === null) {
-
                     this.fillStaffData(response.data);
                 } else {
                     throw response.errors;

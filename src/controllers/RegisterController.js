@@ -4,6 +4,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification'
 
 /** контроллер регистрации */
 export default class RegisterController{
@@ -135,24 +136,17 @@ export default class RegisterController{
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
-    }
-
-    async _tryAuth(){
-        try{
-            await this._userModel.getOwner();
-            router._goTo('/myCafes')
-        }
-        catch (e) {
-            console.log('user not found',e)
-        }
     }
 
     /** Запуск контроллера */
     control(){
         this._registerView.context = this._makeViewContext();
-        //this._tryAuth();
         this._registerView.render();
     }
 }

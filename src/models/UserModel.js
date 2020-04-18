@@ -202,10 +202,8 @@ export default class UserModel {
             {},
             (response) => {
                 if (response.errors === null) {
-                    console.log('get staff', response);
                     this._filUserData(response.data);
                 } else {
-                    // router._goTo('/login');
                     throw response.errors;
                 }
             }
@@ -221,7 +219,6 @@ export default class UserModel {
             formData,
             (response) => {
                 if (response.errors === null) {
-                    console.log('edit resp',response);
                     this._filUserData(response.data);
                 } else {
                     throw response.errors;
@@ -238,14 +235,17 @@ export default class UserModel {
             {'name': await this.name,
                 'email': await this.email,
                 'password': await this.password,
-                'isOwner':true,
-                'Position':'Владелец'
+                'isOwner': true,
+                'Position': 'Владелец'
             },
             (response) => {
-                console.log('response', response);
-                if (response.errors === null) {
+                if (response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     router._goTo('/myCafes');
-                } else {
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             });
@@ -253,16 +253,17 @@ export default class UserModel {
 
     /** Аунтификация пользователя. */
     async login() {
-
         await authAjax('POST',
             constants.PATH + '/api/v1/staff/login',
             {'email': await this.email, 'password': await this.password},
             (response) => {
-                if (response.errors === null) {
-                    console.log('replace to mycafe');
-                    router._goTo('/profile')
-                } else {
-                    alert();
+                if (response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
+                    router._goTo('/profile');
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             });
@@ -275,12 +276,14 @@ export default class UserModel {
             'POST',
             {'name': await this.name, 'email': await this.email, 'password': await this.password},
             (response) => {
-                if (response.errors === null) {
+                if (response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     router._goTo('/profile');
-                } else {
-                    console.log('добавление стаффа:',response);
-                    router._goTo('/login');
-                    throw response.errors[0].message;
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
         );
@@ -292,12 +295,14 @@ export default class UserModel {
             'POST',
             null,
             (response) => {
-                if (response.errors === null) {
+                if (response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     router._goTo('/staff');
-                } else {
-                    console.log('удаление стаффа:',response);
-                    router._goTo('/login');
-                    throw response.errors[0].message;
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
         );

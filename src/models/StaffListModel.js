@@ -100,19 +100,11 @@ export default class StaffListModel{
             'GET',
             {},
             (response) => {
-
-                if(response.data === null){
-                    console.log('get staff error',response.data)
-
+                if (response.errors === null) {
+                    this._saveStaffList(response.data);
+                    this._constructStaff(response.data);
                 } else {
-                    if (response.errors === null) {
-                        this._saveStaffList(response.data);
-                        this._constructStaff(response.data);
-                    } else {
-                        console.log('Список стафов:',response);
-                        router._goTo('/login');
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
         )
@@ -127,16 +119,12 @@ export default class StaffListModel{
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-                    //router._goTo('/createCafe');
+                if (response.errors === null) {
+                    (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
+                    // this._saveCafeList(response.data);
+                    // this._constructCafe(response.data);
                 } else {
-                    if (response.errors === null) {
-                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
-                        // this._saveCafeList(response.data);
-                        // this._constructCafe(response.data);
-                    } else {
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
         )

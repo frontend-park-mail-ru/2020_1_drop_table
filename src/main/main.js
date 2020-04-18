@@ -51,8 +51,6 @@ if ('serviceWorker' in navigator) {
 navigator.serviceWorker.addEventListener('message', event => {
     if(event.data.type === 'csrf'){
         sessionStorage.setItem('Csrf', event.data.Csrf);
-    } else if(event.data.type === 'offline'){
-        alert('you are offline'); //TODO
     }
 });
 

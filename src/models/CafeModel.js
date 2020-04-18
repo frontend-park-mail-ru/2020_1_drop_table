@@ -2,7 +2,6 @@
 
 import {constants} from '../utils/constants';
 import {authAjax} from '../utils/authAjax';
-import {router} from '../main/main';
 
 /** Класс модели кафе */
 export default class CafeModel {
@@ -251,11 +250,9 @@ export default class CafeModel {
         await authAjax('GET', constants.PATH + `/api/v1/cafe/${this._id}`,
             null,
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null){
                     this.fillCafeData(response.data);
                 } else {
-                    console.log('получение кафе:',response)
-                    router._goTo('/login');
                     throw response.errors;
                 }
             }

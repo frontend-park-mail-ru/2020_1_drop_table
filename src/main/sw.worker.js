@@ -4,6 +4,16 @@ const cacheName = 'eloyalty-v1';
 
 /** Urls поддерживающие кэширование */
 const cacheUrls = [
+    '/reg',
+    '/login',
+    '/landing',
+    '/myCafes',
+    '/statistics',
+    '/staff',
+    '/profile',
+    '/createCafe',
+    '/cafe/',
+
     '/bundle.js',
     '/index.html',
     '/logo.png',
@@ -71,7 +81,6 @@ self.addEventListener('fetch', (event) => {
         if(navigator.onLine){
             event.respondWith(onlineHandler(event.request, event.clientId));
         } else {
-            sendOffline(event.clientId);
             event.respondWith(offlineHandler(event.request));
         }
     } else {
@@ -79,8 +88,8 @@ self.addEventListener('fetch', (event) => {
             event.respondWith(fetch(event.request));
             handleRequestQueues(event.clientId)
         } else {
-            sendOffline(event.clientId);
             complicatedRequestQueue.push(event.request);
+            event.respondWith(getOfflineResponse());
         }
     }
 });
@@ -94,17 +103,6 @@ async function sendRefresh(response, clientId) {
         type: 'refresh',
         url: response.url,
         eTag: response.headers.get('ETag')
-    };
-    client.postMessage(message);
-}
-
-async function sendOffline(clientId) {
-    if (!clientId) return;
-    const client = await self.clients.get(clientId);
-    if (!client) return;
-
-    let message = {
-        type: 'offline',
     };
     client.postMessage(message);
 }
@@ -148,7 +146,7 @@ async function offlineHandler(request) {
         }
         return match;
     } else {
-        return null; // TODO OFFLINE WORKING
+        return getOfflineResponse(); //TODO PAGE YOU are in offline
     }
 }
 
@@ -182,9 +180,11 @@ async function handlePlainRequestQueue(requestQueue, clientId){
 }
 
 async function handleComplicatedRequestQueue(requestQueue, clientId){
+    console.log('queue', requestQueue);
     while(requestQueue.length){
         const request = requestQueue.shift();
         const response = await fetch(request);
+        console.log('queue response', response);
         const csrf = response.headers.get('Csrf');
         await sendCsrf(csrf, clientId);
     }
@@ -215,5 +215,13 @@ function constructHeaders(response){
         headers.append(...keyValue);
     }
     return headers;
+}
+
+function getOfflineResponse(){
+    const data = {errors: [{message:'offline'}]};
+    const blob = new Blob([JSON.stringify(data)], {type : 'application/json'});
+    const init = {'status' : 200};
+    const response = new Response(blob, init);
+    return response;
 }
 

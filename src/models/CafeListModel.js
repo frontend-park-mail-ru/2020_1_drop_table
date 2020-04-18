@@ -12,7 +12,7 @@ export default class CafeListModel{
     /** Инициализация модели */
     constructor() {
         this._cafeModelsList = [];
-        this._cafeListJson = null;
+        this._cafeListJson = [];
     }
 
     /**
@@ -22,7 +22,7 @@ export default class CafeListModel{
     get context(){
         return new Promise((resolve) => {
             this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeListJson ? this._cafeListJson : []);
+                resolve(this._cafeListJson);
             });
         });
     }
@@ -85,18 +85,16 @@ export default class CafeListModel{
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-                    // router._goTo('/createCafe');
-                } else {
-                    if (response.errors === null) {
-                        this._cafeListJson = response.data;
-                        this._constructCafe();
-                    } else {
-                        //todo разное поведение при ошибках
-                        console.log('Получение кафе:',response)
-                        router._goTo('/login');
-                        throw response.errors;
-                    }
+                if(response.errors === null){
+                    this._cafeListJson = response.data;
+                }
+
+                if(response.errors === null || response.errors.includes('offline')){
+                    this._constructCafe();
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
         )
@@ -108,11 +106,18 @@ export default class CafeListModel{
             'POST',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null){
                     cafe.fillCafeData(response.data);
+                }
+
+                if(response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     this._cafeModelsList.push(cafe);
                     router._goTo('/myCafes');
-                } else {
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             }
@@ -125,9 +130,13 @@ export default class CafeListModel{
             'PUT',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     router._goTo(`/myCafes`);
-                } else {
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             }

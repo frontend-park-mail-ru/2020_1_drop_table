@@ -15,8 +15,6 @@ export default class CafeListController{
         this._cafeListModel = cafeListModel;
         this._userModel = userModel;
         this._cafeListView = cafeListView;
-
-
     }
 
     /**
@@ -24,7 +22,6 @@ export default class CafeListController{
      * @return {obj} созданный контекст
      */
     async _makeViewContext(){
-
         let cafeListContext = {
             cafeList: await this._cafeListModel.context
         };

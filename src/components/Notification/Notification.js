@@ -3,8 +3,7 @@ import './Notification.scss';
 import Notification from './Notification.hbs';
 
 /** Компонент уведомления */
-export class NotificationComponent {
-
+export default class NotificationComponent {
 
     constructor(text, time) {
         this._el = document.getElementById('alert-field');
@@ -19,8 +18,8 @@ export class NotificationComponent {
     _renderTemplate() {
         this._el.innerHTML = Notification({text: this._text});
     }
-    remove(){
 
+    remove(){
         let notification= document.getElementsByClassName('notification').item(0);
         notification.style.right = '-100%';
 
@@ -28,7 +27,6 @@ export class NotificationComponent {
             let notificationField = document.getElementById('alert-field');
             notificationField.innerHTML = ' ';
         }, 1000);
-
     }
 
     /** Отрисовка всплывающего окна */
