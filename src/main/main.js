@@ -181,9 +181,6 @@ function doStaffById(req){
     staffPageController.control(id);
 }
 
-
-
-
 /** Роуты роутера */
 router.get('/', doreg);
 router.get('/landing', doLanding);
@@ -200,8 +197,6 @@ router.get('/editCafe/{id}', doEditCafe);
 router.get('/staff', doStaffPage);
 router.get('/staff/{id}', doStaffById);
 router.get('/addStaff', doAddStaff);
-
-
 
 router.get('/points/{uuid}', doStaffMenu);
 router.notFoundHandler(doLanding);
