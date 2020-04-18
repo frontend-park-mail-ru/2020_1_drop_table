@@ -12,6 +12,19 @@ export class NotificationComponent {
         this._time = time;
     }
 
+    _addListeners(){
+        let notification= document.getElementsByClassName('notification').item(0);
+        let notificationField = document.getElementById('alert-field');
+        notificationField.addEventListener('click', function(event) {
+            let isClickInside = notification.contains(event.target);
+            if (!isClickInside) {
+                notification.style.right = '-100%';
+                notificationField.innerHTML = ' ';
+
+            }
+        });
+    }
+
     /**
      * Отрисовка шаблона всплывающего окна
      * @private
@@ -34,6 +47,7 @@ export class NotificationComponent {
     /** Отрисовка всплывающего окна */
     render() {
         this._renderTemplate();
-        setTimeout(this.remove,this._time);
+        this._addListeners();
+        // setTimeout(this.remove,this._time);
     }
 }

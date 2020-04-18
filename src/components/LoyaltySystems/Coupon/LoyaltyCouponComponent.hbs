@@ -1,0 +1,29 @@
+<div class="loyalty-coupon-container">
+    <div class="loyalty-coupon-container__text-field">
+        <h4 class="loyalty-coupon-container__text-field_h4" >{{text}}</h4>
+    </div>
+    <div class="loyalty-coupon-container__logic">
+        <div class="loyalty-coupon-container__logic__inputs" >
+            <div class="loyalty-coupon-container__logic__inputs__field" >
+                <span class="loyalty-coupon-container__logic__inputs__field_span">Сумма</span>
+                <input id = "points" class="loyalty-coupon-container__logic__inputs__field_input">
+            </div>
+            <div class="loyalty-coupon-container__logic__inputs__field" >
+                <span class="loyalty-coupon-container__logic__inputs__field_span">Количество карт</span>
+                <input id="cards" class="loyalty-coupon-container__logic__inputs__field_input">
+            </div>
+
+        </div>
+        <div class="loyalty-coupon-container__logic__statistics" >
+            <div class="loyalty-coupon-container__logic__statistics_field" >
+                <h4 class="loyalty-coupon-container__logic__statistics_field_h4" >Уже выдано</h4>
+                <h4 class="loyalty-coupon-container__logic__statistics_field_h4" id="num">{{done}}</h4>
+            </div>
+            <div class="loyalty-coupon-container__logic__statistics_field" >
+                <h4 class="loyalty-coupon-container__logic__statistics_field_h4" >Осталось</h4>
+                <h4 class="loyalty-coupon-container__logic__statistics_field_h4" id="num">{{left}}</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
