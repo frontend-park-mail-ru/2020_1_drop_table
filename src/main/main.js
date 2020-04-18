@@ -50,10 +50,20 @@ if ('serviceWorker' in navigator) {
 }
 
 navigator.serviceWorker.addEventListener('message', event => {
-    if(event.data.Csrf){
+    if(event.data.type === 'csrf'){
         sessionStorage.setItem('Csrf', event.data.Csrf);
+    } else if(event.data.type === 'offline'){
+        alert('you are offline'); //TODO
     }
 });
+
+// navigator.serviceWorker.addEventListener('message', event => { //TODO
+//     console.log('data', event.data);
+//     if(event.data.type){
+//         console.log('REFRESH');
+//         location.reload();
+//     }
+// });
 
 let app = document.getElementById('application');
 

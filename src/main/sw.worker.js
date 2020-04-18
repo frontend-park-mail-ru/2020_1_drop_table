@@ -67,19 +67,67 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    console.log(complicatedRequestQueue);
     if(event.request.method === 'GET'){
         if(navigator.onLine){
             event.respondWith(onlineHandler(event.request, event.clientId));
         } else {
+            sendOffline(event.clientId);
             event.respondWith(offlineHandler(event.request));
+        }
+    } else {
+        if(navigator.onLine){
+            event.respondWith(fetch(event.request));
+            handleRequestQueues(event.clientId)
+        } else {
+            sendOffline(event.clientId);
+            complicatedRequestQueue.push(event.request);
         }
     }
 });
 
+async function sendRefresh(response, clientId) {
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    let message = {
+        type: 'refresh',
+        url: response.url,
+        eTag: response.headers.get('ETag')
+    };
+    client.postMessage(message);
+}
+
+async function sendOffline(clientId) {
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    let message = {
+        type: 'offline',
+    };
+    client.postMessage(message);
+}
+
+async function sendCsrf(csrf, clientId){
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    if(csrf) {
+        let message = {
+            type: 'csrf',
+            Csrf: csrf
+        }
+        client.postMessage(message);
+    }
+}
+
 async function onlineHandler(request, clientId) {
-    handlePlainRequestQueue(plainRequestQueue, clientId);
+    handleRequestQueues(clientId);
     const match = await fromCache(request);
-    if(match){
+    if(match && match.url){ //TODO REFRESH
         if(!plainRequestQueue.some(obj => {
             return obj.url === request.url;
         })){
@@ -94,7 +142,6 @@ async function onlineHandler(request, clientId) {
 async function offlineHandler(request) {
     const match = await fromCache(request);
     if(match){
-        console.log(plainRequestQueue);
         if(!plainRequestQueue.some(obj => {
             return obj.url === request.url;
         })){
@@ -114,30 +161,34 @@ async function fromCache(request){
 async function handleFetch(request, clientId){
     const response = await fetch(request);
     const [responseNoCsrf, csrf] = await removeResponseCsrfHeader(response.clone());
-    await setCsrf(csrf, clientId);
+    await sendCsrf(csrf, clientId);
     if(responseNoCsrf && responseNoCsrf.ok){
         const cache = await caches.open(cacheName);
         await cache.put(request, responseNoCsrf.clone());
+        await sendRefresh(response, clientId);
     }
     return response;
 }
 
-async function setCsrf(csrf, clientId){
-    if (clientId) return;
-    const client = await self.clients.get(clientId);
-    if (!client) return;
-
-    if(csrf) {
-        client.postMessage({
-            Csrf: csrf
-        });
-    }
+async function handleRequestQueues(clientId){
+    handlePlainRequestQueue(plainRequestQueue, clientId);
+    handleComplicatedRequestQueue(complicatedRequestQueue, clientId);
 }
 
 async function handlePlainRequestQueue(requestQueue, clientId){
     while(requestQueue.length){
         const request = requestQueue.shift();
-        handleFetch(request, clientId);
+        await handleFetch(request, clientId);
+    }
+}
+
+async function handleComplicatedRequestQueue(requestQueue, clientId){
+    while(requestQueue.length){
+        const request = requestQueue.shift();
+        const response = await fetch(request);
+        console.log('comp response', response);
+        const csrf = response.headers.get('Csrf');
+        await sendCsrf(csrf, clientId);
     }
 }
 
