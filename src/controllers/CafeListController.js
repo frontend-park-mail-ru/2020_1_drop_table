@@ -15,6 +15,8 @@ export default class CafeListController{
         this._cafeListModel = cafeListModel;
         this._userModel = userModel;
         this._cafeListView = cafeListView;
+
+
     }
 
     /**
@@ -46,6 +48,12 @@ export default class CafeListController{
         };
         console.log(cafeListContext);
         return cafeListContext;
+    }
+
+    _serviceWorkerEventListener(event){
+        if(event.data.type === 'refresh'){
+            this.control();
+        }
     }
 
     /** Запуск контроллера */

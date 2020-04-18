@@ -242,6 +242,7 @@ export default class UserModel {
                 'Position':'Владелец'
             },
             (response) => {
+                console.log('response', response);
                 if (response.errors === null) {
                     router._goTo('/myCafes');
                 } else {
