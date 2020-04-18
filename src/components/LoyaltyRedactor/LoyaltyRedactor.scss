@@ -1,149 +1,91 @@
-
-
-
-@keyframes showCard {
-  /* You could think of as "step 1" */
-  0% {
-    border-radius: 15px  15px 0 0;
-    transition: height 0.5s ease-in;
-  }
-  /* You could think of as "step 2" */
-  100% {
-    border-radius: 50%;
-
-  }
-}
-
-@keyframes  hideCard {
-  /* You could think of as "step 1" */
-  0% {
-    width: 50px;
-    height: 50px;
-    transition: height 0.5s ease-in;
-  }
-  /* You could think of as "step 2" */
-  100% {
-    border-radius: 50%;
-  }
-}
-
-
 .loyalty-redactor{
-  width:100%;
-
   display: flex;
   flex-direction: column;
-  position: relative;
-  &_h4{
-    font-family: 'Montserrat', arial;
+    &_h4{
+      font-family: 'Montserrat', arial;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+    &__buttons {
+      display: flex;
+      justify-content: space-between;
 
-    font-size: 2rem;
-
-    font-weight: bold;
-
-    margin: 1rem 0;
-  }
-  &__buttons-field{
-    width:100%;
-    display: flex;
-    justify-content: space-around;
-
-    &__loyalty-field{
-      position: relative;
-
-      &__button{
-        transform: translateX(-50%);
-        position: absolute;
+      &__button-normal {
+        background-color: white;
         border-radius: 50%;
-        margin: 5px auto;
-        background-color: #ffffff;
         width: 100px;
         height: 100px;
         box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-        top:0;
-        left:0;
-        z-index: 1;
+        transition: height 0.25s linear 0s, border-radius 0s linear 0.25s;;
 
-        &_img{
-          position: absolute;
+        img {
           border-radius: 50%;
-          max-width: 100px;
-          max-height: 100px;
-          //margin: 5px
+          width: 100px;
+          height: 100px;
+        }
+        &__bottom{
+          height:available;
+        }
+      }
+
+        &__button-active {
+          background-color: white;
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+          border-radius: 15px 15px 0 0;
+          width: 100px;
+          height: 300px;
+          transition: height 0.5s linear 0s, border-radius 0.5s linear 0s;
+
+
+          img {
+            border-radius: 15px 15px 0 0;
+            width: 100px;
+            height: 100px;
+          }
+          &__bottom{
+            height:available;
+          }
+
+        }
+      }
+      &__description-normal{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        background-color: #ffffff;
+        opacity: 0;
+        height:0;
+        width: 0;
+        top:100px;
+        .rect{
+          background-color: #ffffff;
+          height: 0;
+          width: 0;
+          transition: height 0.5s linear, width 0.5s linear;
         }
 
       }
-
-      &__description-center{
-        transform: translateX(-50%);
-        position: absolute;
+      &__description-active{
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
         background-color: #ffffff;
-        width: 0px;
-        height: 0px;
-        top:100px;
-        left:0;
-        z-index:3;
+        opacity: 1;
+        height: 200px;
+        width: 500px;
+        top: -190px;
+
+        .rect{
+          background-color: #ffffff;
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+          height:200px;
+          width:500px;
+          max-height: 1000px;
+          max-width: 1000px;
+          transition: height 0.5s linear, width 0.5s linear;
+
+        }
       }
-
-      &__description-right{
-        position: absolute;
-        background-color: #ffffff;
-        width: 0px;
-        height: 0px;
-        top:115px;
-        right:0;
-        z-index:2;
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-        //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-        overflow: hidden;
-      }
-      &__description-left{
-        position: absolute;
-        background-color: #ffffff;
-        width: 0px;
-        height: 0px;
-        top:115px;
-        left:0;
-        z-index:2;
-        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-        //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-        overflow: hidden;
-      }
-    }
-
-
-  }
-}
-.description-loyalty{
-  margin: 5px 0;
-  width: -moz-available;
-  width: available;
-  height: 190px;
-  position: absolute;
-  top: 185px;
-  left: 0;
-  z-index: 3;
-  //border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  transition: opacity 0.25s linear ;
-
-  &__text-field{
-    height:50%;
-    width: 90%;
-    background-color: white;
-    margin: 0 auto;
-    &_span{
 
     }
-  }
-  &__logic-container{
-    height:50%;
-    width: 90%;
-    margin: 0 auto;
-    background-color: rgba(114, 250, 255, 0.41);
-  }
-}
-
-

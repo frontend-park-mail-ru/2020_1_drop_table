@@ -45,122 +45,36 @@ export class LoyaltyRedactorComponent {
     _normalizeButtons(){
 
     }
+    getJustifyContentBuIndex(i){
+        switch (i) {
+        case 0:
+            return 'flex-start';
+        case 1:
+            return 'center';
+        case 2:
+            return 'center';
+        case 3:
+            return 'flex-end';
+
+
+        }
+    }
 
     _addListeners(){
-        const buttonWidth = 100;// px
-        const marginButton = 0;// px
-
-        const normalButtonState = ()=>{
-            return`width:${buttonWidth}px; height: 100px; transition: height 1s linear 0s; border-radius: 50%;
-            transition: border-radius 0.25s linear 0s`;
-        };
-        const normalImgState = ()=>{
-            return`  position: absolute;border-radius: 50%;max-width: 100px;max-height: 100px;`;
-        };
-        const clickImgState = ()=>{
-            return`  position: absolute;border-radius: 15px  15px 0 0;max-width: 100px;max-height: 100px;`;
-        };
-
-        const clickButtonState = `border-radius: 15px  15px 0 0;height: 310px; transition: height 0.5s linear 0s;`;
-        const normalDescrState = `width: 0px; height: 0px;
-         transition: height 0.5s linear 0s; transition: width 0.5s linear 0s;`;
-
-        const calcWidth1 = (i)=> {
-            return `width: ${(4.5-i)*buttonWidth + (4-i)*marginButton - buttonWidth/2 - marginButton }px;
-                height: 200px;transition: height 0.25s linear 0s;transition: width 0.25s linear 0s;`
-        };
-
-        const calcWidth2 = (i)=> {
-            return `width: ${(i+0.5)*buttonWidth + (1+i)*marginButton + i*buttonWidth/4}px;
-                height: 200px;transition: height 0.25s linear 0s;transition: width 0.25s linear 0s;`
-        };
-
-        const clickDescriptionState =(i, direction)=>{
-            if(direction === 'left'){
-                if( i >= 2){
-                    return calcWidth1(3 - i)
-                } else{
-                    return calcWidth2(i)
+        let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
+        let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
+        for(let i = 0; i< buttonsNormal.length; i++){
+            buttonsNormal.item(i).addEventListener('click',(e)=>{
+                description.className = 'loyalty-redactor__description-active';
+                description.style.justifyContent = this.getJustifyContentBuIndex(i);
+                let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
+                for(let i = 0; i < buttonsActive.length; i++){
+                    buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
                 }
-            } else if(direction === 'right'){
-                if( i >= 2){
-                    return calcWidth2(3 - i)
-                }
-                return calcWidth1(i)
-            }
-        };
-
-
-        const clickDescrCenterState = `width: 100px;height: 215px;transition: height 0.1s linear 0s;`;
-        const descriptionCenter =
-            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center');
-        const descriptionRight =
-            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right');
-        const descriptionLeft =
-            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left');
-        const buttons = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__button');
-
-
-        for(let i = 0; i < buttons.length; i++){
-            buttons.item(i).addEventListener('click',(e)=>{
-                for(let i = 0; i < buttons.length;i++){
-                    buttons.item(i).setAttribute('style', normalButtonState());
-                    buttons.item(i).getElementsByTagName('img').
-                        item(0).setAttribute('style',normalImgState());
-                    descriptionRight.item(i).setAttribute('style', normalDescrState);
-                    descriptionLeft.item(i).setAttribute('style', normalDescrState);
-                    descriptionCenter.item(i).setAttribute('style', normalDescrState);
-
-                }
-                const description =
-                    document.getElementsByClassName('description-loyalty').item(0);
-                description.innerHTML = ' ';
-                description.style.transition ='';
-                description.style.opacity = '0';
-
-                const button = e.target;
-                button.setAttribute('style', clickButtonState);
-                console.log('btn', button);
-                // button.getElementsByTagName('img').
-                //     item(0).setAttribute('style',clickImgState());
-
-                const descriptionContainer = button.closest('.loyalty-redactor__buttons-field__loyalty-field');
-                descriptionContainer.
-                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left').
-                    item(0).setAttribute('style', clickDescriptionState(i,'right'));
-                descriptionContainer.
-                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right').
-                    item(0).setAttribute('style', clickDescriptionState(i,'left'));
-
-                descriptionContainer.
-                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center').
-                    item(0).setAttribute('style', clickDescrCenterState);
-
-                this._renderLoyaltyDescription(i);
-                description.style.transition ='opacity 0.25s linear ';
-                description.style.opacity = '100%';
+                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active'
             })
         }
 
-        const specifiedElement = document.getElementsByClassName('loyalty-redactor').item(0);
-
-        document.addEventListener('click', function(e) {
-            let isClickInside = specifiedElement.contains(e.target);
-            if (!isClickInside) {
-                for(let i = 0; i < buttons.length; i++){
-                    buttons.item(i).setAttribute('style', normalButtonState());
-                    // buttons.item(i).getElementsByTagName('img').item(0).
-                    //     setAttribute('style', normalImgState());
-                    descriptionRight.item(i).setAttribute('style', normalDescrState);
-                    descriptionLeft.item(i).setAttribute('style', normalDescrState);
-                    descriptionCenter.item(i).setAttribute('style', normalDescrState);
-                }
-                const description =
-                    document.getElementsByClassName('description-loyalty').item(0);
-                description.innerHTML = '';
-                description.style.opacity = '0';
-            }
-        });
     }
 
     /**
