@@ -68,12 +68,11 @@
 }
 
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_img{
-
-    width: 100%;
+    width: 45vw;
+    height: calc(45vw/2);
     display: block;
     object-fit: cover;
-    //max-width: 800px;
-    //max-height: 300px;
+
 
 }
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_span{
@@ -117,6 +116,13 @@ input[type=file] {
     pointer-events: none;
     user-select: none;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+
+
 
 
 

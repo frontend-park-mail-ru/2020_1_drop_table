@@ -116,8 +116,8 @@
     position: absolute;
     content: "";
     //bottom: 14px;
-    top: 2.3px;
-    left: 2px;
+    top: 4px;
+    left: 5px;
     background: radial-gradient(#FFF76B 0%, #FFF845 30%, #FFDA4E 50%, #FB8933 100%);
     transition: .5s;
 }
@@ -125,10 +125,12 @@
     display: none;
 }
 input:checked + .slider{
+
     background-color: #141414;
     //border: 3px solid white;
 }
 input:checked + .slider:before{
+    margin-top: 1px;
     transform: translateX(35.5px);
     background: radial-gradient(rgba(255,255,255,0.75) 0%, rgba(127,127,127,0.5) 90%, #000 100%);
     //background: url(http://errazib.com/img/dark_moon.png) no-repeat center;

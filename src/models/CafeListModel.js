@@ -22,7 +22,7 @@ export default class CafeListModel{
     get context(){
         return new Promise((resolve) => {
             this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeListJson);
+                resolve(this._cafeListJson ? this._cafeListJson : []);
             });
         });
     }
@@ -86,12 +86,15 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.data == null){
-                    //router._goTo('/createCafe');
+                    // router._goTo('/createCafe');
                 } else {
                     if (response.errors === null) {
                         this._cafeListJson = response.data;
                         this._constructCafe();
                     } else {
+                        //todo разное поведение при ошибках
+                        console.log('Получение кафе:',response)
+                        router._goTo('/login');
                         throw response.errors;
                     }
                 }

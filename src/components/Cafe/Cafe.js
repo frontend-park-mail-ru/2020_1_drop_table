@@ -68,5 +68,7 @@ export default class CafeComponent {
         this._addListener(context);
         this.renderForm(context['form']);
         this._handlePromises(context);
+
+
     }
 }

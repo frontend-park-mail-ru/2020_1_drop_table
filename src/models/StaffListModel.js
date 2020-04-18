@@ -4,6 +4,7 @@ import {ajax} from '../utils/ajax';
 import {constants} from '../utils/constants';
 import StaffModel from './StaffModel';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
+import {router} from '../main/main';
 
 
 /** Модель staff 3 рк */
@@ -108,7 +109,8 @@ export default class StaffListModel{
                         this._saveStaffList(response.data);
                         this._constructStaff(response.data);
                     } else {
-                        console.log('throw error');
+                        console.log('Список стафов:',response);
+                        router._goTo('/login');
                         throw response.errors;
                     }
                 }

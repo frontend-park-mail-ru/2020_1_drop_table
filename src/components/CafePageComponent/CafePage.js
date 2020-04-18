@@ -31,15 +31,14 @@ export class CafePageComponent {
      * @param {obj} context некоторый контекст с информацией о странице кафе
      */
     render(context) {
-        let openTime = new Date(context['openTime']);
-        let closeTime = new Date(context['closeTime']);
-
+        let openTime = context['openTime'];
+        let closeTime = context['closeTime'];
         let data = {
             name: this._cropName(context['name']),
             address: context['address'],
             description: context['description'],
-            openTime: openTime.getHours()+':'+openTime.getMinutes(),
-            closeTime: closeTime.getHours()+':'+closeTime.getMinutes(),
+            openTime: openTime,
+            closeTime: closeTime,
             photo: context['photo'],
         };
         this._parent.innerHTML = CafePageTemplate(data);

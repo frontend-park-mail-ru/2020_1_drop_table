@@ -2,6 +2,7 @@
 
 import {constants} from '../utils/constants';
 import {authAjax} from '../utils/authAjax';
+import {router} from '../main/main';
 
 /** Класс модели кафе */
 export default class CafeModel {
@@ -10,10 +11,10 @@ export default class CafeModel {
     constructor(context) {
         this._id = null;
         this._address = null;
-        this._closeTime = null;
         this._description = null;
         this._name = null;
         this._openTime = null;
+        this._closeTime = null;
         this._ownerID = null;
         this._photo = null;
         this.fillCafeData(context);
@@ -192,11 +193,14 @@ export default class CafeModel {
     fillCafeData(context){
         if(context) {
             this._address = context['address'];
-            this._closeTime = context['closeTime'];
             this._description = context['description'];
             this._id = context['id'];
             this._name = context['name'];
-            this._openTime = context['openTime'];
+            const openTime = new Date(context['openTime']);
+            this._openTime = `${openTime.getUTCHours()}:${openTime.getUTCMinutes()}`;
+            const closeTime = new Date(context['closeTime']);
+            this._closeTime = `${closeTime.getUTCHours()}:${closeTime.getUTCMinutes()}`;
+
             this._ownerID = context['ownerID'];
             this._photo = context['photo'];
         }
@@ -205,11 +209,11 @@ export default class CafeModel {
     makeContext(){
         return {
             address: this._address,
-            closeTime: this._closeTime,
             description: this._description,
             id: this._id,
             name: this._name,
             openTime: this._openTime,
+            closeTime: this._closeTime,
             ownerID: this._ownerID,
             photo: this._photo,
         }
@@ -227,6 +231,8 @@ export default class CafeModel {
             'CafeName': await this.name,
             'address': await this.address,
             'description': await this.description,
+            'openTime': await this.openTime,
+            'closeTime': await this.closeTime,
         };
 
         if (photo) {
@@ -248,6 +254,8 @@ export default class CafeModel {
                 if (response.errors === null) {
                     this.fillCafeData(response.data);
                 } else {
+                    console.log('получение кафе:',response)
+                    router._goTo('/login');
                     throw response.errors;
                 }
             }
