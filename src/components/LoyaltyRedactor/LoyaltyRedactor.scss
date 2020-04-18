@@ -94,14 +94,16 @@
         justify-content: flex-start;
         background-color: #ffffff;
         opacity: 1;
-        height: 200px;
+        height:max-content;
+        min-height:200px;
         width: 500px;
         top: -5px;
 
         .rect{
           background-color: #ffffff;
           box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-          height:200px;
+          height:max-content;
+          min-height:200px;
           width:500px;
           max-height: 1000px;
           max-width: 1000px;
