@@ -37,15 +37,32 @@ import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
 import StaffPageController from '../controllers/StaffPageController';
 
-// /** Регистрация сервис воркера */
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
-//         .then((reg) => {
-//             console.log('Registration succeeded. Scope is ' + reg.scope);
-//         }).catch((error) => {
-//             console.log('Registration failed with ' + error);
-//         });
-// }
+/** Регистрация сервис воркера */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
+        .then((reg) => {
+            console.log('Registration succeeded. Scope is ' + reg);
+
+        }).catch((error) => {
+            console.log('Registration failed with ' + error);
+        });
+}
+
+navigator.serviceWorker.addEventListener('message', event => {
+    if(event.data.type === 'csrf'){
+        sessionStorage.setItem('Csrf', event.data.Csrf);
+    } else if(event.data.type === 'offline'){
+        alert('you are offline'); //TODO
+    }
+});
+
+// navigator.serviceWorker.addEventListener('message', event => { //TODO
+//     console.log('data', event.data);
+//     if(event.data.type){
+//         console.log('REFRESH');
+//         location.reload();
+//     }
+// });
 
 let app = document.getElementById('application');
 
@@ -163,9 +180,6 @@ function doStaffById(req){
     staffPageController.control(id);
 }
 
-
-
-
 /** Роуты роутера */
 router.get('/', dolog);
 router.get('/landing', doLanding);
@@ -182,8 +196,6 @@ router.get('/editCafe/{id}', doEditCafe);
 router.get('/staff', doStaffPage);
 router.get('/staff/{id}', doStaffById);
 router.get('/addStaff', doAddStaff);
-
-
 
 router.get('/points/{uuid}', doStaffMenu);
 router.notFoundHandler(doLanding);

@@ -1,23 +1,14 @@
 'use strict';
 
-const CACHE_NAME = 'eloyalty';
+const cacheName = 'eloyalty-v1';
 
 /** Urls поддерживающие кэширование */
 const cacheUrls = [
-    '/',
-    '/landing',
-    '/reg',
-    '/login',
-    '/myCafes',
-    '/profile',
-    '/createCafe',
-    '/staff',
-    '/addStaff',
-
     '/bundle.js',
     '/index.html',
-    '/logo.ico',
+    '/logo.png',
     '/style.css',
+    '/style_color.css',
     '/sw.worker.js',
 
     '/fonts',
@@ -60,32 +51,169 @@ const cacheUrls = [
     '/images/userpic.png',
 ];
 
-/** Обработчик установки Service worker */
+let complicatedRequestQueue = [];
+let plainRequestQueue = [];
+
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(cacheUrls)
-        ));
+    event.waitUntil(async () => {
+        const cache = await caches.open(cacheName);
+        await cache.addAll(cacheUrls);
+        return self.skipWaiting();
+    });
 });
 
-/** Обработчик запроса (fetch) для Service worker */
-self.addEventListener('fetch', function(event) {
-    event.respondWith(fromCache(event.request));
-    event.waitUntil(update(event.request));
+self.addEventListener('activate', (event) => {
+    event.waitUntil(self.clients.claim());
 });
 
-/** Получаем данные из Cache */
-function fromCache(request) {
-    return caches.open(CACHE_NAME).then((cache) =>
-        cache.match(request).then((matching) =>
-            matching || Promise.reject('no-match')
-        ));
+self.addEventListener('fetch', (event) => {
+    if(event.request.method === 'GET'){
+        if(navigator.onLine){
+            event.respondWith(onlineHandler(event.request, event.clientId));
+        } else {
+            sendOffline(event.clientId);
+            event.respondWith(offlineHandler(event.request));
+        }
+    } else {
+        if(navigator.onLine){
+            event.respondWith(fetch(event.request));
+            handleRequestQueues(event.clientId)
+        } else {
+            sendOffline(event.clientId);
+            complicatedRequestQueue.push(event.request);
+        }
+    }
+});
+
+async function sendRefresh(response, clientId) {
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    let message = {
+        type: 'refresh',
+        url: response.url,
+        eTag: response.headers.get('ETag')
+    };
+    client.postMessage(message);
 }
 
-/** Делаем запрос на обновление данных в cache */
-function update(request) {
-    return caches.open(CACHE_NAME).then((cache) =>
-        fetch(request).then((response) =>
-            cache.put(request, response)
-        )
-    );
+async function sendOffline(clientId) {
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    let message = {
+        type: 'offline',
+    };
+    client.postMessage(message);
 }
+
+async function sendCsrf(csrf, clientId){
+    if (!clientId) return;
+    const client = await self.clients.get(clientId);
+    if (!client) return;
+
+    if(csrf) {
+        let message = {
+            type: 'csrf',
+            Csrf: csrf
+        }
+        client.postMessage(message);
+    }
+}
+
+async function onlineHandler(request, clientId) {
+    handleRequestQueues(clientId);
+    const match = await fromCache(request);
+    if(match && match.url){ //TODO REFRESH
+        if(!plainRequestQueue.some(obj => {
+            return obj.url === request.url;
+        })){
+            plainRequestQueue.push(request);
+        }
+        return match;
+    } else {
+        return handleFetch(request, clientId);
+    }
+}
+
+async function offlineHandler(request) {
+    const match = await fromCache(request);
+    if(match){
+        if(!plainRequestQueue.some(obj => {
+            return obj.url === request.url;
+        })){
+            plainRequestQueue.push(request);
+        }
+        return match;
+    } else {
+        return null; // TODO OFFLINE WORKING
+    }
+}
+
+async function fromCache(request){
+    const cache = await caches.open(cacheName);
+    return await cache.match(request);
+}
+
+async function handleFetch(request, clientId){
+    const response = await fetch(request);
+    const [responseNoCsrf, csrf] = await removeResponseCsrfHeader(response.clone());
+    await sendCsrf(csrf, clientId);
+    if(responseNoCsrf && responseNoCsrf.ok){
+        const cache = await caches.open(cacheName);
+        await cache.put(request, responseNoCsrf.clone());
+        await sendRefresh(response, clientId);
+    }
+    return response;
+}
+
+async function handleRequestQueues(clientId){
+    handlePlainRequestQueue(plainRequestQueue, clientId);
+    handleComplicatedRequestQueue(complicatedRequestQueue, clientId);
+}
+
+async function handlePlainRequestQueue(requestQueue, clientId){
+    while(requestQueue.length){
+        const request = requestQueue.shift();
+        await handleFetch(request, clientId);
+    }
+}
+
+async function handleComplicatedRequestQueue(requestQueue, clientId){
+    while(requestQueue.length){
+        const request = requestQueue.shift();
+        const response = await fetch(request);
+        const csrf = response.headers.get('Csrf');
+        await sendCsrf(csrf, clientId);
+    }
+}
+
+async function removeResponseCsrfHeader(response){
+    if(response && response.headers && response.headers.get('Csrf')){
+        let headersCopy = constructHeaders(response);
+        headersCopy.delete('Csrf');
+        const responseCopy = await constructResponse(response, headersCopy);
+        return [responseCopy, response.headers.get('Csrf')];
+    }
+    return [response, null];
+}
+
+async function constructResponse(response, headers){
+    const blobResponse = await response.blob();
+    return new Response(blobResponse, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: headers ? headers : response.headers
+    });
+}
+
+function constructHeaders(response){
+    let headers = new Headers();
+    for (let keyValue of response.headers.entries()) {
+        headers.append(...keyValue);
+    }
+    return headers;
+}
+
