@@ -47,10 +47,10 @@ export default class ProfileComponent {
             console.log('testik',app.getAttribute('class'));
 
             if(app.className.toString() === 'theme-dark'){
-                app.className = 'theme-light'
+                app.className = 'theme-light';
                 switcher.checked = true;
             } else if(app.className.toString() === 'theme-light'){
-                app.className = 'theme-dark'
+                app.className = 'theme-dark';
                 switcher.checked = false;
             }
 

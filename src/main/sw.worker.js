@@ -67,7 +67,6 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    console.log(complicatedRequestQueue);
     if(event.request.method === 'GET'){
         if(navigator.onLine){
             event.respondWith(onlineHandler(event.request, event.clientId));
@@ -186,7 +185,6 @@ async function handleComplicatedRequestQueue(requestQueue, clientId){
     while(requestQueue.length){
         const request = requestQueue.shift();
         const response = await fetch(request);
-        console.log('comp response', response);
         const csrf = response.headers.get('Csrf');
         await sendCsrf(csrf, clientId);
     }
@@ -218,3 +216,4 @@ function constructHeaders(response){
     }
     return headers;
 }
+

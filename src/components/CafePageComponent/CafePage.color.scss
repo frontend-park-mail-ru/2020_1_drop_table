@@ -43,6 +43,7 @@
     }
     &__edit-button {
       @include themify($themes){
+        color: themed('buttonTextColor');
         background-color: themed('mainColor');
       }
     }

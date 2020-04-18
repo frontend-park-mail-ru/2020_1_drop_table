@@ -30,16 +30,21 @@ export default class EditCafeController{
 
         const cafe = await this._cafeListModel.getCafeById(this._id);
         console.log('get by id ', cafe);
-      
+
         cafe._id = this._id;
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
 
-        // if(image){
-        //     cafe.photo = image;
-        // }
+        const openTime = form.elements['openTime'].value.toString().split(':');
+        const openTimeH = (openTime[0] >= 0 && openTime[0] <= 24)?openTime[0]:0;
+        const openTimeM = (openTime[1] >= 0 && openTime[1] <= 60)?openTime[1]:0;
+        cafe.openTime = `0001-01-01T${openTimeH}:${openTimeM}:00Z`;
 
+        const closeTime = form.elements['closeTime'].value.toString().split(':');
+        const closeTimeH = (closeTime[0] >= 0 && closeTime[0] <= 24)?closeTime[0]:0;
+        const closeTimeM = (closeTime[1] >= 0 && closeTime[1] <= 60)?closeTime[1]:0;
+        cafe.closeTime = `0001-01-01T${closeTimeH}:${closeTimeM}:00Z`;
 
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
@@ -75,7 +80,7 @@ export default class EditCafeController{
                 }
             },
             cafe: {
-                cafeName: 'Редактирование кафе',
+                cafeName: 'Редактор',
                 imgSrcPromise: cafe.photo,
                 imgSrc: '/images/test.jpg',
                 event: {
@@ -100,7 +105,24 @@ export default class EditCafeController{
                             labelData: 'Адрес',
                             inputOption: 'required',
                         },
-                        {type: 'text',
+                        {
+                            type: 'time',
+                            id: 'openTime',
+                            data: ' ',
+                            inputPromise: cafe.openTime,
+                            labelData: 'Время открытия',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'time',
+                            id: 'closeTime',
+                            data: ' ',
+                            inputPromise: cafe.closeTime,
+                            labelData: 'Время закрытия',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'text',
                             id: 'description',
                             data: ' ',
                             inputPromise: cafe.description,
@@ -133,6 +155,7 @@ export default class EditCafeController{
                     }
                 }
             },
+
             {
                 element: form.elements['address'],
                 validate: () => {

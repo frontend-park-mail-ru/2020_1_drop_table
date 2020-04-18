@@ -29,12 +29,9 @@
 }
 
 .staff-page__top__design__long-strip{
-  border: 1px solid;
   height: 0.4rem;
   width: 100%;
   margin-bottom: 0.4rem;
-
-
 }
 
 .staff-page__top__design__medium-strip{
@@ -168,6 +165,7 @@
   margin: 50px auto
 }
 .staff-page__redactor__button-fire {
+  cursor: pointer;
   background-color: #B7202B;
   filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.15));
   width: 300px;
@@ -184,6 +182,7 @@
 .staff-page__redactor__button-fire_span{
   font-family: Montserrat,sans-serif;
   margin: auto;
+  cursor: pointer;
 
 }
 

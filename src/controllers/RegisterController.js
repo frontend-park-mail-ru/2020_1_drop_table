@@ -139,10 +139,20 @@ export default class RegisterController{
         };
     }
 
+    async _tryAuth(){
+        try{
+            await this._userModel.getOwner();
+            router._goTo('/myCafes')
+        }
+        catch (e) {
+            console.log('user not found',e)
+        }
+    }
+
     /** Запуск контроллера */
     control(){
-        sessionStorage.clear();
         this._registerView.context = this._makeViewContext();
+        //this._tryAuth();
         this._registerView.render();
     }
 }

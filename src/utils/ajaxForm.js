@@ -1,5 +1,8 @@
 'use strict';
 
+import {router} from '../main/main';
+import {LoadingComponent} from '../components/Loading/Loading';
+
 /**
  * Ajax с телом FormData
  * @param {string} route - адресс
@@ -29,9 +32,13 @@ export async function ajaxForm(route, method, formData, callback) {
 
     let responseJson = null;
 
+    const loading = new LoadingComponent();
+    loading.render();
+
     try {
         const response = await fetch(req);
         if (response.ok) {
+            loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
@@ -41,6 +48,8 @@ export async function ajaxForm(route, method, formData, callback) {
             throw new Error('Response not ok');
         }
     } catch (exception) {
+        loading.remove();
+        // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }
 

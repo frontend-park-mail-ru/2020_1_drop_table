@@ -144,7 +144,6 @@ export default class AddStaffController{
 
     /** Запуск контроллера */
     control(){
-        sessionStorage.clear();
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }
