@@ -74,7 +74,6 @@ export class LoyaltyRedactorComponent {
                 e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
                 this.renderLoyaltySystem(i);
 
-                (new NotificationComponent(i, 2000)).render();
 
             })
         }
