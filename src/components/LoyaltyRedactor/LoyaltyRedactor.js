@@ -1,5 +1,6 @@
 import './LoyaltyRedactor.scss';
 import LoyaltyRedactor from './LoyaltyRedactor.hbs';
+import {LoyaltySystemComponent} from '../LoyaltySystem/LoyaltySystem'
 
 /** Компонент карточки кафе */
 export class LoyaltyRedactorComponent {
@@ -15,51 +16,133 @@ export class LoyaltyRedactorComponent {
         this._el = el;
     }
 
+    _renderLoyaltyDescription(){
+        const description =
+            this._el.getElementsByClassName('description-loyalty').item(0);
+        this._loyaltySystem = new LoyaltySystemComponent(description);
+        this._loyaltySystem.render();
+    }
+    _removeLoyaltyDescription(){
+        if(this._loyaltySystem) {
+            this._loyaltySystem.remove();
+        }
+    }
+
+    _normalizeButtons(){
+
+    }
+
     _addListeners(){
-        const normalButtonState = `width: 50px; height: 50px; transition: height 0.5s linear 0s; border-radius: 50%;
-            transition: border-radius 0.25s linear 0.25s`;
+        const buttonWidth = 100;// px
+        const marginButton = 0;// px
 
-        const clickButtonState = `border-radius: 15px  15px 0 0;height: 300px; transition: height 0.5s linear 0s;`;
+        const normalButtonState = ()=>{
+            return`width:${buttonWidth}px; height: 100px; transition: height 1s linear 0s; border-radius: 50%;
+            transition: border-radius 0.25s linear 0s`;
+        };
+        const normalImgState = ()=>{
+            return`  position: absolute;border-radius: 50%;max-width: 100px;max-height: 100px;`;
+        };
+        const clickImgState = ()=>{
+            return`  position: absolute;border-radius: 15px  15px 0 0;max-width: 100px;max-height: 95px;`;
+        };
+
+        const clickButtonState = `border-radius: 15px  15px 0 0;height: 310px; transition: height 0.5s linear 0s;`;
+        const normalDescrState = `width: 0px; height: 0px;
+         transition: height 0.5s linear 0s; transition: width 0.5s linear 0s;`;
+
+        const calcWidth1 = (i)=> {
+            return `width: ${(4.5-i)*buttonWidth + (4-i)*marginButton - buttonWidth/2 - marginButton }px;
+                height: 200px;transition: height 0.25s linear 0s;transition: width 0.25s linear 0s;`
+        };
+
+        const calcWidth2 = (i)=> {
+            return `width: ${(i+0.5)*buttonWidth + (1+i)*marginButton + i*buttonWidth/4}px;
+                height: 200px;transition: height 0.25s linear 0s;transition: width 0.25s linear 0s;`
+        };
+
+        const clickDescriptionState =(i, direction)=>{
+            if(direction === 'left'){
+                if( i >= 2){
+                    return calcWidth1(3 - i)
+                } else{
+                    return calcWidth2(i)
+                }
+            } else if(direction === 'right'){
+                if( i >= 2){
+                    return calcWidth2(3 - i)
+                }
+                return calcWidth1(i)
+            }
+        };
 
 
-        const normalDescrState = `width: 0px; height: 0px; transition: height 0.5s linear 0s; transition: width 0.25s linear 0s;`;
-        const clickDescrState = `width: 250px;
-         height: 250px;
-          transition: height 1s linear 0s;
-           // transition: width 1s linear 0s;
-           `;
-
-        const clickDescrCenterState = `width: 50px;
-         height: 265px;
-          transition: height 1s linear 0s;
-           transition: width 1s linear 0s;`;
-
+        const clickDescrCenterState = `width: 100px;height: 215px;transition: height 0.1s linear 0s;`;
+        const descriptionCenter =
+            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center');
+        const descriptionRight =
+            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right');
+        const descriptionLeft =
+            this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left');
         const buttons = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__button');
-        const descrCenter = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center');
-        const descrRight = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right');
-        const descrLeft = this._el.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left');
+
+
         for(let i = 0; i < buttons.length; i++){
             buttons.item(i).addEventListener('click',(e)=>{
                 for(let i = 0; i < buttons.length;i++){
-                    buttons.item(i).setAttribute("style", normalButtonState);
-                    descrRight.item(i).setAttribute("style", normalDescrState);
-                    descrLeft.item(i).setAttribute("style", normalDescrState);
+                    buttons.item(i).setAttribute('style', normalButtonState());
+                    buttons.item(i).getElementsByTagName('img').
+                        item(0).setAttribute('style',normalImgState());
+                    descriptionRight.item(i).setAttribute('style', normalDescrState);
+                    descriptionLeft.item(i).setAttribute('style', normalDescrState);
+                    descriptionCenter.item(i).setAttribute('style', normalDescrState);
 
-                    descrCenter.item(i).setAttribute("style", normalDescrState);
                 }
-                e.target.setAttribute("style", clickButtonState);
+                const description =
+                    document.getElementsByClassName('description-loyalty').item(0);
+                description.innerHTML = '';
+                description.style.transition ='';
+                description.style.opacity = '0';
 
-                const descrsCont = e.target.closest('.loyalty-redactor__buttons-field__loyalty-field');
-                descrsCont.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right').
-                    item(0).setAttribute("style", clickDescrState);
-                descrsCont.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left').
-                    item(0).setAttribute("style", clickDescrState);
+                const button = e.target;
+                button.setAttribute('style', clickButtonState);
 
-                descrsCont.getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center').
-                    item(0).setAttribute("style", clickDescrCenterState);
+                const descriptionContainer = button.closest('.loyalty-redactor__buttons-field__loyalty-field');
+                descriptionContainer.
+                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-left').
+                    item(0).setAttribute('style', clickDescriptionState(i,'right'));
+                descriptionContainer.
+                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-right').
+                    item(0).setAttribute('style', clickDescriptionState(i,'left'));
 
+                descriptionContainer.
+                    getElementsByClassName('loyalty-redactor__buttons-field__loyalty-field__description-center').
+                    item(0).setAttribute('style', clickDescrCenterState);
+
+                this._renderLoyaltyDescription();
+                description.style.transition ='opacity 0.25s linear ';
+                description.style.opacity = '100%';
             })
         }
+
+        const specifiedElement = document.getElementsByClassName('loyalty-redactor').item(0);
+
+        document.addEventListener('click', function(e) {
+            let isClickInside = specifiedElement.contains(e.target);
+            if (!isClickInside) {
+                for(let i = 0; i < buttons.length; i++){
+                    buttons.item(i).setAttribute('style', normalButtonState());
+                    buttons.item(i).getElementsByTagName('img').item(0).setAttribute('style', normalImgState());
+                    descriptionRight.item(i).setAttribute('style', normalDescrState);
+                    descriptionLeft.item(i).setAttribute('style', normalDescrState);
+                    descriptionCenter.item(i).setAttribute('style', normalDescrState);
+                }
+                const description =
+                    document.getElementsByClassName('description-loyalty').item(0);
+                description.innerHTML = '';
+                description.style.opacity = '0';
+            }
+        });
     }
 
     /**
@@ -70,7 +153,7 @@ export class LoyaltyRedactorComponent {
         this._el.innerHTML = LoyaltyRedactor();
     }
 
-    /** Отрисоака карточки кафе */
+    /** Отрисоака */
     render() {
         this._renderTemplate();
         this._addListeners()

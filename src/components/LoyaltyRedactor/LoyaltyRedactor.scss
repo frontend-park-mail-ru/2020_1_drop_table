@@ -30,9 +30,19 @@
 
 .loyalty-redactor{
   width:100%;
+
   display: flex;
   flex-direction: column;
   position: relative;
+  &_h4{
+    font-family: 'Montserrat', arial;
+
+    font-size: 2rem;
+
+    font-weight: bold;
+
+    margin: 1rem 0;
+  }
   &__buttons-field{
     width:100%;
     display: flex;
@@ -40,25 +50,36 @@
 
     &__loyalty-field{
       position: relative;
+
       &__button{
+        transform: translateX(-50%);
         position: absolute;
         border-radius: 50%;
-        margin: 10px auto;
+        margin: 5px auto;
         background-color: #ffffff;
-        width: 50px;
-        height: 50px;
+        width: 100px;
+        height: 100px;
         box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
         top:0;
         left:0;
         z-index: 1;
+
+        &_img{
+          position: absolute;
+          border-radius: 50%;
+          max-width: 100px;
+          max-height: 100px;
+        }
+
       }
 
       &__description-center{
+        transform: translateX(-50%);
         position: absolute;
         background-color: #ffffff;
         width: 0px;
         height: 0px;
-        top:50px;
+        top:100px;
         left:0;
         z-index:3;
       }
@@ -68,8 +89,8 @@
         background-color: #ffffff;
         width: 0px;
         height: 0px;
-        top:65px;
-        right:-35px;
+        top:115px;
+        right:0;
         z-index:2;
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
         //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
@@ -80,8 +101,8 @@
         background-color: #ffffff;
         width: 0px;
         height: 0px;
-        top:65px;
-        left:15px;
+        top:115px;
+        left:0;
         z-index:2;
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
         //filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
@@ -91,7 +112,37 @@
 
 
   }
-
-
 }
+.description-loyalty{
+  margin: 5px 0;
+  width: -moz-available;
+  width: available;
+  height: 190px;
+  position: absolute;
+  top: 185px;
+  left: 0;
+  z-index: 3;
+  //border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.25s linear ;
+
+  &__text-field{
+    height:50%;
+    width: 90%;
+    background-color: white;
+    margin: 0 auto;
+    &_span{
+
+    }
+  }
+  &__logic-container{
+    height:50%;
+    width: 90%;
+    margin: 0 auto;
+    background-color: rgba(114, 250, 255, 0.41);
+  }
+}
+
 
