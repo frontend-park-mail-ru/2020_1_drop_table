@@ -23,17 +23,17 @@ export class LoyaltySystemComponent {
      * Отрисовка шаблона кафе
      * @private
      */
-    _renderTemplate() {
-        this._el.innerHTML = LoyaltySystem();
+    _renderTemplate(context) {
+        this._el.innerHTML = LoyaltySystem(context);
     }
     remove(){
         this._el.innerHTML ='';
     }
 
     /** Отрисоака карточки кафе */
-    render() {
+    render(context) {
         console.log('render ls')
-        this._renderTemplate();
+        this._renderTemplate(context);
         this._addListeners()
     }
 }
