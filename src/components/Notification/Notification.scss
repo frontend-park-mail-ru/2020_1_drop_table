@@ -1,0 +1,22 @@
+.notification{
+  min-height: 50px;
+  min-width: 250px;
+  position: fixed;
+  top: 10px;
+  right:10px;
+  display: flex;
+  opacity: 1;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px 15px 15px 15px;
+  transition: opacity 2s linear 0s, right 2s linear 0s;
+
+  &_h4{
+    font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    margin: 0 5px;
+
+  }
+}

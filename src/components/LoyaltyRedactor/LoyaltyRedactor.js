@@ -2,6 +2,8 @@ import './LoyaltyRedactor.scss';
 import LoyaltyRedactor from './LoyaltyRedactor.hbs';
 import {LoyaltySystemComponent} from '../LoyaltySystem/LoyaltySystem'
 
+import {NotificationComponent} from  '../Notification/Notification'
+
 /** Компонент карточки кафе */
 export class LoyaltyRedactorComponent {
 
@@ -71,7 +73,7 @@ export class LoyaltyRedactorComponent {
                 for(let i = 0; i < buttonsActive.length; i++){
                     buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
                 }
-                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active'
+                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
             })
         }
 
