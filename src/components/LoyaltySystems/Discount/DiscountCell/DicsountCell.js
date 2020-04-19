@@ -1,10 +1,10 @@
-import './LoyaltyCouponComponent.scss';
-import LoyaltyCoupon from './LoyaltyCouponComponent.hbs';
+import './DicsountCell.scss';
+import DiscountCell from './DicsountCell.hbs';
 
 
 
 /** Компонент карточки кафе */
-export class LoyaltyCouponComponent {
+export class DiscountCellComponent {
 
     /**
      * Инициализация компоненты карточки кафе
@@ -15,24 +15,19 @@ export class LoyaltyCouponComponent {
      */
     constructor(el) {
         this._el = el;
-        this._text = `
-        Описание действия coupon Описание действия coupon Описание действия coupon
-         Описание действия coupon Описание действия coupon Описание действия coupon
-        `
+
     }
 
     /**
      * Отрисовка шаблона кафе
      * @private
      */
-    _renderTemplate() {
-
-        this._el.innerHTML = LoyaltyCoupon({text: this._text});
+    _renderTemplate(context) {
+        this._el.innerHTML += DiscountCell(context);
     }
 
     /** Отрисоака */
-    render() {
-        setTimeout(this._renderTemplate.bind(this), 500);
-
+    render(context) {
+        this._renderTemplate(context);
     }
 }

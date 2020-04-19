@@ -4,5 +4,19 @@
     </div>
     <div class="loyalty-discount-container__logic">
 
+        <div class="loyalty-discount-container__logic__button-field">
+            <span class="loyalty-discount-container__logic__button-field_span">Уровни скидки</span>
+            <div class="loyalty-discount-container__logic__button-field__button">
+                <span class="loyalty-discount-container__logic__button-field__button_span">
+                    Добавить
+                </span>
+            </div>
+        </div>
+
+        <div class="loyalty-discount-container__logic__discounts">
+            {{#each discounts}}
+                {{{this}}}
+            {{/each}}
+        </div>
     </div>
 </div>
