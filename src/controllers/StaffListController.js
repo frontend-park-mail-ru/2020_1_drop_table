@@ -17,14 +17,18 @@ export default class StaffListController{
         this._staffListView = staffListView;
     }
 
+    async update(){
+        await this._staffListModel.update();
+    }
+
     /**
      * Создание контекста для StaffListView
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(){
+    _makeViewContext(){
 
         let staffListContext = {
-            staffList : await this._staffListModel.context
+            staffList : this._staffListModel.context
 
             // await = this._staffListModel.context
         };
@@ -74,7 +78,8 @@ export default class StaffListController{
 
     /** Запуск контроллера */
     async control(){
-        this._staffListView.context = await this._makeViewContext();
+        await this.update();
+        this._staffListView.context = this._makeViewContext();
         this._staffListView.render();
         this._addListeners()
     }

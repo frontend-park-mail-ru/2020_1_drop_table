@@ -22,6 +22,11 @@ export default class CreateCafeController{
         this._createCafeView = createCafeView;
     }
 
+    async update(){
+        await this._userModel.update();
+        await this._cafeListModel.update();
+    }
+
     /** Event добавление кафе */
     async _addCafe(e) {
         e.preventDefault();
@@ -184,6 +189,7 @@ export default class CreateCafeController{
 
     /** Запуск контроллера */
     async control(){
+        await this.update();
         this._createCafeView.context = await this._makeViewContext();
         this._createCafeView.render();
     }

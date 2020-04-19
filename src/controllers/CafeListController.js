@@ -17,13 +17,19 @@ export default class CafeListController{
         this._cafeListView = cafeListView;
     }
 
+    async update(){
+        await this._userModel.update();
+        await this._cafeListModel.update();
+    }
+
     /**
      * Создание контекста для CafeListView
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(){
+    _makeViewContext(){
+
         let cafeListContext = {
-            cafeList: await this._cafeListModel.context
+            cafeList: this._cafeListModel.context
         };
 
         cafeListContext['header'] = {
@@ -43,19 +49,14 @@ export default class CafeListController{
                 listener: () => {router._goTo('/createCafe');}
             }
         };
-        console.log(cafeListContext);
-        return cafeListContext;
-    }
 
-    _serviceWorkerEventListener(event){
-        if(event.data.type === 'refresh'){
-            this.control();
-        }
+        return cafeListContext;
     }
 
     /** Запуск контроллера */
     async control(){
-        this._cafeListView.context = await this._makeViewContext();
+        await this.update();
+        this._cafeListView.context = this._makeViewContext();
         this._cafeListView.render();
     }
 }

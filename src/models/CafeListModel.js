@@ -15,28 +15,24 @@ export default class CafeListModel{
         this._cafeListJson = [];
     }
 
-    /**
-     * Возвращает промис, который возвращает сырое представление модели
-     * @return {Promise} промис, который возвращает сырое представление модели
-     */
-    get context(){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeListJson);
-            });
-        });
+    async update(){
+        await this.cafesList();
     }
 
     /**
-     * Возвращает промис, который возвращает пуст или не пуст cafeModelList
-     * @return {Promise} промис, который возвращает пуст или не пуст cafeModelList
+     * Возвращает сырое представление модели
+     * @return {Promise} сырое представление модели
+     */
+    get context(){
+        return this._cafeListJson;
+    }
+
+    /**
+     * Возвращает пуст или не пуст cafeModelList
+     * @return {bool} пуст или не пуст cafeModelList
      */
     get isEmpty(){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(!this._cafeModelsList.length);
-            });
-        });
+        return !this._cafeModelsList.length;
     }
 
     /**
@@ -45,23 +41,9 @@ export default class CafeListModel{
      * @return {CafeModel} объект CafeModel с нужным id
      */
     getCafeById(id){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeModelsList.find((cafe) => {
-                    return cafe._id == id;
-                }));
-            });
+        return this._cafeModelsList.find((cafe) => {
+            return cafe._id == id;
         });
-    }
-
-    /**
-     * Проверяет существование поля data
-     * @param {int|string|null} data
-     */
-    async _checkCafeList(data){
-        if(!data){
-            await this.cafesList();
-        }
     }
 
     /** Конструирует cafeModel из cafeListJson */
@@ -86,7 +68,7 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.errors === null){
-                    this._cafeListJson = response.data;
+                    this._cafeListJson = response.data ? response.data : [] ;
                 }
 
                 if(response.errors === null || response.errors.includes('offline')){

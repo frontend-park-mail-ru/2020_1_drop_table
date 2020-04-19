@@ -145,7 +145,7 @@ export default class RegisterController{
     }
 
     /** Запуск контроллера */
-    control(){
+    async control(){
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }

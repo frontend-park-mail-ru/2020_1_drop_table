@@ -22,13 +22,18 @@ export default class EditCafeController{
         this._createCafeView = createCafeView;
     }
 
+    async update(){
+        await this._userModel.update();
+        await this._cafeListModel.update();
+    }
+
     /** Event измененич кафе */
     async _editCafe(e) {
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
         const photoInput = document.getElementById('upload');
 
-        const cafe = await this._cafeListModel.getCafeById(this._id);
+        const cafe = this._cafeListModel.getCafeById(this._id);
         console.log('get by id ', cafe);
 
         cafe._id = this._id;
@@ -63,8 +68,8 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(id){
-        const cafe = await this._cafeListModel.getCafeById(id);
+    _makeViewContext(id){
+        const cafe = this._cafeListModel.getCafeById(id);
 
         return {
             header:{
@@ -81,8 +86,7 @@ export default class EditCafeController{
             },
             cafe: {
                 cafeName: 'Редактор',
-                imgSrcPromise: cafe.photo,
-                imgSrc: '/images/test.jpg',
+                imgSrc: cafe.photo,
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -92,40 +96,35 @@ export default class EditCafeController{
                         {
                             type: 'text',
                             id: 'name',
-                            data: ' ',
-                            inputPromise: cafe.name,
+                            data: cafe.name,
                             labelData: 'Название',
                             inputOption: 'required',
                         },
                         {
                             type: 'text',
                             id: 'address',
-                            data: ' ',
-                            inputPromise: cafe.address,
+                            data: cafe.address,
                             labelData: 'Адрес',
                             inputOption: 'required',
                         },
                         {
                             type: 'time',
                             id: 'openTime',
-                            data: ' ',
-                            inputPromise: cafe.openTime,
+                            data: cafe.openTime,
                             labelData: 'Время открытия',
                             inputOption: 'required',
                         },
                         {
                             type: 'time',
                             id: 'closeTime',
-                            data: ' ',
-                            inputPromise: cafe.closeTime,
+                            data: cafe.closeTime,
                             labelData: 'Время закрытия',
                             inputOption: 'required',
                         },
                         {
                             type: 'text',
                             id: 'description',
-                            data: ' ',
-                            inputPromise: cafe.description,
+                            data: cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
                         },
@@ -198,8 +197,9 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      */
     async control(id){
+        await this.update();
         this._id = id;
-        this._createCafeView.context = await this._makeViewContext(id);
+        this._createCafeView.context = this._makeViewContext(id);
         this._createCafeView.render();
     }
 }
