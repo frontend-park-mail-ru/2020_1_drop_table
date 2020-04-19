@@ -39,21 +39,47 @@ export class LoyaltyRedactorComponent {
         }
     }
 
+    getContext(i){
+        switch(i){
+        case 0:
+            return {
+
+            };
+        case 1:
+            return {
+                'discounts':[
+                    {
+                        'discount':20,
+                        'price':1000,
+                    },
+                ]
+            };
+        case 2:
+            return {
+
+            };
+        case 3:
+            return {
+
+            };
+
+        }
+    }
     renderLoyaltySystem(i){
         const rect = document.getElementsByClassName('rect').item(0);
         rect.innerHTML = '';
         switch(i){
         case 0:
-            (new LoyaltyStampComponent(rect)).render();
+            (new LoyaltyStampComponent(rect)).render(this.getContext(i));
             break;
         case 1:
-            (new LoyaltyDiscountComponent(rect)).render();
+            (new LoyaltyDiscountComponent(rect)).render(this.getContext(i));
             break;
         case 2:
-            (new LoyaltyWalletComponent(rect)).render();
+            (new LoyaltyWalletComponent(rect)).render(this.getContext(i));
             break;
         case 3:
-            (new LoyaltyCouponComponent(rect)).render();
+            (new LoyaltyCouponComponent(rect)).render(this.getContext(i));
             break;
 
         }
