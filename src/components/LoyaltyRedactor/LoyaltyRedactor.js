@@ -1,6 +1,13 @@
 import './LoyaltyRedactor.scss';
 import LoyaltyRedactor from './LoyaltyRedactor.hbs';
-import {LoyaltySystemComponent} from '../LoyaltySystem/LoyaltySystem'
+
+import {LoyaltyCouponComponent} from '../LoyaltySystems/Coupon/LoyaltyCouponComponent'
+import {LoyaltyDiscountComponent} from '../LoyaltySystems/Discount/LoyaltyDiscountComponent'
+import {LoyaltyWalletComponent} from '../LoyaltySystems/Wallet/LoyaltyWalletComponent'
+import {LoyaltyStampComponent} from '../LoyaltySystems/Stamp/LoyaltyStampComponent'
+
+import {NotificationComponent} from '../Notification/Notification'
+
 
 /** Компонент карточки кафе */
 export class LoyaltyRedactorComponent {
@@ -16,35 +23,7 @@ export class LoyaltyRedactorComponent {
         this._el = el;
     }
 
-    _renderLoyaltyDescription(id){
-        let data = [
-            {
-                text:'Описание1 Описание1 Описание1 Описание1 Описание1 Описание1 Описание1 Описание1 Описание1'
-            },
-            {
-                text:'Описание2 Описание2 Описание2 Описание2 Описание2 Описание2 Описание2 Описание2 Описание2'
-            },
-            {
-                text:'Описание3 Описание3 Описание3 Описание3 Описание3 Описание3 Описание3 Описание3 Описание3'
-            },
-            {
-                text:'Описание4 Описание4 Описание4 Описание4 Описание4 Описание4 Описание4 Описание4 Описание4'
-            },
-        ]
-        const description =
-            this._el.getElementsByClassName('description-loyalty').item(0);
-        this._loyaltySystem = new LoyaltySystemComponent(description);
-        this._loyaltySystem.render(data[id]);
-    }
-    _removeLoyaltyDescription(){
-        if(this._loyaltySystem) {
-            this._loyaltySystem.remove();
-        }
-    }
 
-    _normalizeButtons(){
-
-    }
     getJustifyContentBuIndex(i){
         switch (i) {
         case 0:
@@ -60,6 +39,27 @@ export class LoyaltyRedactorComponent {
         }
     }
 
+    renderLoyaltySystem(i){
+        const rect = document.getElementsByClassName('rect').item(0);
+        rect.innerHTML = '';
+        switch(i){
+        case 0:
+            (new LoyaltyStampComponent(rect)).render();
+            break;
+        case 1:
+            (new LoyaltyDiscountComponent(rect)).render();
+            break;
+        case 2:
+            (new LoyaltyWalletComponent(rect)).render();
+            break;
+        case 3:
+            (new LoyaltyCouponComponent(rect)).render();
+            break;
+
+        }
+
+    }
+
     _addListeners(){
         let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
         let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
@@ -71,7 +71,10 @@ export class LoyaltyRedactorComponent {
                 for(let i = 0; i < buttonsActive.length; i++){
                     buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
                 }
-                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active'
+                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
+                this.renderLoyaltySystem(i);
+
+
             })
         }
 

@@ -17,36 +17,27 @@ export default class StaffListModel{
         this._constructStaff(staffListData);
     }
 
+    async update(){
+        await this._userModel.update();
+        await this.staffList();
+    }
+
     get context(){
-        return new Promise((resolve) => {
-            this._checkStaffList().then(()=>{
-                const staffList = sessionStorage.getItem('StaffList');
-                if(staffList){
-                    resolve(JSON.parse(staffList));
-                }
-                resolve(null);
-            });
-        });
+        const staffList = sessionStorage.getItem('StaffList');
+        if(staffList){
+            return(JSON.parse(staffList));
+        }
+        return null;
     }
 
     get isEmpty(){
-        return new Promise((resolve) => {
-            this._checkStaffList().then(()=>{
-                resolve(!this._staffModelsList.length);
-            });
-        });
+        return !this._staffModelsList.length;
     }
 
     getStaffById(id){
         return this._staffModelsList.find((staff) => {
             return staff._StaffId == id;
         });
-    }
-
-    async _checkStaffList(data){
-        if(!data){
-            await this.staffList();
-        }
     }
 
     _loadStaffList(){
@@ -74,19 +65,6 @@ export default class StaffListModel{
                 });
             }
         }
-
-        // staffListData.toArray().forEach((_, key) => {
-        //     const cafe = new StaffModel(id);
-        //     this._staffModelsList.push(cafe);
-        // });
-        //
-        //
-        // staffListData.toArray().forEach((_, id) => {
-        //     const cafe = new StaffModel(id);
-        //     this._staffModelsList.push(cafe);
-        // });
-
-
     }
 
     createStaff(){
@@ -95,24 +73,15 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        let id = await this._userModel.id;
-        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${id}`,
+        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
             (response) => {
-
-                if(response.data === null){
-                    console.log('get staff error',response.data)
-
+                if (response.errors === null) {
+                    this._saveStaffList(response.data);
+                    this._constructStaff(response.data);
                 } else {
-                    if (response.errors === null) {
-                        this._saveStaffList(response.data);
-                        this._constructStaff(response.data);
-                    } else {
-                        console.log('Список стафов:',response);
-                        router._goTo('/login');
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
         )
@@ -127,16 +96,12 @@ export default class StaffListModel{
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-                    //router._goTo('/createCafe');
+                if (response.errors === null) {
+                    (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
+                    // this._saveCafeList(response.data);
+                    // this._constructCafe(response.data);
                 } else {
-                    if (response.errors === null) {
-                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
-                        // this._saveCafeList(response.data);
-                        // this._constructCafe(response.data);
-                    } else {
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
         )

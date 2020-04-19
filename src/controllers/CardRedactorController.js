@@ -15,9 +15,15 @@ export default class CardRedactorController {
         this._cardRedactorView = cardRedactorView;
     }
 
+    async update(){
+        await this._appleCard.update();
+    }
+
     /** Запуск контроллера */
     async control(){
-        this._appleCard.context = await this._makeContext();
+        await this.update();
+
+        this._appleCard.context = this._makeContext();
         this._cardRedactorView._appleCard = this._appleCard;
         this._cardRedactorView.render();
         this.addImageListeners();
@@ -36,9 +42,9 @@ export default class CardRedactorController {
      * @return {Promise<{appleCard: any}>}
      * @private
      */
-    async _makeContext(){
+    _makeContext(){
         let appleCardContext = {
-            appleCard: await this._appleCard.context
+            appleCard: this._appleCard.context
         };
         return appleCardContext;
     }

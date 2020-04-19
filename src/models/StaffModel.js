@@ -13,58 +13,35 @@ export default class StaffModel { // дописать потом
         this._Position = staff.Position;
         this._CafeId = staff.CafeId;
         this._Photo = staff.Photo? staff.Photo : '/images/userpic.png';
-        //this._loadStaff();
+    }
+
+    async update(){
+        await this.getStaff();
     }
 
     get StaffId(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._StaffId).then(()=>{
-                resolve(this._StaffId);
-            });
-        });
+        return this._StaffId;
     }
 
     get StaffName(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._StaffName).then(()=>{
-                resolve(this._StaffName);
-            });
-        });
+        return this._StaffName;
     }
 
     get Position(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._Position).then(()=>{
-                resolve(this._Position);
-            });
-        });
+        return this._Position;
     }
 
     get CafeId(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._CafeId).then(()=>{
-                resolve(this._CafeId);
-            });
-        });
+        return this._CafeId;
     }
 
     get CafeName(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._CafeName).then(()=>{
-                resolve(this._CafeName);
-            });
-        });
+        return this._CafeName
     }
 
     get Photo(){
-        return new Promise((resolve) => {
-            this._checkStaff(this._Photo).then(()=>{
-                resolve(this._Photo);
-            });
-        });
+        return this._Photo;
     }
-
-
 
     get context(){
         let staffListData = sessionStorage.getItem('StaffList');
@@ -106,13 +83,6 @@ export default class StaffModel { // дописать потом
         this._saveStaff();
     }
 
-
-    async _checkStaff(data){
-        if(!data){
-            await this.getStaff();
-        }
-    }
-
     _loadStaff(){
         let staffListData = sessionStorage.getItem('StaffList');
         if (staffListData && this._listId != null) {
@@ -149,15 +119,12 @@ export default class StaffModel { // дописать потом
         this._saveStaff();
     }
 
-
-
     /** Получение работника */
     async getStaff(){
         await authAjax('GET', constants.PATH + `/api/v1/staff/${this._StaffId}`,
             null,
             (response) => {
                 if (response.errors === null) {
-
                     this.fillStaffData(response.data);
                 } else {
                     throw response.errors;

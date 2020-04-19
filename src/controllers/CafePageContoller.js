@@ -17,6 +17,11 @@ export default class CafePageController {
         this._id = null;
     }
 
+    async update(){
+        await this._userModel.update();
+        await this._cafeListModel.update();
+    }
+
     /** Event добавление работника */
     addStaffButtonClick(){
         this._userModel.addStaffQR(this._id);
@@ -32,11 +37,11 @@ export default class CafePageController {
      * @param {int} id идентификатор кафе
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(id){
+    _makeViewContext(id){
         this._id = id;
-        const cafe = await this._cafeListModel.getCafeById(id);
+        const cafe = this._cafeListModel.getCafeById(id);
         let cafeContext = {
-            'cafe': await cafe.context
+            'cafe': cafe.context
         };
 
         cafeContext['header'] = {
@@ -60,7 +65,8 @@ export default class CafePageController {
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        this._cafePageView.context = await this._makeViewContext(id);
+        await this.update();
+        this._cafePageView.context = this._makeViewContext(id);
         this._cafePageView.render();
     }
 }

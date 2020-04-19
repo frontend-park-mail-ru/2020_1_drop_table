@@ -52,20 +52,20 @@ export class AppleCardModel {
 
     }
 
+    async update(){
+        await this.getCard();
+    }
+
     /**
-     * Возвращает промис, который возвращает сырое представление карточки
-     * @return {Promise<{obj}>}
+     * Возвращает сырое представление карточки
+     * @return {obj}
      */
     get context() {
-        return new Promise((resolve) => {
-            this.getCard().then(()=>{
-                const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
-                if (cafeCard) {
-                    resolve(JSON.parse(cafeCard));
-                }
-                resolve(null);
-            });
-        });
+        const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
+        if (cafeCard) {
+            return(JSON.parse(cafeCard));
+        }
+        return null;
     }
 
     /**

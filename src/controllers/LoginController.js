@@ -36,15 +36,6 @@ export default class LoginController {
 
         }
     }
-    async _tryAuth(){
-        try{
-            await this._userModel.getOwner();
-            router._goTo('/myCafes')
-        }
-        catch (e) {
-            console.log('user not found',e)
-        }
-    }
 
     /**
      * Создание контекста для LoginView
@@ -59,7 +50,6 @@ export default class LoginController {
                 }
             },
             login: {
-                user: this._userModel._checkUser,
                 form: {
                     event: {
                         type: 'submit',
@@ -118,9 +108,8 @@ export default class LoginController {
     }
 
     /** Запуск контроллера */
-    control(){
+    async control(){
         this._loginView.context = this._makeViewContext();
-        this._tryAuth();
         this._loginView.render();
 
     }

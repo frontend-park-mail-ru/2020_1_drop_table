@@ -12,31 +12,27 @@ export default class CafeListModel{
     /** Инициализация модели */
     constructor() {
         this._cafeModelsList = [];
-        this._cafeListJson = null;
+        this._cafeListJson = [];
+    }
+
+    async update(){
+        await this.cafesList();
     }
 
     /**
-     * Возвращает промис, который возвращает сырое представление модели
-     * @return {Promise} промис, который возвращает сырое представление модели
+     * Возвращает сырое представление модели
+     * @return {Promise} сырое представление модели
      */
     get context(){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeListJson ? this._cafeListJson : []);
-            });
-        });
+        return this._cafeListJson;
     }
 
     /**
-     * Возвращает промис, который возвращает пуст или не пуст cafeModelList
-     * @return {Promise} промис, который возвращает пуст или не пуст cafeModelList
+     * Возвращает пуст или не пуст cafeModelList
+     * @return {bool} пуст или не пуст cafeModelList
      */
     get isEmpty(){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(!this._cafeModelsList.length);
-            });
-        });
+        return !this._cafeModelsList.length;
     }
 
     /**
@@ -45,23 +41,9 @@ export default class CafeListModel{
      * @return {CafeModel} объект CafeModel с нужным id
      */
     getCafeById(id){
-        return new Promise((resolve) => {
-            this._checkCafeList(this._cafeListJson).then(()=>{
-                resolve(this._cafeModelsList.find((cafe) => {
-                    return cafe._id == id;
-                }));
-            });
+        return this._cafeModelsList.find((cafe) => {
+            return cafe._id == id;
         });
-    }
-
-    /**
-     * Проверяет существование поля data
-     * @param {int|string|null} data
-     */
-    async _checkCafeList(data){
-        if(!data){
-            await this.cafesList();
-        }
     }
 
     /** Конструирует cafeModel из cafeListJson */
@@ -85,18 +67,16 @@ export default class CafeListModel{
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-                    // router._goTo('/createCafe');
-                } else {
-                    if (response.errors === null) {
-                        this._cafeListJson = response.data;
-                        this._constructCafe();
-                    } else {
-                        //todo разное поведение при ошибках
-                        console.log('Получение кафе:',response)
-                        router._goTo('/login');
-                        throw response.errors;
-                    }
+                if(response.errors === null){
+                    this._cafeListJson = response.data ? response.data : [] ;
+                }
+
+                if(response.errors === null || response.errors.includes('offline')){
+                    this._constructCafe();
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
         )
@@ -108,11 +88,18 @@ export default class CafeListModel{
             'POST',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null){
                     cafe.fillCafeData(response.data);
+                }
+
+                if(response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     this._cafeModelsList.push(cafe);
                     router._goTo('/myCafes');
-                } else {
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             }
@@ -125,9 +112,13 @@ export default class CafeListModel{
             'PUT',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
                     router._goTo(`/myCafes`);
-                } else {
+                }
+
+                if(response.errors !== null){
                     throw response.errors;
                 }
             }

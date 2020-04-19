@@ -20,6 +20,10 @@ export default class UserProfileController{
         this._userProfileView = userProfileView;
     }
 
+    async update(){
+        await this._userModel.update();
+    }
+
     /** Event изменения профиля */
     async _changeUserProfileListener(e) {
         e.preventDefault();
@@ -73,8 +77,7 @@ export default class UserProfileController{
                 }
             },
             profile: {
-                imgSrc: '/images/userpic.png',
-                imgSrcPromise: this._userModel.photo,
+                imgSrc: this._userModel.photo ? this._userModel.photo : '/images/userpic.png',
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -84,27 +87,24 @@ export default class UserProfileController{
                         {
                             type: 'text',
                             id: 'full-name',
-                            data: 'Имя',
-                            inputPromise: this._userModel.name,
+                            data: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
                         },
                         {
                             type: 'email',
                             id: 'email',
-                            data: 'Почта',
-                            inputPromise: this._userModel.email,
+                            data: this._userModel.email,
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
                             type: 'text',
                             id: 'Position',
-                            data: 'Должность',
-                            inputPromise: this._userModel.Position,
+                            data: this._userModel.Position,
                             labelData: 'Должность',
                             inputOption: 'required',
-                            readOnly: this._userModel.isOwner?'':'readOnly'
+                            readOnly: this._userModel.isOwner ? '' : 'readOnly'
                         },
                     ],
                     submitValue: 'Готово',
@@ -164,10 +164,10 @@ export default class UserProfileController{
                 'Пользователь с такой почтой уже существует',
                 form['email']
             ],
-            // 'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
-            //     'Минимальная длинна пароля 8 символов',
-            //     form['password']
-            // ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
+                'Минимальная длинна пароля 8 символов',
+                form['password']
+            ],
             'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'min\' tag': [
                 'Имя слишком короткое',
                 form['full-name']
@@ -185,6 +185,7 @@ export default class UserProfileController{
 
     /** Запуск контроллера */
     async control(){
+        await this.update();
         this._userProfileView.context = this._makeViewContext();
         this._userProfileView.render();
     }

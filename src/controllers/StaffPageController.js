@@ -11,8 +11,13 @@ export default class StaffPageController {
         this._id = null;
     }
 
+    async update(){
+        await this._userModel.update();
+        await this._staffListModel.update();
+    }
 
-    async _makeViewContext(id){
+
+    _makeViewContext(id){
         this._id = id;
         const staff = this._staffListModel.getStaffById(id);
         let staffContext = {
@@ -52,7 +57,8 @@ export default class StaffPageController {
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        this._staffPageView.context = await this._makeViewContext(id);
+        await this.update();
+        this._staffPageView.context = this._makeViewContext(id);
         this._staffPageView.render();
         this._addListeners(id);
     }

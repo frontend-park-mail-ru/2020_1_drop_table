@@ -19,6 +19,10 @@ export default class AddStaffController{
         this._uuid = uuid;
     }
 
+    async update(){
+        await this._userModel.update();
+    }
+
     /**
      * Создание контекста для RegisterView
      * @return {obj} созданный контекст
@@ -143,7 +147,8 @@ export default class AddStaffController{
     }
 
     /** Запуск контроллера */
-    control(){
+    async control(){
+        await this.update();
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }
