@@ -1,8 +1,10 @@
 
 import './FormCreatorCell.scss'
 
-import FormCreatorCellBig from './FormCreatorCellBig.hbs'
+import FormCreatorCellBig from './CellBig/FormCreatorCellBig.hbs'
 import FormCreatorCellSmall from './FormCreatorCellSmall.hbs'
+import {TypesComponent} from './CellBig/TypesComponent/TypesComponent';
+import {OptionsComponent} from './CellBig/OptionsComponent/OptionsComponent';
 // import FormCreatorCellSmall from './FormCreatorCell/FormCreatorCellSmall.hbs'
 /** Компонент карточки кафе */
 export class FormCreatorCellComponent {
@@ -23,9 +25,26 @@ export class FormCreatorCellComponent {
      * Отрисовка шаблона кафе
      * @private
      */
+
+
+
+    _renderTypes(context){
+        let answerTypes = this._el.getElementsByClassName('big-form-cell__answer-type').item(0);
+        (new TypesComponent(answerTypes).render(context))
+    }
+    _renderOptions(context){
+        if( context.answerType === 'listOne' || context.answerType === 'listMany'){
+            let answerOptions =  this._el.getElementsByClassName('big-form-cell__answer-options').item(0);
+            (new OptionsComponent(answerOptions)).render(context);
+        }
+
+    }
     _renderTemplate(context, type) {
         if(type === 'big'){
             this._el.innerHTML = FormCreatorCellBig(context);
+            this._renderTypes(context);
+            this._renderOptions(context)
+
         } else if(type === 'small'){
             this._el.innerHTML = FormCreatorCellSmall(context);
         }

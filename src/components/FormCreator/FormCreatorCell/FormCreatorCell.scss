@@ -39,7 +39,12 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       margin-left: 15px;
-      &__type{
+      &__type,
+      &__type-text,
+      &__type-phone,
+      &__type-date,
+      &__type-listOne,
+      &__type-listMany  {
         cursor: pointer;
         //width: 10vw;
         height: 50px;
