@@ -45,12 +45,14 @@ export default class StaffPageController {
     async _addListeners(id){
 
         let fireButton = document.getElementsByClassName('staff-page__redactor__button-fire').item(0);
+        let positionInput = document.getElementsByClassName('staff-page__top__design__work__position').item(0);
         const context = {
             userModel : this._userModel,
             id : id
         };
-        fireButton.addEventListener('click',this.fireStaff.bind(context));
 
+        fireButton.addEventListener('click',this.fireStaff.bind(context));
+        //positionInput.addEventListener('input', this.)
     }
 
     /** Запуск контроллера

@@ -87,23 +87,27 @@ export default class StaffListModel{
         )
     }
 
-    /** создание qr работника */
-    async addStaffQR(id) {
-        if(!id){
-            id = await this._userModel.id; // выдает null
-        }
-        await ajax(constants.PATH + `/api/v1/staff/generateQr/${id}`,
-            'GET',
-            {},
-            (response) => {
-                if (response.errors === null) {
-                    (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
-                    // this._saveCafeList(response.data);
-                    // this._constructCafe(response.data);
-                } else {
-                    throw response.errors;
+    /** Добавление QR работника */
+    async addStaffQR() {
+        const positionInput = document.
+            getElementsByClassName('input-alert-window-container__window__field_input').item(0);
+        if(positionInput.value) {
+            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+                'GET',
+                {},
+                (response) => {
+                    if (response.data != null) {
+                        if (response.errors === null) {
+                            (new AlertWindowComponent('Покажите код сотруднику', null, response.data)).render();
+                        } else {
+                            throw response.errors;
+                        }
+                    }
                 }
-            }
-        )
+            )
+        }
     }
+
+
+
 }

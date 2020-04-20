@@ -251,7 +251,7 @@ export default class UserModel {
             }
         );
     }
-    /** Добавление работника */
+    /** Удаление работника */
     async fireStaff(id) {
         const requestUrl = `/api/v1/staff/delete_staff/${id}`;
         await ajax(constants.PATH + requestUrl,
@@ -271,20 +271,45 @@ export default class UserModel {
         );
     }
 
-    /** Добавление QR работника */
-    async addStaffQR(cafeId) {
-        await ajax(constants.PATH + `/api/v1/staff/generateQr/${cafeId}`,
-            'GET',
-            {},
+    /** Удаление работника */
+    async changeStaffPosition(id, position) {
+
+        const requestUrl = `/api/v1/staff/update_position/${id}`;
+        await ajax(constants.PATH + requestUrl,
+            'POST',
+            {position},
             (response) => {
-                if(response.data != null){
-                    if (response.errors === null) {
-                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
-                    } else {
-                        throw response.errors;
-                    }
+                if (response.errors === null || response.errors.some((err) => {
+                    return err.message === 'offline'
+                })){
+                    router._goTo('/staff');
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
-        )
+        );
+    }
+
+    /** Добавление QR работника */
+    async addStaffQR() {
+        const positionInput = document.
+            getElementsByClassName('input-alert-window-container__window__field_input').item(0);
+        if(positionInput.value) {
+            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+                'GET',
+                {},
+                (response) => {
+                    if (response.data != null) {
+                        if (response.errors === null) {
+                            (new AlertWindowComponent('Покажите код сотруднику', null, response.data)).render();
+                        } else {
+                            throw response.errors;
+                        }
+                    }
+                }
+            )
+        }
     }
 }

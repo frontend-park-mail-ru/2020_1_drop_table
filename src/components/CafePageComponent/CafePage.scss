@@ -164,43 +164,52 @@
     }
 }
 
-.buttons__apple-pass-button{
-    -webkit-appearance: none;
-    width:16rem;
-    height: 8rem;
-    margin: 10px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &_h4{
-        font-family: Montserrat;
-        cursor: pointer;
-    }
-    &:hover{
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
-    }
-}
-
 .card-creator-container{
     width: 100%;
     height: 100%;
 
 }
-.buttons__add-staff-button{
-    -webkit-appearance: none;
-    width:16rem;
-    height: 8rem;
-    margin: 10px auto;
+
+.buttons {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    &_h4{
-        font-family: Montserrat;
-        cursor: pointer;
+
+    &__apple-pass-button {
+        -webkit-appearance: none;
+        width: 16rem;
+        height: 8rem;
+        margin: 10px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &_h4 {
+            font-family: Montserrat;
+            cursor: pointer;
+        }
+
+        &:hover {
+            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.45));
+        }
     }
-    &:hover{
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+
+
+    &__add-staff-button {
+        -webkit-appearance: none;
+        width: 16rem;
+        height: 8rem;
+        margin: 10px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &_h4 {
+            font-family: Montserrat;
+            cursor: pointer;
+        }
+
+        &:hover {
+            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.45));
+        }
     }
 }
 

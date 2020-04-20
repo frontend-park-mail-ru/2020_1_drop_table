@@ -1,5 +1,5 @@
 import {router} from '../main/main';
-
+import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
 /** контроллер кафе */
 export default class CafePageController {
 
@@ -24,7 +24,7 @@ export default class CafePageController {
 
     /** Event добавление работника */
     addStaffButtonClick(){
-        this._userModel.addStaffQR(this._id);
+        (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
     }
 
     /** Event редактирование кафе */
@@ -54,6 +54,7 @@ export default class CafePageController {
                 }
             }
         };
+
         cafeContext['add-staff-button'] = this.addStaffButtonClick.bind(this);
 
         cafeContext['cafe-page__cafe-info__edit-button'] = this.editCafeButtonClick.bind(this);

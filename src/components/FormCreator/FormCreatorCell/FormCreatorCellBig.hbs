@@ -1,0 +1,56 @@
+<div class="big-form-cell">
+
+    <div class="big-form-cell__delete" id="cell-delete-{{cell_id}}">
+
+    </div>
+
+    <div class="big-form-cell__question">
+        <h4 class="big-form-cell__question_h4">Текст вопроса</h4>
+        <input class="big-form-cell__question_input" type="text">
+    </div>
+    <div class="big-form-cell__answer-type">
+        <h4 class="big-form-cell__answer-type_h4">Тип ответа</h4>
+        <div class="big-form-cell__answer-type__types" >
+            <div class="big-form-cell__answer-type__types__type">
+                <span class="big-form-cell__answer-type__types__type_span" >Текст</span>
+            </div>
+            <div class="big-form-cell__answer-type__types__type">
+                <span class="big-form-cell__answer-type__types__type_span" >Телефон</span>
+            </div>
+            <div class="big-form-cell__answer-type__types__type">
+                <span class="big-form-cell__answer-type__types__type_span" >Дата</span>
+            </div>
+            <div class="big-form-cell__answer-type__types__type-active">
+                <span class="big-form-cell__answer-type__types__type_span" >Один из списка</span>
+            </div>
+            <div class="big-form-cell__answer-type__types__type">
+                <span class="big-form-cell__answer-type__types__type_span" >Несколько из списка</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="big-form-cell__answer-options">
+        {{#if answerOptions}}
+        <h4 class="big-form-cell__answer-options_h4">Варианты ответа</h4>
+        <div class="big-form-cell__answer-options__options">
+            <div class="big-form-cell__answer-options__options_add-button">
+                <span class="big-form-cell__answer-options__options_add-button_span">Добавить</span>
+            </div>
+            <div class="big-form-cell__answer-options__options__list">
+                {{#each answerOptions}}
+                    <div class="big-form-cell__answer-options__options__list__cell" id="option-{{cell_id}}-{{option_id}}">
+                        <input class="big-form-cell__answer-options__options__list__cell_input" type="text" value={{text}}>
+                        <div class="big-form-cell__answer-options__options__list__cell__button"></div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+
+    <div class="big-form-cell__save">
+
+    </div>
+
+
+</div>
