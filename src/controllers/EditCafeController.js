@@ -174,7 +174,7 @@ export default class EditCafeController{
             {
                 element: form.elements['openTime'],
                 validate: () => {
-                    const timeRegex = /[0-9][1-9]*/;
+                    const timeRegex = /([0-1][0-9])|(2[0-4])*/;
                     if(timeRegex.test(form.elements['openTime'].value.toString())){
                         return 'Время имеет некорректный формат';
                     }
@@ -183,7 +183,7 @@ export default class EditCafeController{
             {
                 element: form.elements['closeTime'],
                 validate: () => {
-                    const timeRegex = /[0-9][1-9]*/;
+                    const timeRegex = /([0-1][0-9])|(2[0-4])*/;
                     if(timeRegex.test(form.elements['closeTime'].value.toString())){
                         return 'Время имеет некорректный формат';
                     }
