@@ -175,6 +175,24 @@ export default class CreateCafeController{
                     }
                 }
             },
+            {
+                element: form.elements['openTime'],
+                validate: () => {
+                    const timeRegex = /[0-9][1-9]*/;
+                    if(timeRegex.test(form.elements['openTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
+            {
+                element: form.elements['closeTime'],
+                validate: () => {
+                    const timeRegex = /[0-9][1-9]*/;
+                    if(timeRegex.test(form.elements['closeTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
         ];
     }
 

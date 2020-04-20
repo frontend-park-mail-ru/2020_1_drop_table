@@ -165,13 +165,27 @@ export default class EditCafeController{
             },
             {
                 element: form.elements['description'],
-                validate: () => {/**
-     * Создание контекста для ServerExceptionHandler
-     * @param {Element} form вылидируемый элемент
-     * @return {obj} созданный контекст
-     */
+                validate: () => {
                     if(form.elements['description'].value.toString().length < 6){
                         return 'Описание кафе слишком короткое';
+                    }
+                }
+            },
+            {
+                element: form.elements['openTime'],
+                validate: () => {
+                    const timeRegex = /[0-9][1-9]*/;
+                    if(timeRegex.test(form.elements['openTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
+            {
+                element: form.elements['closeTime'],
+                validate: () => {
+                    const timeRegex = /[0-9][1-9]*/;
+                    if(timeRegex.test(form.elements['closeTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
                     }
                 }
             },
