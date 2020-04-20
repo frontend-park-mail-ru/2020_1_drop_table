@@ -67,11 +67,8 @@ export default class CafeListModel{
             'GET',
             {},
             (response) => {
-                if(response.errors === null){
-                    this._cafeListJson = response.data ? response.data : [] ;
-                }
-
-                if(response.errors === null || response.errors.includes('offline')){
+                if(response.errors === null && response.data){
+                    this._cafeListJson = response.data;
                     this._constructCafe();
                 }
 
@@ -96,6 +93,7 @@ export default class CafeListModel{
                     return err.message === 'offline'
                 })){
                     this._cafeModelsList.push(cafe);
+                    this._cafeListJson.push(cafe.context);
                     router._goTo('/myCafes');
                 }
 
