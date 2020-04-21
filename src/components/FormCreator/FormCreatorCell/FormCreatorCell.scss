@@ -1,0 +1,200 @@
+.big-form-cell{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px 15px 15px 15px;
+  height:100%;
+  width:90%;
+  margin: 20px auto;
+  font-family: Montserrat, sans-serif;
+
+  &__question{
+    display: flex;
+    flex-direction: column;
+
+      &_h4{
+        margin-left:20px;
+        font-size: 2rem;
+        color: black;
+
+      }
+    &_input{
+      border: 2px solid black;
+      width: auto;
+      font-size: 2rem;
+      margin:0 20px;
+    }
+  }
+  &__answer-type{
+    display: flex;
+    flex-direction: column;
+    &_h4{
+      margin-left:20px;
+      font-size: 2rem;
+      color: black;
+    }
+    &__types{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      margin-left: 15px;
+      &__type,
+      &__type-text,
+      &__type-phone,
+      &__type-date,
+      &__type-listOne,
+      &__type-listMany  {
+        cursor: pointer;
+        //width: 10vw;
+        height: 50px;
+        background-color: rgba(28, 118, 143, 0.55);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 5px;
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+        &:hover{
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+        }
+        &-active{
+          cursor: pointer;
+          //width: 10vw;
+          height: 50px;
+          background-color:#1C768F;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 5px;
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+          &:hover{
+            box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+          }
+          &_span{
+            margin: 0 5px;
+            color: white;
+            font-size: 1rem;
+            white-space: nowrap;
+          }
+        }
+        &_span{
+          margin: 0 5px;
+          color: white;
+          font-size: 1rem;
+          white-space: nowrap;
+        }
+
+      }
+    }
+
+  }
+
+  &__answer-options{
+    display: flex;
+    flex-direction: column;
+    &_h4{
+      margin-left:20px;
+      font-size: 2rem;
+      color: black;
+    }
+    &__options{
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      &_add-button{
+        cursor: pointer;
+        height: 50px;
+        background-color: #1C768F;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 20px;
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+        &:hover{
+          box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+        }
+        &_span{
+          margin: 0 5px;
+          color: white;
+          font-size: 1rem;
+
+        }
+      }
+
+      &__list{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        &__cell{
+          display: flex;
+          margin: auto 20px;
+          height: 50px;
+          &_input{
+            border-top: 2px solid black;
+            border-left: 2px solid black;
+            border-right: none;
+            border-bottom: 2px solid black;
+            min-width: 75px;
+            font-size: 1rem;
+          }
+          &__button{
+            border-top: 2px solid black;
+            border-left: none;
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+            width:20px;
+            background-color: white;
+            &:hover{
+              background-color: #B7202B;
+            }
+          }
+        }
+      }
+    }
+
+  }
+  &__delete{
+    position: relative;
+    width: 45px;
+    height: 45px;
+
+    margin-left: auto;
+    background: #EE6161;
+    border-radius:  0px 15px;
+  }
+  &__save{
+    position: relative;
+    width: 45px;
+    height: 45px;
+    margin-left: auto;
+    background: #1C768F;
+    border-radius:  15px 0px ;
+  }
+}
+
+.small-form-cell {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px 15px 15px 15px;
+  height: 100%;
+  width: 30%;
+  min-width: 300px;
+  min-height: 200px;
+  margin: 20px auto;
+  font-family: Montserrat, sans-serif;
+
+  &__question{
+
+    &_h4{
+
+    }
+
+    &_input{
+
+    }
+  }
+
+}

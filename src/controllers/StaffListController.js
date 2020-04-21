@@ -1,6 +1,7 @@
 'use strict';
 
 import {router} from '../main/main';
+import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
 
 /** контроллер списка работников */
 export default class StaffListController{
@@ -48,7 +49,8 @@ export default class StaffListController{
     }
 
     _addStaffQR(){
-        this.staffListModel.addStaffQR(this.id);
+        (new InputAlertWindowComponent(this.staffListModel.addStaffQR, this.id)).render();
+        // this.staffListModel.addStaffQR(this.id);
     }
     _redirectStaff(){
         router._goTo(`/staff/${this.id}`)
@@ -65,7 +67,7 @@ export default class StaffListController{
             };
             addButtons.item(i).addEventListener('click',this._addStaffQR.bind(context))
         }
-        
+
         let staffCards = document.getElementsByClassName('staff-card-container');
         for(let i = 0; i < staffCards.length; i++){
             const context = {

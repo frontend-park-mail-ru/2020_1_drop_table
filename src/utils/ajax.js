@@ -11,8 +11,9 @@ import {ajaxForm} from './ajaxForm.js'
  */
 export async function ajax(route, method, data, callback) {
     const formData = new FormData();
+    let jsonData = JSON.stringify(data);
     if (method !== 'GET' && method !== 'HEAD') {
-        formData.append('jsonData', JSON.stringify(data));
+        formData.append('jsonData',jsonData );
     }
     await ajaxForm(route, method, formData, callback);
 }

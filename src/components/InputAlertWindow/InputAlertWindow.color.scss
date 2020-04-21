@@ -1,0 +1,8 @@
+@import '../../scss/themes.scss';
+
+.input-alert-window-container__window {
+  @include themify($themes) {
+    background-color: themed('alertBackgroundColor');
+
+  }
+}

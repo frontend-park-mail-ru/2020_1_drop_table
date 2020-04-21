@@ -41,16 +41,27 @@ export default class StaffPageController {
     fireStaff(){
         this.userModel.fireStaff(this.id);
     }
+    changeStaffPosition(){
+        console.log('test change staff', this.input.value.toString())
+        this.userModel.changeStaffPosition(this.id, this.input.value)
+    }
 
     async _addListeners(id){
 
         let fireButton = document.getElementsByClassName('staff-page__redactor__button-fire').item(0);
-        const context = {
+        let positionInput = document.getElementsByClassName('staff-page__top__design__work__position').item(0);
+        let context = {
             userModel : this._userModel,
             id : id
         };
         fireButton.addEventListener('click',this.fireStaff.bind(context));
 
+        context = {
+            userModel : this._userModel,
+            id: id,
+            input: positionInput,
+        };
+        positionInput.addEventListener('change', this.changeStaffPosition.bind(context))
     }
 
     /** Запуск контроллера

@@ -19,7 +19,7 @@ export class StaffMenuComponent {
             loyalty_points: this.points + 1
         };
 
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/points-system/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
             console.log('response', response);
             if (response.errors === null) {
                 console.log('points ok');
@@ -37,7 +37,7 @@ export class StaffMenuComponent {
             loyalty_points: this.points - 1
         };
 
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/points-system/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
             console.log('response', response);
             if (response.errors === null) {
                 console.log('points ok');
