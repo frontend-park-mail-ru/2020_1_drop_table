@@ -124,6 +124,7 @@
       &__list{
         display: flex;
         justify-content: flex-start;
+        flex-wrap: wrap;
 
         &__cell{
           display: flex;
@@ -170,4 +171,30 @@
     background: #1C768F;
     border-radius:  15px 0px ;
   }
+}
+
+.small-form-cell {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 15px 15px 15px 15px;
+  height: 100%;
+  width: 30%;
+  min-width: 300px;
+  min-height: 200px;
+  margin: 20px auto;
+  font-family: Montserrat, sans-serif;
+
+  &__question{
+
+    &_h4{
+
+    }
+
+    &_input{
+
+    }
+  }
+
 }

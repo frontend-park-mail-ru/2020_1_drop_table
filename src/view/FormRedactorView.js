@@ -22,9 +22,13 @@ export default class FormRedactorView extends BaseView{
         this.formCreator = new FormCreatorComponent(container);
     }
 
+    renderCell(cellContext, type){
+        console.log('render cell');
+        this.formCreator._renderCell(cellContext, type);
+    }
+
     /** Отрисовка редактора крточки */
     render() {
-        console.log('render formredactor ',this._formModel.context )
         this.formCreator.render(this._formModel.context);
 
     }

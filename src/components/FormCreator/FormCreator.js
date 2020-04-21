@@ -15,7 +15,6 @@ export class FormCreatorComponent {
      */
     constructor(el) {
         this._el = el;
-        this._cellsList = [];
     }
 
     /**
@@ -24,11 +23,22 @@ export class FormCreatorComponent {
      */
     _renderTemplate(context) {
 
-        console.log('render template ', context)
         this._el.innerHTML = FormCreator(context);
-        let cells = document.getElementsByClassName('form-creator-container__cells-container__cell');
+        //let cells = document.getElementsByClassName('form-creator-container__cells-container__cell');
         for(let i = 0; i < context.cells.length; i++){
-            (new FormCreatorCellComponent(cells.item(i)).render(context.cells[i], 'big'))
+            this._renderCell(context.cells[i], 'big');
+            //(new FormCreatorCellComponent(cells.item(i)).render(context.cells[i], 'big'))
+        }
+    }
+
+    _renderCell(context, type){
+        console.log('_render cell ', type, context)
+        let cell = document.getElementById(`cell-${context.cell_id}`);
+
+        if(type === 'big'){
+            (new FormCreatorCellComponent(cell).render(context, 'big'))
+        } else if(type === 'small'){
+            (new FormCreatorCellComponent(cell).render(context, 'small'))
         }
     }
 

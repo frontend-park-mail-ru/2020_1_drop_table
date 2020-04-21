@@ -48,7 +48,7 @@ export default class CafePageView extends BaseView {
                     cell_id: 1,
                     question: 'Вопрос',
                     answerType: 'text',
-                    answerOptions: null,
+                    answerOptions: [],
                 },
             ]
         }

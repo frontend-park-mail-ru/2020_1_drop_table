@@ -20,11 +20,8 @@ export default class FormRedactorController {
         // await this.update();
 
         // this._appleCard.context = this._makeContext();
-        this.updateView();
 
-        // let cardRedactorBottom =
-        //     document.getElementsByClassName('card').item(0);
-        // cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+        this.updateView();
 
     }
     updateView(){
@@ -54,9 +51,11 @@ export default class FormRedactorController {
         for(let i = 0; i < cells.length; i++){
             this._addCellListeners(cells.item(i));
         }
+    }
 
-
-
+    _makePreview(){
+        console.log('make preview', this.cellContext)
+        this._formRedactorView.renderCell(this.cellContext,'small');
     }
     _addCellListeners(cell) {
         let deleteButton = cell.getElementsByClassName('big-form-cell__delete').item(0);
@@ -66,23 +65,37 @@ export default class FormRedactorController {
             updateView: this.updateView.bind(this),
         };
         deleteButton.addEventListener('click', this.removeCell.bind(context));
-        //todo заново вешать лисенеры
 
+
+        let previewButton = cell.getElementsByClassName('big-form-cell__save').item(0);
+        context = {
+            _formRedactorView : this._formRedactorView,
+            cellContext: this._formModel._cells[previewButton.id.split('-')[2]],
+        };
+        console.log('cellContext', context);
+        previewButton.addEventListener('click', this._makePreview.bind(context));
 
         let typesContainer = cell.getElementsByClassName('big-form-cell__answer-type__types').item(0);
-        console.log('test1', typesContainer);
         let types = cell.getElementsByClassName('big-form-cell__answer-type__types__type');
-        console.log('test2', types);
-        for (let i = 0; types.length; i++) {
+        for (let i = 0; i < types.length; i++) {
             let context = {
                 cell_id: Number(typesContainer.id.split('-')[1]),
                 _formModel: this._formModel,
                 updateView: this.updateView.bind(this),
-                type_id: i,
+                type: types.item(i).id.split('-')[2],
             };
-            console.log('test___', i)
-            //types.item(i).addEventListener('click', this.setType.bind(context));
+            types.item(i).addEventListener('click', this.setType.bind(context));
         }
+
+        let questionInput = cell.getElementsByClassName('big-form-cell__question_input').item(0);
+
+        context = {
+            cell_id: Number(questionInput.id.split('-')[1]),
+            _formModel: this._formModel,
+            input : questionInput,
+        };
+
+        questionInput.addEventListener('change', this.changeQuestion.bind(context));
 
 
         let addOptionButton =
@@ -107,7 +120,8 @@ export default class FormRedactorController {
                 };
                 deleteButton.addEventListener('click', this.removeOption.bind(context));
 
-                let input = options.item(i).getElementsByClassName('big-form-cell__answer-options__options__list__cell_input').item(0);
+                let input = options.item(i).
+                    getElementsByClassName('big-form-cell__answer-options__options__list__cell_input').item(0);
                 context = {
                     cell_id: Number(options.item(i).id.split('-')[1]),
                     option_id: Number(options.item(i).id.split('-')[2]),
@@ -121,31 +135,22 @@ export default class FormRedactorController {
         }
     }
 
+
+    changeQuestion(){
+        this._formModel._cells[this.cell_id].question = this.input.value
+    }
+
     setType() {
-        this._formModel.cells[this.cell_id].answerType = (typeId = this._type_id) => {
-            switch (typeId) {
-            case 0:
-                return 'text';
-            case 1:
-                return 'phone';
-            case 2:
-                return 'date';
-            case 3:
-                return 'listOne';
-            case 4:
-                return 'listMany';
-            }
-        }
+        this._formModel._cells[this.cell_id].answerType = this.type;
         this.updateView();
     }
 
     addCell() {
-        console.log('add cell');
         this._formModel._cells.push({
-            cell_id: this._formModel._cells.length + 1,
+            cell_id: this._formModel._cells.length, //+1
             question: 'Вопрос',
             answerType: 'text',
-            answerOptions: null,
+            answerOptions: [],
         },);
         //todo render
         this.updateView();
@@ -171,7 +176,7 @@ export default class FormRedactorController {
             if (this._formModel._cells[i].cell_id === this.cell_id) {
                 this._formModel._cells[i].answerOptions.push({
                     cell_id: this.cell_id,
-                    option_id: this._formModel._cells[i].answerOptions.length + 1,
+                    option_id: this._formModel._cells[i].answerOptions.length,
                     text: 'Вариант'
                 });
                 //todo render
@@ -198,7 +203,6 @@ export default class FormRedactorController {
     }
 
     changeOptionText() {
-        console.log('change',this.input.value)
         if(this._formModel._cells[this.cell_id] && this._formModel._cells[this.cell_id].answerOptions[this.option_id]){
             this._formModel._cells[this.cell_id].answerOptions[this.option_id].text = this.input.value
             // this.updateView();

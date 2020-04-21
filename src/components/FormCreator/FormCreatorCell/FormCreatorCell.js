@@ -2,7 +2,7 @@
 import './FormCreatorCell.scss'
 
 import FormCreatorCellBig from './CellBig/FormCreatorCellBig.hbs'
-import FormCreatorCellSmall from './FormCreatorCellSmall.hbs'
+import FormCreatorCellSmall from './CellSmall/FormCreatorCellSmall.hbs'
 import {TypesComponent} from './CellBig/TypesComponent/TypesComponent';
 import {OptionsComponent} from './CellBig/OptionsComponent/OptionsComponent';
 // import FormCreatorCellSmall from './FormCreatorCell/FormCreatorCellSmall.hbs'
@@ -17,6 +17,7 @@ export class FormCreatorCellComponent {
      * @param {int} id идентификатор кафе
      */
     constructor(el) {
+        console.log('constructor cell', el)
         this._el = el;
         this._cellsList = [];
     }
@@ -37,16 +38,23 @@ export class FormCreatorCellComponent {
             let answerOptions =  this._el.getElementsByClassName('big-form-cell__answer-options').item(0);
             (new OptionsComponent(answerOptions)).render(context);
         }
-
     }
+    _renderSmallOptions(context){
+        console.log('small options',context)
+    }
+
     _renderTemplate(context, type) {
         if(type === 'big'){
+            console.log('render template big', this._el);
             this._el.innerHTML = FormCreatorCellBig(context);
             this._renderTypes(context);
             this._renderOptions(context)
 
         } else if(type === 'small'){
+            console.log('render template small', this._el);
             this._el.innerHTML = FormCreatorCellSmall(context);
+
+            this._renderSmallOptions(context)
         }
 
     }
