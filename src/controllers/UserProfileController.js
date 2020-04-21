@@ -6,6 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -21,7 +22,11 @@ export default class UserProfileController{
     }
 
     async update(){
-        await this._userModel.update();
+        try {
+            await this._userModel.update();
+        } catch (exceptions) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        }
     }
 
     /** Event изменения профиля */
@@ -158,7 +163,7 @@ export default class UserProfileController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form = document.body){
         return {
             'pq: duplicate key value violates unique constraint "staff_email_key"': [
                 'Пользователь с такой почтой уже существует',
@@ -179,7 +184,11 @@ export default class UserProfileController{
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 

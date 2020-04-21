@@ -63,98 +63,86 @@ navigator.serviceWorker.addEventListener('message', event => {
 // });
 
 let app = document.getElementById('application');
-
 export const router = new Router();
+
+const userModel = new UserModel();
+const staffListModel = new StaffListModel(userModel);
+const cafeListModel = new CafeListModel();
+const landingModel = new LandingModel();
+
+
+const staffListView = new StaffListView();
+const registerView = new RegisterView(app, 'Регистрация');
+const loginView = new LoginView(app);
+const cafeListView = new CafeListView(app);
+const userProfileView = new UserProfileView(app);
+const createCafeView = new CreateCafeView();
+const cafePageView = new CafePageView();
+const editCafeView = new CreateCafeView();
+const landingView = new LandingView(app);
+const addStaffView = new RegisterView(app, 'Регистрация работника');
+const staffPageView = new StaffPageView();
+
+const registerController = new RegisterController(userModel, registerView);
+const loginController = new LoginController(userModel, loginView);
+const cafeListController = new CafeListController(cafeListModel, userModel, cafeListView);
+const userProfileController = new UserProfileController(userModel, userProfileView);
+const createCafeController = new CreateCafeController(cafeListModel, userModel, createCafeView);
+const staffListController = new StaffListController(staffListModel, staffListView);
+const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
+const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
+const landingController = new LandingController(landingModel, landingView);
+const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
 
 /** Страница регистрации */
 function doreg(){
-    const userModel = new UserModel();
-    const registerView = new RegisterView(app, 'Регистрация');
-    const registerController = new RegisterController(userModel, registerView);
     registerController.control();
 }
 
 /** Страница авторизации */
 function dolog(){
-    console.log('in login');
-    const userModel = new UserModel();
-    const loginView = new LoginView(app);
-    const loginController = new LoginController(userModel, loginView);
     loginController.control();
 }
 
 /** Страница моих кафе */
 function doMyCafes(){
-    const cafeList = new CafeListModel();
-    const userModel = new UserModel();
-    const cafeListView = new CafeListView(app);
-    const cafeListController = new CafeListController(cafeList, userModel, cafeListView);
     cafeListController.control();
 }
 
 /** Страница профиля */
 function doProfile(){
-    console.log('in profile');
-    const user = new UserModel();
-    const userProfileView = new UserProfileView(app);
-    const userProfileController = new UserProfileController(user, userProfileView);
     userProfileController.control();
 }
 
 /** Страница создания кафе */
 function doCreateCafe(){
-    const cafeList = new CafeListModel();
-    const userModel = new UserModel();//router
-    const createCafeView = new CreateCafeView();
-    const createCafeController = new CreateCafeController(cafeList, userModel, createCafeView);
     createCafeController.control();
 }
 
 /** Страница добавления работника */
 function doStaffPage(){
-    const userModel = new UserModel();
-    const staffListModel = new StaffListModel(userModel);
-    const staffListView = new StaffListView();
-    const staffListController = new StaffListController(staffListModel, staffListView);
     staffListController.control();
-
 }
 
 /** Страница кафе */
 function doCafe(req){
-    const id = req.param.id;
-    console.log('in cafe');
-    const cafeListModel = new CafeListModel();
-    const userModel = new UserModel();
-    const cafePageView = new CafePageView();
-    const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
-    cafePageController.control(id);
+    cafePageController.control(req.param.id);
 }
 
 /** Страница изменения кафе */
 function doEditCafe(req){
-    const id = req.param.id;
-    const cafeListModel = new CafeListModel();
-    const userModel = new UserModel();
-    const editCafeView = new CreateCafeView();
-    const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
-    editCafeController.control(id);
+    editCafeController.control(req.param.id);
 }
 
 /** Страница лэндинга */
 function doLanding() {
-    const landingModel = new LandingModel();
-    const landingView = new LandingView(app);
-    const landingController = new LandingController(landingModel, landingView);
     landingController.control();
 }
 
 /** Страница добавления работника */
 function doAddStaff(req) {
     const uuid = req.query.get('uuid');
-    const userModel = new UserModel();
-    const addStaffView = new RegisterView(app, 'Регистрация работника');
-    const addStaffController = new AddStaffController(userModel, addStaffView,uuid);
+    const addStaffController = new AddStaffController(userModel, addStaffView, uuid);
     addStaffController.control();
 }
 
@@ -167,15 +155,7 @@ function doStaffMenu(req) {
 }
 
 function doStaffById(req){
-    const id = req.param.id;
-
-    const userModel = new UserModel();
-    const staffListModel = new StaffListModel(userModel);
-    const staffPageView = new StaffPageView();
-    console.log('view in main', staffPageView);
-    const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
-
-    staffPageController.control(id);
+    staffPageController.control(req.param.id);
 }
 
 /** Роуты роутера */
