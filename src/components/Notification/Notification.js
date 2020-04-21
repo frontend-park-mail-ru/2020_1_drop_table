@@ -5,10 +5,9 @@ import Notification from './Notification.hbs';
 /** Компонент уведомления */
 export default class NotificationComponent {
 
-    constructor(text, time) {
+    constructor(text) {
         this._el = document.getElementById('alert-field');
         this._text = text;
-        this._time = time;
     }
 
     _addListeners(){
@@ -46,6 +45,5 @@ export default class NotificationComponent {
     render() {
         this._renderTemplate();
         this._addListeners();
-        // setTimeout(this.remove,this._time);
     }
 }

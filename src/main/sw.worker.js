@@ -121,6 +121,10 @@ async function sendCsrf(csrf, clientId){
     }
 }
 
+async function getCsrf(clientId){
+    
+}
+
 async function onlineHandler(request, clientId) {
     handleRequestQueues(clientId);
     const match = await fromCache(request);

@@ -6,6 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер создания кафе */
 export default class CreateCafeController{
@@ -23,8 +24,12 @@ export default class CreateCafeController{
     }
 
     async update(){
-        await this._userModel.update();
-        await this._cafeListModel.update();
+        try{
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exceptions) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        }
     }
 
     /** Event добавление кафе */
@@ -52,7 +57,7 @@ export default class CreateCafeController{
 
         console.log('tetetetetst', cafe.closeTime)
 
-        cafe.photo = image;
+        cafe.photo = image; //? image : '/images/test.jpg';
 
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
@@ -60,8 +65,8 @@ export default class CreateCafeController{
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
                 await this._cafeListModel.create(photoInput.files[0], cafe);
-            } catch (exception) {
-                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
+            } catch (exceptions) {
+                (new ServerExceptionHandler(form, serverExceptionContext)).handle(exceptions);
             }
         }
 
@@ -71,7 +76,7 @@ export default class CreateCafeController{
      * Создание контекста для CafePageView
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(){
+    _makeViewContext(){
         return {
             header:{
                 type: null,
@@ -170,6 +175,24 @@ export default class CreateCafeController{
                     }
                 }
             },
+            {
+                element: form.elements['openTime'],
+                validate: () => {
+                    const timeRegex = /^([0-1][0-9])|(2[0-3]):([0-5][0-9])$/;
+                    if(!timeRegex.test(form.elements['openTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
+            {
+                element: form.elements['closeTime'],
+                validate: () => {
+                    const timeRegex = /^([0-1][0-9])|(2[0-3]):([0-5][0-9])$/;
+                    if(!timeRegex.test(form.elements['closeTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
         ];
     }
 
@@ -178,19 +201,23 @@ export default class CreateCafeController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form= document.body){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
                 'Название кафе слишком короткое',
                 form['name']
             ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
     /** Запуск контроллера */
     async control(){
         await this.update();
-        this._createCafeView.context = await this._makeViewContext();
+        this._createCafeView.context = this._makeViewContext();
         this._createCafeView.render();
     }
 }
