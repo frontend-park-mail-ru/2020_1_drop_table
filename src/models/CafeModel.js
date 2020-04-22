@@ -184,8 +184,8 @@ export default class CafeModel {
             'CafeName': this.name,
             'address': this.address,
             'description': this.description,
-            'openTime': this.openTime,
-            'closeTime': this.closeTime,
+            'openTime': '0001-01-01T'+this.openTime+':00Z',
+            'closeTime': '0001-01-01T'+this.closeTime+':00Z',
         };
 
         if (photo) {
