@@ -1,0 +1,39 @@
+.survey{
+
+  &__header{
+    font-family: Montserrat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &_h4{
+    font-size: 2rem;
+      color: black;
+    }
+  }
+  &__cells{
+
+  }
+
+  &__submit{
+    font-family: Montserrat;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    &__button{
+      height: 70px;
+      width: 200px;
+      background-color: #1C768F;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+      &:hover{
+        box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+      }
+      &_span{
+        margin: 0 auto;
+        color: white;
+      }
+    }
+  }
+}

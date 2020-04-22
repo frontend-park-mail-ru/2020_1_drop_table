@@ -5,6 +5,7 @@ import FormCreatorCellBig from './CellBig/FormCreatorCellBig.hbs'
 import FormCreatorCellSmall from './CellSmall/FormCreatorCellSmall.hbs'
 import {TypesComponent} from './CellBig/TypesComponent/TypesComponent';
 import {OptionsComponent} from './CellBig/OptionsComponent/OptionsComponent';
+import {SmallOptionsComponent} from './CellSmall/SmallOptionsComponent/SmallOptionsComponent';
 // import FormCreatorCellSmall from './FormCreatorCell/FormCreatorCellSmall.hbs'
 /** Компонент карточки кафе */
 export class FormCreatorCellComponent {
@@ -35,23 +36,38 @@ export class FormCreatorCellComponent {
     }
     _renderOptions(context){
         if( context.answerType === 'listOne' || context.answerType === 'listMany'){
+            context['listType'] = true;
             let answerOptions =  this._el.getElementsByClassName('big-form-cell__answer-options').item(0);
             (new OptionsComponent(answerOptions)).render(context);
+        } else{
+            context['listType'] = false;
         }
     }
     _renderSmallOptions(context){
         console.log('small options',context)
+
+        let answerOptions =  this._el.getElementsByClassName('small-form-cell__answer-options').item(0);
+        if(context.answerType === 'listOne' || context.answerType === 'listMany'){
+            context['listType'] = true;
+            (new SmallOptionsComponent(answerOptions)).render(context);
+        } else{
+            context['listType'] = false;
+        }
     }
 
     _renderTemplate(context, type) {
         if(type === 'big'){
-            console.log('render template big', this._el);
             this._el.innerHTML = FormCreatorCellBig(context);
             this._renderTypes(context);
             this._renderOptions(context)
 
         } else if(type === 'small'){
             console.log('render template small', this._el);
+            if(context.answerType === 'listOne' || context.answerType === 'listMany'){
+                context['listType'] = true;
+            }else{
+                context['listType'] = false;
+            }
             this._el.innerHTML = FormCreatorCellSmall(context);
 
             this._renderSmallOptions(context)

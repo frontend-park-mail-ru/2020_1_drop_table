@@ -37,6 +37,11 @@ import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
 import StaffPageController from '../controllers/StaffPageController';
 
+
+import SurveyView from '../view/SurveyView';
+import SurveyController from '../controllers/SurveyController'
+import {FormModel} from '../models/FormModel'
+
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.worker.js', {scope: '/'})
@@ -158,6 +163,22 @@ function doStaffById(req){
     staffPageController.control(req.param.id);
 }
 
+
+function doSurvey(req) {
+    const cafeId = req.param.cafeId;
+    const uuid = req.param.uuid;
+
+    console.log('0')
+    const formModel = new FormModel(cafeId, uuid);
+    console.log('1')
+    const surveyView = new SurveyView(app);
+    console.log('2')
+    const surveyController = new SurveyController(formModel, surveyView );
+    console.log('3')
+    surveyController.control();
+}
+
+
 /** Роуты роутера */
 router.get('/', dolog);
 router.get('/landing', doLanding);
@@ -176,6 +197,10 @@ router.get('/staff/{id}', doStaffById);
 router.get('/addStaff', doAddStaff);
 
 router.get('/points/{uuid}', doStaffMenu);
+
+router.get('/survey/{cafeId}/{uuid}', doSurvey);
+
+
 router.notFoundHandler(doLanding);
 
 router.init();

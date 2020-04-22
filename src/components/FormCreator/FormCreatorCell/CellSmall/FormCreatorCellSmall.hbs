@@ -1,24 +1,16 @@
-<div class="small-form-cell">
+<div class="small-form-cell" id="small-cell-{{cell_id}}">
 
 
     <div class="small-form-cell__question">
-        <h4 class="small-form-cell__question_h4">{{question}}</h4>
+        <span class="small-form-cell__question_span">{{question}}</span>
         {{#unless listType }}
         <input class="small-form-cell__question_input" id="input-{{cell_id}}" type="text">
         {{/unless}}
     </div>
 
-    {{#if listType }}
     <div class="small-form-cell__answer-options">
 
     </div>
-    {{/if}}
-
-    {{#if redactor }}
-    <div class="small-form-cell__save" id="cell-save-{{cell_id}}">
-    </div>
-    {{/if}}
-
 
 </div>
 
