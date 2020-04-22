@@ -45,7 +45,7 @@ export class LoyaltyDiscountComponent {
             element : this._el,
             text : this._text
         }
-        setTimeout(this._renderTemplate.bind(newContext), 500);
+        setTimeout(this._renderTemplate.bind(newContext), 250);
 
     }
 }
