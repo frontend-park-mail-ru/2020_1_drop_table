@@ -45,13 +45,7 @@ export class AppleCardModel {
           "primaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}],
           "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
-           "backFields": [
-            {
-             "key" : "survey",
-             "label" : "Опрос",
-             "value" : "test"
-             },
-           ], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
+           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
             "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
              "backgroundColor": "rgb(30, 118, 143)", "foregroundColor": "rgb(0, 0, 0)",
               "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
@@ -209,6 +203,7 @@ export class AppleCardModel {
      * @return {obj}
      */
     getAsJson() {
+        alert('jsontest')
         console.log('json test', this._storeCard['headerFields']);
         let json = {
 
@@ -241,9 +236,9 @@ export class AppleCardModel {
             'backgroundColor': this._backgroundColor,
             'backFields': [
                 {
-                    key: 'survey',
-                    label: 'Опрос',
-                    value: `${constants.CURRENT_PATH}/survey/${this._cafeId}/<<CustomerID>>`
+                    'key': 'survey',
+                    'label': 'Опрос',
+                    'value': `${constants.CURRENT_PATH}/survey/${this._cafeId}/<<CustomerID>>`
                 }
             ],
             'storeCard': {
@@ -582,7 +577,7 @@ export class AppleCardModel {
         const formData = await this._makeFormData(images);
 
         await ajaxForm(constants.PATH +
-            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}/?published=${publish.toString()}`, //todo make await
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?published=${publish.toString()}`, //todo make await
         'PUT',
         formData,
         (response) => {
