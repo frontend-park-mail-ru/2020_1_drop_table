@@ -11,7 +11,6 @@ export default class FormRedactorController {
     }
 
     async update() {
-        console.log('formcontrl update')
         await this._formModel.update();
     }
 
@@ -218,7 +217,8 @@ export default class FormRedactorController {
                 this._formModel._cells[i].answerOptions.push({
                     cell_id: this.cell_id,
                     option_id: this._formModel._cells[i].answerOptions.length,
-                    text: 'Вариант'
+                    text: 'Вариант',
+                    checked : false,
                 });
                 //todo render
                 this.updateView();

@@ -24,18 +24,13 @@ export class FormCreatorComponent {
     _renderTemplate(context) {
 
         this._el.innerHTML = FormCreator(context);
-        //let cells = document.getElementsByClassName('form-creator-container__cells-container__cell');
         for(let i = 0; i < context.cells.length; i++){
             this._renderCell(context.cells[i], 'big');
-            //(new FormCreatorCellComponent(cells.item(i)).render(context.cells[i], 'big'))
         }
     }
 
     _renderCell(context, type){
-        console.log('_render cell ')
-        console.log( context)
         let cell = document.getElementById(`cell-${context.cell_id}`);
-
         if(type === 'big'){
             (new FormCreatorCellComponent(cell).render(context, 'big'))
         } else if(type === 'small'){

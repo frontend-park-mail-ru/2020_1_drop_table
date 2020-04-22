@@ -225,6 +225,19 @@
             opacity: 0.5;
           }
         }
+        &__button-active{
+          border: 2px solid #1e7e98;
+          border-radius: 5px;
+          height: 20px;
+          width: 20px;
+          margin: auto 5px;
+          background-color: #1C768F;
+          opacity: 0.9;
+          &:hover{
+
+            opacity: 0;
+          }
+        }
 
         &__text-field{
           display: flex;
@@ -232,6 +245,18 @@
           width:80%;
           background-color: #1C768F;
           opacity: 0.5;
+          &_span{
+            margin: auto;
+            font-size: 1.2rem;
+            color: white;
+          }
+        }
+        &__text-field-active{
+          display: flex;
+          flex-direction: column;
+          width:80%;
+          background-color: #1C768F;
+          opacity: 1;
           &_span{
             margin: auto;
             font-size: 1.2rem;

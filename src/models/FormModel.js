@@ -75,7 +75,7 @@ export class FormModel {
             formData,
             (response) => {
                 if (response.errors === null) {
-                    (new NotificationComponent('Сохранено')).render();
+                    (new NotificationComponent('Спасибо')).render();
                 } else {
                     throw response.errors;
                 }
