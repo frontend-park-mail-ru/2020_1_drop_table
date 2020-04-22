@@ -203,7 +203,6 @@ export class AppleCardModel {
      * @return {obj}
      */
     getAsJson() {
-        alert('jsontest')
         console.log('json test', this._storeCard['headerFields']);
         let json = {
 
@@ -518,6 +517,7 @@ export class AppleCardModel {
      * @return {Promise<void>}
      */
     async getCard() {
+
         await ajax(constants.PATH +
             `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?published=true`,
         'GET',
@@ -575,9 +575,8 @@ export class AppleCardModel {
      */
     async editCard(images, publish) {
         const formData = await this._makeFormData(images);
-
         await ajaxForm(constants.PATH +
-            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?published=${publish.toString()}`, //todo make await
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?publish=${publish.toString()}`, //todo make await
         'PUT',
         formData,
         (response) => {
