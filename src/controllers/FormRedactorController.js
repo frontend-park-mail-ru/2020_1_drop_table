@@ -8,23 +8,20 @@ export default class FormRedactorController {
     constructor(formModel, formRedactorView) {
         this._formModel = formModel;
         this._formRedactorView = formRedactorView;
-
     }
 
     async update() {
-        // await this._formModel.update();
+        console.log('formcontrl update')
+        await this._formModel.update();
     }
 
     /** Запуск контроллера */
-    control() {
-        // await this.update();
-
-        // this._appleCard.context = this._makeContext();
-
-        this.updateView();
+    async control() {
+        await this.update();
+        await this.updateView();
 
     }
-    updateView(){
+    async updateView(){
         this._formRedactorView._formModel = this._formModel;
         this._formRedactorView.render();
         this.addListeners();
@@ -42,39 +39,39 @@ export default class FormRedactorController {
         return formModelContext;
     }
 
-
+    saveSurvey(){
+        this._formModel.saveSurvey();
+    }
     addListeners() {
         let addButton = document.getElementsByClassName('form-creator-container__button').item(0);
         addButton.addEventListener('click', this.addCell.bind(this));
         let cells = document.getElementsByClassName('form-creator-container__cells-container__cell');
-
         for(let i = 0; i < cells.length; i++){
             this._addCellListeners(cells.item(i));
         }
+        let saveButton = document.getElementsByClassName('form-creator-container__save-button').item(0);
+        saveButton.addEventListener('click', this.saveSurvey.bind(this))
     }
 
     _makePreview(){
-        console.log('make preview', this.cellContext)
         this._formRedactorView.renderCell(this.cellContext,'small');
+        let previewCell = document.getElementById(`small-cell-${this.cellContext.cell_id}`);
+        previewCell.addEventListener('click', this._makeForm.bind(this))
+
     }
-    _addCellListeners(cell) {
-        let deleteButton = cell.getElementsByClassName('big-form-cell__delete').item(0);
-        let context = {
-            cell_id: Number(deleteButton.id.split('-')[2]),
-            _formModel: this._formModel,
-            updateView: this.updateView.bind(this),
-        };
-        deleteButton.addEventListener('click', this.removeCell.bind(context));
+
+    _makeForm(){
+        this._formRedactorView.renderCell(this.cellContext,'big');
+        let cell =  document.getElementById(`big-cell-${this.cellContext.cell_id}`)
+        this._addDeleteListener(cell);
+        this._addPreviewListener(cell);
+        this._addTypeListeners(cell);
+        this._addQuestionListener(cell);
+        this._addOptionListeners(cell);
+    }
 
 
-        let previewButton = cell.getElementsByClassName('big-form-cell__save').item(0);
-        context = {
-            _formRedactorView : this._formRedactorView,
-            cellContext: this._formModel._cells[previewButton.id.split('-')[2]],
-        };
-        console.log('cellContext', context);
-        previewButton.addEventListener('click', this._makePreview.bind(context));
-
+    _addTypeListeners(cell){
         let typesContainer = cell.getElementsByClassName('big-form-cell__answer-type__types').item(0);
         let types = cell.getElementsByClassName('big-form-cell__answer-type__types__type');
         for (let i = 0; i < types.length; i++) {
@@ -86,22 +83,22 @@ export default class FormRedactorController {
             };
             types.item(i).addEventListener('click', this.setType.bind(context));
         }
+    }
 
+    _addQuestionListener(cell){
         let questionInput = cell.getElementsByClassName('big-form-cell__question_input').item(0);
-
-        context = {
+        let context = {
             cell_id: Number(questionInput.id.split('-')[1]),
             _formModel: this._formModel,
             input : questionInput,
         };
-
         questionInput.addEventListener('change', this.changeQuestion.bind(context));
-
-
+    }
+    _addOptionListeners(cell){
         let addOptionButton =
-                cell.getElementsByClassName('big-form-cell__answer-options__options_add-button').item(0);
+            cell.getElementsByClassName('big-form-cell__answer-options__options_add-button').item(0);
         if (addOptionButton) {
-            context = {
+            let context = {
                 cell_id: Number(addOptionButton.id.split('-')[2]),
                 _formModel: this._formModel,
                 updateView: this.updateView.bind(this),
@@ -120,19 +117,63 @@ export default class FormRedactorController {
                 };
                 deleteButton.addEventListener('click', this.removeOption.bind(context));
 
-                let input = options.item(i).
-                    getElementsByClassName('big-form-cell__answer-options__options__list__cell_input').item(0);
+                let input = options.item(i).getElementsByClassName(
+                    'big-form-cell__answer-options__options__list__cell_input').item(0);
                 context = {
                     cell_id: Number(options.item(i).id.split('-')[1]),
                     option_id: Number(options.item(i).id.split('-')[2]),
                     _formModel: this._formModel,
                     updateView: this.updateView.bind(this),
                     input: input
-                }
+                };
                 input.addEventListener('change', this.changeOptionText.bind(context))
 
             }
         }
+    }
+
+    _addDeleteListener(cell){
+        let deleteButton = cell.getElementsByClassName('big-form-cell__delete').item(0);
+        let context = {
+            cell_id: Number(deleteButton.id.split('-')[2]),
+            _formModel: this._formModel,
+            updateView: this.updateView.bind(this),
+        };
+        deleteButton.addEventListener('click', this.removeCell.bind(context));
+    }
+    _addPreviewListener(cell){
+        let previewButton = cell.getElementsByClassName('big-form-cell__save').item(0);
+        let context = {
+            _addDeleteListener: this._addDeleteListener,
+            _addPreviewListener: this._addPreviewListener,
+            _addTypeListeners: this._addTypeListeners,
+            _addQuestionListener: this._addQuestionListener,
+            _addOptionListeners: this._addOptionListeners,
+            updateView: this.updateView,
+            addCell: this.addCell,
+            removeCell: this.removeCell,
+            setType: this.setType,
+            changeQuestion: this.changeQuestion,
+            addOption: this.addOption,
+            removeOption: this.removeOption,
+            changeOptionText: this.changeOptionText,
+            addListeners: this.addListeners,
+            _addCellListeners: this._addCellListeners,
+            _makeForm: this._makeForm,
+            _makePreview: this._makePreview,
+            _formModel : this._formModel,
+            _formRedactorView : this._formRedactorView,
+            cellContext: this._formModel._cells[previewButton.id.split('-')[2]],
+        };
+        previewButton.addEventListener('click', this._makePreview.bind(context));
+    }
+
+    _addCellListeners(cell) {
+        this._addDeleteListener(cell);
+        this._addPreviewListener(cell);
+        this._addTypeListeners(cell);
+        this._addQuestionListener(cell);
+        this._addOptionListeners(cell);
     }
 
 

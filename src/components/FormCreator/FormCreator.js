@@ -32,7 +32,8 @@ export class FormCreatorComponent {
     }
 
     _renderCell(context, type){
-        console.log('_render cell ', type, context)
+        console.log('_render cell ')
+        console.log( context)
         let cell = document.getElementById(`cell-${context.cell_id}`);
 
         if(type === 'big'){

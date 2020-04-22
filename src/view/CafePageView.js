@@ -4,7 +4,7 @@ import CardRedactorController from '../controllers/CardRedactorController';
 import CardRedactorView from './CardRedactorView';
 import {AppleCardModel} from '../models/AppleCardModel';
 
-import FormModel from '../models/FormModel';
+import {FormModel} from '../models/FormModel';
 import FormRedactorController from '../controllers/FormRedactorController';
 import FormRedactorView from '../view/FormRedactorView';
 
@@ -19,39 +19,39 @@ export default class CafePageView extends BaseView {
      */
     constructor(app = document.getElementById('application')) {
         super(app);
-        this._formContext = {
-            cells: [
-                {
-                    cell_id: 0,
-                    question: 'Вопрос',
-                    answerType: 'listOne',
-                    answerOptions: [
-                        {
-                            cell_id : 0,
-                            option_id: 0,
-                            text:'Первое'
-                        },
-                        {
-                            cell_id : 0,
-                            option_id: 1,
-                            text:'Второе'
-                        },
-                        {
-                            cell_id : 0,
-                            option_id: 2,
-                            text:'Третье'
-                        },
-
-                    ],
-                },
-                {
-                    cell_id: 1,
-                    question: 'Вопрос',
-                    answerType: 'text',
-                    answerOptions: [],
-                },
-            ]
-        }
+        // this._formContext = {
+        //     cells: [
+        //         {
+        //             cell_id: 0,
+        //             question: 'Вопрос',
+        //             answerType: 'listOne',
+        //             answerOptions: [
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 0,
+        //                     text:'Первое'
+        //                 },
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 1,
+        //                     text:'Второе'
+        //                 },
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 2,
+        //                     text:'Третье'
+        //                 },
+        //
+        //             ],
+        //         },
+        //         {
+        //             cell_id: 1,
+        //             question: 'Вопрос',
+        //             answerType: 'text',
+        //             answerOptions: [],
+        //         },
+        //     ]
+        // }
     }
 
     applePassButtonClick () { //TODO move to controller
@@ -63,9 +63,10 @@ export default class CafePageView extends BaseView {
             const cardRedactorController = new CardRedactorController(appleCardModel, cardRedactorView);
             cardRedactorController.control();
 
-
-            const formModel = new FormModel(this._formContext);
+            //this._formContext,
+            const formModel = new FormModel( this._context['cafe'].id);
             console.log('formModel context ',formModel.context)
+            console.log('formModel cafeId ',this._context['cafe'].id)
             const formRedactorView = new FormRedactorView();
             const formRedactorController = new FormRedactorController(formModel, formRedactorView);
             formRedactorController.control();

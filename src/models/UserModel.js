@@ -277,7 +277,7 @@ export default class UserModel {
         const requestUrl = `/api/v1/staff/update_position/${id}`;
         await ajax(constants.PATH + requestUrl,
             'POST',
-            position,
+            {position},
             (response) => {
                 if (response.errors === null || response.errors.some((err) => {
                     return err.message === 'offline'

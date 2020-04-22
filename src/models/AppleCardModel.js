@@ -6,7 +6,7 @@ import {ajax} from '../utils/ajax';
 import {constants} from '../utils/constants';
 import {ajaxForm} from '../utils/ajaxForm';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
-import {LoadingComponent} from '../components/Loading/Loading';
+
 
 /** Модель карточки */
 export class AppleCardModel {
@@ -17,6 +17,7 @@ export class AppleCardModel {
      */
     constructor(cafeId) {
         this._cafeId = cafeId;
+        this._loyaltyType = 'coffee_cup';
         this._icon = null;
         this._strip = null;
         this._organizationName = null;
@@ -44,7 +45,13 @@ export class AppleCardModel {
           "primaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}],
           "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
-           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
+           "backFields": [
+            {
+             "key" : "survey",
+             "label" : "Опрос",
+             "value" : "test"
+             },
+           ], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
             "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
              "backgroundColor": "rgb(30, 118, 143)", "foregroundColor": "rgb(0, 0, 0)",
               "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
@@ -226,15 +233,19 @@ export class AppleCardModel {
                     'latitude': 37.33182
                 }
             ],
-
-
             'organizationName': this._organizationName,
             'description': this._description,
             'labelColor': this._labelColor,
             'logoText': (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
             'foregroundColor': this._foregroundColor,
             'backgroundColor': this._backgroundColor,
-            'backFields': [],
+            'backFields': [
+                {
+                    key: 'survey',
+                    label: 'Опрос',
+                    value: `${constants.CURRENT_PATH}/survey/${this._cafeId}/<<CustomerID>>`
+                }
+            ],
             'storeCard': {
                 'headerFields': [],
                 'primaryFields': [],
@@ -512,23 +523,28 @@ export class AppleCardModel {
      * @return {Promise<void>}
      */
     async getCard() {
-        await ajax(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?published=true&design_only=true`,
-            'GET',
-            {},
-            (response) => {
-                if (response.data == null) {
-                    console.log('null data: ', response.data);
-                    this._fillCardData({design: this._minDesign});
-                    //router._goTo('/createCafe');
+        await ajax(constants.PATH +
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?published=true`,
+        'GET',
+        {},
+        (response) => {
+            if (response.data == null) {
+                console.log('null data: ', response.data);
+                this._fillCardData({design: this._minDesign});
+                //router._goTo('/createCafe');
+            } else {
+                if (response.errors === null) {
+                    this._fillCardData(response.data);
                 } else {
-                    if (response.errors === null) {
-                        this._fillCardData(response.data);
-                    } else {
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
+        }
         )
+    }
+
+    getLoyaltyInfo(){
+        return {'cups_count': 10};
     }
 
     /**
@@ -540,7 +556,9 @@ export class AppleCardModel {
     async _makeFormData(images) {
         let formData = new FormData();
         const data = this.getAsJson();
+        const loyaltyInfo = this.getLoyaltyInfo();
         formData.append('jsonData', JSON.stringify(data));
+        formData.append('loyalty_info', JSON.stringify(loyaltyInfo))
         if (images) {
             formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
             formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
@@ -563,26 +581,29 @@ export class AppleCardModel {
     async editCard(images, publish) {
         const formData = await this._makeFormData(images);
 
-        await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=${publish.toString()}`, //todo make await
-            'PUT',
-            formData,
-            (response) => {
-                if (response.errors === null) {
-                    console.log('editCard success', response);
-                    if(response.data['QR'] && response.data['URL'] && publish){
-                        console.log('window component');
-                        (new AlertWindowComponent('Ваша карточка опубликована', response.data['URL'], response.data['QR'])).render();
+        await ajaxForm(constants.PATH +
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}/?published=${publish.toString()}`, //todo make await
+        'PUT',
+        formData,
+        (response) => {
+            if (response.errors === null) {
+                console.log('editCard success', response);
+                if(response.data['QR'] && response.data['URL'] && publish){
+                    console.log('window component');
+                    (new AlertWindowComponent('Ваша карточка опубликована',
+                        response.data['URL'], response.data['QR'])).render();
 
-                    } else if(response.data['QR'] && response.data['URL'] && !publish) {
-                        (new AlertWindowComponent('Ваша карточка сохранена',  response.data['URL'], response.data['QR'])).render();
-                    }
-                } else {
-                    console.log('error ', response.errors);
-                    throw response.errors;
+                } else if(response.data['QR'] && response.data['URL'] && !publish) {
+                    (new AlertWindowComponent('Ваша карточка сохранена',
+                        response.data['URL'], response.data['QR'])).render();
                 }
-
-
+            } else {
+                console.log('error ', response.errors);
+                throw response.errors;
             }
+
+
+        }
         );
     }
 }

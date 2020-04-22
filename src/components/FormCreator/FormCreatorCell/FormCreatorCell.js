@@ -5,6 +5,7 @@ import FormCreatorCellBig from './CellBig/FormCreatorCellBig.hbs'
 import FormCreatorCellSmall from './CellSmall/FormCreatorCellSmall.hbs'
 import {TypesComponent} from './CellBig/TypesComponent/TypesComponent';
 import {OptionsComponent} from './CellBig/OptionsComponent/OptionsComponent';
+import {SmallOptionsComponent} from './CellSmall/SmallOptionsComponent/SmallOptionsComponent';
 // import FormCreatorCellSmall from './FormCreatorCell/FormCreatorCellSmall.hbs'
 /** Компонент карточки кафе */
 export class FormCreatorCellComponent {
@@ -41,6 +42,11 @@ export class FormCreatorCellComponent {
     }
     _renderSmallOptions(context){
         console.log('small options',context)
+
+        let answerOptions =  this._el.getElementsByClassName('small-form-cell__answer-options').item(0);
+        if(context.answerType === 'listOne' || context.answerType === 'listMany'){
+            (new SmallOptionsComponent(answerOptions)).render(context);
+        }
     }
 
     _renderTemplate(context, type) {
