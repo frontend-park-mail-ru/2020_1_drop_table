@@ -122,34 +122,17 @@ class FakeRequest {
     }
 
     _copyHeaders(headers = {}) {
-        return headers;
-
-        // let headersCopy = new Headers(); //TODO ON SERVER
-        // if(this._request && this._request.headers){
-        //     headersCopy = new Headers(Array.from(this._request.headers.entries()));
-        // }
-        //
-        // if(headers instanceof Object){
-        //     for (const [header, value] of Object.entries(headers)) {
-        //         if(value){
-        //             headersCopy.set(header, value);
-        //         } else {
-        //             headersCopy.delete(header);
-        //         }
-        //     }
-        // }
-        // return headersCopy;
-    }
-
-    async _copyBlob(){
-        const blob = await this._request.blob();
-        if(this._request && this._request.headers && this._request.headers.get('Content-Type')){
-            const boundaryRegex = /boundary=----\w+/;
-            const boundary = this._request.headers.get('Content-Type').match(boundaryRegex)[0].slice(9);
-            const blobText = (await blob.text()).replace(new RegExp(boundary,'g'), boundary.toLowerCase());
-            return new Blob([blobText], {type: blob.type});
+        let headersCopy = new Headers(this._request.headers);
+        if(headers instanceof Object){
+            for (const [header, value] of Object.entries(headers)) {
+                if(value){
+                    headersCopy.set(header, value);
+                } else {
+                    headersCopy.delete(header);
+                }
+            }
         }
-        return blob;
+        return headersCopy;
     }
 
     async get(headers = {}){
@@ -157,7 +140,7 @@ class FakeRequest {
         return new Request(this._request.url, {
             method: this._request.method,
             headers: headersResponse,
-            body: this._request && this._request.headers.get('Content-Type') ? await this._copyBlob() : undefined,
+            body: this._request && this._request.headers.get('Content-Type') ? await this._request.blob() : undefined,
             referrer: this._request.referrer,
             referrerPolicy: this._request.referrerPolicy,
             mode: this._request.mode,
