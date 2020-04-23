@@ -41,6 +41,7 @@ export async function ajaxForm(route, method, formData, callback) {
             loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
+                console.log('csrf SET', csrf);
                 sessionStorage.setItem('Csrf', csrf);
             }
             responseJson = await response.json();
