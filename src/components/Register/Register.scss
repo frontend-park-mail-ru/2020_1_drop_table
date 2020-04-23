@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 @import '../../scss/themes.scss';
 
+
 .decorate-container {
     width: 100%;
     display: flex;
@@ -111,7 +112,8 @@
         }
 
         &_input {
-
+            -webkit-appearance: none;
+            border-radius: 0;
             border: none;
             border-bottom: solid 2px;
             width: 100%;
@@ -171,6 +173,8 @@
         width: 75%;
 
         &__input-field_input {
+            -webkit-appearance: none;
+            border-radius: 0;
             padding-top: 10%;
             padding-bottom: 10%;
         }
