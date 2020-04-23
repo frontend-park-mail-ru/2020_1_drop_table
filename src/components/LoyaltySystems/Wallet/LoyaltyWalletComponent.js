@@ -31,6 +31,6 @@ export class LoyaltyWalletComponent {
 
     /** Отрисоака */
     render() {
-        setTimeout(this._renderTemplate.bind(this), 750);
+        setTimeout(this._renderTemplate.bind(this), 250);
     }
 }

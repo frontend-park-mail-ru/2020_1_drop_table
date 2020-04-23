@@ -8,12 +8,19 @@
     flex-shrink: 0;
     font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     font-weight: normal;
-    /*height: 35em;*/
-    /*width: calc(35em / 1.28);*/
-    height: 603px;
-    width: 408px;
-    -webkit-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
+
+    max-height: 603px;
+    max-width: 408px;
+    width:28vw;
+    height: calc(1.47*28vw);
+
+    min-width: 306px;
+    min-height: 452px;
+
+    margin: 0 auto;
+
+    -webkit-transition: background-color 500ms linear;
+    transition: background-color 500ms linear;
 
     &__header{
         font-size: 1.5rem;
