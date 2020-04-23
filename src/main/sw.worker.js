@@ -379,7 +379,7 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
 
-    event.waitUntil(new Promise(()=>{
+    event.waitUntil(new Promise(()=>{ //TODO REFRESH
         plainRequestManager.refresh(event.clientId).then(()=>{
             complicatedRequestManager.refresh(event.clientId);
         });
