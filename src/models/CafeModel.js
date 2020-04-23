@@ -162,10 +162,14 @@ export default class CafeModel {
             this._description = context['description'];
             this._id = context['id'];
             this._name = context['name'];
+
             const openTime = new Date(context['openTime']);
-            this._openTime = `${openTime.getUTCHours()}:${openTime.getUTCMinutes()}`;
+            this._openTime = `${('0' + openTime.getUTCHours()).slice(-2)}:
+                ${('0' + openTime.getUTCMinutes()).slice(-2)}`;
+
             const closeTime = new Date(context['closeTime']);
-            this._closeTime = `${closeTime.getUTCHours()}:${closeTime.getUTCMinutes()}`;
+            this._closeTime = `${('0' + closeTime.getUTCHours()).slice(-2)}:
+                ${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
 
             this._ownerID = context['ownerID'];
             this._photo = context['photo'];
