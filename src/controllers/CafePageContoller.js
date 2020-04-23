@@ -40,7 +40,6 @@ export default class CafePageController {
     _makeViewContext(id){
         this._id = id;
         const cafe = this._cafeListModel.getCafeById(id);
-        console.log(cafe.context);
         let cafeContext = {
             'cafe': cafe.context
         };
