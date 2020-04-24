@@ -59,13 +59,13 @@ navigator.serviceWorker.addEventListener('message', event => {
     }
 });
 
-// navigator.serviceWorker.addEventListener('message', event => { //TODO
-//     console.log('data', event.data);
-//     if(event.data.type){
-//         console.log('REFRESH');
-//         location.reload();
-//     }
-// });
+navigator.serviceWorker.addEventListener('message', event => { //TODO
+    console.log('data', event.data);
+    if(event.data.type){
+        console.log('REFRESH');
+        location.reload();
+    }
+});
 
 let app = document.getElementById('application');
 export const router = new Router();
