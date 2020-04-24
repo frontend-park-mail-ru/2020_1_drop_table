@@ -3,6 +3,7 @@
 import {router} from '../main/main';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import FormValidation from '../utils/FormValidation';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер добавления работника */
 export default class AddStaffController{
@@ -142,7 +143,11 @@ export default class AddStaffController{
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 

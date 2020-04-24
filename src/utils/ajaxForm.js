@@ -22,7 +22,6 @@ export async function ajaxForm(route, method, formData, callback) {
 
     if(myCsrf){
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
-        //reqBody.headers.push('X-CSRF-TOKEN', myCsrf);
     }
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;

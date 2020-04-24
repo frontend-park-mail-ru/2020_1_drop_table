@@ -6,6 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер редактирования кафе */
 export default class EditCafeController{
@@ -23,8 +24,13 @@ export default class EditCafeController{
     }
 
     async update(){
-        await this._userModel.update();
-        await this._cafeListModel.update();
+        try {
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+
     }
 
     /** Event измененич кафе */
@@ -191,12 +197,16 @@ export default class EditCafeController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form= document.body){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
                 'Название кафе слишком короткое',
                 form['name']
             ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
