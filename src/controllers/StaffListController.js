@@ -2,6 +2,8 @@
 
 import {router} from '../main/main';
 import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер списка работников */
 export default class StaffListController{
@@ -13,13 +15,16 @@ export default class StaffListController{
      * @param {StaffListView} staffListView view списка работников
      */
     constructor(staffListModel, staffListView) {
-
         this._staffListModel = staffListModel;
         this._staffListView = staffListView;
     }
 
     async update(){
-        await this._staffListModel.update();
+        try {
+            await this._staffListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /**
@@ -76,6 +81,15 @@ export default class StaffListController{
             staffCards.item(i).addEventListener('click',this._redirectStaff.bind(context))
         }
 
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 
     /** Запуск контроллера */

@@ -1,5 +1,7 @@
 import {router} from '../main/main';
 import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
+import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 /** контроллер кафе */
 export default class CafePageController {
 
@@ -18,13 +20,21 @@ export default class CafePageController {
     }
 
     async update(){
-        await this._userModel.update();
-        await this._cafeListModel.update();
+        try {
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /** Event добавление работника */
     addStaffButtonClick(){
-        (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
+        try {
+            (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /** Event редактирование кафе */
@@ -60,6 +70,15 @@ export default class CafePageController {
         cafeContext['cafe-page__cafe-info__edit-button'] = this.editCafeButtonClick.bind(this);
 
         return cafeContext;
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 
     /** Запуск контроллера

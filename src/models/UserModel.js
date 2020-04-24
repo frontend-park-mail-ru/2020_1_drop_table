@@ -202,13 +202,9 @@ export default class UserModel {
                 'Position': 'Владелец'
             },
             (response) => {
-                if (response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if (response.errors === null){
                     router._goTo('/myCafes');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             });
@@ -220,13 +216,9 @@ export default class UserModel {
             constants.PATH + '/api/v1/staff/login',
             {'email': this.email, 'password': this.password},
             (response) => {
-                if (response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if (response.errors === null){
                     router._goTo('/profile');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             });
@@ -239,13 +231,9 @@ export default class UserModel {
             'POST',
             {'name': this.name, 'email': this.email, 'password': this.password},
             (response) => {
-                if (response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if (response.errors === null){
                     router._goTo('/profile');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             }
@@ -258,13 +246,9 @@ export default class UserModel {
             'POST',
             null,
             (response) => {
-                if (response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if (response.errors === null){
                     router._goTo('/staff');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             }
@@ -279,13 +263,9 @@ export default class UserModel {
             'POST',
             {position},
             (response) => {
-                if (response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if (response.errors === null){
                     router._goTo('/staff');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             }

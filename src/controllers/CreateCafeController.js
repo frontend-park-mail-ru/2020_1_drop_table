@@ -192,7 +192,7 @@ export default class CreateCafeController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form= document.body){
+    _makeExceptionContext(form = document.body){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
                 'Название кафе слишком короткое',

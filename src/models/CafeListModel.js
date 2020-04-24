@@ -87,17 +87,10 @@ export default class CafeListModel{
             (response) => {
                 if(response.errors === null){
                     cafe.fillCafeData(response.data);
-                }
-
-                if(response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
                     this._cafeModelsList.push(cafe);
                     this._cafeListJson.push(cafe.context);
                     router._goTo('/myCafes');
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             }
@@ -110,13 +103,9 @@ export default class CafeListModel{
             'PUT',
             await cafe.getFormData(photo),
             (response) => {
-                if(response.errors === null || response.errors.some((err) => {
-                    return err.message === 'offline'
-                })){
+                if(response.errors === null){
                     router._goTo(`/myCafes`);
-                }
-
-                if(response.errors !== null){
+                } else {
                     throw response.errors;
                 }
             }
