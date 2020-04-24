@@ -3,7 +3,7 @@
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import {router} from '../main/main';
-import NotificationComponent from "../components/Notification/Notification";
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер авторизации */
 export default class LoginController {
