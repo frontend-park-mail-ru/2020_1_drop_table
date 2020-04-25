@@ -147,7 +147,8 @@ function doLanding() {
 /** Страница добавления работника */
 function doAddStaff(req) {
     const uuid = req.query.get('uuid');
-    const addStaffController = new AddStaffController(userModel, addStaffView, uuid);
+    const position = req.query.get('position');
+    const addStaffController = new AddStaffController(userModel, addStaffView, uuid, position);
     addStaffController.control();
 }
 

@@ -256,6 +256,7 @@ export default class CardRedactorController {
                 fr.onload = function () {
                     stripImage.src = fr.result;
                     stripCardImage.style.backgroundImage = `url(${fr.result})`
+
                 };
                 fr.readAsDataURL(files[0]);
             }

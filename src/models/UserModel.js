@@ -225,8 +225,8 @@ export default class UserModel {
     }
 
     /** Добавление работника */
-    async addStaff(uuid) {
-        const requestUrl = '/api/v1/add_staff?uuid=' + uuid;
+    async addStaff(uuid,position) {
+        const requestUrl = `/api/v1/add_staff?uuid=${uuid}&position=${position}` ;
         await ajax(constants.PATH + requestUrl,
             'POST',
             {'name': this.name, 'email': this.email, 'password': this.password},

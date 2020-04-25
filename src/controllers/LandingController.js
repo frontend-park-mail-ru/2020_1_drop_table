@@ -8,7 +8,7 @@ export default class LandingController {
      * @param {LandingModel} landingModel модель лэндинга
      * @param {LandingView} landingView view лэндинга
      */
-    constructor(landingModel, landingView) {
+    constructor(landingModel, landingView, cafeListModel) {
         this._landingModel = landingModel;
         this._landingView = landingView;
     }

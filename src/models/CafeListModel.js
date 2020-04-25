@@ -15,8 +15,13 @@ export default class CafeListModel{
         this._cafeListJson = [];
     }
 
-    async update(){
-        await this.cafesList();
+    async update(type){
+        if(type === 'owner'){
+            await this.cafesList();
+        } else {
+            await this.getAllCafes(0,5);
+        }
+
     }
 
     /**
@@ -111,4 +116,23 @@ export default class CafeListModel{
             }
         );
     }
+
+    async getAllCafes(since, limit) {
+        await ajax(constants.PATH + `/api/v1/cafe/get_all?since=${since}&limit=${limit}`,
+            'GET',
+            {},
+            (response) => {
+                if(response.errors === null && response.data){
+                    this._cafeListJson = response.data;
+                    this._constructCafe();
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
+                }
+            }
+        )
+    }
+
+
 }
