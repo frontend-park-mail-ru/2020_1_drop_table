@@ -13,13 +13,20 @@ export default class CafeListModel{
     constructor() {
         this._cafeModelsList = [];
         this._cafeListJson = [];
+        this._pp = {
+            firstId: 0,
+            lastId: 24,
+            paginationStack: 24,
+            bufferSize: 6
+        }
     }
 
     async update(type){
         if(type === 'owner'){
             await this.cafesList();
         } else {
-            await this.getAllCafes(0,5);
+            this._cafeListJson = await this.getAllCafes(0,24);
+            this._constructCafe();
         }
 
     }
@@ -38,6 +45,41 @@ export default class CafeListModel{
      */
     get isEmpty(){
         return !this._cafeModelsList.length;
+    }
+
+    get ForwardPaginator(){
+        async function* paginator() {
+            while(true){
+                while ((this._pp.lastId - this._pp.firstId)/2 >= this._pp.bufferSize){
+                    yield this._cafeListJson.slice(this._pp.firstId,
+                        this._pp.firstId + this._pp.paginationStack);
+                    this._pp.firstId += this._pp.paginationStack;
+                }
+
+                const cafes = await this.getAllCafes(this._pp.lastId, this._pp.lastId + this._pp.bufferSize);
+                this._cafeListJson.concat(cafes);
+                this._constructCafe();
+            }
+        }
+
+        return paginator.bind(this);
+    }
+
+    get backPaginator(){
+        async function* paginator() {
+
+            while(true){
+                if(this._pp.firstId > 0){
+                    yield this._cafeListJson.slice(this.this._pp.firstId -
+                        this.this._pp.paginationStack, this.this._pp.firstId);
+                    this.this._pp.firstId -= 1;
+                } else {
+                    return null;
+                }
+            }
+        }
+
+        return paginator.bind(this);
     }
 
     /**
@@ -123,8 +165,7 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.errors === null && response.data){
-                    this._cafeListJson = response.data;
-                    this._constructCafe();
+                    return  response.data;
                 }
 
                 if(response.errors !== null){
@@ -133,6 +174,4 @@ export default class CafeListModel{
             }
         )
     }
-
-
 }
