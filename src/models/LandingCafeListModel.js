@@ -7,19 +7,27 @@ import {ajaxForm} from '../utils/ajaxForm';
 import {router} from '../main/main';
 
 /** Класс модели списка кафе */
-export default class CafeListModel{
+export default class LandingCafeListModel{
 
     /** Инициализация модели */
     constructor() {
         this._cafeModelsList = [];
         this._cafeListJson = [];
+        this._currentId = 0;
+        this._step = 4;
+        this._limit = 8;
+        this._stopUpdates = false;
     }
 
     async update(){
-        await this.cafesList();
-    }
-    async updateAllCafes(since, limit){
-        await this.getAllCafes(since, limit);
+        await this.getAllCafes(this._cafeListJson.length, this._limit);
+        //this._currentId += this._limit;
+
+        // if(this._cafeListJson[this._cafeListJson.length]){
+        //     this._currentId += this._limit;
+        // }
+
+
     }
 
     /**
@@ -66,56 +74,6 @@ export default class CafeListModel{
         return new CafeModel();
     }
 
-    /** Получение списка кафе */
-    async cafesList() {
-        await ajax(constants.PATH + '/api/v1/cafe',
-            'GET',
-            {},
-            (response) => {
-                if(response.errors === null && response.data){
-                    this._cafeListJson = response.data;
-                    this._constructCafe();
-                }
-
-                if(response.errors !== null){
-                    throw response.errors;
-                }
-            }
-        )
-    }
-
-    /** Создание кафе */
-    async create(photo, cafe) {
-        await ajaxForm(constants.PATH + '/api/v1/cafe',
-            'POST',
-            await cafe.getFormData(photo),
-            (response) => {
-                if(response.errors === null){
-                    cafe.fillCafeData(response.data);
-                    this._cafeModelsList.push(cafe);
-                    this._cafeListJson.push(cafe.context);
-                    router._goTo('/myCafes');
-                } else {
-                    throw response.errors;
-                }
-            }
-        );
-    }
-
-    /** Изменение кафе */
-    async editCafe(photo, cafe, id){
-        await ajaxForm(constants.PATH + `/api/v1/cafe/${id}`,
-            'PUT',
-            await cafe.getFormData(photo),
-            (response) => {
-                if(response.errors === null){
-                    router._goTo(`/myCafes`);
-                } else {
-                    throw response.errors;
-                }
-            }
-        );
-    }
 
     async getAllCafes(since, limit) {
         await ajax(constants.PATH + `/api/v1/cafe/get_all?since=${since}&limit=${limit}`,
@@ -123,8 +81,11 @@ export default class CafeListModel{
             {},
             (response) => {
                 if(response.errors === null && response.data){
-                    this._cafeListJson = response.data;
-                    this._constructCafe();
+                    response.data.forEach((el)=>{
+                        this._cafeListJson.push(el);
+                    })
+
+                    //this._constructCafe();
                 }
 
                 if(response.errors !== null){

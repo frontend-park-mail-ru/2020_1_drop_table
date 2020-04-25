@@ -21,6 +21,7 @@ export default class CafeListView extends BaseView{
      * @param {obj} context контекст для отрисовки CafeListView
      */
     _renderCafes(context){
+
         const cafesContainer = document.createElement('div');
         (new CafesContainerComponent(cafesContainer)).render(context);
         this._app.appendChild(cafesContainer);
