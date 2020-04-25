@@ -1,6 +1,8 @@
 'use strict';
 
 import {getContextByClass} from '../utils/cardRedactorUtils'
+import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 
 /** Контроллер редактирования карточки */
 export default class CardRedactorController {
@@ -16,7 +18,11 @@ export default class CardRedactorController {
     }
 
     async update(){
-        await this._appleCard.update();
+        try{
+            await this._appleCard.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /** Запуск контроллера */
@@ -135,57 +141,71 @@ export default class CardRedactorController {
     /** Добавление листенеров для публикации */
     addSavePublishListeners(){
         const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
-        submitSave.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            const iconInput = document.getElementById('uploadAvatar');
-            let icon = iconInput.files[0];
-
-            const stripInput = document.getElementById('uploadStrip');
-            let strip = stripInput.files[0];
-
-            //todo Попросить Диму принимать урлы а не только изображения
-            if(!strip){
-                strip = this._appleCard._strip;
-            }
-            if(!icon){
-                icon = this._appleCard._icon;
-            }
-            const images ={'icon.png': icon, 'icon@2x.png': icon,
-                'logo.png': icon, 'logo@2x.png': icon,
-                'strip.png': strip, 'strip@2x.png': strip
-            };
-
-            this._appleCard.editCard(images, false);
-            console.log(' save apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
-        });
+        submitSave.addEventListener('click', this._editCardListener.bind(this));
 
         const submitPublish = document.getElementsByClassName('card-form__buttons__publish').item(0);
-        submitPublish.addEventListener('click', (e) => {
-            e.preventDefault();
-            const iconInput = document.getElementById('uploadAvatar');
-            let icon = iconInput.files[0];
-            const stripInput = document.getElementById('uploadStrip');
-            let strip = stripInput.files[0];
+        submitPublish.addEventListener('click', this._publishCarfListener.bind(this));
+    }
 
-            if(strip === null){
-                strip = this._appleCard._strip;
-            }
-            if(icon === null){
-                icon = this._appleCard._icon;
-                console.log('взял из карты icon', icon)
-            }
+    _publishCarfListener(e){
+        e.preventDefault();
+        const iconInput = document.getElementById('uploadAvatar');
+        let icon = iconInput.files[0];
+        const stripInput = document.getElementById('uploadStrip');
+        let strip = stripInput.files[0];
 
-            const images ={
-                'icon.png': icon,
-                'icon@2x.png': icon,
-                'logo.png': icon,
-                'logo@2x.png': icon,
-                'strip.png': strip,
-                'strip@2x.png': strip
-            };
+        if(strip === null){
+            strip = this._appleCard._strip;
+
+        }
+        if(icon === null){
+            icon = this._appleCard._icon;
+            console.log('взял из карты icon', icon)
+        }
+
+        const images ={
+            'icon.png': icon,
+            'icon@2x.png': icon,
+            'logo.png': icon,
+            'logo@2x.png': icon,
+            'strip.png': strip,
+            'strip@2x.png': strip
+        };
+
+        try {
             this._appleCard.editCard(images,true);
-        });
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+    }
+
+    _editCardListener(e) {
+        e.preventDefault();
+
+        const iconInput = document.getElementById('uploadAvatar');
+        let icon = iconInput.files[0];
+
+        const stripInput = document.getElementById('uploadStrip');
+        let strip = stripInput.files[0];
+
+        //todo Попросить Диму принимать урлы а не только изображения
+        if(!strip){
+            strip = this._appleCard._strip;
+        }
+        if(!icon){
+            icon = this._appleCard._icon;
+        }
+        const images ={'icon.png': icon, 'icon@2x.png': icon,
+            'logo.png': icon, 'logo@2x.png': icon,
+            'strip.png': strip, 'strip@2x.png': strip
+        };
+
+        try {
+            this._appleCard.editCard(images, false);
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+        console.log(' save apple card as json from controller', JSON.stringify(this._appleCard.getAsJson()));
     }
 
     /** Добавление полей карты */
@@ -209,6 +229,15 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 
     /** Добавление листенеров на изображения */

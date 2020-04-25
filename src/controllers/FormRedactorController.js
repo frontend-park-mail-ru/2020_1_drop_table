@@ -1,6 +1,7 @@
 'use strict';
 
-
+import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 
 /** Контроллер редактирования карточки */
 export default class FormRedactorController {
@@ -11,7 +12,11 @@ export default class FormRedactorController {
     }
 
     async update() {
-        await this._formModel.update();
+        try {
+            await this._formModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /** Запуск контроллера */
@@ -39,7 +44,11 @@ export default class FormRedactorController {
     }
 
     saveSurvey(){
-        this._formModel.saveSurvey();
+        try {
+            this._formModel.saveSurvey();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
     addListeners() {
         let addButton = document.getElementsByClassName('form-creator-container__button').item(0);
@@ -249,5 +258,14 @@ export default class FormRedactorController {
             // this.updateView();
         }
 
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 }
