@@ -21,7 +21,11 @@ export default class AddStaffController{
     }
 
     async update(){
-        await this._userModel.update();
+        try{
+            await this._userModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /**

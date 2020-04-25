@@ -1,5 +1,8 @@
 'use strict';
 
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from "../components/Notification/Notification";
+
 /** контроллер авторизации */
 export default class SurveyController {
 
@@ -101,7 +104,20 @@ export default class SurveyController {
 
     _submitForm(){
         console.log('submit');
-        this._formModel.submitSurvey();
+        try {
+            this._formModel.submitSurvey();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 
     /** Запуск контроллера */
