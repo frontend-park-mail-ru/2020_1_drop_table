@@ -70,7 +70,8 @@ export default class CafeListModel{
 
             while(true){
                 if(this._pp.firstId > 0){
-                    yield this._cafeListJson[this.this._pp.firstId]
+                    yield this._cafeListJson.slice(this.this._pp.firstId -
+                        this.this._pp.paginationStack, this.this._pp.firstId);
                     this.this._pp.firstId -= 1;
                 } else {
                     return null;
