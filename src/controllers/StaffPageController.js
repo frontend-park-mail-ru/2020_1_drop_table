@@ -1,4 +1,6 @@
 import {router} from '../main/main';
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер кафе */
 export default class StaffPageController {
@@ -12,8 +14,12 @@ export default class StaffPageController {
     }
 
     async update(){
-        await this._userModel.update();
-        await this._staffListModel.update();
+        try {
+            await this._userModel.update();
+            await this._staffListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
 
@@ -62,6 +68,15 @@ export default class StaffPageController {
             input: positionInput,
         };
         positionInput.addEventListener('change', this.changeStaffPosition.bind(context))
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
     }
 
     /** Запуск контроллера
