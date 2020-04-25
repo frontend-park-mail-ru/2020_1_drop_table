@@ -181,6 +181,8 @@
   font-family: Montserrat, sans-serif;
 
   &__question{
+    display: flex;
+    flex-direction: column;
     margin: 10px;
     &_span{
       overflow-wrap: break-word;

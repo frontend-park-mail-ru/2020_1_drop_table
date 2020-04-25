@@ -13,9 +13,10 @@ export default class NotificationComponent {
     _addListeners(){
         let notification= document.getElementsByClassName('notification').item(0);
         let notificationField = document.getElementById('alert-field');
-        notificationField.addEventListener('click', function(event) {
+        notification.addEventListener('click', function(event) {
+
             let isClickInside = notification.contains(event.target);
-            if (!isClickInside) {
+            if (isClickInside) {
                 notification.style.right = '-100%';
                 notificationField.innerHTML = ' ';
 

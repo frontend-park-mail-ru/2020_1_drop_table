@@ -14,10 +14,11 @@ export default class AddStaffController{
      * @param {RegisterView} registerView view регистрации
      * @param {string} uuid иденитфикатор работника
      */
-    constructor(userModel, registerView, uuid) {
+    constructor(userModel, registerView, uuid, position) {
         this._userModel = userModel;
         this._registerView = registerView;
         this._uuid = uuid;
+        this._position = position;
     }
 
     async update(){
@@ -68,7 +69,7 @@ export default class AddStaffController{
             this._userModel.name = form.elements['full-name'].value.toString();
 
             try {
-                await this._userModel.addStaff(this._uuid);
+                await this._userModel.addStaff(this._uuid, this._position);
 
             } catch (exception) {
                 console.log('exc',exception);

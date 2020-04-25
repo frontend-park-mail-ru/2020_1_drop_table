@@ -170,7 +170,6 @@ export default class CardRedactorController {
 
             if(strip === null){
                 strip = this._appleCard._strip;
-
             }
             if(icon === null){
                 icon = this._appleCard._icon;
@@ -228,6 +227,7 @@ export default class CardRedactorController {
                 fr.onload = function () {
                     stripImage.src = fr.result;
                     stripCardImage.style.backgroundImage = `url(${fr.result})`
+
                 };
                 fr.readAsDataURL(files[0]);
             }

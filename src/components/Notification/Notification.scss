@@ -12,7 +12,7 @@
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
   border-radius: 15px 15px 15px 15px;
   transition: opacity 2s linear 0s, right 2s linear 0s;
-
+  z-index: 10;
   &_h4{
     font-family: Montserrat, sans-serif;
     font-size: 1rem;
