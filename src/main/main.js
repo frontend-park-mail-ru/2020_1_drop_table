@@ -54,19 +54,23 @@ if ('serviceWorker' in navigator) {
         });
 }
 
-navigator.serviceWorker.addEventListener('message', event => {
-    if(event.data.type === 'csrf'){
-        sessionStorage.setItem('Csrf', event.data.Csrf);
-    }
-});
+// navigator.serviceWorker.addEventListener('message', event => {
+//     if(event.data.type === 'csrf'){
+//         sessionStorage.setItem('Csrf', event.data.Csrf);
+//     }
+// });
+//
+// navigator.serviceWorker.addEventListener('message', event => { //TODO
+//     console.log('data', event.data);
+//     if(event.data.type){
+//         console.log('REFRESH');
+//         location.reload();
+//     }
+// });
 
-navigator.serviceWorker.addEventListener('message', event => { //TODO
-    console.log('data', event.data);
-    if(event.data.type){
-        console.log('REFRESH');
-        location.reload();
-    }
-});
+const html = document.getElementsByTagName('html').item(0);
+const theme = localStorage.getItem('theme');
+html.className = theme ? theme : 'theme-light';
 
 let app = document.getElementById('application');
 export const router = new Router();

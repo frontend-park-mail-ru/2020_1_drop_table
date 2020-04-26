@@ -163,13 +163,11 @@ export default class CafeModel {
             this._id = context['id'];
             this._name = context['name'];
 
-            const openTime = new Date(context['openTime']);
-            this._openTime = `${('0' + openTime.getUTCHours()).slice(-2)}:
-                ${('0' + openTime.getUTCMinutes()).slice(-2)}`;
+            const openTime = new Date(context['openTime']); //TODO Нужно разобраться как правильно переносить на новую строку
+            this._openTime = `${('0' + openTime.getUTCHours()).slice(-2)}:${('0' + openTime.getUTCMinutes()).slice(-2)}`;
 
             const closeTime = new Date(context['closeTime']);
-            this._closeTime = `${('0' + closeTime.getUTCHours()).slice(-2)}:
-                ${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
+            this._closeTime = `${('0' + closeTime.getUTCHours()).slice(-2)}:${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
 
             this._ownerID = context['ownerID'];
             this._photo = context['photo'];
