@@ -84,7 +84,6 @@ export default class LandingCafeListModel{
                     response.data.forEach((el)=>{
                         this._cafeListJson.push(el);
                     })
-
                     //this._constructCafe();
                 }
 

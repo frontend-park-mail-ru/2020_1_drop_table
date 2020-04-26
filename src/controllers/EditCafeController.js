@@ -69,6 +69,7 @@ export default class EditCafeController{
      * @return {obj} созданный контекст
      */
     _makeViewContext(id){
+
         const cafe = this._cafeListModel.getCafeById(id);
 
         return {
