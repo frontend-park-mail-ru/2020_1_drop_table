@@ -3,6 +3,14 @@
 import {getContextByClass} from '../utils/cardRedactorUtils'
 import NotificationComponent from "../components/Notification/Notification";
 import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import {LoyaltyStampComponent} from '../components/LoyaltySystems/Stamp/LoyaltyStampComponent';
+import {LoyaltyDiscountComponent} from '../components/LoyaltySystems/Discount/LoyaltyDiscountComponent';
+import {LoyaltyWalletComponent} from '../components/LoyaltySystems/Wallet/LoyaltyWalletComponent';
+import {LoyaltyCouponComponent} from '../components/LoyaltySystems/Coupon/LoyaltyCouponComponent';
+
+
+
+
 
 /** Контроллер редактирования карточки */
 export default class CardRedactorController {
@@ -36,6 +44,7 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+        this._addLoyaltyListeners();
 
         let cardRedactorBottom =
             document.getElementsByClassName('card').item(0);
@@ -275,4 +284,109 @@ export default class CardRedactorController {
             }
         });
     }
+
+    getJustifyContentBuIndex(i){
+        switch (i) {
+        case 0:
+            return 'flex-start';
+        case 1:
+            return 'center';
+        case 2:
+            return 'center';
+        case 3:
+            return 'flex-end';
+
+
+        }
+    }
+
+    getContext(i){
+        switch(i){
+        case 0:
+            return {
+
+            };
+        case 1:
+            return {
+                'discounts':[
+                    {
+                        'discount':20,
+                        'price':1000,
+                    },
+                ]
+            };
+        case 2:
+            return {
+
+            };
+        case 3:
+            return {
+
+            };
+
+        }
+    }
+    renderLoyaltySystem(i){
+        const rect = document.getElementsByClassName('rect').item(0);
+        rect.innerHTML = '';
+        switch(i){
+        case 0:
+            this._appleCard.loyaltySystemName = 'cups_count';
+            (new LoyaltyStampComponent(rect)).render(this.getContext(i));
+            break;
+        case 1:
+            this._appleCard.loyaltySystemName = 'cashback';
+            (new LoyaltyDiscountComponent(rect)).render(this.getContext(i));
+            break;
+        case 2:
+            this._appleCard.loyaltySystemName = 'cashback';
+            (new LoyaltyWalletComponent(rect)).render(this.getContext(i));
+            break;
+        case 3:
+            (new LoyaltyCouponComponent(rect)).render(this.getContext(i));
+            break;
+
+        }
+
+    }
+
+    _addLoyaltyListeners(){
+        let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
+        let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
+        for(let i = 0; i< buttonsNormal.length; i++){
+            buttonsNormal.item(i).addEventListener('click',(e)=>{
+                description.className = 'loyalty-redactor__description-active';
+                description.style.justifyContent = this.getJustifyContentBuIndex(i);
+                let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
+                for(let i = 0; i < buttonsActive.length; i++){
+                    buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+                }
+                e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
+                this.renderLoyaltySystem(i);
+
+
+            })
+        }
+
+        let coffeeCupsInput = document.getElementsByClassName(
+            'loyalty-stamp-container__logic_input').item(0);
+        let cashbackPercentsInput = document.getElementsByClassName(
+            'loyalty-wallet-container__logic_input').item(0);
+
+        coffeeCupsInput.addEventListener('input',this.coffeeCupsListener.bind(this));
+        cashbackPercentsInput.addEventListener('input',this.cashbackPercentsInputListener.bind(this))
+
+
+    }
+    coffeeCupsListener(){
+        //let coffeeCupsInput = document.getElementsByClassName('loyalty-stamp-container__logic_input').item(0);
+        //this._appleCard.
+
+    }
+    cashbackPercentsInputListener(){
+        let cashbackPercentsInput = document.getElementsByClassName(
+            'loyalty-wallet-container__logic_input').item(0);
+
+    }
+
 }

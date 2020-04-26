@@ -16,8 +16,7 @@ export class LoyaltyWalletComponent {
     constructor(el) {
         this._el = el;
         this._text = `
-        Описание действия wallet Описание действия wallet Описание действия wallet
-         Описание действия wallet Описание действия wallet Описание действия wallet
+        Карточка клиента - накопительная. Кешбек с покупок в Вашем заведении можно потратить на ваши товары и услуги.
         `
     }
 
