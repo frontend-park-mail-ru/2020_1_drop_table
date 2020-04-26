@@ -43,9 +43,6 @@ export default class LandingController {
 
         buttonLeft.addEventListener('click',this.cafesBack.bind(this));
         buttonRight.addEventListener('click',this.cafesForward.bind(this));
-
-
-
     }
 
     cafesBack(){
@@ -59,32 +56,24 @@ export default class LandingController {
             (new LandingCafesContainerComponent(container)).render(
                 cafes.slice(this._landingCafeListModel._currentId,
                     this._landingCafeListModel._currentId + this._landingCafeListModel._step));
-
         }
-
-
     }
-    cafesForward(){
+
+    async cafesForward(){
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         let cafes = this._landingCafeListModel._cafeListJson;
         let lengthBeforeUpdate = cafes.length;
         let lengthAfterUpdate;
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step > cafes.length ){
-            this._landingCafeListModel.update();
+            await this._landingCafeListModel.update();
             lengthAfterUpdate = cafes.length;
             if(lengthBeforeUpdate === lengthAfterUpdate){
-                console.log('test3',  lengthBeforeUpdate, lengthAfterUpdate, this._landingCafeListModel._currentId)
                 return;
             }
         }
-
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,
             this._landingCafeListModel._currentId += this._landingCafeListModel._step));
-
-
-
-
     }
 
     /** Запуск контроллера */
