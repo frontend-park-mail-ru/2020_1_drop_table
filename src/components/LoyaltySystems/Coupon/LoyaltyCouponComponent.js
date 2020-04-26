@@ -16,8 +16,8 @@ export class LoyaltyCouponComponent {
     constructor(el) {
         this._el = el;
         this._text = `
-        Описание действия coupon Описание действия coupon Описание действия coupon
-         Описание действия coupon Описание действия coupon Описание действия coupon
+        Карта клиента - купон на определенную сумму денег. Вы сможете выпускать купоны разного номинала в ограниченном
+        количестве. В разделе статистка вам будет доступна вся информация о купонах
         `
     }
 
@@ -26,8 +26,8 @@ export class LoyaltyCouponComponent {
      * @private
      */
     _renderTemplate() {
-
         this._el.innerHTML = LoyaltyCoupon({text: this._text});
+
     }
 
     /** Отрисоака */

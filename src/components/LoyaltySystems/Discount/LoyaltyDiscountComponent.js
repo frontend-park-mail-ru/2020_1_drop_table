@@ -18,8 +18,8 @@ export class LoyaltyDiscountComponent {
     constructor(el) {
         this._el = el;
         this._text = `
-        Описание действия discount Описание действия discount Описание действия discount
-         Описание действия discount Описание действия discount Описание действия discount
+        Карта клиента - скидочная. Клиент сможет получить скидку при предъявлении карты сотруднику. 
+        Вы можете выбрать уровни скидки.
         `
     }
 

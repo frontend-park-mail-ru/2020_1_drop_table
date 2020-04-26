@@ -46,32 +46,7 @@ export class LandingCafesContainerComponent {
         let cafes = context.map(({photo = photo, name = name, id = id} = {}) => {
             return LandingCafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
-
-        const noCafes = !context.length;
-
-        this._parent.innerHTML = LandingCafeContainer({noCafes: noCafes, cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
-
-        for(let i = 0; i < context.length; i++){
-
-            let card = this._parent.getElementsByClassName('landing-cafe-card-container').item(i);
-
-            let cardImage = this._parent.getElementsByClassName('landing-cafe-card-container__image-container').item(i);
-            let cardName = this._parent.getElementsByClassName('landing-cafe-card-container__name-container').item(i);
-            if(cardImage && cardName) {
-                cardImage.addEventListener('click', function () {
-                    const cardIdStr = card.getAttribute('id');
-                    const cardId = cardIdStr.slice(1, cardIdStr.length);
-                    router._goTo(`/cafe/${cardId}`);
-                });
-
-                cardName.addEventListener('click', function () {
-                    const cardIdStr = card.getAttribute('id');
-                    const cardId = cardIdStr.slice(1, cardIdStr.length);
-                    router._goTo(`/cafe/${cardId}`)
-
-                });
-            }
-        }
+        this._parent.innerHTML = LandingCafeContainer({ cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
     }
 
     /** Отрисовка компоненты списка кафе */
