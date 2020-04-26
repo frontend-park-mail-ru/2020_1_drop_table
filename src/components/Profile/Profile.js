@@ -35,22 +35,26 @@ export default class ProfileComponent {
 
         if(app.className.toString() === 'theme-dark'){
             switcher.checked = false;
+            localStorage.setItem('theme', 'theme-dark');
+
         } else if(app.className.toString() === 'theme-light'){
             switcher.checked = true;
+            localStorage.setItem('theme', 'theme-light');
         }
 
         const switchTheme = this._parent.getElementsByClassName('switch').item(0);
         switchTheme.addEventListener('click', function (e){
             e.preventDefault();
-
-
             console.log('testik',app.getAttribute('class'));
 
             if(app.className.toString() === 'theme-dark'){
                 app.className = 'theme-light';
+                localStorage.setItem('theme', 'theme-light');
                 switcher.checked = true;
+
             } else if(app.className.toString() === 'theme-light'){
                 app.className = 'theme-dark';
+                localStorage.setItem('theme', 'theme-dark');
                 switcher.checked = false;
             }
 
