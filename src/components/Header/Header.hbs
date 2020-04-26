@@ -29,6 +29,12 @@
                     <a href='/login' class="nav-links__link-container_a">Выйти из аккаунта</a>
                     </div>
                 {{/if}}
+
+                {{#if hasLogin}}
+                    <div  class="nav-links__link-container">
+                        <a href='/login' class="nav-links__link-container_a">Войти</a>
+                    </div>
+                {{/if}}
             </div>
 
         {{#if menuList}}

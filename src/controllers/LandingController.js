@@ -24,7 +24,7 @@ export default class LandingController {
     _makeViewContext(){
         return {
             header: {
-                type: 'auth',
+                type: 'landing',
                 avatar: {
                     photo: null
                 }
