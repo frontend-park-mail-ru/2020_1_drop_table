@@ -64,31 +64,6 @@ const cacheUrls = [
     '/images/wallet.png',
 ];
 
-class CacheStorage {
-
-    constructor(cacheName) {
-        this._cacheName = cacheName;
-        this._cache = null;
-    }
-
-    async set() {
-        this._cache = await caches.open(this._cacheName);
-        return this;
-    }
-
-    async match(request) {
-        return await this._cache.match(request);
-    }
-
-    async put(request, response) {
-        await this._cache.put(request, response.clone());
-    }
-
-    async addAll(cacheUrls){
-        await this._cache.addAll(cacheUrls);
-    }
-}
-
 class FakeResponse {
     constructor(response) {
         this._response = response;
@@ -135,22 +110,21 @@ class FakeResponse {
 }
 
 class PlainRequestManager{
-
-    constructor(cacheStorage){
-        this._cacheStorage = cacheStorage;
-    }
+    constructor(){}
 
     async _handleRequest(request){
         const response = await fetch(request);
         if(response && response.ok){
             const fakeResponse = await (new FakeResponse(response.clone())).get({'Csrf':null});
-            this._cacheStorage.put(request, fakeResponse);
+            let cache = await caches.open(cacheName);
+            await cache.put(request, fakeResponse);
         }
         return response;
     }
 
     async _offlineRequestHandler(request){
-        const match = await this._cacheStorage.match(request);
+        let cache = await caches.open(cacheName);
+        const match = await cache.match(request);
         return await (new FakeResponse(match)).get({},
             {'errors':[{'code':200,'message':'offline'}]});
     }
@@ -178,15 +152,14 @@ class ComplicatedRequestManager{
 }
 
 
-const cacheStorage = new CacheStorage(cacheName);
-const plainRequestManager = new PlainRequestManager(cacheStorage);
+const plainRequestManager = new PlainRequestManager();
 const complicatedRequestManager = new ComplicatedRequestManager();
 
 self.addEventListener('install', (event) => {
-    event.waitUntil(new Promise((resolve) => {
-        cacheStorage.set().then(() => {
-            resolve(cacheStorage.addAll(cacheUrls));
-        })
+    event.waitUntil(new Promise(resolve => {
+        caches.open(cacheName).then((cache)=>{
+            resolve(cache.addAll(cacheUrls));
+        });
     }));
 });
 
