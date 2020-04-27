@@ -17,7 +17,8 @@ export class AppleCardModel {
      */
     constructor(cafeId) {
         this._cafeId = cafeId;
-        this._loyaltyType = 'coffee_cup';
+        this._type = 'coffee_cup';
+        this._loyalty_info = { };
         this._icon = null;
         this._strip = null;
         this._organizationName = null;
@@ -53,8 +54,8 @@ export class AppleCardModel {
 
     }
 
-    async update(){
-        await this.getCard();
+    async update(type){
+        await this.getCard(type);
     }
 
     /**
@@ -139,6 +140,30 @@ export class AppleCardModel {
      */
     set logoText(value) {
         this._logoText = value;
+    }
+
+    get type() {
+        return this._type;
+    }
+
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
+    set type(value) {
+        this._type = value;
+    }
+
+    get loyalty_info() {
+        return this._loyalty_info;
+    }
+
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
+    set loyalty_info(value) {
+        this._loyalty_info = value;
     }
 
     /**
@@ -489,7 +514,7 @@ export class AppleCardModel {
      * @private
      */
     _fillCardData(context){
-
+        console.log('filldata', context.type, context.loyalty_info)
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
         const design =  JSON.parse(jsonDesign);
 
@@ -503,6 +528,8 @@ export class AppleCardModel {
         this._foregroundColor = design.foregroundColor;
         this._backgroundColor = design.backgroundColor;
         this._backFields = [];
+        this._type = context.type;
+        this._loyalty_info = context.loyalty_info;
         this._storeCard = {
             'headerFields': [],
             'primaryFields': [],
@@ -516,10 +543,10 @@ export class AppleCardModel {
      * Получение карточки
      * @return {Promise<void>}
      */
-    async getCard() {
+    async getCard(type) {
 
         await ajax(constants.PATH +
-            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?published=true`,
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${type}?published=true`,
         'GET',
         {},
         (response) => {
@@ -538,9 +565,6 @@ export class AppleCardModel {
         )
     }
 
-    getLoyaltyInfo(){
-        return {'cups_count': 10};
-    }
 
     /**
      * Создание formData для создания карточки
@@ -548,12 +572,14 @@ export class AppleCardModel {
      * @return {Promise<FormData>}
      * @private
      */
-    async _makeFormData(images) {
+    async _makeFormData(images, loyalty) {
+        console.log('fdtest', JSON.stringify(loyalty.type), JSON.stringify(loyalty.loyalty_info))
         let formData = new FormData();
         const data = this.getAsJson();
-        const loyaltyInfo = this.getLoyaltyInfo();
+        //const loyaltyInfo = this.getLoyaltyInfo();
         formData.append('jsonData', JSON.stringify(data));
-        formData.append('loyalty_info', JSON.stringify(loyaltyInfo))
+        formData.append('type',JSON.stringify(loyalty.type));
+        formData.append('loyalty_info',JSON.stringify(loyalty.loyalty_info))
         if (images) {
             formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
             formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
@@ -562,7 +588,8 @@ export class AppleCardModel {
             formData.append('strip.png',(images['strip.png'])?images['strip.png']:this._strip  );
             formData.append('strip@2x.png',(images['strip@2x.png'])?images['strip@2x.png']:this._strip);
         }
-
+        //formData.append({'type': this._type});
+        //formData.append({'loyalty_info': JSON.stringify(this._loyalty_info)});
         return formData;
     }
 
@@ -573,10 +600,11 @@ export class AppleCardModel {
      * @param publish
      * @return {Promise<void>}
      */
-    async editCard(images, publish) {
-        const formData = await this._makeFormData(images);
+    async editCard(images, loyalty, publish) {
+        console.log('test edit', loyalty.type)
+        const formData = await this._makeFormData(images, loyalty);
         await ajaxForm(constants.PATH +
-            `/api/v1/cafe/${this._cafeId}/apple_pass/${this._loyaltyType}?publish=${publish.toString()}`, //todo make await
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${loyalty.type}?publish=${publish.toString()}`, //todo make await
         'PUT',
         formData,
         (response) => {

@@ -56,9 +56,11 @@ export class CafesContainerComponent {
         for(let i = 0; i < context.length; i++){
 
             let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
-            if( i % 2 && i <= 4){
-                card.style.marginTop = '7vw';
-            }
+
+            //console.log('hahha',this._parent.offsetWidth, card.item(0).offsetWidth )
+            // if( i % 2 && i <= this._parent.offsetWidth/card.item(0).offsetWidth){
+            //     card.style.marginTop = '7vw';
+            // }
             let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
             let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
             if(cardImage && cardName) {

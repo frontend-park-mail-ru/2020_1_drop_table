@@ -25,12 +25,14 @@ export class LoyaltyStampComponent {
      * Отрисовка шаблона кафе
      * @private
      */
-    _renderTemplate() {
-        this._el.innerHTML = LoyaltyStamp({text: this._text});
+    _renderTemplate(context) {
+        console.log('context stamp', context, context.cups_count);
+        let stamps = context.cups_count;
+        this._el.innerHTML = LoyaltyStamp({text: this._text, stamps:stamps });
     }
 
     /** Отрисоака */
-    render() {
-        setTimeout(this._renderTemplate.bind(this), 250);
+    render(context) {
+        this._renderTemplate(context);
     }
 }

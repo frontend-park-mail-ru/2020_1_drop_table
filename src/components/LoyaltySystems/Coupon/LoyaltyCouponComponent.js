@@ -32,7 +32,7 @@ export class LoyaltyCouponComponent {
 
     /** Отрисоака */
     render() {
-        setTimeout(this._renderTemplate.bind(this), 250);
+        this._renderTemplate();
 
     }
 }
