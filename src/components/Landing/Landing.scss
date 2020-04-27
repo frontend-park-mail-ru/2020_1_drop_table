@@ -345,6 +345,7 @@
 .landing-page__coupon-and-card-coupon__image-container{
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     /*justify-content: space-around;*/
 }
 .landing-page__coupon-and-card-coupon__image-container_img{

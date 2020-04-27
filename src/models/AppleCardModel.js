@@ -580,7 +580,7 @@ export class AppleCardModel {
         formData.append('jsonData', JSON.stringify(data));
         formData.append('type',JSON.stringify(loyalty.type));
         formData.append('loyalty_info',JSON.stringify(loyalty.loyalty_info))
-        if (images) {
+        if (images['icon.png'] && images['strip.png']) {
             formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
             formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
             formData.append('logo.png',(images['logo.png'])?images['logo.png']:this._icon );

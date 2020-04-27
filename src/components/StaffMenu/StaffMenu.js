@@ -7,10 +7,11 @@ import NotificationComponent from '../Notification/Notification';
 
 export class StaffMenuComponent {
 
-    constructor(el = document.getElementById('application'), uuid) {
+    constructor(el = document.getElementById('application'), uuid, stack) {
         this._el = el;
         this.points = 0;
         this.token = uuid;
+        this.stack = stack;
     }
 
 
@@ -41,7 +42,7 @@ export class StaffMenuComponent {
         });
     }
     changePointMinusStack() {
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,  {"coffee_cups":Number(this.points - 5)}, (response) => {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,  {"coffee_cups":Number(this.points - this.stack)}, (response) => {
             if (response.errors === null) {
                 (new NotificationComponent('Успешно')).render();
                 this.loadData()
@@ -58,7 +59,9 @@ export class StaffMenuComponent {
             console.log('response data', response.data);
             if (response.errors === null) {
                 this.points = Number(JSON.parse(response.data).coffee_cups);
-                document.getElementById('label').innerHTML = '☕️'.repeat(this.points  % 5);
+
+                console.log('stack', this.stack)
+                document.getElementById('label').innerHTML = '☕️'.repeat(this.points  % this.stack);
 
                 let e = document.getElementById('stacks');
 
@@ -68,7 +71,7 @@ export class StaffMenuComponent {
                     e.removeChild(child);
                     child = e.lastElementChild;
                 }
-                for (let i = 0; i < Math.floor(this.points / 5); i++) {
+                for (let i = 0; i < Math.floor(this.points / this.stack); i++) {
                     let btn = document.createElement('button');
                     let t = document.createTextNode('☕️');
                     btn.addEventListener('click', this.changePointMinusStack);

@@ -7,9 +7,10 @@ import NotificationComponent from '../Notification/Notification';
 
 export class StaffMenuCashbackComponent {
 
-    constructor(el = document.getElementById('application'), uuid) {
+    constructor(el = document.getElementById('application'), uuid, balance) {
         this._el = el;
         this.token = uuid;
+        this.balance = balance
     }
 
     changePoints() {
@@ -27,7 +28,7 @@ export class StaffMenuCashbackComponent {
 
 
     _renderTemplate(){
-        this._el.innerHTML = StaffMenu();
+        this._el.innerHTML = StaffMenu({balance: this.balance});
     }
 
     render()
