@@ -283,6 +283,14 @@ export default class CardRedactorController {
         const avatarImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img-avatar').item(0);
         const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
 
+        stripCardImage.style.backgroundImage =  this._appleCard._strip;
+        if(this._appleCard._icon){
+            avatarImage.src = this._appleCard._icon;
+            avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+            avatarCardImage.src = this._appleCard._icon;
+        }
+        console.log('set image icon', this._appleCard._icon );
+
         stripInput.addEventListener('change',(e)=>{
             let tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {
@@ -290,8 +298,8 @@ export default class CardRedactorController {
                 fr.onload = function () {
                     stripImage.src = fr.result;
                     stripCardImage.style.backgroundImage = `url(${fr.result})`
-
-                };
+                    this._appleCard._strip = `url(${fr.result})`;
+                }.bind(this);
                 fr.readAsDataURL(files[0]);
             }
 
@@ -303,8 +311,9 @@ export default class CardRedactorController {
                 fr.onload = function () {
                     avatarImage.src = fr.result;
                     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-                    avatarCardImage.src= fr.result;
-                };
+                    avatarCardImage.src = fr.result;
+                    this._appleCard._icon = fr.result;
+                }.bind(this);
                 fr.readAsDataURL(files[0]);
             }
         });
