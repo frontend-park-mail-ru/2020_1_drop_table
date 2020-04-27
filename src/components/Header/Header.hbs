@@ -1,0 +1,53 @@
+<header class="page-header">
+
+
+        <div class="nav">
+
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+                <img class="nav-header_img" src="{{logoImageSrc}}"/>
+                <a href="/landing" class="nav-header_h4">eLoyalty</a>
+            </div>
+
+            <div class="nav-links">
+
+            {{#each menuList}}
+            <div class="nav-links__link-container">
+                <a class="nav-links__link-container_a" href={{href}} >{{text}}</a>
+            </div>
+            {{/each}}
+
+                {{#if hasAvatar}}
+                        <div  class="nav-links__link-container">
+                            <a href='/profile' class="nav-links__link-container_a" >Профиль</a>
+                        </div>
+
+                {{/if}}
+
+                {{#if hasExit}}
+                <div  class="nav-links__link-container">
+                    <a href='/login' class="nav-links__link-container_a">Выйти из аккаунта</a>
+                    </div>
+                {{/if}}
+
+                {{#if hasLogin}}
+                    <div  class="nav-links__link-container">
+                        <a href='/login' class="nav-links__link-container_a">Войти</a>
+                    </div>
+                {{/if}}
+            </div>
+
+        {{#if menuList}}
+        <div class="nav__btn">
+            <label class="nav__btn_label" for="nav-check">
+                <span class="nav__btn_label_span"></span>
+                <span class="nav__btn_label_span"></span>
+                <span class="nav__btn_label_span"></span>
+            </label>
+        </div>
+        {{/if}}
+    </div>
+
+
+
+</header>

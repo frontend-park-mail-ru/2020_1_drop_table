@@ -2,7 +2,8 @@
 
 import RegisterTemplate from './RegisterTopBar.hbs';
 import RegisterFormTemplate from './RegisterForm.hbs';
-import './Styles.scss';
+import './Register.scss';
+import './Register.color.scss';
 
 /** Компонента регистрации */
 export default class RegisterComponent{

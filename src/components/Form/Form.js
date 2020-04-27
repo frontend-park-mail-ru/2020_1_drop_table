@@ -1,6 +1,7 @@
 'use strict';
 
 import './Form.scss';
+import './Form.color.scss';
 import FormTemplate from './Form.hbs';
 
 /** Компонент формы */
@@ -12,25 +13,6 @@ export default class FormComponent {
      */
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
-    }
-
-    /**
-     * Обработка промисов
-     * @param {obj} context некоторый контекст с информацией о форме
-     * @private
-     */
-    _handlePromises(context){
-        const inputElementsCollection = this._parent.getElementsByClassName('input-field_input');
-        context['formFields'].forEach((form, index) => {
-            let inputElement = inputElementsCollection.item(index);
-            if('inputPromise' in form){
-                form['inputPromise'].then((value) => {
-                    inputElement.value = value;
-                });
-            }
-        }, (exception) => {
-            alert(exception); //TODO Сделать обработку ошибки
-        });
     }
 
     /**
@@ -52,6 +34,5 @@ export default class FormComponent {
     render(context) {
         this._parent.innerHTML = FormTemplate(context);
         this._addListener(context);
-        this._handlePromises(context);
     }
 }

@@ -2,8 +2,9 @@
 
 import {router} from '../main/main';
 
-import FormValidation from '../modules/FormValidation';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification'
 
 /** контроллер регистрации */
 export default class RegisterController{
@@ -135,13 +136,16 @@ export default class RegisterController{
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
     /** Запуск контроллера */
-    control(){
-        sessionStorage.clear();
+    async control(){
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }

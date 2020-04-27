@@ -1,8 +1,13 @@
-import Header from '../components/MainHeader/Header';
+import Header from '../components/Header/Header';
 import {CafePageComponent} from '../components/CafePageComponent/CafePage';
 import CardRedactorController from '../controllers/CardRedactorController';
 import CardRedactorView from './CardRedactorView';
 import {AppleCardModel} from '../models/AppleCardModel';
+
+import {FormModel} from '../models/FormModel';
+import FormRedactorController from '../controllers/FormRedactorController';
+import FormRedactorView from '../view/FormRedactorView';
+
 import BaseView from './BaseView';
 
 /** view страницы кафе */
@@ -14,17 +19,61 @@ export default class CafePageView extends BaseView {
      */
     constructor(app = document.getElementById('application')) {
         super(app);
+        // this._formContext = {
+        //     cells: [
+        //         {
+        //             cell_id: 0,
+        //             question: 'Вопрос',
+        //             answerType: 'listOne',
+        //             answerOptions: [
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 0,
+        //                     text:'Первое'
+        //                 },
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 1,
+        //                     text:'Второе'
+        //                 },
+        //                 {
+        //                     cell_id : 0,
+        //                     option_id: 2,
+        //                     text:'Третье'
+        //                 },
+        //
+        //             ],
+        //         },
+        //         {
+        //             cell_id: 1,
+        //             question: 'Вопрос',
+        //             answerType: 'text',
+        //             answerOptions: [],
+        //         },
+        //     ]
+        // }
     }
 
     applePassButtonClick () { //TODO move to controller
-        let container = document.getElementsByClassName('card-creator-container').item(0);
-        if( container.innerHTML.toString().length <= 2 ){
-            console.log('cafe context: ', this._context['cafe'].id);
-            const appleCardModel= new AppleCardModel(this._context['cafe'].id);
+        let cardContainer = document.getElementsByClassName('card-creator-container').item(0);
+        // let formContainer = document.getElementsByClassName('form-creator-container').item(0);
+        if( cardContainer.innerHTML.toString().length <= 2 ) {
+            const appleCardModel = new AppleCardModel(this._context['cafe'].id);
             const cardRedactorView = new CardRedactorView();
             const cardRedactorController = new CardRedactorController(appleCardModel, cardRedactorView);
             cardRedactorController.control();
+
+            //this._formContext,
+            const formModel = new FormModel( this._context['cafe'].id);
+            console.log('formModel context ',formModel.context)
+            console.log('formModel cafeId ',this._context['cafe'].id)
+            const formRedactorView = new FormRedactorView();
+            const formRedactorController = new FormRedactorController(formModel, formRedactorView);
+            formRedactorController.control();
+
+
         }
+
     }
 
     /** Отрисовка страницы с кафе */
@@ -39,11 +88,11 @@ export default class CafePageView extends BaseView {
 
         const buttonApplePass =  document.getElementsByClassName('buttons__apple-pass-button').item(0);
         buttonApplePass.addEventListener('click',this.applePassButtonClick.bind(this));
-        console.log('1',buttonApplePass)
+
 
         const buttonAddStaff =  document.getElementsByClassName('buttons__add-staff-button').item(0);
         buttonAddStaff.addEventListener('click',this.context['add-staff-button']);
-        console.log('2',buttonAddStaff)
+
 
         const buttonEditCafe =  document.getElementsByClassName('cafe-page__cafe-info__edit-button').item(0);
         buttonEditCafe.addEventListener('click',this.context['cafe-page__cafe-info__edit-button']);

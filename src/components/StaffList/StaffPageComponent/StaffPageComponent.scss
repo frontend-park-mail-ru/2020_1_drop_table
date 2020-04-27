@@ -1,0 +1,48 @@
+@import '../../../scss/themes.scss';
+
+.staff-page-container{
+    width:100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top:0;
+    z-index: 3;
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+.staff-page-container__QR-window{
+    position: absolute;
+    justify-self: center;
+    top:25%;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 80%;
+    border-radius: 0.5rem;
+    -webkit-filter: drop-shadow(5px 5px 5px #000);
+    filter: drop-shadow(5px 5px 5px #000);
+}
+
+.staff-page-container__QR-window_h4{
+    font-family: Montserrat, Arial;
+    font-size: 3rem;
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2%;
+}
+
+.staff-page-container__QR-window_img{
+    height: 15rem;
+    width: 15rem;
+    justify-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom:2rem ;
+}

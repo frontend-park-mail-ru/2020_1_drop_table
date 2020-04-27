@@ -1,0 +1,48 @@
+
+//@import url(https://db.onlinewebfonts.com/c/fd6e6c30c7d355528ba9428eea942445?family=Futura);
+@import '../../scss/themes.scss';
+
+.input-field {
+    &_input {
+        @include themify($themes){
+            color: themed('textColor');
+        }
+        @include themify($themes){
+            border-color: themed('textColor');
+        }
+    }
+    &__submit {
+        @include themify($themes){
+            color: themed('buttonTextColor');
+        }
+        @include themify($themes){
+            background-color: themed('mainColor');
+        }
+        &:active {
+            @include themify($themes){
+                color: themed('buttonTextColor');
+            }
+            @include themify($themes){
+                background: themed('mainColor');
+            }
+
+        }
+    }
+
+    &_label {
+        @include themify($themes){
+            color: themed('textColor');
+        }
+    }
+}
+.error{
+    @include themify($themes){
+       color: themed('errorColor');
+    }
+}
+
+
+
+
+
+

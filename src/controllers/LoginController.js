@@ -1,8 +1,9 @@
 'use strict';
 
-import FormValidation from '../modules/FormValidation';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import {router} from '../main/main';
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер авторизации */
 export default class LoginController {
@@ -104,13 +105,17 @@ export default class LoginController {
                 'Некорректный логин или пароль',
                 form['password']
             ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
     /** Запуск контроллера */
-    control(){
-        sessionStorage.clear();
+    async control(){
         this._loginView.context = this._makeViewContext();
         this._loginView.render();
+
     }
 }

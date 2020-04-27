@@ -1,6 +1,8 @@
 'use strict';
 
 import {router} from '../main/main';
+import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 
 /** контроллер списка кафе */
 export default class CafeListController{
@@ -17,14 +19,23 @@ export default class CafeListController{
         this._cafeListView = cafeListView;
     }
 
+    async update(){
+        try {
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+    }
+
     /**
      * Создание контекста для CafeListView
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(){
+    _makeViewContext(){
 
         let cafeListContext = {
-            cafeList: await this._cafeListModel.context
+            cafeList: this._cafeListModel.context
         };
 
         cafeListContext['header'] = {
@@ -33,7 +44,7 @@ export default class CafeListController{
                 photo: this._userModel.photo,
                 event: {
                     type: 'click',
-                    listener: () => {router._goTo('/profile');}
+                    listener: () => {router._goTo('/profile')}
                 }
             }
         };
@@ -41,16 +52,26 @@ export default class CafeListController{
         cafeListContext['button'] = {
             event:{
                 type: 'click',
-                listener: () => {router._goTo('/createCafe');}
+                listener: () => {router._goTo('/createCafe')}
             }
         };
-        console.log(cafeListContext);
+
         return cafeListContext;
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
+                return [null, null]
+            }
+        };
     }
 
     /** Запуск контроллера */
     async control(){
-        this._cafeListView.context = await this._makeViewContext();
+        await this.update();
+        this._cafeListView.context = this._makeViewContext();
         this._cafeListView.render();
     }
 }

@@ -3,7 +3,6 @@ import {authAjax} from '../utils/authAjax'
 import {constants} from '../utils/constants';
 import {ajaxForm} from '../utils/ajaxForm';
 
-
 import {router} from '../main/main';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
@@ -18,80 +17,76 @@ export default class UserModel {
         this._name = null;
         this._password = null;
         this._photo = null;
+        this._Position = null;
+        this._isOwner = null;
+    }
 
-        this._getUser();
+    async update(){
+        await this.getOwner();
+    }
+
+    get isOwner() {
+        return this._isOwner;
+    }
+
+    get Position() {
+        return this._Position;
     }
 
     /**
-     * Возвращает промис, который возвращает время редактирования
-     * @return {Promise} промис, который возвращает время редактирования.
+     * Возвращает время редактирования профиля
+     * @return {string} время редактирования профиля.
      */
     get editedAt() {
-        return new Promise((resolve) => {
-            this._checkUser(this._editedAt).then(()=>{
-                resolve(this._editedAt);
-            });
-        });
+        return this._editedAt;
     }
 
     /**
-     * Возвращает промис, который возвращает email
-     * @return {Promise} промис, который возвращает email.
+     * Возвращает email пользователя
+     * @return {string} email пользователя.
      */
     get email() {
-        return new Promise((resolve) => {
-            this._checkUser(this._email).then(()=>{
-                resolve(this._email);
-            });
-        });
+        return this._email;
     }
 
     /**
-     * Возвращает промис, который возвращает id
-     * @return {Promise} промис, который возвращает id.
+     * Возвращает id пользователя
+     * @return {string} id пользователя.
      */
     get id() {
-        return new Promise((resolve) => {
-            this._checkUser(this._id).then(()=>{
-                resolve(this._id);
-            });
-        });
+        return this._id;
     }
 
     /**
-     * Возвращает промис, который возвращает name
-     * @return {Promise} промис, который возвращает name.
+     * Возвращает имя пользователя
+     * @return {string} имя пользователя.
      */
     get name() {
-        return new Promise((resolve) => {
-            this._checkUser(this._name).then(()=>{
-                resolve(this._name);
-            });
-        });
+        return this._name;
     }
 
     /**
-     * Возвращает промис, который возвращает password
-     * @return {Promise} промис, который возвращает password.
+     * Возвращает пароль пользователя
+     * @return {string} пароль пользователя.
      */
     get password() {
-        return new Promise((resolve) => {
-            this._checkUser(this._password).then(()=>{
-                resolve(this._password);
-            });
-        });
+        return this._password;
     }
 
     /**
-     * Возвращает промис, который возвращает photo
-     * @return {Promise} промис, который возвращает photo.
+     * Возвращает фото пользователя
+     * @return {obj} photo пользователя.
      */
     get photo() {
-        return new Promise((resolve) => {
-            this._checkUser(this._photo).then(()=>{
-                resolve(this._photo);
-            });
-        });
+        return this._photo;
+    }
+
+    set isOwner(isOwner) {
+        this._isOwner = isOwner;
+    }
+
+    set Position(Position) {
+        this._Position = Position.toString();
     }
 
     /**
@@ -100,7 +95,6 @@ export default class UserModel {
      */
     set email(email) {
         this._email = email.toString();
-        this._saveUser();
     }
 
     /**
@@ -109,7 +103,6 @@ export default class UserModel {
      */
     set name(name) {
         this._name = name.toString();
-        this._saveUser();
     }
 
     /**
@@ -118,40 +111,6 @@ export default class UserModel {
      */
     set password(password) {
         this._password = password.toString();
-        this._saveUser();
-    }
-
-    /**
-     * Проверяет существование поля data
-     * @param {string|null} data
-     */
-    async _checkUser(data){
-        if(!data){
-            await this.getOwner();
-        }
-    }
-
-    /** Заполняет поля userModel из sessionStorage */
-    _getUser() {
-        let userData = sessionStorage.getItem('user');
-        if (userData) {
-            userData = JSON.parse(userData);
-            this._filUserData(userData);
-        }
-    }
-
-    /** Сохраняет поля userModel в sessionStorage */
-    _saveUser() {
-        const obj = {
-            'editedAt': this._editedAt,
-            'email': this._email,
-            'id': this._id,
-            'name': this._name,
-            'password': this._password,
-            'photo': this._photo
-        };
-
-        sessionStorage.setItem('user', JSON.stringify(obj));
     }
 
     /**
@@ -159,25 +118,27 @@ export default class UserModel {
      * @param {obj|null} photo
      * @return {FormData} formData
      */
-    async _makeFormData(photo) {
+    _makeFormData(photo) {
         let formData = new FormData();
         let data = {
-            'name': await this.name,
-            'email': await this.email,
-            'password': await this.password,
+            'name': this.name,
+            'email': this.email,
+            'Position': this.Position,
         };
-
         if (photo) {
             formData.append('photo', photo);
         } else {
+            console.log('else in fd');
             data = {
-                'name': await this.name,
-                'email': await this.email,
-                'password': await this.password,
-                'photo': await this.photo
-            }
-        }
+                'name': this.name,
+                'email': this.email,
+                'photo': this.photo,
+                'Position': this.Position,
+            };
+            console.log('else in fd', data);
 
+        }
+        console.log('append data',JSON.stringify(data));
         formData.append('jsonData', JSON.stringify(data));
         return formData;
     }
@@ -191,8 +152,10 @@ export default class UserModel {
         this._email = data['email'];
         this._id = data['id'];
         this._name = data['name'];
-        this._password = data['password'];
+        this._Position = data['Position'];
+        this._isOwner = data['isOwner'];
         this._photo = data['photo']? data['photo']:'/images/userpic.png';
+
     }
 
     /** Получение информации о текущем пользователе. */
@@ -203,7 +166,6 @@ export default class UserModel {
             (response) => {
                 if (response.errors === null) {
                     this._filUserData(response.data);
-                    this._saveUser();
                 } else {
                     throw response.errors;
                 }
@@ -213,14 +175,14 @@ export default class UserModel {
 
     /** Изменение информации о текущем пользователе. */
     async editOwner(photo = null){
-        const formData = await this._makeFormData(photo);
-        await ajaxForm(constants.PATH+'/api/v1/staff/' + await this.id,
+        const formData = this._makeFormData(photo);
+
+        await ajaxForm(constants.PATH+'/api/v1/staff/' + this.id,
             'PUT',
             formData,
             (response) => {
                 if (response.errors === null) {
                     this._filUserData(response.data);
-                    this._saveUser();
                 } else {
                     throw response.errors;
                 }
@@ -231,12 +193,16 @@ export default class UserModel {
 
     /** Регистрация пользователя. */
     async register() {
-        sessionStorage.clear();
         await ajax(constants.PATH + '/api/v1/staff',
             'POST',
-            {'name': await this.name, 'email': await this.email, 'password': await this.password, 'isOwner':true},
+            {'name': this.name,
+                'email': this.email,
+                'password': this.password,
+                'isOwner': true,
+                'Position': 'Владелец'
+            },
             (response) => {
-                if (response.errors === null) {
+                if (response.errors === null){
                     router._goTo('/myCafes');
                 } else {
                     throw response.errors;
@@ -246,52 +212,83 @@ export default class UserModel {
 
     /** Аунтификация пользователя. */
     async login() {
-        sessionStorage.clear();
         await authAjax('POST',
             constants.PATH + '/api/v1/staff/login',
-            {'email': await this.email, 'password': await this.password},
+            {'email': this.email, 'password': this.password},
             (response) => {
-                if (response.errors === null) {
-                    console.log('replace to mycafe');
-                    router._goTo('/profile')
+                if (response.errors === null){
+                    router._goTo('/profile');
                 } else {
-                    alert();
                     throw response.errors;
                 }
             });
     }
 
     /** Добавление работника */
-    async addStaff(uuid) {
-        const requestUrl = '/api/v1/add_staff?uuid=' + uuid;
+    async addStaff(uuid,position) {
+        const requestUrl = `/api/v1/add_staff?uuid=${uuid}&position=${position}` ;
         await ajax(constants.PATH + requestUrl,
             'POST',
-            {'name': await this.name, 'email': await this.email, 'password': await this.password},
+            {'name': this.name, 'email': this.email, 'password': this.password},
             (response) => {
-                if (response.errors === null) {
+                if (response.errors === null){
                     router._goTo('/profile');
-
                 } else {
-                    throw response.errors[0].message;
+                    throw response.errors;
+                }
+            }
+        );
+    }
+    /** Удаление работника */
+    async fireStaff(id) {
+        const requestUrl = `/api/v1/staff/delete_staff/${id}`;
+        await ajax(constants.PATH + requestUrl,
+            'POST',
+            null,
+            (response) => {
+                if (response.errors === null){
+                    router._goTo('/staff');
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
+    }
+
+    /** Удаление работника */
+    async changeStaffPosition(id, position) {
+
+        const requestUrl = `/api/v1/staff/update_position/${id}`;
+        await authAjax('POST',constants.PATH + requestUrl,
+            {'position':position},
+            (response) => {
+                if (response.errors === null){
+                    router._goTo('/staff');
+                } else {
+                    throw response.errors;
                 }
             }
         );
     }
 
     /** Добавление QR работника */
-    async addStaffQR(cafeId) {
-        await ajax(constants.PATH + `/api/v1/staff/generateQr/${cafeId}`,
-            'GET',
-            {},
-            (response) => {
-                if(response.data != null){
-                    if (response.errors === null) {
-                        (new AlertWindowComponent( 'Покажите код сотруднику',null, response.data)).render();
-                    } else {
-                        throw response.errors;
+    async addStaffQR() {
+        const positionInput = document.
+            getElementsByClassName('input-alert-window-container__window__field_input').item(0);
+        if(positionInput.value) {
+            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+                'GET',
+                {},
+                (response) => {
+                    if (response.data != null) {
+                        if (response.errors === null) {
+                            (new AlertWindowComponent('Покажите код сотруднику', null, response.data)).render();
+                        } else {
+                            throw response.errors;
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 }

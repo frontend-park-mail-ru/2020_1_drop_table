@@ -1,8 +1,9 @@
 'use strict';
 
 import {router} from '../main/main';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
-import FormValidation from '../modules/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер добавления работника */
 export default class AddStaffController{
@@ -13,10 +14,19 @@ export default class AddStaffController{
      * @param {RegisterView} registerView view регистрации
      * @param {string} uuid иденитфикатор работника
      */
-    constructor(userModel, registerView, uuid) {
+    constructor(userModel, registerView, uuid, position) {
         this._userModel = userModel;
         this._registerView = registerView;
         this._uuid = uuid;
+        this._position = position;
+    }
+
+    async update(){
+        try{
+            //await this._userModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /**
@@ -63,8 +73,7 @@ export default class AddStaffController{
             this._userModel.name = form.elements['full-name'].value.toString();
 
             try {
-                console.log('test add staff controller try block' );
-                await this._userModel.addStaff(this._uuid);
+                await this._userModel.addStaff(this._uuid, this._position);
 
             } catch (exception) {
                 console.log('exc',exception);
@@ -139,13 +148,17 @@ export default class AddStaffController{
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
     /** Запуск контроллера */
-    control(){
-        sessionStorage.clear();
+    async control(){
+        await this.update();
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }

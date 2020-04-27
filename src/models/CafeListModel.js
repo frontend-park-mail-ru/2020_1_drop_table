@@ -12,37 +12,33 @@ export default class CafeListModel{
     /** Инициализация модели */
     constructor() {
         this._cafeModelsList = [];
-        const cafeListData = this._loadCafeList();
-        this._constructCafe(cafeListData);
+        this._cafeListJson = [];
+    }
+
+    async update(){
+        await this.cafesList();
+    }
+    async updateAllCafes(since, limit){
+        await this.getAllCafes(since, limit);
     }
 
     /**
-     * Возвращает промис, который возвращает сырое представление модели
-     * @return {Promise} промис, который возвращает сырое представление модели
+     * Возвращает сырое представление модели
+     * @return {Promise} сырое представление модели
      */
     get context(){
-        return new Promise((resolve) => {
-            this._checkCafeList().then(()=>{
-                const cafeList = sessionStorage.getItem('CafeList');
-                if(cafeList){
-                    resolve(JSON.parse(cafeList));
-                }
-                resolve(null);
-            });
-        });
+        return this._cafeListJson;
     }
 
     /**
-     * Возвращает промис, который возвращает пуст или не пуст cafeModelList
-     * @return {Promise} промис, который возвращает пуст или не пуст cafeModelList
+     * Возвращает пуст или не пуст cafeModelList
+     * @return {bool} пуст или не пуст cafeModelList
      */
     get isEmpty(){
-        return new Promise((resolve) => {
-            this._checkCafeList().then(()=>{
-                resolve(!this._cafeModelsList.length);
-            });
-        });
+        return !this._cafeModelsList.length;
     }
+
+
 
     /**
      * Возвращает cafe из cafeModelList, с нужным id
@@ -55,44 +51,10 @@ export default class CafeListModel{
         });
     }
 
-    /**
-     * Проверяет существование поля data
-     * @param {string|null} data
-     */
-    async _checkCafeList(data){
-        if(!data){
-            await this.cafesList();
-        }
-    }
-
-    /** Заполняет поля cafeModelList из sessionStorage
-     * @return {Array} Возвращает список кафе из CafelListModel
-     */
-    _loadCafeList(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData) {
-            cafeListData = JSON.parse(cafeListData);
-            return cafeListData;
-        } else {
-            this._saveCafeList([]);
-            return [];
-        }
-    }
-
-    /**
-     * Сохраняет поля cafeListModel в sessionStorage
-     * @param {obj} data объект для сохранения
-     */
-    _saveCafeList(data){
-        sessionStorage.setItem('CafeList', JSON.stringify(data));
-    }
-
-    /** Конструирует cafeModel из  cafeListData
-     * @param {Array} cafeListData сырое представление списка кафе
-     */
-    _constructCafe(cafeListData){
-        cafeListData.forEach((_, id) => {
-            const cafe = new CafeModel(id);
+    /** Конструирует cafeModel из cafeListJson */
+    _constructCafe(){
+        this._cafeListJson.forEach((cafeContext) => {
+            const cafe = new CafeModel(cafeContext);
             this._cafeModelsList.push(cafe);
         });
     }
@@ -110,15 +72,13 @@ export default class CafeListModel{
             'GET',
             {},
             (response) => {
-                if(response.data == null){
-                    //router._goTo('/createCafe');
-                } else {
-                    if (response.errors === null) {
-                        this._saveCafeList(response.data);
-                        this._constructCafe(response.data);
-                    } else {
-                        throw response.errors;
-                    }
+                if(response.errors === null && response.data){
+                    this._cafeListJson = response.data;
+                    this._constructCafe();
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
                 }
             }
         )
@@ -130,14 +90,12 @@ export default class CafeListModel{
             'POST',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
-                    console.log('test error', cafe.getFormData(photo))
-                    cafe.listId = this._cafeModelsList.length;
+                if(response.errors === null){
                     cafe.fillCafeData(response.data);
                     this._cafeModelsList.push(cafe);
+                    this._cafeListJson.push(cafe.context);
                     router._goTo('/myCafes');
                 } else {
-
                     throw response.errors;
                 }
             }
@@ -150,12 +108,29 @@ export default class CafeListModel{
             'PUT',
             await cafe.getFormData(photo),
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null){
                     router._goTo(`/myCafes`);
                 } else {
                     throw response.errors;
                 }
             }
         );
+    }
+
+    async getAllCafes(since, limit) {
+        await ajax(constants.PATH + `/api/v1/cafe/get_all?since=${since}&limit=${limit}`,
+            'GET',
+            {},
+            (response) => {
+                if(response.errors === null && response.data){
+                    this._cafeListJson = response.data;
+                    this._constructCafe();
+                }
+
+                if(response.errors !== null){
+                    throw response.errors;
+                }
+            }
+        )
     }
 }

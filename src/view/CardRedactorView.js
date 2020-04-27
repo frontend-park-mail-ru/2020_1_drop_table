@@ -4,8 +4,10 @@ import CardCreator from '../components/CardCreator/CardCreator.hbs';
 import CardFormComponent from '../components/CardForm/CardForm';
 import {CardAppleComponent} from '../components/CardApple/CardApple';
 import '../components/CardCreator/CardCreator.scss'
+import '../components/CardCreator/CardCreator.color.scss'
 
 import BaseView from './BaseView';
+import {LoyaltyRedactorComponent} from '../components/LoyaltyRedactor/LoyaltyRedactor';
 
 /** view редактора крточки */
 export default class CardRedactorView extends BaseView{
@@ -18,8 +20,15 @@ export default class CardRedactorView extends BaseView{
         super(app);
         this._context = null;
         this._appleCard = null;
+
+
         let container = document.getElementsByClassName('card-creator-container').item(0);
         container.innerHTML = CardCreator();
+
+        let loyaltyContainer = document.getElementsByClassName('loyalty-redactor-container').item(0);
+        console.log(loyaltyContainer);
+        (new LoyaltyRedactorComponent(loyaltyContainer)).render();
+
         let left = document.getElementsByClassName('card-redactor-container__card-form').item(0);
         let right = document.getElementsByClassName('card-redactor-container__card-model').item(0);
         this.cardFormComp = new CardFormComponent(left);

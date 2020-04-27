@@ -323,6 +323,19 @@
 }
 
 
+.landing-page__teaser{
+    width: 100%;
+    display: flex;
+
+}
+#video_background{
+    width: 50%;
+    margin: auto;
+}
+
+
+
+
 .landing-page__coupon-and-card-coupon{
     display: flex;
     /*border: 1px solid black;*/
@@ -332,6 +345,7 @@
 .landing-page__coupon-and-card-coupon__image-container{
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     /*justify-content: space-around;*/
 }
 .landing-page__coupon-and-card-coupon__image-container_img{
@@ -341,6 +355,16 @@
 }
 
 @media (max-width: 480px) {
+
+
+    .landing-page__teaser{
+        width: 100%;
+        display: flex;
+
+    }
+    #video_background{
+        width: inherit;
+    }
 
     .landing-page__coupon-and-card{
         display: flex;
@@ -650,4 +674,111 @@
     height: 6rem;
 
     background-color: black;
+}
+
+
+
+@media (max-width: 480px) {
+    .landing-page__cafes{
+        display: flex;
+        flex-direction: column;
+        &__container{
+            order: 0;
+            height: 100%;
+        }
+        &__circle-left{
+            order: 1;
+            display: flex;
+            flex-direction: row;
+            justify-content:  flex-start;
+            width:100%;
+        }
+        &__circle-right{
+            order: 2;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            width:100%;
+            position: relative;
+            top:-100px;
+        }
+    }
+}
+
+
+@media (min-width: 480px) {
+
+    .landing-page__cafes{
+        display: flex;
+        justify-content: space-between;
+        &__container{
+            order: 0;
+        }
+        &__circle-left{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: auto 0;;
+        }
+        &__circle-right{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: auto 0;
+        }
+    }
+
+}
+
+
+
+.landing-page__cafes{
+
+
+    &__container{
+        height: 100%;
+    }
+
+    &__circle-left{
+
+        &__circle{
+            height: 100px;
+            width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 50%;
+            z-index: 2;
+            &:hover{
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            }
+            svg{
+                z-index: 3;
+                margin: 0 auto;
+            }
+        }
+
+
+     }
+    &__circle-right{
+        &__circle{
+            height: 100px;
+            width: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 50%;
+            z-index: 2;
+            &:hover{
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            }
+            svg{
+                z-index: 3;
+                margin: 0 auto;
+                transform: rotate(180deg);
+            }
+        }
+    }
 }

@@ -1,11 +1,12 @@
 'use strict';
 
-import {handleImageUpload} from '../modules/imageUpload';
+import {handleImageUpload} from '../utils/imageUpload';
 
 import {router} from '../main/main';
 
-import FormValidation from '../modules/FormValidation';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер редактирования кафе */
 export default class EditCafeController{
@@ -22,12 +23,20 @@ export default class EditCafeController{
         this._createCafeView = createCafeView;
     }
 
+    async update(){
+        try {
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+
+    }
+
     /** Event измененич кафе */
     async _editCafe(e) {
-        console.log('editCafe');
         e.preventDefault();
         const form = document.getElementsByClassName('new-cafe-page__outer__sub__form-container__form-field').item(0);
-        console.log('form', form);
         const photoInput = document.getElementById('upload');
 
         const cafe = this._cafeListModel.getCafeById(this._id);
@@ -37,22 +46,18 @@ export default class EditCafeController{
         cafe.name = form.elements['name'].value;
         cafe.address = form.elements['address'].value;
         cafe.description = form.elements['description'].value;
-
-        // if(image){
-        //     cafe.photo = image;
-        // }
-
+        cafe.openTime = form.elements['openTime'].value.toString();
+        //cafe.openTime = `0001-01-01T${openTimeH}:${openTimeM}:00Z`;
+        cafe.closeTime = form.elements['closeTime'].value.toString();
+        //cafe.closeTime = `0001-01-01T${closeTimeH}:${closeTimeM}:00Z`;
 
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
         if ((new FormValidation(form)).validate(validateContext)) {
             try {
-                console.log('try editCafe', photoInput.files[0], cafe, this._id);
                 await this._cafeListModel.editCafe(photoInput.files[0], cafe, this._id);
             } catch (exception) {
-                console.log('catch', exception);
-
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
         }
@@ -63,7 +68,8 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(id){
+    _makeViewContext(id){
+
         const cafe = this._cafeListModel.getCafeById(id);
 
         return {
@@ -80,9 +86,8 @@ export default class EditCafeController{
                 }
             },
             cafe: {
-                cafeName: 'Редактирование кафе',
-                imgSrcPromise: cafe.photo,
-                imgSrc: '/images/test.jpg',
+                cafeName: 'Редактор',
+                imgSrc: cafe.photo,
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -92,23 +97,35 @@ export default class EditCafeController{
                         {
                             type: 'text',
                             id: 'name',
-                            data: ' ',
-                            inputPromise: cafe.name,
+                            data: cafe.name,
                             labelData: 'Название',
                             inputOption: 'required',
                         },
                         {
                             type: 'text',
                             id: 'address',
-                            data: ' ',
-                            inputPromise: cafe.address,
+                            data: cafe.address,
                             labelData: 'Адрес',
                             inputOption: 'required',
                         },
-                        {type: 'text',
+                        {
+                            type: 'time',
+                            id: 'openTime',
+                            data: cafe.openTime,
+                            labelData: 'Время открытия',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'time',
+                            id: 'closeTime',
+                            data: cafe.closeTime,
+                            labelData: 'Время закрытия',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'text',
                             id: 'description',
-                            data: ' ',
-                            inputPromise: cafe.description,
+                            data: cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
                         },
@@ -138,6 +155,7 @@ export default class EditCafeController{
                     }
                 }
             },
+
             {
                 element: form.elements['address'],
                 validate: () => {
@@ -148,13 +166,27 @@ export default class EditCafeController{
             },
             {
                 element: form.elements['description'],
-                validate: () => {/**
-     * Создание контекста для ServerExceptionHandler
-     * @param {Element} form вылидируемый элемент
-     * @return {obj} созданный контекст
-     */
+                validate: () => {
                     if(form.elements['description'].value.toString().length < 6){
                         return 'Описание кафе слишком короткое';
+                    }
+                }
+            },
+            {
+                element: form.elements['openTime'],
+                validate: () => {
+                    const timeRegex = /^([0-1][0-9])|(2[0-3]):([0-5][0-9])$/;
+                    if(!timeRegex.test(form.elements['openTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
+                    }
+                }
+            },
+            {
+                element: form.elements['closeTime'],
+                validate: () => {
+                    const timeRegex = /^([0-1][0-9])|(2[0-3]):([0-5][0-9])$/;
+                    if(!timeRegex.test(form.elements['closeTime'].value.toString())){
+                        return 'Время имеет некорректный формат';
                     }
                 }
             },
@@ -166,12 +198,16 @@ export default class EditCafeController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form= document.body){
         return {
             'Key: \'Cafe.CafeName\' Error:Field validation for \'CafeName\' failed on the \'min\' tag': [
                 'Название кафе слишком короткое',
                 form['name']
             ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
@@ -180,8 +216,9 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      */
     async control(id){
+        await this.update();
         this._id = id;
-        this._createCafeView.context = await this._makeViewContext(id);
+        this._createCafeView.context = this._makeViewContext(id);
         this._createCafeView.render();
     }
 }

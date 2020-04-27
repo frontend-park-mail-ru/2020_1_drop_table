@@ -1,11 +1,12 @@
 'use strict';
 
-import {handleImageUpload} from '../modules/imageUpload';
+import {handleImageUpload} from '../utils/imageUpload';
 
 import {router} from '../main/main';
 
-import FormValidation from '../modules/FormValidation';
-import ServerExceptionHandler from '../modules/ServerExceptionHandler';
+import FormValidation from '../utils/FormValidation';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -18,6 +19,14 @@ export default class UserProfileController{
     constructor(userModel, userProfileView){
         this._userModel = userModel;
         this._userProfileView = userProfileView;
+    }
+
+    async update(){
+        try {
+            await this._userModel.update();
+        } catch (exceptions) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        }
     }
 
     /** Event изменения профиля */
@@ -33,7 +42,9 @@ export default class UserProfileController{
         if ((new FormValidation(form)).validate(validateContext)) {
             this._userModel.name = form.elements['full-name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
-            this._userModel.password = form.elements['password'].value.toString();
+            this._userModel.Position = form.elements['Position'].value.toString();
+
+            // this._userModel.password = form.elements['password'].value.toString();
 
             try {
                 await this._userModel.editOwner(photo);
@@ -64,16 +75,14 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: () => {
-                            sessionStorage.clear();
                             router._goTo('/login');
-                           
+
                         }
                     }
                 }
             },
             profile: {
-                imgSrc: '/images/userpic.png',
-                imgSrcPromise: this._userModel.photo,
+                imgSrc: this._userModel.photo ? this._userModel.photo : '/images/userpic.png',
                 event: {
                     type: 'change',
                     listener: handleImageUpload
@@ -83,34 +92,24 @@ export default class UserProfileController{
                         {
                             type: 'text',
                             id: 'full-name',
-                            data: 'name',
-                            inputPromise: this._userModel.name,
+                            data: this._userModel.name,
                             labelData: 'Имя',
                             inputOption: 'required',
                         },
                         {
                             type: 'email',
                             id: 'email',
-                            data: 'email',
-                            inputPromise: this._userModel.email,
+                            data: this._userModel.email,
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
-                            type: 'password',
-                            id: 'password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
-                            labelData: 'Пароль',
+                            type: 'text',
+                            id: 'Position',
+                            data: this._userModel.Position,
+                            labelData: 'Должность',
                             inputOption: 'required',
-                        },
-                        {
-                            type: 'password',
-                            id: 're-password',
-                            data: 'password',
-                            inputPromise: this._userModel.password,
-                            labelData: 'Повторите пароль',
-                            inputOption: 'required',
+                            readOnly: this._userModel.isOwner ? '' : 'readOnly'
                         },
                     ],
                     submitValue: 'Готово',
@@ -148,21 +147,14 @@ export default class UserProfileController{
                 }
             },
             {
-                element: form.elements['password'],
+                element: form.elements['Position'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 8){
-                        return 'Пароль слишком короткий';
+                    if(form.elements['Position'].value.toString().length < 4){
+                        return 'Должность слишком короткая';
                     }
                 }
             },
-            {
-                element: form.elements['re-password'],
-                validate: () => {
-                    if(form.elements['re-password'].value.toString() !== form.elements['password'].value.toString()){
-                        return 'Пароли не совпадают';
-                    }
-                }
-            },
+
         ];
     }
 
@@ -171,7 +163,7 @@ export default class UserProfileController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form = document.body){
         return {
             'pq: duplicate key value violates unique constraint "staff_email_key"': [
                 'Пользователь с такой почтой уже существует',
@@ -185,15 +177,24 @@ export default class UserProfileController{
                 'Имя слишком короткое',
                 form['full-name']
             ],
+            'Key: \'Staff.Position\' Error:Field validation for \'Position\' failed on the \'min\' tag': [
+                'Должность слишком короткая',
+                form['Position']
+            ],
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
-            ]
+            ],
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         };
     }
 
     /** Запуск контроллера */
     async control(){
+        await this.update();
         this._userProfileView.context = this._makeViewContext();
         this._userProfileView.render();
     }

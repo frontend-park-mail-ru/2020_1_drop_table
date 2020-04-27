@@ -4,50 +4,40 @@ import {ajax} from '../utils/ajax';
 import {constants} from '../utils/constants';
 import StaffModel from './StaffModel';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
+import {router} from '../main/main';
+
 
 /** Модель staff 3 рк */
 export default class StaffListModel{
 
-    constructor() {
-        this._ownerId = null;
+    constructor(userModel) {
+        this._userModel = userModel;
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
-        console.log('constructor')
+    }
+
+    async update(){
+        await this._userModel.update();
+        await this.staffList();
     }
 
     get context(){
-        console.log('context');
-        return new Promise((resolve) => {
-            this._checkStaffList().then(()=>{
-                const staffList = sessionStorage.getItem('StaffList');
-                if(staffList){
-                    resolve(JSON.parse(staffList));
-                }
-                resolve(null);
-            });
-        });
+        const staffList = sessionStorage.getItem('StaffList');
+        if(staffList){
+            return(JSON.parse(staffList));
+        }
+        return null;
     }
 
     get isEmpty(){
-        return new Promise((resolve) => {
-            this._checkStaffList().then(()=>{
-                resolve(!this._staffModelsList.length);
-            });
-        });
+        return !this._staffModelsList.length;
     }
 
     getStaffById(id){
         return this._staffModelsList.find((staff) => {
-            return staff._id == id;
+            return staff._StaffId == id;
         });
-    }
-
-    async _checkStaffList(data){
-        if(!data){
-            console.log('checkStaffList')
-            await this.staffList();
-        }
     }
 
     _loadStaffList(){
@@ -65,25 +55,16 @@ export default class StaffListModel{
         sessionStorage.setItem('StaffList', JSON.stringify(data));
     }
 
-    _constructStaff(staffListData){
-        console.log('get staff ',staffListData)
-
-        Object.entries(staffListData).map((key, value) => {
-            console.log('cafe',key);
-
-            console.log('staff',value);
-        });
-        // for (let [key, value] of staffListData) {
-        //     console.log('cafe', key);
-        //     if(value){
-        //         console.log('staff', value);
-        //     }
-        //
-        // }
-        // staffListData.forEach((_, id) => {
-        //     const staff = new StaffModel(id);
-        //     this._staffModelsList.push(staff);
-        // });
+    _constructStaff(staffListData){ //todo создавать сотрудников
+        for (let [key, value] of Object.entries(staffListData)) {
+            console.log('test1', value)
+            if(value) {
+                value.forEach((staffVal) => {
+                    const staff = new StaffModel(staffVal);
+                    this._staffModelsList.push(staff);
+                });
+            }
+        }
     }
 
     createStaff(){
@@ -92,47 +73,41 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        console.log('in staff list')
-        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/5`,
+        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
             (response) => {
-
-                console.log(response)
-                if(response.data === null){
-                    console.log('get staff error',response.data)
-                    //router._goTo('/createCafe');
+                if (response.errors === null) {
+                    this._saveStaffList(response.data);
+                    this._constructStaff(response.data);
                 } else {
-                    if (response.errors === null) {
-                        this._saveStaffList(response.data);
-                        this._constructStaff(response.data);
-                    } else {
-                        console.log('throw error')
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
         )
     }
 
-    /** создание qr работника */
+    /** Добавление QR работника */
     async addStaffQR() {
-        await ajax(constants.PATH + `/api/v1/staff/generateQr/${7}`,
-            'GET',
-            {},
-            (response) => {
-                if(response.data == null){
-                    //router._goTo('/createCafe');
-                } else {
-                    if (response.errors === null) {
-                        (new AlertWindowComponent( '', response.data)).render();
-                        // this._saveCafeList(response.data);
-                        // this._constructCafe(response.data);
-                    } else {
-                        throw response.errors;
+        const positionInput = document.
+            getElementsByClassName('input-alert-window-container__window__field_input').item(0);
+        if(positionInput.value) {
+            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+                'GET',
+                {},
+                (response) => {
+                    if (response.data != null) {
+                        if (response.errors === null) {
+                            (new AlertWindowComponent('Покажите код сотруднику', null, response.data)).render();
+                        } else {
+                            throw response.errors;
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
+
+
+
 }

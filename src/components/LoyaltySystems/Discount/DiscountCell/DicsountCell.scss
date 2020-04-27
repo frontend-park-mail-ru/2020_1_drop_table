@@ -1,0 +1,37 @@
+.discount-cell{
+  border: 2px solid #000000;
+  font-family: Montserrat, sans-serif;
+  margin: 10px;
+  &__form{
+    width: 100%;
+    display: flex;
+    &__discount{
+      width: 30%;
+      &_input{
+        font-weight: bolder;
+        font-size: 2rem;
+        border: none;
+        height: 95%;
+        width: 100%;
+        color: #fa9917;
+      }
+
+    }
+    &__type{
+      width: 40%;
+    }
+
+    &__price{
+      width: 30%;
+      &_input{
+        font-weight: bolder;
+        font-size: 1.5rem;
+        border: none;
+        height: 95%;
+        width: 90%;
+        color: black;
+      }
+    }
+
+  }
+}

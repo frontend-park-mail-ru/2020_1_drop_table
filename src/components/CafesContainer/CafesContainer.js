@@ -1,5 +1,10 @@
 import './CafesContainer.scss';
+import './CafesContainer.color.scss';
+
+
 import '../CafeCard/CafeCard.scss';
+import '../CafeCard/CafeCard.color.scss';
+
 import CafeContainer from './CafesContainer.hbs';
 import CafeCard from '../CafeCard/CafeCard.hbs';
 import {router} from '../../main/main';
@@ -17,16 +22,7 @@ export class CafesContainerComponent {
         this._secondColumn = null;
     }
 
-    /**
-     * Формирование контекста для шаблона
-     * @param {obj} context контекст нужный для отрисовки компонента
-     * @private
-     */
-    _makeData(context){
-        let center = context.length / 2;
-        this._firstColumn = context.slice(0, center);
-        this._secondColumn = context.slice(center);
-    }
+
 
     /**
      * Обрезание динного названия
@@ -35,8 +31,9 @@ export class CafesContainerComponent {
      * @private
      */
     _cropName(name){
-        if(name.length>10){
-            return name.slice(0,8).concat('...')
+
+        if (name.length > 10) {
+            return name.slice(0, 8).concat('...')
         }
         return name;
     }
@@ -48,22 +45,22 @@ export class CafesContainerComponent {
      */
     _renderTemplate(context) {
 
-        let fc = this._firstColumn.map(({photo = photo, name = name, id = id} = {}) => {
-
+        let cafes = context.map(({photo = photo, name = name, id = id} = {}) => {
             return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
-        let sc = this._secondColumn.map(({photo = photo, name = name, id = id} = {}) => {
-            return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
-        });
-
-
 
         const noCafes = !context.length;
 
-        this._parent.innerHTML = CafeContainer({noCafes: noCafes, firstCol: fc, secCol: sc}); //TODO норм шаблоны и лисенеры на кафе
+        this._parent.innerHTML = CafeContainer({noCafes: noCafes, cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
 
         for(let i = 0; i < context.length; i++){
+
             let card = this._parent.getElementsByClassName('cafe-card-container').item(i);
+
+            //console.log('hahha',this._parent.offsetWidth, card.item(0).offsetWidth )
+            // if( i % 2 && i <= this._parent.offsetWidth/card.item(0).offsetWidth){
+            //     card.style.marginTop = '7vw';
+            // }
             let cardImage = this._parent.getElementsByClassName('cafe-card-container__image-container').item(i);
             let cardName = this._parent.getElementsByClassName('cafe-card-container__name-container').item(i);
             if(cardImage && cardName) {
@@ -85,7 +82,6 @@ export class CafesContainerComponent {
 
     /** Отрисовка компоненты списка кафе */
     render(context) {
-        this._makeData(context);
         this._renderTemplate(context);
     }
 }

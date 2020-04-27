@@ -1,0 +1,9 @@
+@import '../../../scss/themes.scss';
+
+
+
+.staff-page-container__QR-window{
+    @include themify($themes){
+        background-color: themed('backgroundColor');
+    }
+}

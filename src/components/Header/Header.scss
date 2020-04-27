@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+.page-header{
+    padding-bottom: 20px;
+}
+
+.nav {
+    font-family: 'Montserrat',Arial;
+    width: 100%;
+    position: relative;
+    display: flex;
+
+}
+
+.nav-header {
+    display: flex;
+    width: 20%;
+}
+
+.nav-header_img{
+    height: 6vw;
+    object-fit: cover;
+    margin: auto;
+}
+.nav-header_h4{
+    font-size: 2vw;
+    margin: auto;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+
+.nav__btn {
+    display: none;
+
+}
+
+.nav-links {
+    display: flex;
+    font-size: 1.5vw; //todo подобрать подходящий
+    justify-content: flex-end;
+    width: 85%;
+    opacity: 95%;
+    z-index: 5;
+    margin: auto;
+}
+
+.nav-links__link-container {
+    display: flex;
+    text-decoration: none;
+    height: 100px;
+    margin: 0 2rem;
+}
+.nav-links__link-container-avatar {
+    display: flex;
+    text-decoration: none;
+}
+
+
+.nav-links__link-container_a{
+    margin: auto;
+    white-space: nowrap;
+    text-decoration: none;
+    padding: 0 10px;
+}
+.nav-links__link-container_a:hover{
+    text-decoration: underline;
+}
+
+.nav-links__link-container_img {
+    display: inline-block;
+    max-height: 100px;
+    max-width: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    height: 8vw;
+    width: 8vw;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+#nav-check {
+    display: none;
+}
+
+@media (max-width:900px) {
+    .nav__btn {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        z-index: 6;
+
+    }
+    .nav__btn_label {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+    }
+
+    .nav__btn_label_span {
+        display: block;
+        width: 25px;
+        height: 10px;
+        border-top: 2px solid;
+    }
+    .nav-links {
+        position: absolute;
+        display: flex;
+        flex-direction: column-reverse;
+        transition: all 0.3s ease-in;
+        overflow-y: hidden;
+        left: 0;
+        width: 100%;
+        font-size: 3vw;
+    }
+    .nav-links__link-container {
+        display: flex;
+        flex-direction: column-reverse;
+        width: 100%;
+        margin:  10% 0 ;
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+
+
+
+
+    .nav-links__link-container_img  {
+        display: inline-block;
+        max-height: 100px;
+        max-width: 100px;
+        margin-top: 10px;
+    }
+
+    #nav-check:not(:checked) ~ .nav-links {
+        height: 0px;
+    }
+   #nav-check:checked ~ .nav-links {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+    }
+
+}
+
+

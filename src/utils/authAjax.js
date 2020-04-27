@@ -5,6 +5,9 @@
  * @param body Тело запроса
  * @param callback Функция принимающая результат ответа
  */
+import {router} from '../main/main';
+import {LoadingComponent} from '../components/Loading/Loading';
+
 export async function authAjax(method, route, body, callback) {
     let reqBody;
 
@@ -24,31 +27,30 @@ export async function authAjax(method, route, body, callback) {
         };
     }
     const myCsrf = sessionStorage.getItem('Csrf');
-    console.log('myCSRF auth', myCsrf)
     if(myCsrf){
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
         //req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
     }
-
+    const loading = new LoadingComponent();
+    loading.render();
 
     const req = new Request(route, reqBody);
     let responseJson = null;
     try {
         const response = await fetch(req);
-
-
         if (response.ok) {
-            console.log('resp auth ok');
+            loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
             }
             responseJson = await response.json();
         } else {
-
             throw new Error('Response not ok');
         }
     } catch (exception) {
+        loading.remove();
+        // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }
 

@@ -7,114 +7,84 @@ import {authAjax} from '../utils/authAjax';
 export default class CafeModel {
 
     /** Инициализация модели */
-    constructor(listId) {
-        this._listId = listId;
+    constructor(context) {
         this._id = null;
         this._address = null;
-        this._closeTime = null;
         this._description = null;
         this._name = null;
         this._openTime = null;
+        this._closeTime = null;
         this._ownerID = null;
         this._photo = null;
+        this.fillCafeData(context);
+    }
 
-        this._loadCafe();
+    async update(){
+        await this.getCafe();
     }
 
     /**
-     * Возвращает промис, который возвращает адресс кафе
-     * @return {Promise} промис, который возвращает адресс кафе
+     * Возвращает адресс кафе
+     * @return {string} адресс кафе
      */
     get address(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._address).then(()=>{
-                resolve(this._address);
-            });
-        });
+        return this._address;
     }
 
     /**
-     * Возвращает промис, который возвращает время закрытия кафе
-     * @return {Promise} промис, который возвращает время закрытия кафе
+     * Возвращает время закрытия кафе
+     * @return {string} время закрытия кафе
      */
     get closeTime(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._closeTime).then(()=>{
-                resolve(this._closeTime);
-            });
-        });
+        return this._closeTime;
     }
 
     /**
-     * Возвращает промис, который возвращает описание кафе
-     * @return {Promise} промис, который возвращает описание кафе
+     * Возвращает описание кафе
+     * @return {string} описание кафе
      */
     get description(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._description).then(()=>{
-                resolve(this._description);
-            });
-        });
+        return this._description;
     }
 
     /**
-     * Возвращает промис, который возвращает id кафе
-     * @return {Promise} промис, который возвращает id кафе
+     * Возвращает id кафе
+     * @return {string} id кафе
      */
     get id(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._id).then(()=>{
-                resolve(this._id);
-            });
-        });
+        return this._id;
     }
 
     /**
-     * Возвращает промис, который возвращает название кафе
+     * Возвращает название кафе
      * @return {Promise} промис, который возвращает название кафе
      */
     get name(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._name).then(()=>{
-                resolve(this._name);
-            });
-        });
+        return this._name;
     }
 
     /**
-     * Возвращает промис, который возвращает время открытия кафе
-     * @return {Promise} промис, который возвращает время открытия кафе
+     * Возвращает время открытия кафе
+     * @return {string} время открытия кафе
      */
     get openTime(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._openTime).then(()=>{
-                resolve(this._openTime);
-            });
-        });
+        return this._openTime;
     }
 
     /**
-     * Возвращает промис, который возвращает id владельца кафе
-     * @return {Promise} промис, который возвращает id владельца кафе
+     * Возвращает id владельца кафе
+     * @return {string} id владельца кафе
      */
     get ownerID(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._ownerID).then(()=>{
-                resolve(this._ownerID);
-            });
-        });
+        return this._ownerID;
     }
 
     /**
-     * Возвращает промис, который возвращает фото кафе
-     * @return {Promise} промис, который возвращает фото кафе
+     * Возвращает фото кафе
+     * @return {string} фото кафе
      */
     get photo(){
-        return new Promise((resolve) => {
-            this._checkCafe(this._photo).then(()=>{
-                resolve(this._photo);
-            });
-        });
+        return this._photo;
     }
 
     /**
@@ -122,17 +92,16 @@ export default class CafeModel {
      * @return {obj} объект с полями cafeModel
      */
     get context(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        const cafeData = JSON.parse(cafeListData)[this._listId];
-        return cafeData;
-    }
-
-    /**
-     * Устанавливает значение listId
-     * @param {int} listId
-     */
-    set listId(listId){
-        this._listId = listId;
+        return {
+            address: this._address,
+            description: this._description,
+            id: this._id,
+            name: this._name,
+            openTime: this._openTime,
+            closeTime: this._closeTime,
+            ownerID: this._ownerID,
+            photo: this._photo,
+        }
     }
 
     /**
@@ -141,7 +110,6 @@ export default class CafeModel {
      */
     set address(address){
         this._address = address.toString();
-        this._saveCafe();
     }
 
     /**
@@ -150,7 +118,6 @@ export default class CafeModel {
      */
     set closeTime(closeTime){
         this._closeTime = closeTime.toString();
-        this._saveCafe();
     }
 
     /**
@@ -159,7 +126,6 @@ export default class CafeModel {
      */
     set description(description){
         this._description = description.toString();
-        this._saveCafe();
     }
 
     /**
@@ -168,7 +134,6 @@ export default class CafeModel {
      */
     set name(name){
         this._name = name.toString();
-        this._saveCafe();
     }
 
     /**
@@ -177,7 +142,6 @@ export default class CafeModel {
      */
     set openTime(openTime){
         this._openTime = openTime.toString();
-        this._saveCafe();
     }
 
     /**
@@ -186,46 +150,6 @@ export default class CafeModel {
      */
     set photo(photo){
         this._photo = photo.toString();
-        this._saveCafe();
-    }
-
-    /**
-     * Проверяет существование поля data
-     * @param {string|null} data
-     */
-    async _checkCafe(data){
-        if(!data){
-            await this.getCafe();
-        }
-    }
-
-    /** Заполняет поля cafeModel из sessionStorage */
-    _loadCafe(){
-        let cafeListData = sessionStorage.getItem('CafeList');
-        if (cafeListData && this._listId != null) {
-            const cafeData = JSON.parse(cafeListData)[this._listId];
-            if(cafeData){
-                this.fillCafeData(cafeData);
-            }
-        }
-    }
-
-    /** Сохраняет поля cafeModel в sessionStorage */
-    _saveCafe(){
-        const data = {
-            'address': this._address,
-            'closeTime': this._closeTime,
-            'description': this._description,
-            'id': this._id,
-            'name': this._name,
-            'openTime': this._openTime,
-            'ownerID': this._ownerID,
-            'photo': this._photo
-        };
-
-        let cafeList = JSON.parse(sessionStorage.getItem('CafeList'));
-        cafeList[this._listId] = data;
-        sessionStorage.setItem('CafeList', JSON.stringify(cafeList));
     }
 
     /**
@@ -233,15 +157,21 @@ export default class CafeModel {
      * @param {obj} context
      */
     fillCafeData(context){
-        this._address = context['address'];
-        this._closeTime = context['closeTime'];
-        this._description = context['description'];
-        this._id = context['id'];
-        this._name = context['name'];
-        this._openTime = context['openTime'];
-        this._ownerID = context['ownerID'];
-        this._photo = context['photo'];
-        this._saveCafe();
+        if(context) {
+            this._address = context['address'];
+            this._description = context['description'];
+            this._id = context['id'];
+            this._name = context['name'];
+
+            const openTime = new Date(context['openTime']); //TODO Нужно разобраться как правильно переносить на новую строку
+            this._openTime = `${('0' + openTime.getUTCHours()).slice(-2)}:${('0' + openTime.getUTCMinutes()).slice(-2)}`;
+
+            const closeTime = new Date(context['closeTime']);
+            this._closeTime = `${('0' + closeTime.getUTCHours()).slice(-2)}:${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
+
+            this._ownerID = context['ownerID'];
+            this._photo = context['photo'];
+        }
     }
 
     /**
@@ -252,16 +182,18 @@ export default class CafeModel {
     async getFormData(photo){
         let formData = new FormData();
         let data = {
-            'name': await this.name,
-            'CafeName': await this.name,
-            'address': await this.address,
-            'description': await this.description,
+            'name': this.name,
+            'CafeName': this.name,
+            'address': this.address,
+            'description': this.description,
+            'openTime': '0001-01-01T'+this.openTime+':00Z',
+            'closeTime': '0001-01-01T'+this.closeTime+':00Z',
         };
 
         if (photo) {
             formData.append('photo', photo);
         } else {
-            data['photo'] = await this.photo;
+            data['photo'] = this.photo;
             console.log(data['photo']);
         }
 
@@ -271,10 +203,10 @@ export default class CafeModel {
 
     /** Получение информации о кафе по его id */
     async getCafe(){
-        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this._id}`,
+        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
             null,
             (response) => {
-                if (response.errors === null) {
+                if(response.errors === null){
                     this.fillCafeData(response.data);
                 } else {
                     throw response.errors;

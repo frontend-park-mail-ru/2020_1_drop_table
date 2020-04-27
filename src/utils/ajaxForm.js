@@ -1,5 +1,8 @@
 'use strict';
 
+import {router} from '../main/main';
+import {LoadingComponent} from '../components/Loading/Loading';
+
 /**
  * Ajax с телом FormData
  * @param {string} route - адресс
@@ -16,14 +19,10 @@ export async function ajaxForm(route, method, formData, callback) {
     };
 
     const myCsrf = sessionStorage.getItem('Csrf');
-    console.log('myCSRF form', myCsrf)
 
     if(myCsrf){
-        console.log('test123')
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
-        //reqBody.headers.push('X-CSRF-TOKEN', myCsrf);
     }
-    console.log('test12233')
     if(method !== 'GET' && method !== 'HEAD'){
         reqBody['body'] = formData;
     }
@@ -32,11 +31,13 @@ export async function ajaxForm(route, method, formData, callback) {
 
     let responseJson = null;
 
+    const loading = new LoadingComponent();
+    loading.render();
+
     try {
         const response = await fetch(req);
-
         if (response.ok) {
-            console.log('resp  formok');
+            loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
@@ -46,6 +47,8 @@ export async function ajaxForm(route, method, formData, callback) {
             throw new Error('Response not ok');
         }
     } catch (exception) {
+        loading.remove();
+        // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }
 

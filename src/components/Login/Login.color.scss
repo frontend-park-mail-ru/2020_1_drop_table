@@ -1,0 +1,14 @@
+@import '../../scss/themes.scss';
+
+.form-field__need-register__first,
+.form-field__need-register__reg-span{
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}
+
+.form-field__need-register__reg-span {
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}

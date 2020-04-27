@@ -1,6 +1,7 @@
 'use strict';
 
 import './Cafe.scss';
+import './Cafe.color.scss';
 import CafeTemplate from './Cafe.hbs';
 import Form from '../Form/Form.js';
 
@@ -33,8 +34,11 @@ export default class CafeComponent {
 
     async _handlePromises(context){
         const photo = await context.imgSrcPromise;
+
         let img = this._parent.getElementsByClassName('new-cafe-page__outer__sub__image-container__photo-container__image-picker_img').item(0);
-        img.src = photo;
+        if(photo) {
+            img.src = photo;
+        }
     }
 
     /**
@@ -64,5 +68,7 @@ export default class CafeComponent {
         this._addListener(context);
         this.renderForm(context['form']);
         this._handlePromises(context);
+
+
     }
 }

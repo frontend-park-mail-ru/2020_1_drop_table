@@ -1,9 +1,9 @@
-
+@import '../../scss/themes.scss';
 .nameField_h4, .field-button{
     margin-left: 10%;
 }
 .nameField_h4{
-
+    cursor: default;
 }
 .labelField, .valueField, .valueField_label, .labelField_label{
     margin-left: 10%;
@@ -13,9 +13,7 @@
     margin-bottom: 0.5rem;
     width: 80%;
     height:1.5rem;
-    /*border: none;*/
-    /*border-bottom: solid 2px #000000;*/
-    border: solid 2px #000000;
+    border: solid 2px;
 
 }
 
@@ -30,12 +28,9 @@
 
 .field-button {
     width: 100px;
-    /*width: 25px;*/
     height: 25px;
     border-radius: 25px;
-    border: 2px solid #1e768f;
-    background-color: #1e768f;
-    color: #fff;
+    border: 2px solid ;
     transition: width 0.7s;
     overflow: hidden;
 }
@@ -53,5 +48,7 @@
     font-size: 1rem;
     width: 100%;
     left: 0;
+    cursor: pointer;
+
 }
 

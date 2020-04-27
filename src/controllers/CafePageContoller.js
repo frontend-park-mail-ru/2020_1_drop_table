@@ -1,5 +1,7 @@
 import {router} from '../main/main';
-
+import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
+import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 /** контроллер кафе */
 export default class CafePageController {
 
@@ -17,9 +19,22 @@ export default class CafePageController {
         this._id = null;
     }
 
+    async update(){
+        try {
+            await this._userModel.update();
+            await this._cafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+    }
+
     /** Event добавление работника */
     addStaffButtonClick(){
-        this._userModel.addStaffQR(this._id);
+        try {
+            (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     /** Event редактирование кафе */
@@ -32,7 +47,7 @@ export default class CafePageController {
      * @param {int} id идентификатор кафе
      * @return {obj} созданный контекст
      */
-    async _makeViewContext(id){
+    _makeViewContext(id){
         this._id = id;
         const cafe = this._cafeListModel.getCafeById(id);
         let cafeContext = {
@@ -49,6 +64,7 @@ export default class CafePageController {
                 }
             }
         };
+
         cafeContext['add-staff-button'] = this.addStaffButtonClick.bind(this);
 
         cafeContext['cafe-page__cafe-info__edit-button'] = this.editCafeButtonClick.bind(this);
@@ -56,11 +72,21 @@ export default class CafePageController {
         return cafeContext;
     }
 
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
+        }
+    }
+
     /** Запуск контроллера
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        this._cafePageView.context = await this._makeViewContext(id);
+        await this.update();
+        this._cafePageView.context = this._makeViewContext(id);
         this._cafePageView.render();
     }
 }

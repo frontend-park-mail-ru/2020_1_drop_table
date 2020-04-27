@@ -7,6 +7,7 @@ import {constants} from '../utils/constants';
 import {ajaxForm} from '../utils/ajaxForm';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 
+
 /** Модель карточки */
 export class AppleCardModel {
 
@@ -16,6 +17,8 @@ export class AppleCardModel {
      */
     constructor(cafeId) {
         this._cafeId = cafeId;
+        this._type = 'coffee_cup';
+        this._loyalty_info = { };
         this._icon = null;
         this._strip = null;
         this._organizationName = null;
@@ -36,12 +39,12 @@ export class AppleCardModel {
         "barcode": {"format": "PKBarcodeFormatQR",
      "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
       "messageEncoding": "iso-8859-1"},
-       "logoText": "Это",
+       "logoText": "Название",
         "locations": [{"latitude": 37.6189722, "longitude": -122.3748889}, {"latitude": 37.33182, "longitude": -122.03118}],
          "storeCard": {
-         "headerFields": [{"key": "_676325044", "label": "твоя", "value": "классная"}],
-          "primaryFields": [{"key": "_768436380", "label": "Попробуй", "value": "карточка"}],
-          "secondaryFields": [{"key": "_768436380", "label": "отредактировать", "value": "её"}]
+         "headerFields": [{"key": "_676325044", "label": "Карта", "value": "лояльности"}],
+          "primaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}],
+          "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
            "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
             "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
@@ -51,20 +54,20 @@ export class AppleCardModel {
 
     }
 
+    async update(type){
+        await this.getCard(type);
+    }
+
     /**
-     * Возвращает промис, который возвращает сырое представление карточки
-     * @return {Promise<{obj}>}
+     * Возвращает сырое представление карточки
+     * @return {obj}
      */
     get context() {
-        return new Promise((resolve) => {
-            this.getCard().then(()=>{
-                const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
-                if (cafeCard) {
-                    resolve(JSON.parse(cafeCard));
-                }
-                resolve(null);
-            });
-        });
+        const cafeCard = sessionStorage.getItem(`card ${this._cafeId}`);
+        if (cafeCard) {
+            return(JSON.parse(cafeCard));
+        }
+        return null;
     }
 
     /**
@@ -137,6 +140,30 @@ export class AppleCardModel {
      */
     set logoText(value) {
         this._logoText = value;
+    }
+
+    get type() {
+        return this._type;
+    }
+
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
+    set type(value) {
+        this._type = value;
+    }
+
+    get loyalty_info() {
+        return this._loyalty_info;
+    }
+
+    /**
+     * Устанавливает текст логотипа
+     * @param {string} текст логотипа
+     */
+    set loyalty_info(value) {
+        this._loyalty_info = value;
     }
 
     /**
@@ -225,15 +252,19 @@ export class AppleCardModel {
                     'latitude': 37.33182
                 }
             ],
-
-
             'organizationName': this._organizationName,
             'description': this._description,
             'labelColor': this._labelColor,
             'logoText': (this._storeCard['headerFields'][0] !== undefined)?this._storeCard['headerFields'][0]._label:'',
             'foregroundColor': this._foregroundColor,
             'backgroundColor': this._backgroundColor,
-            'backFields': [],
+            'backFields': [
+                {
+                    'key': 'survey',
+                    'label': 'Опрос',
+                    'value': `${constants.CURRENT_PATH}/survey/${this._cafeId}/<<CustomerID>>`
+                }
+            ],
             'storeCard': {
                 'headerFields': [],
                 'primaryFields': [],
@@ -483,14 +514,12 @@ export class AppleCardModel {
      * @private
      */
     _fillCardData(context){
-
+        console.log('filldata', context.type, context.loyalty_info)
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
         const design =  JSON.parse(jsonDesign);
 
         this._icon = context.icon;
         this._strip = context.strip;
-
-        console.log('icon ',context.icon);
 
         this._organizationName = design.organizationName;
         this._description = design.description;
@@ -499,6 +528,8 @@ export class AppleCardModel {
         this._foregroundColor = design.foregroundColor;
         this._backgroundColor = design.backgroundColor;
         this._backFields = [];
+        this._type = context.type;
+        this._loyalty_info = context.loyalty_info;
         this._storeCard = {
             'headerFields': [],
             'primaryFields': [],
@@ -512,25 +543,28 @@ export class AppleCardModel {
      * Получение карточки
      * @return {Promise<void>}
      */
-    async getCard() {
-        await ajax(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?published=true&design_only=true`,
-            'GET',
-            {},
-            (response) => {
-                if (response.data == null) {
-                    console.log('null data: ', response.data);
-                    this._fillCardData({design: this._minDesign});
-                    //router._goTo('/createCafe');
+    async getCard(type) {
+
+        await ajax(constants.PATH +
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${type}?published=true`,
+        'GET',
+        {},
+        (response) => {
+            if (response.data == null) {
+                console.log('null data: ', response.data);
+                this._fillCardData({design: this._minDesign});
+                //router._goTo('/createCafe');
+            } else {
+                if (response.errors === null) {
+                    this._fillCardData(response.data);
                 } else {
-                    if (response.errors === null) {
-                        this._fillCardData(response.data);
-                    } else {
-                        throw response.errors;
-                    }
+                    throw response.errors;
                 }
             }
+        }
         )
     }
+
 
     /**
      * Создание formData для создания карточки
@@ -538,11 +572,15 @@ export class AppleCardModel {
      * @return {Promise<FormData>}
      * @private
      */
-    async _makeFormData(images) {
+    async _makeFormData(images, loyalty) {
+        console.log('fdtest', JSON.stringify(loyalty.type), JSON.stringify(loyalty.loyalty_info))
         let formData = new FormData();
         const data = this.getAsJson();
+        //const loyaltyInfo = this.getLoyaltyInfo();
         formData.append('jsonData', JSON.stringify(data));
-        if (images) {
+        formData.append('type',JSON.stringify(loyalty.type));
+        formData.append('loyalty_info',JSON.stringify(loyalty.loyalty_info))
+        if (images['icon.png'] && images['strip.png']) {
             formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
             formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
             formData.append('logo.png',(images['logo.png'])?images['logo.png']:this._icon );
@@ -550,7 +588,8 @@ export class AppleCardModel {
             formData.append('strip.png',(images['strip.png'])?images['strip.png']:this._strip  );
             formData.append('strip@2x.png',(images['strip@2x.png'])?images['strip@2x.png']:this._strip);
         }
-
+        //formData.append({'type': this._type});
+        //formData.append({'loyalty_info': JSON.stringify(this._loyalty_info)});
         return formData;
     }
 
@@ -561,26 +600,32 @@ export class AppleCardModel {
      * @param publish
      * @return {Promise<void>}
      */
-    async editCard(images, publish) {
-        const formData = await this._makeFormData(images);
+    async editCard(images, loyalty, publish) {
+        console.log('test edit', loyalty.type)
+        const formData = await this._makeFormData(images, loyalty);
+        await ajaxForm(constants.PATH +
+            `/api/v1/cafe/${this._cafeId}/apple_pass/${loyalty.type}?publish=${publish.toString()}`, //todo make await
+        'PUT',
+        formData,
+        (response) => {
+            if (response.errors === null) {
+                console.log('editCard success', response);
+                if(response.data['QR'] && response.data['URL'] && publish){
+                    console.log('window component');
+                    (new AlertWindowComponent('Ваша карточка опубликована',
+                        response.data['URL'], response.data['QR'])).render();
 
-        await ajaxForm(constants.PATH + `/api/v1/cafe/${this._cafeId}/apple_pass?publish=${publish.toString()}`, //todo make await
-            'PUT',
-            formData,
-            (response) => {
-                if (response.errors === null) {
-                    console.log('editCard success', response);
-                    if(response.data['QR'] && response.data['URL'] && publish){
-                        console.log('window component');
-                        (new AlertWindowComponent('Ваша карточка', response.data['URL'], response.data['QR'])).render();
-                    }
-                    // this._filUserData(response.data);
-                    // this._saveUser();
-                } else {
-                    console.log('error ', response.errors);
-                    throw response.errors;
+                } else if(response.data['QR'] && response.data['URL'] && !publish) {
+                    (new AlertWindowComponent('Ваша карточка сохранена',
+                        response.data['URL'], response.data['QR'])).render();
                 }
+            } else {
+                console.log('error ', response.errors);
+                throw response.errors;
             }
+
+
+        }
         );
     }
 }

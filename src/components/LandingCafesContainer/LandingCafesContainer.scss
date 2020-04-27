@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+@import '../../scss/themes.scss';
+
+.landing-cafes-page{
+    font-family: 'Montserrat',SansSerif;
+    display: flex;
+    flex-direction: column;
+    &_h4{
+        margin: 0 auto;
+        font-size: 2rem;
+    }
+
+    &__all-cafes-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        min-height: 60vh;
+
+    }
+
+    &__add-cafe-field{
+        float: right;
+        width:100%;
+        height:200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__text-field{
+            align-self: flex-end;
+            margin-right: 20vw;
+
+            &_span{
+                font-size: 2rem;
+                width:40%;
+            }
+        }
+        &__text-strip{
+            width: 50%;
+            min-width: 220px;
+            height:0.5em;
+            align-self: flex-end;
+
+        }
+
+    }
+
+}
+
+
+@media(max-width: 1250px){
+
+
+}

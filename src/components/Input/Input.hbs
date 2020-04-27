@@ -3,14 +3,14 @@
 {{#if labelData}}
     <label class="labelField_label" for={{labelID}}>{{labelData}}</label>
 
-    <input class="labelField"{{inputOption}} type={{type}} id={{labelID}} value={{labelText}}>
+    <input class="labelField"{{inputOption}} type={{type}} id={{labelID}} placeholder= {{labelText}}>
 
 {{/if}}
 
 {{#if valueData}}
     <label class="valueField_label" for={{valueID}}>{{valueData}}</label>
 
-    <input class="valueField"{{inputOption}} type={{type}} id={{valueID}} value={{valueText}}>
+    <input class="valueField"{{inputOption}} type={{type}} id={{valueID}} placeholder= {{valueText}}>
 {{/if}}
 
 {{#if button}}

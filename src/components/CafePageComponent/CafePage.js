@@ -1,6 +1,8 @@
 'use strict';
 import './CafePage.scss';
+import './CafePage.color.scss';
 import CafePageTemplate from './CafePage.hbs';
+
 
 /** Компонент страницы кафе */
 export class CafePageComponent {
@@ -18,8 +20,8 @@ export class CafePageComponent {
      * @param {string} name название кафе
      */
     _cropName(name){
-        if(name.length>20){
-            return name.slice(0,18).concat('...')
+        if(name.length>12){
+            return name.slice(0,10).concat('...')
         }
         return name;
     }
@@ -29,15 +31,14 @@ export class CafePageComponent {
      * @param {obj} context некоторый контекст с информацией о странице кафе
      */
     render(context) {
-        let openTime = new Date(context['openTime']);
-        let closeTime = new Date(context['closeTime']);
-
+        let openTime = context['openTime'];
+        let closeTime = context['closeTime'];
         let data = {
             name: this._cropName(context['name']),
             address: context['address'],
             description: context['description'],
-            openTime: openTime.getHours()+':'+openTime.getMinutes(),
-            closeTime: closeTime.getHours()+':'+closeTime.getMinutes(),
+            openTime: openTime,
+            closeTime: closeTime,
             photo: context['photo'],
         };
         this._parent.innerHTML = CafePageTemplate(data);

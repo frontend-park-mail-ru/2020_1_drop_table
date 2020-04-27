@@ -1,0 +1,48 @@
+.form-creator-container{
+  display: flex;
+  flex-direction: column;
+  font-family: Montserrat, sans-serif;
+  &_h4{
+    margin: 10px auto;
+    font-size: 3rem;
+  }
+
+  &__button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5%;
+    cursor: pointer;
+    height: 50px;
+    width: max-content;
+    background-color: #1C768F;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+    &:hover{
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+    }
+    &_span{
+      color:white;
+      margin: 0 5px;
+      white-space: nowrap;
+    }
+  }
+  &__save-button{
+    height: 50px;
+    width: max-content;
+    background-color: #1C768F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px auto;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
+    &:hover{
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.35);
+    }
+    &_span{
+      color:white;
+      margin: 0 5px;
+      white-space: nowrap;
+    }
+  }
+
+}

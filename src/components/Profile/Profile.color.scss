@@ -1,0 +1,22 @@
+@import '../../scss/themes.scss';
+
+.user-profile__header__logo-container_image-picker_img{
+  @include themify($themes){
+    border-color: themed('textColor');
+  }
+}
+.user-profile__header__logo-container_image-picker_span{
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}
+.user-profile__header___decorate-container__text-field_span{
+  @include themify($themes){
+    color: themed('textColor');
+  }
+}
+.user-profile__header___decorate-container__strip{
+  @include themify($themes){
+    background-color: themed('mainColor');
+  }
+}
