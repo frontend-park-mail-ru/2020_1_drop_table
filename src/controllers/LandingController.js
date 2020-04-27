@@ -2,6 +2,8 @@
 
 
 import {LandingCafesContainerComponent} from '../components/LandingCafesContainer/LandingCafesContainer';
+import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from "../components/Notification/Notification";
 
 /** контроллер лэндинга */
 export default class LandingController {
@@ -34,7 +36,11 @@ export default class LandingController {
     }
 
     async update(){
-        await this._landingCafeListModel.update();
+        try {
+            await this._landingCafeListModel.update();
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
     }
 
     addListeners(){
@@ -63,17 +69,28 @@ export default class LandingController {
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         let cafes = this._landingCafeListModel._cafeListJson;
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step >= cafes.length ){
-            await this._landingCafeListModel.update();
+            try {
+                await this._landingCafeListModel.update();
+            } catch (exception) {
+                (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+            }
         }
 
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,
             this._landingCafeListModel._currentId + this._landingCafeListModel._step));
 
-
-        console.log(this._landingCafeListModel._currentId, cafes.length);
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step < cafes.length){
             this._landingCafeListModel._currentId += this._landingCafeListModel._step
+        }
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                return [null, null]
+            }
         }
     }
 
