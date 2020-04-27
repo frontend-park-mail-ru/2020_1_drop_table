@@ -53,7 +53,7 @@ if ('serviceWorker' in navigator) {
             console.log('Registration failed with ' + error);
         });
 }
-
+//
 // navigator.serviceWorker.addEventListener('message', event => {
 //     if(event.data.type === 'csrf'){
 //         sessionStorage.setItem('Csrf', event.data.Csrf);

@@ -61,6 +61,7 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+
         this._addLoyaltyListeners();
 
         let cardRedactorBottom =
