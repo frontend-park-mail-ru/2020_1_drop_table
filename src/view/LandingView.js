@@ -22,6 +22,7 @@ export default class LandingView extends BaseView {
     _renderLanding(){
         let landingContainer = document.createElement('div');
         landingContainer.className = 'landingContainer';
+        landingContainer.style.overflow = 'hidden'
         this._app.appendChild(landingContainer);
         (new LandingComponent(landingContainer)).render();
     }

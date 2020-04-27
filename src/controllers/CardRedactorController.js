@@ -24,7 +24,7 @@ export default class CardRedactorController {
         this._appleCard = appleCardModel;
         this._cardRedactorView = cardRedactorView;
         this._loyaltyInfo = {
-            type: null,
+            type: 'coffee_cup',
             loyalty_info: {}
         };
         this._discounts = []
@@ -342,7 +342,8 @@ export default class CardRedactorController {
             this._loyaltyInfo.type = 'coffee_cup';
             await this.changeType();
             if(!await this._appleCard._loyalty_info){
-                this._appleCard._loyalty_info = {cups_count: 10}
+                this._loyaltyInfo.loyalty_info = {'cups_count': 5}
+                this._appleCard._loyalty_info = {cups_count: 5}
             } else{
                 this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info)
             }
@@ -378,6 +379,7 @@ export default class CardRedactorController {
             await this.changeType();
             console.log('cashback test', await this._appleCard._loyalty_info);
             if(!await this._appleCard._loyalty_info){
+                this._loyaltyInfo.loyalty_info = {'cashback': 10}
                 this._appleCard._loyalty_info = {cashback: 10};
             } else{
                 this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info)
