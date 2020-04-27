@@ -62,14 +62,12 @@ export default class LandingController {
     async cafesForward(){
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         let cafes = this._landingCafeListModel._cafeListJson;
-        let lengthBeforeUpdate = cafes.length;
-        let lengthAfterUpdate;
+        // let lengthBeforeUpdate = cafes.length;
+        // let lengthAfterUpdate;
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step > cafes.length ){
             await this._landingCafeListModel.update();
-            lengthAfterUpdate = cafes.length;
-            if(lengthBeforeUpdate === lengthAfterUpdate){
-                return;
-            }
+            //lengthAfterUpdate = cafes.length;
+
         }
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,

@@ -2,6 +2,7 @@ import './StaffMenu.scss';
 import StaffMenu from './StaffMenu.hbs';
 import {constants} from '../../utils/constants';
 import {authAjax} from '../../utils/authAjax';
+import NotificationComponent from '../Notification/Notification';
 
 
 export class StaffMenuComponent {
@@ -14,85 +15,50 @@ export class StaffMenuComponent {
 
 
     changePointPlus() {
-        let data = {
-            token: this.token,
-            loyalty_points: this.points + 1
-        };
-
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/points-system/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,  {"coffee_cups":Number(this.points + 1)}, (response) => {
             console.log('response', response);
             if (response.errors === null) {
                 console.log('points ok');
+                (new NotificationComponent('Успешно')).render();
                 this.loadData()
             } else {
+                (new NotificationComponent('Ошибка')).render();
                 throw response.errors;
             }
-        }).then(() => {
-            console.log('then')
         });
     }
     changePointMinus() {
-        let data = {
-            token: this.token,
-            loyalty_points: this.points - 1
-        };
-
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/points-system/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,  {"coffee_cups":Number(this.points - 1)}, (response) => {
             console.log('response', response);
             if (response.errors === null) {
                 console.log('points ok');
+                (new NotificationComponent('Успешно')).render();
                 this.loadData()
             } else {
+                (new NotificationComponent('Ошибка')).render();
                 throw response.errors;
             }
-        }).then(() => {
-            console.log('then')
         });
     }
     changePointMinusStack() {
-        let data = {
-            token: this.token,
-            loyalty_points: this.points -5
-        };
-
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
-            console.log('response', response);
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,  {"coffee_cups":Number(this.points - 5)}, (response) => {
             if (response.errors === null) {
-                console.log('points ok');
+                (new NotificationComponent('Успешно')).render();
                 this.loadData()
             } else {
+                (new NotificationComponent('Ошибка')).render();
                 throw response.errors;
             }
-        }).then(() => {
-            console.log('then')
         });
     }
 
-    changePoints(point) {
-        let data = {
-            token: this.token,
-            loyalty_points: this.points + point
-        };
-
-        authAjax('PUT',`${constants.PATH}/api/v1/customers/${data.token}/${data.loyalty_points}/`,  {}, (response) => {
-            console.log('response', response);
-            if (response.errors === null) {
-                console.log('points ok');
-                this.loadData()
-            } else {
-                throw response.errors;
-            }
-        }).then(() => {
-            console.log('then')
-        });
-    }
 
     loadData() {
         authAjax('GET', `${constants.PATH}/api/v1/customers/${this.token}/points/`, null, (response) => {
             console.log('response data', response.data);
             if (response.errors === null) {
-                this.points = response.data;
-                document.getElementById('label').innerHTML = '☕️'.repeat(response.data % 5);
+                this.points = Number(JSON.parse(response.data).coffee_cups);
+                document.getElementById('label').innerHTML = '☕️'.repeat(this.points  % 5);
 
                 let e = document.getElementById('stacks');
 
@@ -102,7 +68,7 @@ export class StaffMenuComponent {
                     e.removeChild(child);
                     child = e.lastElementChild;
                 }
-                for (let i = 0; i < Math.floor(response.data / 5); i++) {
+                for (let i = 0; i < Math.floor(this.points / 5); i++) {
                     let btn = document.createElement('button');
                     let t = document.createTextNode('☕️');
                     btn.addEventListener('click', this.changePointMinusStack);
@@ -111,6 +77,7 @@ export class StaffMenuComponent {
                     document.getElementById('stacks').appendChild(btn);
                 }
             } else {
+                (new NotificationComponent('Ошибка')).render();
                 throw response.errors;
             }
         }).then(() => {

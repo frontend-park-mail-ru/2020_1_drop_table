@@ -53,7 +53,7 @@ if ('serviceWorker' in navigator) {
             console.log('Registration failed with ' + error);
         });
 }
-
+//
 // navigator.serviceWorker.addEventListener('message', event => {
 //     if(event.data.type === 'csrf'){
 //         sessionStorage.setItem('Csrf', event.data.Csrf);
@@ -162,7 +162,7 @@ function doAddStaff(req) {
 function doStaffMenu(req) {
     const uuid = req.param.uuid;
     const staffMenuView = new StaffMenuView(app, uuid);
-    const staffMenuController = new StaffMenuController(staffMenuView);
+    const staffMenuController = new StaffMenuController(staffMenuView, uuid);
     staffMenuController.control();
 }
 
@@ -175,13 +175,9 @@ function doSurvey(req) {
     const cafeId = req.param.cafeId;
     const uuid = req.param.uuid;
 
-    console.log('0')
     const formModel = new FormModel(cafeId, uuid);
-    console.log('1')
     const surveyView = new SurveyView(app);
-    console.log('2')
     const surveyController = new SurveyController(formModel, surveyView );
-    console.log('3')
     surveyController.control();
 }
 

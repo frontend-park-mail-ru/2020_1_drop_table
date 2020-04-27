@@ -9,7 +9,7 @@ const ExtractNormalCSS = new ExtractTextPlugin('style.css');
 const ExtractColorCSS = new ExtractTextPlugin('style_color.css');
 
 module.exports = {
-    entry: './src/main/main.js',
+    entry: ["@babel/polyfill", './src/main/main.js'] ,
     module: {
         rules: [
             {
@@ -50,7 +50,7 @@ module.exports = {
                 test: /\.(png|svg|jpg|gif|ico)$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 100 * 1024
+                    limit: 300 * 1024
                 }
             },
             {
@@ -107,7 +107,8 @@ module.exports = {
             {from:'src/fonts',to:'fonts'},
             {from:'src/main/sw.worker.js',to:''},
         ]),
-        require('autoprefixer')
+        require('autoprefixer'),
+
     ]
 };
 

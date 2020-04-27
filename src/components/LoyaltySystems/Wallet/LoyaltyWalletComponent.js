@@ -24,12 +24,15 @@ export class LoyaltyWalletComponent {
      * Отрисовка шаблона кафе
      * @private
      */
-    _renderTemplate() {
-        this._el.innerHTML = LoyaltyWallet({text: this._text});
+    _renderTemplate(context) {
+        console.log('context wallet', context)
+        let cashback = context.cashback;
+        this._el.innerHTML = LoyaltyWallet({text: this._text, cashback: cashback});
     }
 
     /** Отрисоака */
-    render() {
-        setTimeout(this._renderTemplate.bind(this), 250);
+    render(context) {
+
+        this._renderTemplate(context);
     }
 }

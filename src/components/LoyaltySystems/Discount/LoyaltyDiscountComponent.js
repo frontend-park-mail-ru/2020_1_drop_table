@@ -5,6 +5,7 @@ import LoyaltyDiscount from './LoyaltyDiscountComponent.hbs';
 import DiscountCell from '../Discount/DiscountCell/DicsountCell.hbs';
 
 
+
 /** Компонент карточки кафе */
 export class LoyaltyDiscountComponent {
 
@@ -27,25 +28,19 @@ export class LoyaltyDiscountComponent {
      * Отрисовка шаблона кафе
      * @private
      */
-    _renderTemplate() {
-        this.cont['text'] = this.text;
-        let discounts = this.cont['discounts'];
+    _renderTemplate(context) {
+
         let cells = [];
-        for(let i = 0; i < discounts.length; i++){
-            cells.push(DiscountCell(discounts[i]));
+
+        for(let i = 0; i < context.length; i++){
+            cells.push(DiscountCell({index: i, price:context[i].price, discount:context[i].discount}));
         }
-        this.cont['discounts'] = cells;
-        this.element.innerHTML = LoyaltyDiscount(this.cont);
+        this._el.innerHTML = LoyaltyDiscount({discounts:cells});
     }
 
     /** Отрисоака */
     render(context) {
-        let newContext ={
-            cont: context,
-            element : this._el,
-            text : this._text
-        }
-        setTimeout(this._renderTemplate.bind(newContext), 250);
+        this._renderTemplate(context)
 
     }
 }
