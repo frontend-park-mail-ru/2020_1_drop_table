@@ -3,6 +3,7 @@
 import BaseView from './BaseView';
 import {StaffMenuComponent} from '../components/StaffMenu/StaffMenu';
 import {StaffMenuCashbackComponent} from '../components/StaffMenuCashback/StaffMenuCashback';
+import {StaffMenuDiscountsComponent} from '../components/StaffMenuCashback/StaffMenuCashback';
 /** view страницы с меню работника */
 export default class StaffMenuView extends BaseView {
 
@@ -30,7 +31,7 @@ export default class StaffMenuView extends BaseView {
         } else if(customerData.type === 'percents'){
             console.log('percents', customerData);
             const staffMenuDiscountsElement = document.createElement('div');
-            (new StaffMenuCashbackComponent(staffMenuDiscountsElement, this._uuid)).render();
+            (new StaffMenuDiscountsComponent(staffMenuDiscountsElement, this._uuid)).render();
             this._app.appendChild(staffMenuDiscountsElement);
         }
     }

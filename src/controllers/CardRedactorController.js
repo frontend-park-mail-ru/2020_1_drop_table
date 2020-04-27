@@ -197,7 +197,10 @@ export default class CardRedactorController {
             'strip.png': strip,
             'strip@2x.png': strip
         };
-        this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
+        console.log('test',this._loyaltyInfo.type)
+        if(this._loyaltyInfo.type === 'percents'){
+            this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
+        }
         try {
             this._appleCard.editCard(images,this._loyaltyInfo,true);
         } catch (exception) {
@@ -225,7 +228,11 @@ export default class CardRedactorController {
             'logo.png': icon, 'logo@2x.png': icon,
             'strip.png': strip, 'strip@2x.png': strip
         };
-        this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
+        console.log('test',this._loyaltyInfo.type)
+        if(this._loyaltyInfo.type === 'percents'){
+            this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
+        }
+
         try {
             this._appleCard.editCard(images, this._loyaltyInfo, false);
         } catch (exception) {
@@ -337,10 +344,9 @@ export default class CardRedactorController {
             break;
         case 1:
 
-            this.changeType();
             this._loyaltyInfo.type = 'percents';
+            await this.changeType();
             if(!await this._appleCard._loyalty_info){
-                console.log('percents no')
                 this._loyaltyInfo.loyalty_info = {1000:10};
                 this._appleCard._loyalty_info = this._loyaltyInfo.loyalty_info;
             } else{

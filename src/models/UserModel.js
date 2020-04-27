@@ -259,9 +259,8 @@ export default class UserModel {
     async changeStaffPosition(id, position) {
 
         const requestUrl = `/api/v1/staff/update_position/${id}`;
-        await ajax(constants.PATH + requestUrl,
-            'POST',
-            {position},
+        await authAjax('POST',constants.PATH + requestUrl,
+            {'position':position},
             (response) => {
                 if (response.errors === null){
                     router._goTo('/staff');
