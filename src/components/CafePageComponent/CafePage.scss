@@ -9,8 +9,8 @@
         justify-content: space-around;
 
         &__cafe-info {
-            width: 70vw;
-            height: 40vw;
+            width: 52.5vw;
+            height: 30vw;
             position: relative;
 
             &__image-container {
@@ -142,8 +142,8 @@
             }
 
             &__edit-button {
-                height: 5vw;
-                width: initial;
+                width: 250px;
+                height: 50px;
                 display: flex;
                 justify-content: center;
                 padding: auto 0;
@@ -164,8 +164,7 @@
                 }
 
                 &_span {
-                    padding: 10px;
-                    font-family: 'Montserrat', SansSerif;
+                    margin: 0 auto;
                     cursor: pointer;
                 }
             }
@@ -269,7 +268,7 @@
                 margin: 10px auto;
                 font-weight: bold;
 
-                width: 125px;
+                width: 250px;
                 height: 50px;
 
                 -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
@@ -305,8 +304,8 @@
 
     &__apple-pass-button {
         -webkit-appearance: none;
-        width: 16rem;
-        height: 8rem;
+        width: 250px;
+        height: 50px;
         margin: 10px auto;
         display: flex;
         justify-content: center;
@@ -325,8 +324,8 @@
 
     &__add-staff-button {
         -webkit-appearance: none;
-        width: 16rem;
-        height: 8rem;
+        width: 250px;
+        height: 50px;
         margin: 10px auto;
         display: flex;
         justify-content: center;
