@@ -2,6 +2,7 @@
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import NotificationComponent from '../components/Notification/Notification';
+import {router} from "../main/main";
 
 /** контроллер профиля */
 export default class LoginController{
@@ -17,10 +18,11 @@ export default class LoginController{
     }
 
     async update(){
-        try {
-            //await this._userModel.update();
-        } catch (exceptions) {
-            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        try{
+            await this._userModel.update();
+            router._goTo('/myCafes')
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
     }
 
@@ -69,6 +71,7 @@ export default class LoginController{
                             id: 'password',
                             data: this._userModel.password,
                             labelData: 'Пароль',
+
                             inputOption: 'required',
                         },
 
@@ -97,10 +100,10 @@ export default class LoginController{
     _makeValidateContext(form){
         return [
             {
-                element: form.elements['full-name'],
+                element: form.elements['password'],
                 validate: () => {
-                    if(form.elements['full-name'].value.toString().length < 4){
-                        return 'Имя слишком короткое';
+                    if(form.elements['password'].value.toString().length < 4){
+                        return 'Пароль слишком короткий';
                     }
                 }
             },
@@ -113,34 +116,25 @@ export default class LoginController{
                     }
                 }
             },
-            {
-                element: form.elements['Position'],
-                validate: () => {
-                    if(form.elements['Position'].value.toString().length < 4){
-                        return 'Должность слишком короткая';
-                    }
-                }
-            },
-
         ];
     }
 
 
     _makeExceptionContext(form = document.body){
         return {
-
             'incorrect password or email': [
                 'Некорректный логин или пароль',
                 form['password']
             ],
-           'resource you request not found': [
+            'resource you request not found': [
                 'Некорректный логин или пароль',
                 form['password']
             ],
+            'no permission': ()=>{return [null, null]},
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
         };
     }
 

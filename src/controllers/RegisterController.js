@@ -2,6 +2,7 @@
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import NotificationComponent from '../components/Notification/Notification';
+import {router} from "../main/main";
 
 /** контроллер профиля */
 export default class RegisterController{
@@ -17,10 +18,11 @@ export default class RegisterController{
     }
 
     async update(){
-        try {
-            //await this._userModel.update();
-        } catch (exceptions) {
-            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        try{
+            await this._userModel.update();
+            router._goTo('/myCafes')
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
     }
 
@@ -162,10 +164,6 @@ export default class RegisterController{
                 'Имя слишком короткое',
                 form['full-name']
             ],
-            'Key: \'Staff.Position\' Error:Field validation for \'Position\' failed on the \'min\' tag': [
-                'Должность слишком короткая',
-                form['Position']
-            ],
             'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
                 'Некоректная почта',
                 form['email']
@@ -178,8 +176,9 @@ export default class RegisterController{
                 'Пароль слишком длинный',
                 form['password']
             ],
+            'no permission': ()=>{return [null, null]},
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
