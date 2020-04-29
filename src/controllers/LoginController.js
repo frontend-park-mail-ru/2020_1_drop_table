@@ -18,6 +18,12 @@ export default class LoginController {
         this._loginView = loginView;
     }
 
+    async update(){
+        try{
+            await this._userModel.login();
+        } catch (exception) {}
+    }
+
     /** Event авторизации */
     async _submitListener(e){
         e.preventDefault();
@@ -118,6 +124,7 @@ export default class LoginController {
 
     /** Запуск контроллера */
     async control(){
+        await this.update();
         this._loginView.context = this._makeViewContext();
         this._loginView.render();
 
