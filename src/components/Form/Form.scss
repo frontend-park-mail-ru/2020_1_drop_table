@@ -57,8 +57,31 @@
     }
 }
 .error{
-    margin-top: -10%;
+    margin-top: -15px;
 }
+
+
+
+.authorize__form-container__form__have-account{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto 15px auto;
+    &__ha{
+        margin: 0 auto;
+    }
+    &__href{
+        margin: 0 auto;
+        cursor: pointer;
+        color: black;
+        text-decoration-line: none;
+        &:hover{
+            text-decoration-line: underline;
+        }
+    }
+}
+
+
 
 
 
