@@ -105,6 +105,10 @@ export default class LoginController {
                 'Некорректный логин или пароль',
                 form['password']
             ],
+            'incorrect password or email': [
+                'Некорректный логин или пароль',
+                form['password']
+            ],
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
                 return [null, null]
