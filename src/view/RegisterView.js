@@ -1,8 +1,8 @@
 'use strict';
 
-import RegisterComponent from '../components/Register/Register';
 import Header from '../components/Header/Header';
 import BaseView from './BaseView';
+import AuthorizeComponent from '../components/AuthorizeComponent/AuthorizeComponent';
 
 /** view регистрации */
 export default class RegisterView extends BaseView {
@@ -22,7 +22,10 @@ export default class RegisterView extends BaseView {
         let registerContainer = document.createElement('div');
         registerContainer.className = 'registerContainer';
         this._app.appendChild(registerContainer);
-        (new RegisterComponent(registerContainer)).render(this._context['register'], this._topBarText);
+        if(this._topBarText){
+            this._context['register'].topText = this._topBarText;
+        }
+        (new AuthorizeComponent(registerContainer)).render(this._context['register']);
     }
 
     /** Отрисовка страницы регистрации */

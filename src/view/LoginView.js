@@ -1,8 +1,8 @@
 'use strict';
 
-import LoginComponent from '../components/Login/Login';
 import Header from '../components/Header/Header';
 import BaseView from './BaseView';
+import AuthorizeComponent from '../components/AuthorizeComponent/AuthorizeComponent';
 
 /** view login */
 export default class LoginView extends BaseView {
@@ -20,7 +20,7 @@ export default class LoginView extends BaseView {
         let loginContainer = document.createElement('div');
         loginContainer.className = 'loginContainer';
         this._app.appendChild(loginContainer);
-        (new LoginComponent(loginContainer)).render(this._context['login']);
+        (new AuthorizeComponent(loginContainer)).render(this._context['login']);
     }
 
     /** Отрисовка страницы с логином */
