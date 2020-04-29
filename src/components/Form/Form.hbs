@@ -4,4 +4,10 @@
         <label class="input-field_label" for={{id}}>{{labelData}}</label>
     </div>
 {{/each}}
+    {{#if redirect}}
+        <div class="authorize__form-container__form__have-account">
+            <label class="authorize__form-container__form__have-account__ha">{{redirect.textRedirect}} </label>
+            <a href="{{redirect.link}}" class="authorize__form-container__form__have-account__href">{{redirect.linkText}}</a>
+        </div>
+    {{/if}}
 <input class="input-field__submit" type="submit" value={{submitValue}}>
