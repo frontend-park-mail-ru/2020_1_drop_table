@@ -18,11 +18,13 @@
 
 .nav-header_img{
     height: 6vw;
+    max-height: 100px;
+
     object-fit: cover;
     margin: auto;
 }
 .nav-header_h4{
-    font-size: 2vw;
+    font-size: 1.5rem;
     margin: auto;
     cursor: pointer;
     white-space: nowrap;
@@ -37,7 +39,7 @@
 
 .nav-links {
     display: flex;
-    font-size: 1.5vw; //todo подобрать подходящий
+    font-size: 1.5rem; //todo подобрать подходящий
     justify-content: flex-end;
     width: 85%;
     opacity: 95%;
@@ -62,6 +64,7 @@
     white-space: nowrap;
     text-decoration: none;
     padding: 0 10px;
+    font-size: 1rem;
 }
 .nav-links__link-container_a:hover{
     text-decoration: underline;
