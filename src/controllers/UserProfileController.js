@@ -185,6 +185,14 @@ export default class UserProfileController{
                 'Некоректная почта',
                 form['email']
             ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'max\' tag': [
+                'Имя слишком длинное',
+                form['full-name']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'max\' tag': [
+                'Пароль слишком длинный',
+                form['password']
+            ],
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
                 return [null, null]
