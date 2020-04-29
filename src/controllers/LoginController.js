@@ -1,70 +1,92 @@
 'use strict';
-
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
-import {router} from '../main/main';
 import NotificationComponent from '../components/Notification/Notification';
 
-/** контроллер авторизации */
-export default class LoginController {
+/** контроллер профиля */
+export default class LoginController{
 
     /**
-     * Инициализация LoginController
+     * Инициализация UserProfileController
      * @param {UserModel} userModel модель пользователя
-     * @param {LoginView} loginView view для авторизации
+     * @param {UserProfileView} userProfileView view профиля
      */
-    constructor(userModel, loginView) {
+    constructor(userModel, loginView){
         this._userModel = userModel;
         this._loginView = loginView;
     }
 
-    /** Event авторизации */
-    async _submitListener(e){
+    async update(){
+        try {
+            //await this._userModel.update();
+        } catch (exceptions) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        }
+    }
+
+    /** Event изменения профиля */
+    async _submitListener(e) {
         e.preventDefault();
-        const form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
-        this._userModel.email = form.elements['email'].value;
-        this._userModel.password = form.elements['password'].value;
+        const form = document.getElementsByClassName('authorize__form-container__form').item(0);
 
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
         if ((new FormValidation(form)).validate(validateContext)) {
-            try{
+            this._userModel.email = form.elements['email'].value.toString();
+            this._userModel.password = form.elements['password'].value.toString();
+
+            try {
                 await this._userModel.login();
             } catch (exception) {
                 (new ServerExceptionHandler(form, serverExceptionContext)).handle(exception);
             }
-
         }
     }
 
     /**
-     * Создание контекста для LoginView
+     * Создание контекста для UserProfileView
      * @return {obj} созданный контекст
      */
-    _makeViewContext(){
+    _makeViewContext() {
         return {
             header: {
                 type: 'auth',
-                avatar: {
-                    photo: null
-                }
             },
             login: {
+                topText:'Логин',
                 form: {
+                    formFields: [
+                        {
+                            type: 'text',
+                            id: 'full-name',
+                            data: this._userModel.name,
+                            labelData: 'Имя',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'email',
+                            id: 'email',
+                            data: this._userModel.email,
+                            labelData: 'Почта',
+                            inputOption: 'required',
+                        },
+
+                    ],
+                    redirect: {
+                        textRedirect: 'Впервые у нас?',
+                        link: '/reg',
+                        linkText :'Зарегистрироваться',
+                    },
+
+                    submitValue: 'Готово',
                     event: {
                         type: 'submit',
                         listener: this._submitListener.bind(this)
-                    }
+                    },
                 },
-                register: {
-                    event: {
-                        type: 'click',
-                        listener: ()=>{router._goTo('/reg');}
-                    }
-                }
             }
-        }
+        };
     }
 
     /**
@@ -75,6 +97,14 @@ export default class LoginController {
     _makeValidateContext(form){
         return [
             {
+                element: form.elements['full-name'],
+                validate: () => {
+                    if(form.elements['full-name'].value.toString().length < 4){
+                        return 'Имя слишком короткое';
+                    }
+                }
+            },
+            {
                 element: form.elements['email'],
                 validate: () => {
                     const emailRegex = new RegExp('\\S+@\\S+\\.\\S+');
@@ -84,28 +114,26 @@ export default class LoginController {
                 }
             },
             {
-                element: form.elements['password'],
+                element: form.elements['Position'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 8){
-                        return 'Пароль слишком короткий';
+                    if(form.elements['Position'].value.toString().length < 4){
+                        return 'Должность слишком короткая';
                     }
                 }
-            }
+            },
+
         ];
     }
 
-    /**
-     * Создание контекста для ServerExceptionHandler
-     * @param {Element} form вылидируемый элемент
-     * @return {obj} созданный контекст
-     */
-    _makeExceptionContext(form){
+
+    _makeExceptionContext(form = document.body){
         return {
-            'resource you request not found': [
+
+            'incorrect password or email': [
                 'Некорректный логин или пароль',
                 form['password']
             ],
-            'incorrect password or email': [
+           'resource you request not found': [
                 'Некорректный логин или пароль',
                 form['password']
             ],
@@ -118,8 +146,9 @@ export default class LoginController {
 
     /** Запуск контроллера */
     async control(){
+        await this.update();
         this._loginView.context = this._makeViewContext();
         this._loginView.render();
-
     }
+
 }
