@@ -128,25 +128,14 @@ export default class LoginController{
 
     _makeExceptionContext(form = document.body){
         return {
-            'pq: duplicate key value violates unique constraint "staff_email_key"': [
-                'Пользователь с такой почтой уже существует',
-                form['email']
-            ],
-            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
-                'Минимальная длинна пароля 8 символов',
+
+            'incorrect password or email': [
+                'Некорректный логин или пароль',
                 form['password']
             ],
-            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'min\' tag': [
-                'Имя слишком короткое',
-                form['full-name']
-            ],
-            'Key: \'Staff.Position\' Error:Field validation for \'Position\' failed on the \'min\' tag': [
-                'Должность слишком короткая',
-                form['Position']
-            ],
-            'Key: \'Staff.Email\' Error:Field validation for \'Email\' failed on the \'email\' tag': [
-                'Некоректная почта',
-                form['email']
+           'resource you request not found': [
+                'Некорректный логин или пароль',
+                form['password']
             ],
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
