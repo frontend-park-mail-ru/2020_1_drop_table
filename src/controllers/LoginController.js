@@ -58,17 +58,17 @@ export default class LoginController{
                 form: {
                     formFields: [
                         {
-                            type: 'text',
-                            id: 'full-name',
-                            data: this._userModel.name,
-                            labelData: 'Имя',
-                            inputOption: 'required',
-                        },
-                        {
                             type: 'email',
                             id: 'email',
                             data: this._userModel.email,
                             labelData: 'Почта',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'password',
+                            id: 'password',
+                            data: this._userModel.password,
+                            labelData: 'Пароль',
                             inputOption: 'required',
                         },
 
