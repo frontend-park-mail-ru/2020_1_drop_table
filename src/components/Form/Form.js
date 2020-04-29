@@ -27,11 +27,26 @@ export default class FormComponent {
         );
     }
 
+    _checkContext(context){
+        context.formFields.forEach((subContext)=>{
+            if(!('inputOption' in subContext)){
+                subContext.inputOption = 'required';
+            }
+        })
+
+        context.formFields.forEach((subContext)=>{
+            if(!('areaType' in subContext)){
+                subContext.areaType = 'input';
+            }
+        })
+    }
+
     /**
      * Отрисовка формы
      * @param {obj} context некоторый контекст с информацией о форме
      */
     render(context) {
+        this._checkContext(context)
         this._parent.innerHTML = FormTemplate(context);
         this._addListener(context);
     }
