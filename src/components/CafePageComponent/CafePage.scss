@@ -44,17 +44,16 @@
                 &_h4 {
                     font-size: 4vw;
                     font-weight: bold;
-                    padding: 0 10% 0 10%;
-                    margin-bottom: 0;
+                    margin: 10px;
                     cursor: default;
                 }
 
                 &__align-div {
-                    display: table-cell;
+                    //display: table-cell;
                     height: 100%;
                     width: 100%;
                     font-size: 16px;
-                    line-height: 24px;
+                    //line-height: 24px;
                     white-space: normal;
                     word-break: break-word;
 
@@ -66,7 +65,8 @@
                         &_p {
                             text-decoration: none;
                             height: 5vw;
-                            width: 100%;
+                            width: 90%;
+
                             padding: 0 10px;
                             display: block;
                             overflow-y: scroll;

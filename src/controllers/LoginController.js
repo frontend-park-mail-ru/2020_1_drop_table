@@ -70,7 +70,8 @@ export default class LoginController{
                             type: 'password',
                             id: 'password',
                             data: this._userModel.password,
-                            labelData: 'Проль',
+                            labelData: 'Пароль',
+
                             inputOption: 'required',
                         },
 
