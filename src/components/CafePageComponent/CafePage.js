@@ -19,12 +19,12 @@ export class CafePageComponent {
      * Функция обрезки слишком длинного имени
      * @param {string} name название кафе
      */
-    _cropName(name){
-        if(name.length>12){
-            return name.slice(0,10).concat('...')
-        }
-        return name;
-    }
+    // _cropName(name){
+    //     if(name.length>12){
+    //         return name.slice(0,10).concat('...')
+    //     }
+    //     return name;
+    // }
 
     /**
      * Отрисовка компоненты страницы кафе
@@ -34,7 +34,7 @@ export class CafePageComponent {
         let openTime = context['openTime'];
         let closeTime = context['closeTime'];
         let data = {
-            name: this._cropName(context['name']),
+            name: context['name'],
             address: context['address'],
             description: context['description'],
             openTime: openTime,

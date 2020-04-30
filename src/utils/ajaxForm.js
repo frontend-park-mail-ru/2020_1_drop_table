@@ -31,13 +31,13 @@ export async function ajaxForm(route, method, formData, callback) {
 
     let responseJson = null;
 
-    const loading = new LoadingComponent();
-    loading.render();
+    // const loading = new LoadingComponent();
+    // loading.render();
 
     try {
         const response = await fetch(req);
         if (response.ok) {
-            loading.remove();
+            // loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
@@ -47,7 +47,7 @@ export async function ajaxForm(route, method, formData, callback) {
             throw new Error('Response not ok');
         }
     } catch (exception) {
-        loading.remove();
+        // loading.remove();
         // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }
