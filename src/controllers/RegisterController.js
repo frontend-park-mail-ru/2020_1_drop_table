@@ -95,7 +95,6 @@ export default class RegisterController{
                         link: '/login',
                         linkText :'Войти',
                     },
-
                     submitValue: 'Готово',
                     event: {
                         type: 'submit',
