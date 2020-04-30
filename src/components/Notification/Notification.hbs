@@ -1,3 +1,6 @@
 <div class="notification">
-    <h4 class="notification_h4"> {{text}}</h4>
+    <span class="notification_span"> {{text}}</span>
+    {{#if description}}
+        <p class="notification_p"> {{description}}</p>
+    {{/if}}
 </div>

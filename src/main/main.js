@@ -38,6 +38,9 @@ import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
 import StaffPageController from '../controllers/StaffPageController';
 
+import PageNotFoundController from '../controllers/PageNotFoundController';
+import PageNotFoundView from '../view/PageNotFoundView';
+
 
 import SurveyView from '../view/SurveyView';
 import SurveyController from '../controllers/SurveyController'
@@ -53,20 +56,7 @@ if ('serviceWorker' in navigator) {
             console.log('Registration failed with ' + error);
         });
 }
-//
-// navigator.serviceWorker.addEventListener('message', event => {
-//     if(event.data.type === 'csrf'){
-//         sessionStorage.setItem('Csrf', event.data.Csrf);
-//     }
-// });
-//
-// navigator.serviceWorker.addEventListener('message', event => { //TODO
-//     console.log('data', event.data);
-//     if(event.data.type){
-//         console.log('REFRESH');
-//         location.reload();
-//     }
-// });
+
 
 const html = document.getElementsByTagName('html').item(0);
 const theme = localStorage.getItem('theme');
@@ -181,9 +171,23 @@ function doSurvey(req) {
     surveyController.control();
 }
 
+function doError(req) {
+    let code = req.query.get('code');
+    if(!code){
+        code = 404;
+    }
+    const pageNotFoundView = new PageNotFoundView(app);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
+    pageNotFoundController.control();
+}
+function doNotFound() {
+    const pageNotFoundView = new PageNotFoundView(app);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
+    pageNotFoundController.control();
+}
 
 /** Роуты роутера */
-router.get('/', dolog);
+router.get('/', doLanding);
 router.get('/landing', doLanding);
 
 router.get('/reg', doreg);
@@ -203,8 +207,9 @@ router.get('/points/{uuid}', doStaffMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
+router.get('/error',doError);
 
-router.notFoundHandler(doLanding);
+router.notFoundHandler(doNotFound);
 
 router.init();
 

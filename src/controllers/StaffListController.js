@@ -86,7 +86,7 @@ export default class StaffListController{
     _makeExceptionContext(){
         return {
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         }

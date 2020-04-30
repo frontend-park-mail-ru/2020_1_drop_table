@@ -7,6 +7,9 @@
     position: relative;
     min-width: 260px;
     min-height: 130px;
+
+    max-width: 390px;
+    max-height: 195px;
     margin-bottom: 5rem;
     font-size: 1.5rem;
 
@@ -49,13 +52,11 @@
 
     &__text-field{  //todo flex
 
-      &_h4{
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        color: #000000;
-        transform: translate(-50%, -50%);
+      &_span{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        margin: 25px;
 
       }
 

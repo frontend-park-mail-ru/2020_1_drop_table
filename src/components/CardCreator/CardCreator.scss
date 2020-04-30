@@ -12,7 +12,7 @@
         justify-content: space-around;
         &_h4 {
             font-family: 'Montserrat', arial;
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: bold;
             margin: 1rem 0;
         }
@@ -74,12 +74,12 @@
                 &__save{
                     margin: 10px auto;
                     width: 200px;
-                    height: 80px;
+                    height: 50px;
                 }
                 &__publish{
                     margin: 10px auto;
                     width: 200px;
-                    height: 80px;
+                    height: 50px;
                 }
             }
             &__image-picker__input{
@@ -102,11 +102,9 @@
     &_color-picker{
         display: flex;
         flex-direction: column;
-        margin-bottom: 0.5rem;
         padding-bottom: 0.5rem;
         border-radius: 0.5rem;
-        margin-right: 0.5rem ;
-        margin-left: 0.5rem ;
+
         -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
         width: -moz-available;
@@ -170,7 +168,6 @@
 }
 
 .loyalty-redactor-container{
-    height: 500px;
     width: 100%;
     //overflow: hidden;
 }

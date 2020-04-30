@@ -4,17 +4,17 @@
   font-family: Montserrat, sans-serif;
   &_h4{
     margin: 10px auto;
-    font-size: 3rem;
+    font-size: 2rem;
   }
 
   &__button{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 5%;
+    margin: 0 auto;
     cursor: pointer;
     height: 50px;
-    width: max-content;
+    width: 200px;
     background-color: #1C768F;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
     &:hover{
@@ -22,13 +22,13 @@
     }
     &_span{
       color:white;
-      margin: 0 5px;
+      margin: 0 auto;
       white-space: nowrap;
     }
   }
   &__save-button{
     height: 50px;
-    width: max-content;
+    width: 200px;
     background-color: #1C768F;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@
     }
     &_span{
       color:white;
-      margin: 0 5px;
+      margin: 0 auto;
       white-space: nowrap;
     }
   }

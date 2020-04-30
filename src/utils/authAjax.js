@@ -31,15 +31,15 @@ export async function authAjax(method, route, body, callback) {
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
         //req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
     }
-    const loading = new LoadingComponent();
-    loading.render();
+    // const loading = new LoadingComponent();
+    // loading.render();
 
     const req = new Request(route, reqBody);
     let responseJson = null;
     try {
         const response = await fetch(req);
         if (response.ok) {
-            loading.remove();
+            // loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
@@ -49,7 +49,7 @@ export async function authAjax(method, route, body, callback) {
             throw new Error('Response not ok');
         }
     } catch (exception) {
-        loading.remove();
+        // loading.remove();
         // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }

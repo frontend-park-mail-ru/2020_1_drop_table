@@ -30,13 +30,13 @@ export class CafesContainerComponent {
      * @return {string} обрезанная строка
      * @private
      */
-    _cropName(name){
-
-        if (name.length > 10) {
-            return name.slice(0, 8).concat('...')
-        }
-        return name;
-    }
+    // _cropName(name){
+    //
+    //     if (name.length > 17) {
+    //         return name.slice(0, 15).concat('...')
+    //     }
+    //     return name;
+    // }
 
     /**
      * Отрисовка шаблона
@@ -46,7 +46,7 @@ export class CafesContainerComponent {
     _renderTemplate(context) {
 
         let cafes = context.map(({photo = photo, name = name, id = id} = {}) => {
-            return CafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
+            return CafeCard({cafeImageSrc: photo, name: name, id: id});
         });
 
         const noCafes = !context.length;

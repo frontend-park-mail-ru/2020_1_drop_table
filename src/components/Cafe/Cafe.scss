@@ -17,7 +17,7 @@
 
   }
   .new-cafe-page__decorate-container__text-field{
-    margin-left:15%;
+    margin-left: 100px;
   }
 
 }
@@ -25,12 +25,14 @@
 
 .new-cafe-page__decorate-container {
     font-family: 'Montserrat', arial;
+    display: flex;
+    justify-content: flex-start;
     &__text-field {
       display: flex;
       flex-direction: column;
       justify-self: flex-start;
       &_h1{
-        margin: 0 auto;
+        margin: 0;
       }
       &__strip{
         height: 5px;
@@ -54,7 +56,7 @@
 .new-cafe-page__outer__sub__image-container{
     display: flex;
     justify-content: space-between;
-    margin: 40px;
+    margin-top: 20px;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 
 }
@@ -77,8 +79,13 @@
 }
 
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_img{
-    width: 45vw;
-    height: calc(45vw/2);
+
+    max-height: calc(650px/2);
+    max-width: 650px;
+
+    width: 85vw;
+    height: calc(85vw/2);
+
     display: block;
     object-fit: cover;
     margin: 0 auto;
