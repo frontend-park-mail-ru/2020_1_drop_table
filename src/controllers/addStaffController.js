@@ -24,6 +24,7 @@ export default class AddStaffController{
     async update(){
         try{
             await this._userModel.update();
+
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -72,11 +73,6 @@ export default class AddStaffController{
                         },
 
                     ],
-                    redirect: {
-                        textRedirect: 'Уже есть аккаунт?',
-                        link: '/login',
-                        linkText :'Войти',
-                    },
 
                     submitValue: 'Готово',
                     event: {
@@ -92,7 +88,7 @@ export default class AddStaffController{
     async _submitListener(e) {
         e.preventDefault();
 
-        let form = document.getElementsByClassName('authorize__form-container__form').item(0).item(0);
+        const form = document.getElementsByClassName('authorize__form-container__form').item(0);
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
@@ -187,7 +183,6 @@ export default class AddStaffController{
                 'Пароль слишком длинный',
                 form['password']
             ],
-            'no permission': ()=>{return [null, null]},
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
@@ -197,7 +192,6 @@ export default class AddStaffController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
         this._registerView.context = this._makeViewContext();
         this._registerView.render();
     }

@@ -1,6 +1,10 @@
 .notification{
   min-height: 50px;
   min-width: 250px;
+
+  max-width: 400px;
+  font-family: Montserrat, sans-serif;
+
   position: fixed;
   top: 10px;
   right:10px;
@@ -13,10 +17,13 @@
   border-radius: 15px 15px 15px 15px;
   transition: opacity 2s linear 0s, right 2s linear 0s;
   z-index: 10;
-  &_h4{
-    font-family: Montserrat, sans-serif;
+  &_span{
     font-size: 1rem;
-    margin: 0 5px;
+    margin: 0 auto;
+  }
+  &_p{
+    font-size: 1rem;
+    margin: 0 10px;
 
   }
 }

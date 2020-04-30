@@ -194,7 +194,7 @@ export default class UserProfileController{
                 form['password']
             ],
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
