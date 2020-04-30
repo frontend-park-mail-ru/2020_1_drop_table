@@ -63,14 +63,14 @@ export default class RegisterController{
                         {
                             type: 'text',
                             id: 'full-name',
-                            data: this._userModel.name,
+                            data: '',
                             labelData: 'Имя',
                             inputOption: 'required',
                         },
                         {
                             type: 'email',
                             id: 'email',
-                            data: this._userModel.email,
+                            data: '',
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
