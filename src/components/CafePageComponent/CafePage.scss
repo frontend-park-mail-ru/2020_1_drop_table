@@ -46,7 +46,7 @@
                 display: table-column;
 
                 &_h4 {
-                    font-size: 3rem;
+                    font-size: 2.5rem;
                     font-weight: bold;
                     margin: 10px;
                     cursor: default;
@@ -153,15 +153,12 @@
                 height: 50px;
                 display: flex;
                 justify-content: center;
-                padding: auto 0;
                 flex-direction: column;
-                margin: auto auto;
                 position: absolute;
                 right: 5%;
-                bottom: -100px;
+                bottom: -70px;
                 -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
                 filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-                border-radius: 2%;
                 opacity: 90%;
                 cursor: pointer;
 

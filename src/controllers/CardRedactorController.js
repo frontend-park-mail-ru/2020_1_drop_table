@@ -8,10 +8,6 @@ import {LoyaltyDiscountComponent} from '../components/LoyaltySystems/Discount/Lo
 import {LoyaltyWalletComponent} from '../components/LoyaltySystems/Wallet/LoyaltyWalletComponent';
 import {LoyaltyCouponComponent} from '../components/LoyaltySystems/Coupon/LoyaltyCouponComponent';
 
-
-
-
-
 /** Контроллер редактирования карточки */
 export default class CardRedactorController {
 
@@ -32,11 +28,8 @@ export default class CardRedactorController {
 
     async changeType(){
         try{
-            console.log('change type1', this._loyaltyInfo.type);
             await this._appleCard.update(this._loyaltyInfo.type);
             this._appleCard._type = this._loyaltyInfo.type;
-
-            console.log('change type2', await this._appleCard._loyalty_info);
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -171,10 +164,10 @@ export default class CardRedactorController {
         submitSave.addEventListener('click', this._editCardListener.bind(this));
 
         const submitPublish = document.getElementsByClassName('card-form__buttons__publish').item(0);
-        submitPublish.addEventListener('click', this._publishCarfListener.bind(this));
+        submitPublish.addEventListener('click', this._publishCardListener.bind(this));
     }
 
-    _publishCarfListener(e){
+    _publishCardListener(e){
         e.preventDefault();
         const iconInput = document.getElementById('uploadAvatar');
         let icon = iconInput.files[0];
@@ -198,7 +191,6 @@ export default class CardRedactorController {
             'strip.png': strip,
             'strip@2x.png': strip
         };
-        console.log('test',this._loyaltyInfo.type)
         if(this._loyaltyInfo.type === 'percents'){
             this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
         }
@@ -229,7 +221,7 @@ export default class CardRedactorController {
             'logo.png': icon, 'logo@2x.png': icon,
             'strip.png': strip, 'strip@2x.png': strip
         };
-        console.log('test',this._loyaltyInfo.type)
+        console.log('test',this._loyaltyInfo.type);
         if(this._loyaltyInfo.type === 'percents'){
             this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
         }
@@ -277,10 +269,12 @@ export default class CardRedactorController {
     /** Добавление листенеров на изображения */
     addImageListeners(){
         const stripInput = document.getElementById('uploadStrip');
-        const stripImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);
+        const stripImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img').item(0);
         const stripCardImage = document.getElementsByClassName('card__strip').item(0);
         const avatarInput = document.getElementById('uploadAvatar');
-        const avatarImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img-avatar').item(0);
+        const avatarImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img-avatar').item(0);
         const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
 
         stripCardImage.style.backgroundImage =  this._appleCard._strip;
@@ -297,7 +291,7 @@ export default class CardRedactorController {
                 let fr = new FileReader();
                 fr.onload = function () {
                     stripImage.src = fr.result;
-                    stripCardImage.style.backgroundImage = `url(${fr.result})`
+                    stripCardImage.style.backgroundImage = `url(${fr.result})`;
                     this._appleCard._strip = `url(${fr.result})`;
                 }.bind(this);
                 fr.readAsDataURL(files[0]);
@@ -342,10 +336,10 @@ export default class CardRedactorController {
             this._loyaltyInfo.type = 'coffee_cup';
             await this.changeType();
             if(!await this._appleCard._loyalty_info){
-                this._loyaltyInfo.loyalty_info = {'cups_count': 5}
-                this._appleCard._loyalty_info = {cups_count: 5}
+                this._loyaltyInfo.loyalty_info = {'cups_count': 5};
+                this._appleCard._loyalty_info = {cups_count: 5};
             } else{
-                this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info)
+                this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info);
             }
             (new LoyaltyStampComponent(rect)).render( await this._appleCard._loyalty_info);
 
@@ -364,9 +358,9 @@ export default class CardRedactorController {
 
                 this._loyaltyInfo.loyalty_info = JSON.parse(await this._appleCard._loyalty_info);
                 this._appleCard._loyalty_info = this._loyaltyInfo.loyalty_info;
-                console.log('percents ok',this._appleCard._loyalty_info )
+                console.log('percents ok',this._appleCard._loyalty_info );
             }
-            console.log('percents render',this._appleCard._loyalty_info )
+            console.log('percents render',this._appleCard._loyalty_info );
             this._discounts = this.discountsFromObject(this._loyaltyInfo.loyalty_info);
             (new LoyaltyDiscountComponent(rect)).render(await this._discounts);
             this.addDiscountsListeners();
@@ -423,13 +417,11 @@ export default class CardRedactorController {
 
     }
     coffeeCupsListener(e){
-        console.log('coffeecups input', e.target.value)
         if(Number(e.target.value)){
             this._loyaltyInfo.loyalty_info = {'cups_count':Number(e.target.value)};
         }
     }
     cashbackPercentsInputListener(e){
-        console.log('cashback input',e.target.value)
         if(Number(e.target.value)){
             this._loyaltyInfo.loyalty_info = {'cashback':Number(e.target.value)};
         }
@@ -445,6 +437,7 @@ export default class CardRedactorController {
         for(let i = 0; i < priceInputs.length;i++){
             priceInputs.item(i).addEventListener('input', this.priceInputListener.bind(this))
         }
+
         let discountsInputs = document.getElementsByClassName('discount-cell__form__discount_input');
         for(let i = 0; i < discountsInputs.length;i++){
             discountsInputs.item(i).addEventListener('input', this.discountInputListener.bind(this))
@@ -453,14 +446,12 @@ export default class CardRedactorController {
 
     }
     discountInputListener(e){
-        console.log('cashback input',e.target.value)
         let id = Number(e.target.id.split('-')[1]);
         if(Number(e.target.value)){
             this._discounts[id].discount = e.target.value
         }
     }
     priceInputListener(e){
-        console.log('cashback input',e.target.value)
         let id = Number(e.target.id.split('-')[1]);
         if(Number(e.target.value)){
             this._discounts[id].price = e.target.value
