@@ -54,8 +54,6 @@
 }
 
 .new-cafe-page__outer__sub__image-container{
-    display: flex;
-    justify-content: space-between;
     margin-top: 20px;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 
@@ -135,7 +133,7 @@
       background: none;
       font-size: 1rem;
       margin: 15px auto;
-      width: 100%;
+      min-width: 100%;
     }
 
     &_label {
