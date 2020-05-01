@@ -173,7 +173,7 @@ function doSurvey(req) {
 
 function doError(req) {
 
-    let code = req.query.get('code');
+    let code = req.param.code;
     console.log('errcode',code)
     if(!code){
         code = 404;
@@ -212,7 +212,7 @@ router.get('/points/{uuid}', doStaffMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
-router.get('/error', doError);
+router.get('/error/{code}', doError);
 
 router.notFoundHandler(doNotFound);
 

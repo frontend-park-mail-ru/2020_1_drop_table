@@ -92,7 +92,6 @@
                 width: 43%;
                 display: flex;
                 align-items: center;
-
                 &_span {
                     margin: auto 5% auto 25%;
                     font-size: 2rem;
@@ -100,6 +99,11 @@
                     text-overflow: ellipsis;
                     overflow: auto;
                     white-space: nowrap;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
                 }
             }
 
@@ -145,6 +149,10 @@
                     cursor: default;
                     text-overflow: ellipsis;
                     overflow: hidden;
+                    -ms-overflow-style: none;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
                 }
             }
 
@@ -236,6 +244,12 @@
                     cursor: default;
                     overflow: auto;
                     text-overflow: ellipsis;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+
                 }
             }
             &__time-container{
@@ -262,6 +276,10 @@
                 order: 2;
                 overflow: auto;
                 text-overflow: ellipsis;
+                -ms-overflow-style: none;
+                &::-webkit-scrollbar {
+                    display: none;
+                }
                 &_span{
                     font-size: 1.5rem;
                     cursor: default;
