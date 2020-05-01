@@ -55,9 +55,11 @@
   }
 }
 .buttons__apple-pass-button{
+
   @include themify($themes){
     background-color: themed('mainColor');
   }
+
   &_h4{
     @include themify($themes){
       color: themed('buttonTextColor');

@@ -20,11 +20,14 @@ export default class PageNotFoundView extends BaseView {
 
     /** Отрисовка страницы лэндинга */
     async render(context){
+        console.log('render');
         this._app.innerHTML = '';
+        console.log(this._app.innerHTML);
         (new Header(this._app)).render(context['header']);
         let container = document.createElement('div');
         container.className = 'container-not-found';
         (new PageNotFound(container)).render(context['error']);
+        console.log('render', container);
         this._app.appendChild(container);
 
     }

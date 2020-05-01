@@ -50,9 +50,9 @@
 
 @media ( min-width : 600px ) {
 
-    .card-redactor-container__card-form__image-picker{
+    .card-redactor-container__card-form__image-picker {
         flex-direction: unset;
-        filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
     }
 
     .card-redactor-container {
@@ -68,32 +68,37 @@
             flex: 1;
 
             background: none;
-            &__buttons{
+
+            &__buttons {
                 display: flex;
-                flex-wrap:wrap;
-                &__save{
+                flex-wrap: wrap;
+
+                &__save {
                     margin: 10px auto;
                     width: 200px;
                     height: 50px;
                 }
-                &__publish{
+
+                &__publish {
                     margin: 10px auto;
                     width: 200px;
                     height: 50px;
                 }
             }
-            &__image-picker__input{
+
+            &__image-picker__input {
                 width: 1px;
             }
 
         }
+
         &__card-model {
             margin-top: 10%;
 
         }
     }
-
 }
+
 
 .card-color-pickers-container{
     display: flex;

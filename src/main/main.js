@@ -172,15 +172,19 @@ function doSurvey(req) {
 }
 
 function doError(req) {
+
     let code = req.query.get('code');
+    console.log('errcode',code)
     if(!code){
         code = 404;
     }
+    console.log('doError', code)
     const pageNotFoundView = new PageNotFoundView(app);
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
     pageNotFoundController.control();
 }
 function doNotFound() {
+    console.log('doNotFound')
     const pageNotFoundView = new PageNotFoundView(app);
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
     pageNotFoundController.control();

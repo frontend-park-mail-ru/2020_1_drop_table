@@ -16,12 +16,12 @@ export default class PageNotFoundController{
             type: 'profile',
 
         };
-
-        switch (Number(this._errorCode)) {
+        const code = Number(this._errorCode)
+        switch (code) {
 
         case 404:
             context['error']={
-                code: this._errorCode,
+                code: code,
                 description:`
                 404 ошибка краткое описание или чето еще
                 `
@@ -29,7 +29,7 @@ export default class PageNotFoundController{
             break;
         case 405:
             context['error']={
-                code: this._errorCode,
+                code: code,
                 description:`
                 405 ошибка краткое описание или чето еще
                 `
@@ -38,7 +38,7 @@ export default class PageNotFoundController{
 
         case 406:
             context['error']={
-                code: this._errorCode,
+                code: code,
                 description:`
                 406 ошибка краткое описание или чето еще
                 `
@@ -46,7 +46,7 @@ export default class PageNotFoundController{
             break;
         default:
             context['error']={
-                code: this._errorCode,
+                code: code,
                 description:`
                 Что-то новенькое 
                 `
@@ -61,6 +61,8 @@ export default class PageNotFoundController{
 
     /** Запуск контроллера */
     async control(){
-        this._pageNotFoundView.render(this._makeViewContext());
+        let context = this._makeViewContext()
+        console.log('control',context)
+        this._pageNotFoundView.render(this._makeViewContext(context));
     }
 }
