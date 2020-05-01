@@ -183,6 +183,7 @@ function doError(req) {
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
     pageNotFoundController.control();
 }
+
 function doNotFound() {
     console.log('doNotFound')
     const pageNotFoundView = new PageNotFoundView(app);

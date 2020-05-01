@@ -202,9 +202,15 @@ export default class UserProfileController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._userProfileView.context = this._makeViewContext();
-        this._userProfileView.render();
+        try {
+            await this.update();
+            this._userProfileView.context = this._makeViewContext();
+            this._userProfileView.render();
+        } catch (error) {
+            if (error.message !== 'unknown server error') {
+                throw(new Error(error.message));
+            }
+        }
     }
 
 }

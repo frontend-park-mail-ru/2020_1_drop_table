@@ -96,9 +96,15 @@ export default class LandingController {
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._landingView.context = this._makeViewContext();
-        this._landingView.render();
-        this.addListeners();
+        try {
+            await this.update();
+            this._landingView.context = this._makeViewContext();
+            this._landingView.render();
+            this.addListeners();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

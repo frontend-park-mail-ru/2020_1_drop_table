@@ -122,13 +122,18 @@ export default class SurveyController {
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        console.log('control 1', this._formModel._cells)
-        this._surveyView.context = this._formModel._cells;
-        console.log('test228', this._surveyView.context)
-        this._surveyView.render();
-        this._addListeners()
-
+        try {
+            await this.update();
+            console.log('control 1', this._formModel._cells)
+            this._surveyView.context = this._formModel._cells;
+            console.log('test228', this._surveyView.context)
+            this._surveyView.render();
+            this._addListeners()
+        } catch (error) {
+            if (error.message !== 'unknown server error') {
+                throw(new Error(error.message));
+            }
+        }
     }
     async update(){
         await this._formModel.update();

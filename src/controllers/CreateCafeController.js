@@ -208,8 +208,14 @@ export default class CreateCafeController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._createCafeView.context = this._makeViewContext();
-        this._createCafeView.render();
+        try {
+            await this.update();
+            this._createCafeView.context = this._makeViewContext();
+            this._createCafeView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

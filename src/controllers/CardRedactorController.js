@@ -45,21 +45,27 @@ export default class CardRedactorController {
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
+        try {
+            await this.update();
 
-        this._appleCard.context = this._makeContext();
-        this._cardRedactorView._appleCard = this._appleCard;
-        this._cardRedactorView.render();
-        this.addImageListeners();
-        this.addCardFieldsListeners();
-        this.addSavePublishListeners();
-        this.addColorPickerListeners(this);
+            this._appleCard.context = this._makeContext();
+            this._cardRedactorView._appleCard = this._appleCard;
+            this._cardRedactorView.render();
+            this.addImageListeners();
+            this.addCardFieldsListeners();
+            this.addSavePublishListeners();
+            this.addColorPickerListeners(this);
 
-        this._addLoyaltyListeners();
+            this._addLoyaltyListeners();
 
-        let cardRedactorBottom =
-            document.getElementsByClassName('card').item(0);
-        cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+            let cardRedactorBottom =
+                document.getElementsByClassName('card').item(0);
+            cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
 
     }
 

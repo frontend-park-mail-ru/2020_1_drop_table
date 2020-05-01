@@ -70,8 +70,14 @@ export default class CafeListController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._cafeListView.context = this._makeViewContext();
-        this._cafeListView.render();
+        try {
+            await this.update();
+            this._cafeListView.context = this._makeViewContext();
+            this._cafeListView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

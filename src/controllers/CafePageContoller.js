@@ -85,9 +85,15 @@ export default class CafePageController {
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        await this.update();
-        this._cafePageView.context = this._makeViewContext(id);
-        this._cafePageView.render();
+        try {
+            await this.update();
+            this._cafePageView.context = this._makeViewContext(id);
+            this._cafePageView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }
 
