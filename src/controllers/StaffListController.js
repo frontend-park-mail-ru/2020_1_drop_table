@@ -94,9 +94,15 @@ export default class StaffListController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._staffListView.context = this._makeViewContext();
-        this._staffListView.render();
-        this._addListeners()
+        try {
+            await this.update();
+            this._staffListView.context = this._makeViewContext();
+            this._staffListView.render();
+            this._addListeners();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

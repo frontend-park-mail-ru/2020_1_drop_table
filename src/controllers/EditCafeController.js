@@ -218,9 +218,15 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        await this.update();
-        this._id = id;
-        this._createCafeView.context = this._makeViewContext(id);
-        this._createCafeView.render();
+        try {
+            await this.update();
+            this._id = id;
+            this._createCafeView.context = this._makeViewContext(id);
+            this._createCafeView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

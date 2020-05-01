@@ -180,6 +180,7 @@ function doError(req) {
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
     pageNotFoundController.control();
 }
+
 function doNotFound() {
     const pageNotFoundView = new PageNotFoundView(app);
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);

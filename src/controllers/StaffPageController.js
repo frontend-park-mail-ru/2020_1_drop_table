@@ -83,10 +83,16 @@ export default class StaffPageController {
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        await this.update();
-        this._staffPageView.context = this._makeViewContext(id);
-        this._staffPageView.render();
-        this._addListeners(id);
+        try {
+            await this.update();
+            this._staffPageView.context = this._makeViewContext(id);
+            this._staffPageView.render();
+            this._addListeners(id);
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }
 
