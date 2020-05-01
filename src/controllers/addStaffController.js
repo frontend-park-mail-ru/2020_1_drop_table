@@ -24,7 +24,6 @@ export default class AddStaffController{
     async update(){
         try{
             await this._userModel.update();
-
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -192,7 +191,14 @@ export default class AddStaffController{
 
     /** Запуск контроллера */
     async control(){
-        this._registerView.context = this._makeViewContext();
-        this._registerView.render();
+        try {
+            await this.update();
+            this._registerView.context = this._makeViewContext();
+            this._registerView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

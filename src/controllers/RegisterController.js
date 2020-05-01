@@ -185,9 +185,15 @@ export default class RegisterController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._registerView.context = this._makeViewContext();
-        this._registerView.render();
+        try {
+            await this.update();
+            this._registerView.context = this._makeViewContext();
+            this._registerView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 
 }

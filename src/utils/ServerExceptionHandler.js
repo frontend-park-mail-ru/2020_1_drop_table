@@ -32,6 +32,7 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
             }
         } else {
             router._goTo('/error?code='+error.code);
+            throw new Error('unknown server error');
         }
     }
 

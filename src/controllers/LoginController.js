@@ -22,7 +22,7 @@ export default class LoginController{
             await this._userModel.update();
             router._goTo('/myCafes')
         } catch (exception) {
-            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+            return (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
     }
 
@@ -140,9 +140,14 @@ export default class LoginController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._loginView.context = this._makeViewContext();
-        this._loginView.render();
+        try {
+            await this.update()
+            this._loginView.context = this._makeViewContext();
+            this._loginView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
-
 }
