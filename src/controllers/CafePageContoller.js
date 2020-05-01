@@ -31,7 +31,6 @@ export default class CafePageController {
     /** Event добавление работника */
     addStaffButtonClick(){
         try {
-            // router._goTo('/error?code='+404)
             (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);

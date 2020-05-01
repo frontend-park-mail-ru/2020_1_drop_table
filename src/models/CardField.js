@@ -121,12 +121,14 @@ export class CardField{
             };
         }
 
-        if( i < 1){
-            data.button = 'Добавить';
-            data.buttonsymbol = '+';
-        } else if (i >= 1){
-            data.button = 'Удалить';
-            data.buttonsymbol = '-';
+        if(data.fieldName !== 'HeaderField') {
+            if (i < 1) {
+                data.button = 'Добавить';
+                data.buttonsymbol = '+';
+            } else if (i >= 1) {
+                data.button = 'Удалить';
+                data.buttonsymbol = '-';
+            }
         }
         return data;
     }
