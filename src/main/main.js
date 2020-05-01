@@ -207,10 +207,9 @@ router.get('/points/{uuid}', doStaffMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
-router.get('/error',doError);
+router.get('/error', doError);
 
 router.notFoundHandler(doNotFound);
 
 router.init();
-
 
