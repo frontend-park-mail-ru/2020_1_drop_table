@@ -237,13 +237,14 @@ export default class CardRedactorController {
     /** Добавление полей карты */
     addCardField(e) {
         const parent = e.target.parentNode.parentNode;
-        this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
-        this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
-        this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-
-        this.addCardFieldsListeners();
-        this.addColorPickerListeners(this);
-        this.addSavePublishListeners();
+        if(this._appleCard.allowPushField(getContextByClass(parent.getAttribute('class')))){
+            this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
+            this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
+            this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
+            this.addCardFieldsListeners();
+            this.addColorPickerListeners(this);
+            this.addSavePublishListeners();
+        }
     }
 
     /** Удаление полей карты */
