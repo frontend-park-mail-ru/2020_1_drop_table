@@ -121,6 +121,7 @@ export default class EditCafeController{
                             data: cafe.closeTime,
                             labelData: 'Время закрытия',
                             inputOption: 'required',
+
                         },
                         {
                             type: 'text',
@@ -128,6 +129,7 @@ export default class EditCafeController{
                             data: cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
+                            areaType: 'textarea'
                         },
                     ],
                     submitValue: 'Готово',

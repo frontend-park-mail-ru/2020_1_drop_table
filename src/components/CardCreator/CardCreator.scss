@@ -29,12 +29,12 @@
         object-fit: cover;
 
         &_img{
-            height: 101px;
-            width: 297px;
-
+            height: 120px;
+            width: 300px;
+            object-fit: cover;
             &-avatar{
-                height: 101px;
-                width: 112px;
+                height: 120px;
+                width: 120px;
                 object-fit: cover;
             }
         }

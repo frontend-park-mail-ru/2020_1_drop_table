@@ -123,6 +123,7 @@ export default class CreateCafeController{
                             data: ' ',
                             labelData: 'Описание',
                             inputOption: 'required',
+                            areaType: 'textarea'
                         },
                     ],
                     submitValue: 'Готово',

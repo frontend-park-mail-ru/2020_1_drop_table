@@ -11,6 +11,7 @@ export default class PageNotFoundController{
 
     _makeViewContext(){
         let context = {};
+        //todo Хедер в зависимости от того зареган ли юзер
         context['header'] = {
             type: 'profile',
 

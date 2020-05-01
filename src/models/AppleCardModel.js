@@ -355,6 +355,44 @@ export class AppleCardModel {
 
         }
     }
+    /**
+     * Добавить поле в карточку
+     * @param {string} fieldType тип добавляемого поля
+     */
+    allowPushField(fieldType) {
+        switch (fieldType) {
+        case 'HeaderField':
+            if(this._storeCard.headerFields.length < 1){
+                return true
+            } else {
+                return false
+            }
+        case 'PrimaryField':
+            if(this._storeCard.primaryFields.length < 2
+                && this._storeCard.primaryFields[0]._label.length < 5
+                && this._storeCard.primaryFields[0]._value.length < 5){
+                return true
+            } else {
+                return false
+            }
+        case 'SecondaryField':
+            if(this._storeCard.secondaryFields.length < 3){
+                // let symbolsLabel = 0; todo внедрить проверку
+                // let symbolsValue = 0;
+                // for(let i = 0; i < this._storeCard.secondaryFields.length; i++){
+                //     symbolsLabel += this._storeCard.secondaryFields[i]._label.length;
+                //     symbolsValue += this._storeCard.secondaryFields[i]._value.length;
+                // }
+
+                return true
+            } else {
+                return false
+            }
+        case 'AuxiliaryField':
+            return false
+
+        }
+    }
 
     /**
      * Удалить поле карточки
