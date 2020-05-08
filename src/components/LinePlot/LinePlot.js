@@ -6,14 +6,13 @@ export default class FormComponent {
     constructor(parent = document.body) {
         this._parent = parent;
         this._context = null;
-        this._canvas = null;
         this._plt = null
     }
 
     _flipAxis(point){
         return {
             x:point.x,
-            y:this._canvas.height - point.y
+            y:this._plt.canvas.height - point.y
         };
     }
 
@@ -73,11 +72,11 @@ export default class FormComponent {
     }
 
     _drawAxis(){
-        const minSide = Math.min(this._canvas.height, this._canvas.width);
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
         const axisPreBias = 0.05 * minSide;
-        const xAxisEndPoint = 0.9 * this._canvas.width;
-        const yAxisEndPoint = 0.9 * this._canvas.height;
+        const xAxisEndPoint = 0.9 * this._plt.canvas.width;
+        const yAxisEndPoint = 0.9 * this._plt.canvas.height;
         const linesWidth = minSide / 300;
 
         this._drawLine([{x:axisPreBias, y:axisBias}, {x:xAxisEndPoint, y:axisBias}], linesWidth, '#000000');
@@ -85,10 +84,10 @@ export default class FormComponent {
     }
 
     _drawGrid(array){
-        const minSide = Math.min(this._canvas.height, this._canvas.width);
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
-        const xAxisOuterBias = 0.9 * this._canvas.width;
-        const yAxisOuterBias = 0.85 * this._canvas.height;
+        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
+        const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 300;
         const fontSize = minSide / 60 + 'px';
@@ -102,14 +101,14 @@ export default class FormComponent {
 
     _drawBackground(){
         this._plt.fillStyle = '#F1F0F0';
-        this._plt.fillRect(0, 0, this._canvas.width, this._canvas.height);
+        this._plt.fillRect(0, 0, this._plt.canvas.width, this._plt.canvas.height);
     }
 
     _drawGraph(array) {
-        const minSide = Math.min(this._canvas.height, this._canvas.width);
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
-        const xAxisOuterBias = 0.9 * this._canvas.width;
-        const yAxisOuterBias = 0.84 * this._canvas.height;
+        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
+        const yAxisOuterBias = 0.84 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 100;
         const fontSize = minSide / 60 + 'px';
@@ -141,17 +140,27 @@ export default class FormComponent {
     }
 
     _drawPlot(context){
-        this._canvas = document.getElementsByClassName('linePlot').item(0);
-        this._plt = this._canvas.getContext('2d');
         this._drawBackground();
         this._drawGrid(context);
         this._drawAxis();
         this._drawGraph(context);
     }
 
+    _resize(){
+        if (this._plt.canvas !== this._parent.clientWidth ||
+            this._plt.canvas.height !== this._parent.clientHeight) {
+            this._plt.canvas.width = this._parent.clientWidth;
+            this._plt.canvas.height = this._parent.clientHeight;
+            this._drawPlot(this._context);
+        }
+    }
+
     render(context) {
+        window.addEventListener('resize', this._resize.bind(this));
         this._context = context;
         this._parent.innerHTML = LinePlotTemplate();
-        this._drawPlot(context);
+        const canvas = document.getElementsByClassName('linePlot').item(0);
+        this._plt = canvas.getContext('2d');
+        this._resize();
     }
 }
