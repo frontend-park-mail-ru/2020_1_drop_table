@@ -41,10 +41,11 @@ import StaffPageController from '../controllers/StaffPageController';
 import PageNotFoundController from '../controllers/PageNotFoundController';
 import PageNotFoundView from '../view/PageNotFoundView';
 
-
 import SurveyView from '../view/SurveyView';
 import SurveyController from '../controllers/SurveyController'
 import {FormModel} from '../models/FormModel'
+
+import TestPlotView from '../view/TestPlotView';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -160,6 +161,9 @@ function doStaffById(req){
     staffPageController.control(req.param.id);
 }
 
+function doStatistics() {
+    (new TestPlotView()).render();
+}
 
 function doSurvey(req) {
     const cafeId = req.param.cafeId;
@@ -206,6 +210,7 @@ router.get('/editCafe/{id}', doEditCafe);
 
 router.get('/staff', doStaffPage);
 router.get('/staff/{id}', doStaffById);
+router.get('/statistics', doStatistics);
 router.get('/addStaff', doAddStaff);
 
 router.get('/points/{uuid}', doStaffMenu);
