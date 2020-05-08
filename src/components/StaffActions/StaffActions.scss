@@ -1,0 +1,120 @@
+
+
+.staff-actions-container{
+    display: flex;
+    font-family: Montserrat;
+    margin: 0 auto;
+    justify-content: flex-start;
+    min-height: 560px;
+    max-height: 600px;
+}
+.staff-actions-container__date{
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+}
+.staff-actions-container__date__button-prev{
+    transform: rotate(90deg);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+svg {
+    cursor: pointer;
+}
+.staff-actions-container__date__button-next{
+    transform: rotate(-90deg);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+
+}
+
+.staff-actions-container__date__start-date-container{
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
+    margin:  auto;
+}
+.staff-actions-container__date__start-date-container_span{
+
+}
+
+.staff-actions-container__date__end-date-container{
+    display: flex;
+    flex-direction: column;
+    margin:  auto;
+    justify-self: flex-end;
+}
+.staff-actions-container__date__end-date-container_span{
+
+}
+
+
+.staff-actions-container__date__strip{
+    width:5px;
+    height: 50%;
+    min-height: 50px;
+    margin: 0 auto;
+    background: black;
+}
+
+.staff-actions-container__actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: scroll;
+    min-height: 560px;
+    max-height: 600px;
+}
+.staff-actions-container__actions__action__date{
+    width: available;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.staff-actions-container__actions__action__date__strip-span{
+    display: flex;
+    background: rgba(143,143,143,0.31);
+    margin: 10px;
+}
+
+.staff-actions-container__actions__action__date__strip-span__strip{
+    height: 1px;
+    background: black;
+    width:90%;
+    margin: auto 10px;
+}
+.staff-actions-container__actions__action__date__strip-span_span{
+    font-weight: lighter;
+    white-space: nowrap;
+    margin: auto 5px;
+}
+
+.staff-actions-container__actions__action__date__cell{
+    display: flex;
+    margin: 10px;
+    max-width: 500px;
+    width:50vw;
+    min-width: 220px;
+}
+.staff-actions-container__actions__action__date__cell__text{
+    display: flex;
+    justify-self: flex-start;
+    font-weight: normal;
+    width: 100%;
+}
+.staff-actions-container__actions__action__date__cell__strip{
+    width: inherit;
+    height: 1px;
+    background: black;
+    margin: auto 10px ;
+}
+.staff-actions-container__actions__action__date__cell__time{
+    display: flex;
+    justify-self: flex-end;
+    font-weight: lighter;
+    color: #333333;
+    margin: auto 0;
+}

@@ -71,11 +71,20 @@ export default class Header{
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
             hasLogin: this._hasLogin,
-            logoImageSrc: '/images/logo.png',
+            logoImageSrc: '/images/logo-light.png',
             menuList: this._menuList,
             avatarImageSrc: this._avatar
         };
         this._head.innerHTML = headerTemplate(headerData);
+
+        const img = this._head.getElementsByClassName('nav-header_img').item(0);
+        const theme = localStorage.getItem('theme');
+        if(theme === 'theme-dark'){
+            img.src = '/images/logo-dark.png';
+        } else{
+            img.src = '/images/logo-light.png';
+        }
+
 
     }
 

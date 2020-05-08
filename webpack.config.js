@@ -100,7 +100,7 @@ module.exports = {
             hash: true,
             filename: 'index.html',
             template: './src/html/index.html',
-            favicon: './src/images/logo.png'
+            favicon: './src/images/logo-light.png'
         }),
         new CopyWebpackPlugin([
             {from:'src/images',to:'images'},
