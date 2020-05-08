@@ -45,6 +45,8 @@ import PageNotFoundView from '../view/PageNotFoundView';
 import SurveyView from '../view/SurveyView';
 import SurveyController from '../controllers/SurveyController'
 import {FormModel} from '../models/FormModel'
+import StatisticsView from '../view/StatisticsView';
+import StatisticsController from '../controllers/StatisticsController';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -190,6 +192,11 @@ function doNotFound() {
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
     pageNotFoundController.control();
 }
+function doStatistics(){
+    const statisticsView = new StatisticsView(app);
+    const statisticsController = new StatisticsController(statisticsView);
+    statisticsController.control();
+}
 
 /** Роуты роутера */
 router.get('/', doLanding);
@@ -213,6 +220,9 @@ router.get('/points/{uuid}', doStaffMenu);
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
 router.get('/error/{code}', doError);
+
+
+router.get('/statistics', doStatistics);
 
 router.notFoundHandler(doNotFound);
 
