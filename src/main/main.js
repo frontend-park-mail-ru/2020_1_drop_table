@@ -44,6 +44,8 @@ import PageNotFoundView from '../view/PageNotFoundView';
 import SurveyView from '../view/SurveyView';
 import SurveyController from '../controllers/SurveyController'
 import {FormModel} from '../models/FormModel'
+import StatisticsView from '../view/StatisticsView';
+import StatisticsController from '../controllers/StatisticsController';
 
 import TestPlotView from '../view/TestPlotView';
 
@@ -177,7 +179,7 @@ function doSurvey(req) {
 
 function doError(req) {
 
-    let code = req.query.get('code');
+    let code = req.param.code;
     console.log('errcode',code)
     if(!code){
         code = 404;
@@ -193,6 +195,11 @@ function doNotFound() {
     const pageNotFoundView = new PageNotFoundView(app);
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
     pageNotFoundController.control();
+}
+function doStatistics(){
+    const statisticsView = new StatisticsView(app);
+    const statisticsController = new StatisticsController(statisticsView);
+    statisticsController.control();
 }
 
 /** Роуты роутера */
@@ -217,7 +224,10 @@ router.get('/points/{uuid}', doStaffMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
-router.get('/error', doError);
+router.get('/error/{code}', doError);
+
+
+router.get('/statistics', doStatistics);
 
 router.notFoundHandler(doNotFound);
 

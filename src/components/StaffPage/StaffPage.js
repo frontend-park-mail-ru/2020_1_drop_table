@@ -10,7 +10,6 @@ export class StaffPageComponent {
     }
 
     render(context) {
-        console.log('testik',context)
         this._parent.innerHTML = StaffPageTemplate(context);
 
     }

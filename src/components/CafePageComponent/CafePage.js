@@ -15,16 +15,6 @@ export class CafePageComponent {
         this._parent = parent;
     }
 
-    /**
-     * Функция обрезки слишком длинного имени
-     * @param {string} name название кафе
-     */
-    // _cropName(name){
-    //     if(name.length>12){
-    //         return name.slice(0,10).concat('...')
-    //     }
-    //     return name;
-    // }
 
     /**
      * Отрисовка компоненты страницы кафе

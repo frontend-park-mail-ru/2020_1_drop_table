@@ -141,7 +141,7 @@ export default class LoginController{
     /** Запуск контроллера */
     async control(){
         try {
-            await this.update()
+            await this.update();
             this._loginView.context = this._makeViewContext();
             this._loginView.render();
         } catch (error) {
