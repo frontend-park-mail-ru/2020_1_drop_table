@@ -71,6 +71,15 @@ export default class LinePlotComponent {
         this._plt.closePath();
     }
 
+    _drawRectangle(point, width, height, color='#000000'){
+        point = this._flipAxis(point);
+        this._plt.beginPath();
+        this._plt.rect(point.x, point.y, width, height);
+        this._plt.fillStyle = color;
+        this._plt.fill();
+        this._plt.closePath();
+    }
+
     _drawPoints(arr, width=1, color='#000000', lineCap='round', lineJoin='round'){
         for(let point of arr){
             point = this._flipAxis(point);
@@ -149,10 +158,27 @@ export default class LinePlotComponent {
         this._drawPoints(normArray, linesWidth, '#000000');
     }
 
+    _drawCafeList(array){
+        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const axisBias = 0.1 * maxSide;
+        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
+        const yAxisOuterBias = 0.9 * this._plt.canvas.height;
+        const markersHeight = maxSide / 175;
+        const fontSize = ((xAxisOuterBias - axisBias) / array[0].array.length) / 5;
+
+        array.forEach((data, c)=>{
+            this._drawText({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - 3 * c * fontSize},
+                data.name, fontSize + 'px', 'center');
+            this._drawRectangle({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - (3 * c + 0.5) * fontSize},
+                0.05 * this._plt.canvas.width, markersHeight, data.color);
+        });
+    }
+
     _drawPlot(context){
         this._drawBackground();
         this._drawGrid(context.array[0].array);
         this._drawAxis();
+        this._drawCafeList(context.array);
         for(let subContext of context.array){
             this._drawGraph(subContext.array, subContext.color);
         }
