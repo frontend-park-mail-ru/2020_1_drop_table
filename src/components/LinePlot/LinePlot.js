@@ -75,8 +75,8 @@ export default class FormComponent {
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
         const axisPreBias = 0.05 * minSide;
-        const xAxisEndPoint = 0.9 * this._plt.canvas.width;
-        const yAxisEndPoint = 0.9 * this._plt.canvas.height;
+        const xAxisEndPoint = 0.9 * this._plt.canvas.width ;
+        const yAxisEndPoint = 0.9 * this._plt.canvas.height ;
         const linesWidth = minSide / 300;
 
         this._drawLine([{x:axisPreBias, y:axisBias}, {x:xAxisEndPoint, y:axisBias}], linesWidth, '#000000');
@@ -86,8 +86,8 @@ export default class FormComponent {
     _drawGrid(array){
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
-        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
-        const yAxisOuterBias = 0.85 * this._plt.canvas.height;
+        const xAxisOuterBias = 0.9 * this._plt.canvas.width ;
+        const yAxisOuterBias = 0.85 * this._plt.canvas.height ;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 300;
         const fontSize = minSide / 60 + 'px';
@@ -161,6 +161,9 @@ export default class FormComponent {
         this._parent.innerHTML = LinePlotTemplate();
         const canvas = document.getElementsByClassName('linePlot').item(0);
         this._plt = canvas.getContext('2d');
+
+        //this._plt.imageSmoothingEnabled = false;
         this._resize();
+
     }
 }

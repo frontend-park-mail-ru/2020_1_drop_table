@@ -163,9 +163,6 @@ function doStaffById(req){
     staffPageController.control(req.param.id);
 }
 
-function doStatistics() {
-    (new TestPlotView()).render();
-}
 
 function doSurvey(req) {
     const cafeId = req.param.cafeId;
@@ -217,7 +214,7 @@ router.get('/editCafe/{id}', doEditCafe);
 
 router.get('/staff', doStaffPage);
 router.get('/staff/{id}', doStaffById);
-router.get('/statistics', doStatistics);
+
 router.get('/addStaff', doAddStaff);
 
 router.get('/points/{uuid}', doStaffMenu);
