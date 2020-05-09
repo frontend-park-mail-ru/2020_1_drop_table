@@ -3,7 +3,8 @@
 import './StatisticsComponent.scss';
 
 import StatisticsTemplate from './StatisticsComponent.hbs';
-
+import {MultiSelectComponent} from '../MultiSelect/MultiSelect';
+import {DateInputComponent} from '../DateInput/DateInput'
 /** Компонент графика */
 export default class StatisticsComponent {
 
@@ -27,14 +28,33 @@ export default class StatisticsComponent {
     _checkContext(){
     }
 
-    _renderTemplate(){
+    _renderTemplate(context){
         this._parent.innerHTML = StatisticsTemplate();
+    }
+
+    _renderDateInputs(){
+        let startInputDate = this._parent.
+            getElementsByClassName('statistics-component__head__interval-start').item(0);
+        let endInputDate = this._parent.
+            getElementsByClassName('statistics-component__head__interval-end').item(0);
+
+        (new DateInputComponent(startInputDate)).render();
+        (new DateInputComponent(endInputDate)).render();
+    }
+    _renderSelectors(context){
+        let selectorCafes = this._parent.
+            getElementsByClassName('statistics-component__head__selector-cafes').item(0);
+        let selectorStaff = this._parent.
+            getElementsByClassName('statistics-component__head__selector-staff').item(0);
+        (new MultiSelectComponent(selectorCafes, context['cafes']).render());
+        (new MultiSelectComponent(selectorStaff, context['staff']).render());
     }
 
 
     render(context) {
-        console.log('2', context)
         this._renderTemplate();
+        this._renderDateInputs();
+        this._renderSelectors(context['multiselects']);
 
     }
 }
