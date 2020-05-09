@@ -13,6 +13,8 @@ export default class TestPlotView extends BaseView {
     render(){
         this._app.innerHTML = '';
         const context = {
+            textX: 'Время',
+            textY: 'Прибыль',
             array:[
                 {
                     color:'#814ad0',
