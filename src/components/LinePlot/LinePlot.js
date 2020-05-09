@@ -185,7 +185,7 @@ export default class LinePlotComponent {
     }
 
     _resize(){
-        if (this._plt.canvas !== this._parent.clientWidth ||
+        if (this._plt.canvas.width !== this._parent.clientWidth ||
             this._plt.canvas.height !== this._parent.clientHeight) {
             this._plt.canvas.width = this._parent.clientWidth;
             this._plt.canvas.height = this._parent.clientHeight;
