@@ -105,8 +105,8 @@ export default class LinePlotComponent {
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = maxSide / 300;
-        const fontSize = step / 7 + 'px';
-        const bigFontSize = step / 5 + 'px';
+        const fontSize = step / 5 + 'px';
+        const bigFontSize = step / 3 + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
             this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * maxSide}, point.x, fontSize);
@@ -136,7 +136,7 @@ export default class LinePlotComponent {
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.84 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
-        const linesWidth = maxSide / 100;
+        const linesWidth = maxSide / 175;
 
         const normArray = array.map((point, c)=>{
             return {x: axisBias + (c) * step,
@@ -166,12 +166,12 @@ export default class LinePlotComponent {
     }
 
     render(context) {
-        window.addEventListener('resize', this._resize.bind(this));
         this._context = context;
         this._getMaxMinFromContext(context);
         this._parent.innerHTML = LinePlotTemplate();
         const canvas = document.getElementsByClassName('linePlot').item(0);
         this._plt = canvas.getContext('2d');
         this._resize();
+        window.addEventListener('resize', this._resize.bind(this));
     }
 }
