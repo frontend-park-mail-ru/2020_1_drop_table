@@ -4,6 +4,7 @@ import {StaffPageComponent} from '../components/StaffPage/StaffPage';
 
 import BaseView from './BaseView';
 import StaffActionsComponent from '../components/StaffActions/StaffActions';
+import LinePlot from '../components/LinePlot/LinePlot';
 
 
 export default class StaffPageView extends BaseView {
@@ -24,11 +25,25 @@ export default class StaffPageView extends BaseView {
         let actions = this._app.getElementsByClassName('staff-page__recent-actions__actions-container').item(0);
         (new StaffActionsComponent(actions)).render();
     }
+    _renderPlot(){
+        let container = this._app.getElementsByClassName('staff-page__statistics-container__graph-container').item(0);
+        const context = [
+            {x:'январь', y:1},
+            {x:'февраль', y:2},
+            {x:'март', y:5},
+            {x:'апрель', y:4},
+            {x:'май', y:6},
+            {x:'июнь', y:5},
+            {x:'июль', y:3},
+        ];
+        (new LinePlot(container)).render(context);
+    }
     render(){
         this._app.innerHTML = '';
         this._renderHeader();
         this._renderTemplate();
         this._renderActions();
+        this._renderPlot();
     }
 
 }

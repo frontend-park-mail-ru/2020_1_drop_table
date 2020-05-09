@@ -87,12 +87,14 @@ export default class LinePlotComponent {
     }
 
     _drawAxis(){
+
         const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * maxSide;
         const axisPreBias = 0.075 * maxSide;
         const xAxisEndPoint = 0.9 * this._plt.canvas.width;
         const yAxisEndPoint = 0.9 * this._plt.canvas.height;
         const linesWidth = maxSide / 300;
+
 
         this._drawLine([{x:axisPreBias, y:axisBias}, {x:xAxisEndPoint, y:axisBias}], linesWidth, '#000000');
         this._drawLine([{x:axisBias, y:axisPreBias}, {x:axisBias, y:yAxisEndPoint}], linesWidth, '#000000');

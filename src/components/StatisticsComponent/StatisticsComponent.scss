@@ -1,0 +1,24 @@
+.statistics-component{
+
+
+  &__head{
+    display: flex;
+    flex-direction: row;
+
+    &__interval-start{
+      margin: 0 10px;
+    }
+    &__interval-end{
+      margin: 0 10px;
+    }
+    &__selector-cafes{
+      margin: 0 10px;
+    }
+
+    &__selector-staff{
+      margin: 0 10px;
+    }
+
+
+  }
+}
