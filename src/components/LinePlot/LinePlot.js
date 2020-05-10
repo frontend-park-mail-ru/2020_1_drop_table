@@ -96,7 +96,6 @@ export default class LinePlotComponent {
     }
 
     _drawAxis(){
-
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
         const axisPreBias = 0.075 * minSide;

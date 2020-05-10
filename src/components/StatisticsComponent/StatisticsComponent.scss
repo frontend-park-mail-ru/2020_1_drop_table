@@ -54,6 +54,13 @@
     height: 40vw;
     min-width: 300px;
     min-height: 350px;
+    overflow-x: scroll;
+    overflow-y: hidden;;
+
+  &__with-scroll{
+    height: 100%;
+    width: 300%;
+  }
 
   }
 }
