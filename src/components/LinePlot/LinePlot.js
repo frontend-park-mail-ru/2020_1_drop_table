@@ -175,6 +175,7 @@ export default class LinePlotComponent {
     }
 
     _drawPlot(context){
+        console.log('draw plot')
         this._drawBackground();
         this._drawGrid(context.array[0].array);
         this._drawAxis();
@@ -187,6 +188,7 @@ export default class LinePlotComponent {
     _resize(){
         if (this._plt.canvas.width !== this._parent.clientWidth ||
             this._plt.canvas.height !== this._parent.clientHeight) {
+            console.log('resize plot2',this._parent.clientWidth,this._parent.clientHeight, this._parent  )
             this._plt.canvas.width = this._parent.clientWidth;
             this._plt.canvas.height = this._parent.clientHeight;
             this._drawPlot(this._context);
@@ -197,7 +199,7 @@ export default class LinePlotComponent {
         this._context = context;
         this._getMaxMinFromContext(context);
         this._parent.innerHTML = LinePlotTemplate();
-        const canvas = document.getElementsByClassName('linePlot').item(0);
+        const canvas = this._parent.getElementsByClassName('linePlot').item(0);
         this._plt = canvas.getContext('2d');
         this._resize();
         window.addEventListener('resize', this._resize.bind(this));

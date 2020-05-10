@@ -1,24 +1,147 @@
 .statistics-component{
-
+  font-family: Montserrat, sans-serif;
 
   &__head{
     display: flex;
     flex-direction: row;
-
+    flex-wrap: wrap;
+    justify-content: space-around;
+    &__one-plot{
+      display: flex;
+      flex-direction: column;
+      &_span{
+        font-size: 1.5rem;
+        font-weight: bolder;
+        margin: 8px 0 0 0;
+      }
+    }
     &__interval-start{
-      margin: 0 10px;
+      margin: 10px;
     }
     &__interval-end{
-      margin: 0 10px;
+      margin: 10px;
     }
     &__selector-cafes{
-      margin: 0 10px;
+      margin: 10px;
     }
 
     &__selector-staff{
-      margin: 0 10px;
+      margin:10px;
     }
+    &_button{
 
+      margin: 10px;
+      width: 250px;
+      height: 50px;
+      color: white;
+      background-color: #1C768F;
+      border: none;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+      font-size: 1rem;
+      transition: background-color 1s ease;
+      cursor: pointer;
+      &:hover{
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+      }
+      &:active{
+        background-color: #fa9917;
+        transition: background-color 0s ease;
+      }
+    }
+  }
+  &__graph-container{
+    margin: 10px auto;
+    height: 40vw;
+    min-width: 300px;
+    min-height: 350px;
 
   }
+}
+@media(min-width: 620px) {
+  .statistics-component__graph-container{
+    width: 57.6vw;
+  }
+}
+@media(max-width: 620px) {
+  .statistics-component__graph-container{
+    width: 90vw;
+  }
+}
+.interval{
+  display: flex;
+  flex-direction: column;
+  &_h1{
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+  &__start-end{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* The container */
+.container-checkbox {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 1.5rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin: 0 auto;
+}
+
+/* Hide the browser's default checkbox */
+.container-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.container-checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container-checkbox input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.container-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container-checkbox .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

@@ -114,10 +114,22 @@
 
 
 .staff-page__statistics-container__graph-container{
-  width:100%;
-  margin: 50px auto;
-  height: 600px;
+  margin: 10px auto;
+  height: 40vw;
+  min-height: 350px;
+  min-width: 300px;
 }
+@media(min-width: 620px) {
+  .staff-page__statistics-container__graph-container{
+    width: 57.6vw;
+  }
+}
+@media(max-width: 620px) {
+  .staff-page__statistics-container__graph-container{
+    width: 90vw;
+  }
+}
+
 
 
 .staff-page__recent-actions{
