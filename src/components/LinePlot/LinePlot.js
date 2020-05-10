@@ -97,6 +97,7 @@ export default class LinePlotComponent {
 
     _drawAxis(){
 
+
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
         const axisPreBias = 0.075 * minSide;
@@ -110,8 +111,10 @@ export default class LinePlotComponent {
     }
 
     _drawGrid(array){
+
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
+
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
@@ -142,6 +145,7 @@ export default class LinePlotComponent {
     }
 
     _drawGraph(array, color='#FA9917') {
+
         const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * minSide;
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
