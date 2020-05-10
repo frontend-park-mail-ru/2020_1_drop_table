@@ -71,6 +71,15 @@ export default class LinePlotComponent {
         this._plt.closePath();
     }
 
+    _drawRectangle(point, width, height, color='#000000'){
+        point = this._flipAxis(point);
+        this._plt.beginPath();
+        this._plt.rect(point.x, point.y, width, height);
+        this._plt.fillStyle = color;
+        this._plt.fill();
+        this._plt.closePath();
+    }
+
     _drawPoints(arr, width=1, color='#000000', lineCap='round', lineJoin='round'){
         for(let point of arr){
             point = this._flipAxis(point);
@@ -107,8 +116,8 @@ export default class LinePlotComponent {
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = maxSide / 300;
-        const fontSize = step / 7 + 'px';
-        const bigFontSize = step / 5 + 'px';
+        const fontSize = step / 5 + 'px';
+        const bigFontSize = step / 3 + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
             this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * maxSide}, point.x, fontSize);
@@ -138,7 +147,7 @@ export default class LinePlotComponent {
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.84 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
-        const linesWidth = maxSide / 100;
+        const linesWidth = maxSide / 175;
 
         const normArray = array.map((point, c)=>{
             return {x: axisBias + (c) * step,
@@ -149,18 +158,34 @@ export default class LinePlotComponent {
         this._drawPoints(normArray, linesWidth, '#000000');
     }
 
+    _drawCafeList(array){
+        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const axisBias = 0.1 * maxSide;
+        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
+        const yAxisOuterBias = 0.9 * this._plt.canvas.height;
+        const markersHeight = maxSide / 175;
+        const fontSize = ((xAxisOuterBias - axisBias) / array[0].array.length) / 5;
+
+        array.forEach((data, c)=>{
+            this._drawText({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - 3 * c * fontSize},
+                data.name, fontSize + 'px', 'center');
+            this._drawRectangle({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - (3 * c + 0.5) * fontSize},
+                0.05 * this._plt.canvas.width, markersHeight, data.color);
+        });
+    }
+
     _drawPlot(context){
         console.log('draw plot')
         this._drawBackground();
         this._drawGrid(context.array[0].array);
         this._drawAxis();
+        this._drawCafeList(context.array);
         for(let subContext of context.array){
             this._drawGraph(subContext.array, subContext.color);
         }
     }
 
     _resize(){
-        console.log('resize plot', )
         if (this._plt.canvas.width !== this._parent.clientWidth ||
             this._plt.canvas.height !== this._parent.clientHeight) {
             console.log('resize plot2',this._parent.clientWidth,this._parent.clientHeight, this._parent  )
@@ -171,8 +196,6 @@ export default class LinePlotComponent {
     }
 
     render(context) {
-        console.log('render plot')
-        console.log(context)
         this._context = context;
         this._getMaxMinFromContext(context);
         this._parent.innerHTML = LinePlotTemplate();
@@ -180,7 +203,5 @@ export default class LinePlotComponent {
         this._plt = canvas.getContext('2d');
         this._resize();
         window.addEventListener('resize', this._resize.bind(this));
-        this._drawPlot(context);
-
     }
 }
