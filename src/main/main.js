@@ -199,6 +199,10 @@ function doStatistics(){
     statisticsController.control();
 }
 
+function doStat(){
+    (new TestPlotView()).render();
+}
+
 /** Роуты роутера */
 router.get('/', doLanding);
 router.get('/landing', doLanding);
@@ -223,7 +227,11 @@ router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
 router.get('/error/{code}', doError);
 
+router.get('/test', doStat);
+
+
 router.get('/statistics', doStatistics);
+
 
 router.notFoundHandler(doNotFound);
 
