@@ -88,67 +88,61 @@
   }
 }
 
-/* The container */
-.container-checkbox {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  font-size: 1.5rem;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  margin: 0 auto;
-}
-
-/* Hide the browser's default checkbox */
-.container-checkbox input {
-  position: absolute;
+#cbx {
   opacity: 0;
+  position: absolute;
+}
+.elastic-cbx {
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 }
-
-/* Create a custom checkbox */
-.container-checkbox .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  background-color: #eee;
+.elastic-cbx svg {
+  fill: none;
+  pointer-events: none;
 }
-
-/* On mouse-over, add a grey background color */
-.container-checkbox:hover input ~ .checkmark {
-  background-color: #ccc;
+.elastic-cbx svg path {
+  stroke-width: 2;
 }
-
-/* When the checkbox is checked, add a blue background */
-.container-checkbox input:checked ~ .checkmark {
-  background-color: #2196F3;
+.elastic-cbx svg path#cb {
+  stroke: #999fb7;
 }
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.container-checkbox .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+.elastic-cbx svg path#cm {
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: bottom center;
 }
-
-/* Show the checkmark when checked */
-.container-checkbox input:checked ~ .checkmark:after {
-  display: block;
+#cbx:checked + label #cb {
+  fill: #1e768f;
+  stroke: #1e7e98;
+  animation: elasticInput 0.3s ease forwards;
 }
-
-/* Style the checkmark/indicator */
-.container-checkbox .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+#cbx:checked + label #cm {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s ease;
+  transition-delay: 0.05s;
+}
+@-moz-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@-webkit-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@-o-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
 }

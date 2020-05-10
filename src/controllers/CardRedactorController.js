@@ -21,7 +21,7 @@ export default class CardRedactorController {
         this._cardRedactorView = cardRedactorView;
         this._loyaltyInfo = {
             type: 'coffee_cup',
-            loyalty_info: {}
+            loyalty_info: {'coffee_cups': 5}
         };
         this._discounts = []
     }
@@ -55,8 +55,8 @@ export default class CardRedactorController {
             this.addCardFieldsListeners();
             this.addSavePublishListeners();
             this.addColorPickerListeners(this);
-
             this._addLoyaltyListeners();
+            this._makeActiveLoyalty(0);
 
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
@@ -415,13 +415,20 @@ export default class CardRedactorController {
                 }
                 e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
                 this.renderLoyaltySystem(i);
-
-
             })
         }
-
-
-
+    }
+    _makeActiveLoyalty(i){
+        let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
+        let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
+        description.className = 'loyalty-redactor__description-active';
+        description.style.justifyContent = this.getJustifyContentBuIndex(i);
+        let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
+        for(let i = 0; i < buttonsActive.length; i++){
+            buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+        }
+        buttonsNormal.item(i).className = 'loyalty-redactor__buttons__button-active';
+        this.renderLoyaltySystem(i);
     }
     coffeeCupsListener(e){
         if(Number(e.target.value)){
