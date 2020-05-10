@@ -103,7 +103,6 @@ export default class LinePlotComponent {
         const yAxisEndPoint = 0.9 * this._plt.canvas.height;
         const linesWidth = minSide / 100;
 
-
         this._drawLine([{x:axisPreBias, y:axisBias}, {x:xAxisEndPoint, y:axisBias}], linesWidth, '#000000');
         this._drawLine([{x:axisBias, y:axisPreBias}, {x:axisBias, y:yAxisEndPoint}], linesWidth, '#000000');
     }
@@ -115,8 +114,8 @@ export default class LinePlotComponent {
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 150;
-        const fontSize = (minSide / array.length) / 5 + 'px';
-        const bigFontSize = (minSide / array.length)  / 3 + 'px';
+        const fontSize = ((minSide / array.length) / 5) / this._pixelRatio + 'px';
+        const bigFontSize = ((minSide / array.length) / 3) / this._pixelRatio + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
             this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * minSide}, point.x, fontSize);
@@ -170,9 +169,9 @@ export default class LinePlotComponent {
     _resize(){
         if (this._plt.canvas.width !== this._parent.clientWidth ||
             this._plt.canvas.height !== this._parent.clientHeight) {
-            console.log('resize plot2',this._parent.clientWidth,this._parent.clientHeight, this._parent  )
             this._plt.canvas.width = this._parent.clientWidth;
             this._plt.canvas.height = this._parent.clientHeight;
+            this._pixelRatio = window.devicePixelRatio;
             this._drawPlot(this._context);
         }
     }
