@@ -14,13 +14,12 @@ export class DateInputComponent {
     }
 
     /** Отрисовка страницы лендинга */
-    render() {
-        this._parent.innerHTML = DateInputTemplate();
+    render(context) {
+        this._parent.innerHTML = DateInputTemplate({text: context.text});
         this._addListeners();
     }
     _addListeners(){
         let date = this._parent.getElementsByClassName('date-input_input').item(0);
-
         function checkValue(str, max) {
             if (str.charAt(0) !== '0' || str == '00') {
                 let num = parseInt(str);

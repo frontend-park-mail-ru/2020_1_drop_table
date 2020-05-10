@@ -12,12 +12,13 @@ export class MultiSelectComponent {
     constructor(parent = document.getElementById('application'), context) {
         this._parent = parent;
         this.data = context.data;
+        this._context = context;
         this.options = context.options;
     }
 
     _initSelector(){
         let element = this._parent.getElementsByClassName('multiselect__container').item(0);
-        Motus.ElementMultiselect.init(element, this.data, select, this.options);
+        Motus.ElementMultiselect.init(element, this.data, this._context.listener, this.options);
     }
     /** Отрисовка страницы лендинга */
     render() {
