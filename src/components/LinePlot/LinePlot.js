@@ -97,12 +97,13 @@ export default class LinePlotComponent {
 
     _drawAxis(){
 
-        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
-        const axisBias = 0.1 * maxSide;
-        const axisPreBias = 0.075 * maxSide;
+
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
+        const axisBias = 0.1 * minSide;
+        const axisPreBias = 0.075 * minSide;
         const xAxisEndPoint = 0.9 * this._plt.canvas.width;
         const yAxisEndPoint = 0.9 * this._plt.canvas.height;
-        const linesWidth = maxSide / 300;
+        const linesWidth = minSide / 100;
 
 
         this._drawLine([{x:axisPreBias, y:axisBias}, {x:xAxisEndPoint, y:axisBias}], linesWidth, '#000000');
@@ -110,30 +111,32 @@ export default class LinePlotComponent {
     }
 
     _drawGrid(array){
-        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
-        const axisBias = 0.1 * maxSide;
+
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
+        const axisBias = 0.1 * minSide;
+
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
-        const linesWidth = maxSide / 300;
-        const fontSize = step / 5 + 'px';
-        const bigFontSize = step / 3 + 'px';
+        const linesWidth = minSide / 150;
+        const fontSize = (minSide / array.length) / 5 + 'px';
+        const bigFontSize = (minSide / array.length)  / 3 + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
-            this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * maxSide}, point.x, fontSize);
+            this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * minSide}, point.x, fontSize);
             this._drawLine([{x:axisBias + (c+1) * step, y:axisBias},
                 {x:axisBias + (c+1) * step, y:yAxisOuterBias}], linesWidth, '#BFBFBF');
         })
 
-        this._drawText({x:axisBias - 0.01 * maxSide, y:axisBias + 0.025 * maxSide},
+        this._drawText({x:axisBias - 0.01 * minSide, y:axisBias + 0.025 * minSide},
             this._trimNumber((this._yMaxValue - this._yMinValue)*0.04), fontSize, 'right');
-        this._drawText({x:axisBias - 0.01 * maxSide, y:(yAxisOuterBias + axisBias + 0.025 * maxSide) / 2},
+        this._drawText({x:axisBias - 0.01 * minSide, y:(yAxisOuterBias + axisBias + 0.025 * minSide) / 2},
             this._trimNumber((this._yMaxValue + this._yMinValue) / 2), fontSize, 'right');
-        this._drawText({x:axisBias - 0.01 * maxSide, y:yAxisOuterBias},
+        this._drawText({x:axisBias - 0.01 * minSide, y:yAxisOuterBias},
             this._trimNumber(this._yMaxValue), fontSize, 'right');
 
-        this._drawText({x:axisBias, y:0.025 * maxSide}, this._context.textX, bigFontSize, 'left');
-        this._drawText({x:0.025 * maxSide, y:axisBias}, this._context.textY, bigFontSize, 'left', -1.57);
+        this._drawText({x:axisBias, y:0.025 * minSide}, this._context.textX, bigFontSize, 'left');
+        this._drawText({x:0.025 * minSide, y:axisBias}, this._context.textY, bigFontSize, 'left', -1.57);
     }
 
     _drawBackground(){
@@ -142,12 +145,13 @@ export default class LinePlotComponent {
     }
 
     _drawGraph(array, color='#FA9917') {
-        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
-        const axisBias = 0.1 * maxSide;
+
+        const minSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
+        const axisBias = 0.1 * minSide;
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.84 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
-        const linesWidth = maxSide / 175;
+        const linesWidth = minSide / 70;
 
         const normArray = array.map((point, c)=>{
             return {x: axisBias + (c) * step,
@@ -158,28 +162,11 @@ export default class LinePlotComponent {
         this._drawPoints(normArray, linesWidth, '#000000');
     }
 
-    _drawCafeList(array){
-        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
-        const axisBias = 0.1 * maxSide;
-        const xAxisOuterBias = 0.9 * this._plt.canvas.width;
-        const yAxisOuterBias = 0.9 * this._plt.canvas.height;
-        const markersHeight = maxSide / 175;
-        const fontSize = ((xAxisOuterBias - axisBias) / array[0].array.length) / 5;
-
-        array.forEach((data, c)=>{
-            this._drawText({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - 3 * c * fontSize},
-                data.name, fontSize + 'px', 'center');
-            this._drawRectangle({x: 0.95 * this._plt.canvas.width, y: yAxisOuterBias - (3 * c + 0.5) * fontSize},
-                0.05 * this._plt.canvas.width, markersHeight, data.color);
-        });
-    }
-
     _drawPlot(context){
         console.log('draw plot')
         this._drawBackground();
         this._drawGrid(context.array[0].array);
         this._drawAxis();
-        this._drawCafeList(context.array);
         for(let subContext of context.array){
             this._drawGraph(subContext.array, subContext.color);
         }
