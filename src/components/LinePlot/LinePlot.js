@@ -97,7 +97,7 @@ export default class LinePlotComponent {
 
     _drawAxis(){
 
-        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * maxSide;
         const axisPreBias = 0.075 * maxSide;
         const xAxisEndPoint = 0.9 * this._plt.canvas.width;
@@ -110,7 +110,7 @@ export default class LinePlotComponent {
     }
 
     _drawGrid(array){
-        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * maxSide;
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
@@ -142,7 +142,7 @@ export default class LinePlotComponent {
     }
 
     _drawGraph(array, color='#FA9917') {
-        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * maxSide;
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.84 * this._plt.canvas.height;
@@ -159,7 +159,7 @@ export default class LinePlotComponent {
     }
 
     _drawCafeList(array){
-        const maxSide = Math.max(this._plt.canvas.height, this._plt.canvas.width);
+        const maxSide = Math.min(this._plt.canvas.height, this._plt.canvas.width);
         const axisBias = 0.1 * maxSide;
         const xAxisOuterBias = 0.9 * this._plt.canvas.width;
         const yAxisOuterBias = 0.9 * this._plt.canvas.height;

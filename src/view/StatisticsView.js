@@ -13,7 +13,7 @@ export default class StatisticsView extends BaseView {
 
     _renderPlot(context){
         let container = this._app.getElementsByClassName(
-            'statistics-component__graph-container').item(0);
+            'statistics-component__graph-container__with-scroll').item(0);
         (new LinePlot(container)).render(context);
     }
 
