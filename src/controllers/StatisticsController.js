@@ -1,12 +1,58 @@
 'use strict';
 
 
+import StatisticSerializer from '../Serializers/StatisticSerializer';
+
 export default class StatisticsController{
 
 
     constructor(statisticsView, statisticsModel) {
         this._statisticsView = statisticsView;
         this._statisticsModel = statisticsModel;
+        this._statisticSerializer = new StatisticSerializer();
+        this._options = {
+            cafesList: ['cafe1','cafe2','cafe3'],
+            staffList: ['staff1','staff2','staff3','staff4'],
+            onePlot: true
+        }
+        this._data = {
+            'cafe1':{
+                'staff1':[
+                    {'01.01':1},
+                    {'02.01':2},
+                    {'03.01':2},
+                ],
+                'staff2':[
+                    {'01.01':2},
+                    {'02.01':3},
+                    {'03.01':3},
+                ],
+            },
+            'cafe2':{
+                'staff1':[
+                    {'01.01':1},
+                    {'02.01':2},
+                    {'03.01':2},
+                ],
+                'staff3':[
+                    {'01.01':4},
+                    {'02.01':2},
+                    {'03.01':1},
+                ],
+            },
+            'cafe3':{
+                'staff1':[
+                    {'01.01':2},
+                    {'02.01':2},
+                    {'03.01':2},
+                ],
+                'staff3':[
+                    {'01.01':2},
+                    {'02.01':2},
+                    {'03.01':4},
+                ],
+            },
+        }
     }
 
     _makeViewContext(){
@@ -18,37 +64,59 @@ export default class StatisticsController{
 
         context['statistics']= {
             multiselects:{
-                staff:{
+                cafes:{
                     data:[
-                        {label: 'Кафе1', value: '1'},
-                        {label: 'Кафе2', value: '2'},
-                        {label: 'Кафе3', value: '3'},
+                        {label: 'cafe1', value: 'cafe1'},
+                        {label: 'cafe2', value: 'cafe2'},
+                        {label: 'cafe3', value: 'cafe3'},
                     ],
                     options:{
-                        title:'Выбор кафе'
+                        title:'Кафе'
+                    },
+                    listener: (data)=>{
+                        this._options.cafesList = data;
+                        this._statisticsView._renderPlot(
+                            this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+                        );
                     }
                 },
-                cafes:
+                staff:
                     {
                         data:[
-                            {label: 'Работник1', value: '1'},
-                            {label: 'Работник2', value: '2'},
-                            {label: 'Работник3', value: '3'},
-                            {label: 'Работник4', value: '4'},
-                            {label: 'Работник5', value: '5'},
-                            {label: 'Работник6', value: '6'},
+                            {label: 'staff1', value: 'staff1'},
+                            {label: 'staff2', value: 'staff2'},
+                            {label: 'staff3', value: 'staff3'},
+                            {label: 'staff4', value: 'staff4'},
+                            {label: 'staff5', value: 'staff5'},
+                            {label: 'staff5', value: 'staff6'},
                         ],
                         options:{
-                            title:'Выбор работника'
+                            title:'Работники'
+                        },
+                        listener: (data)=>{
+                            console.log('data',data)
+                            this._options.staffList = data;
+                            this._statisticsView._renderPlot(
+                                this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+                            );
                         }
                     }
             },
-            stat:{},
-        }
+            plot: this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+        };
 
         return context;
     }
-
+    _addListeners(){
+        let onePlotCheckbox = document.getElementsByClassName('container-checkbox_input').item(0);
+        onePlotCheckbox.addEventListener('change',()=>{
+            console.log('change')
+            this._options.onePlot = !this._options.onePlot;
+            this._statisticsView._renderPlot(
+                this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+            );
+        })
+    }
 
 
     /** Запуск контроллера */
@@ -57,5 +125,6 @@ export default class StatisticsController{
         let context = this._makeViewContext();
         console.log('test cont', context);
         this._statisticsView.render(context);
+        this._addListeners();
     }
 }
