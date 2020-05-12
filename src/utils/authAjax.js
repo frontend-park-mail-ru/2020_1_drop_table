@@ -8,9 +8,9 @@
 import {router} from '../main/main';
 import {LoadingComponent} from '../components/Loading/Loading';
 
-export async function authAjax(method, route, body, callback) {
+export async function authAjax(method, route, body, callback, allowGet) {
     let reqBody;
-
+    console.log('body',JSON.stringify(body));
     if(method !== 'GET'){
         reqBody = {
             method: method,
@@ -19,7 +19,8 @@ export async function authAjax(method, route, body, callback) {
             credentials: 'include',
         };
 
-    } else {
+    }
+    else {
         reqBody ={
             method: method,
             mode: 'cors',

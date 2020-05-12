@@ -5,6 +5,7 @@ import {constants} from '../utils/constants';
 import StaffModel from './StaffModel';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 import {router} from '../main/main';
+import {authAjax} from '../utils/authAjax';
 
 
 /** Модель staff 3 рк */
@@ -73,7 +74,7 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
+        await ajax(constants.PATH_STAFF + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
             (response) => {
@@ -92,7 +93,7 @@ export default class StaffListModel{
         const positionInput = document.
             getElementsByClassName('input-alert-window-container__window__field_input').item(0);
         if(positionInput.value) {
-            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+            await ajax(constants.PATH_STAFF + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
                 'GET',
                 {},
                 (response) => {
@@ -106,6 +107,33 @@ export default class StaffListModel{
                 }
             )
         }
+    }
+
+    fillStaffActions(id,context){
+        let staff = this.getStaffById(id);
+        if(context) {
+            for (let i = 0; i < context.length; i++) {
+                staff._actions.push(context[i]);
+            }
+        } else if(!staff._actions){
+            staff._actions = [];
+        }
+    }
+
+    /** Получение последних действий  */
+    async getStat(id,limit, since){
+        console.log('get stat')
+        await authAjax( 'POST',constants.PATH + `/api/v1/statistics/get_worker_data`,
+            {'staffID': Number(id), 'limit':limit, 'since':since},
+            (response) => {
+
+                if (response.errors === null) {
+                    this.fillStaffActions(id,response.data);
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
     }
 
 

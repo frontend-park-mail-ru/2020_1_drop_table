@@ -9,8 +9,8 @@ export default class StaffPageController {
         this._staffListModel = staffListModel;
         this._userModel = userModel;
         this._staffPageView = staffPageView;
-
         this._id = null;
+        this._lastAction = 0;
     }
 
     async update(){
@@ -23,11 +23,14 @@ export default class StaffPageController {
     }
 
 
-    _makeViewContext(id){
+    async _makeViewContext(id){
+        console.log('make view context');
         this._id = id;
         const staff = this._staffListModel.getStaffById(id);
+        await this._staffListModel.getStat(id, 2, this._lastAction);
+        console.log('make view context2');
         let staffContext = {
-            'staff': staff
+            'staff': staff,
         };
 
         staffContext['header'] = {
@@ -68,6 +71,24 @@ export default class StaffPageController {
             input: positionInput,
         };
         positionInput.addEventListener('change', this.changeStaffPosition.bind(context))
+
+        let nextActionsBtn = document.getElementsByClassName(
+            'staff-actions-container__date__button-next').item(0);
+        nextActionsBtn.addEventListener('click',this.addActions.bind(this));
+
+        let prevActionsBtn = document.getElementsByClassName(
+            'staff-actions-container__date__button-prev').item(0);
+        let scrollDiv = document.getElementsByClassName('staff-actions-container__actions').item(0);
+        prevActionsBtn.addEventListener('click',()=>{
+            scrollDiv.scrollTop = 0;
+        })
+    }
+    async addActions(){
+        await this._staffListModel.getStat(this._id, 2, this._lastAction);
+        this._lastAction +=2;
+        this._staffPageView._addActions();
+        let scrollDiv = document.getElementsByClassName('staff-actions-container__actions').item(0);
+        scrollDiv.scrollBottom = 0;
     }
 
     _makeExceptionContext(){
@@ -85,7 +106,7 @@ export default class StaffPageController {
     async control(id){
         try {
             await this.update();
-            this._staffPageView.context = this._makeViewContext(id);
+            this._staffPageView.context = await this._makeViewContext(id);
             this._staffPageView.render();
             this._addListeners(id);
         } catch (error) {

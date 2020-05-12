@@ -46,7 +46,6 @@ export default  class StatisticSerializer{
                 }
             }
         }
-        console.log('test filter', plotData)
         return plotData;
     }
 
@@ -127,15 +126,11 @@ export default  class StatisticSerializer{
         let simpleData = entriesPolyFill(data);
 
         for(let i = 0; i < simpleData.length;i++){
-            console.log('simpleData name', simpleData[i][0], simpleData[i][1])
             let points = [];
             let arr = entriesPolyFill(simpleData[i][1]);
-            console.log('arr', arr, arr.length)
             for(let j = 0; j < arr.length; j++ ){
                 points.push({x: arr[j][0], y: arr[j][1]});
-                console.log('push to arr',arr[j][0], arr[j][1])
             }
-            console.log('points', points)
             plotData.array.push({
                 color: colors[i],
                 name:simpleData[i][0],
