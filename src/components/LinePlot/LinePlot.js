@@ -147,7 +147,7 @@ export default class LinePlotComponent {
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 70;
 
-        const normArray = array.map((point, c)=>{
+        const normArray = array.map((point, c) => {
             return {x: axisBias + (c) * step,
                 y:axisBias + (yAxisOuterBias - axisBias)/
                     (this._yMaxValue - this._yMinValue)*(point.y - this._yMinValue)};
