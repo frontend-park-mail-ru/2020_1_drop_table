@@ -124,7 +124,7 @@ export default class LinePlotComponent {
         })
 
         this._drawText({x:axisBias - 0.01 * minSide, y:axisBias + 0.025 * minSide},
-            this._trimNumber((this._yMaxValue - this._yMinValue)*0.04), fontSize, 'right');
+            this._trimNumber(this._yMinValue * 0.04), fontSize, 'right');
         this._drawText({x:axisBias - 0.01 * minSide, y:(yAxisOuterBias + axisBias + 0.025 * minSide) / 2},
             this._trimNumber((this._yMaxValue + this._yMinValue) / 2), fontSize, 'right');
         this._drawText({x:axisBias - 0.01 * minSide, y:yAxisOuterBias},
