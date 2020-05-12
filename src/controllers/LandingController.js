@@ -13,8 +13,9 @@ export default class LandingController {
      * @param {LandingModel} landingModel модель лэндинга
      * @param {LandingView} landingView view лэндинга
      */
-    constructor(landingModel, landingView, landingCafeListModel) {
+    constructor(landingModel, userModel, landingView, landingCafeListModel) {
         this._landingModel = landingModel;
+        this._userModel = userModel;
         this._landingView = landingView;
         this._landingCafeListModel = landingCafeListModel
     }
@@ -23,15 +24,23 @@ export default class LandingController {
      * Создание контекста для LandingView
      * @return {obj} созданный контекст
      */
-    _makeViewContext(){
-        return {
+    async _makeViewContext(){
+        let context = {
             header: {
-                type: 'landing',
+                type: '',
                 avatar: {
                     photo: null
                 }
             },
             landingCafeListModel: this._landingCafeListModel,
+        };
+
+        try{
+            await this._userModel.getOwner();
+            return context;
+        } catch (error) {
+            context.header.type = 'landing';
+            return context;
         }
     }
 
@@ -98,8 +107,8 @@ export default class LandingController {
     async control(){
         try {
             await this.update();
-            this._landingView.context = this._makeViewContext();
-            this._landingView.render();
+            this._landingView.context = await this._makeViewContext();
+            await this._landingView.render();
             this.addListeners();
         } catch (error) {
             if(error.message !== 'unknown server error'){
