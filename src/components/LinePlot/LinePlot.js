@@ -71,15 +71,6 @@ export default class LinePlotComponent {
         this._plt.closePath();
     }
 
-    _drawRectangle(point, width, height, color='#000000'){
-        point = this._flipAxis(point);
-        this._plt.beginPath();
-        this._plt.rect(point.x, point.y, width, height);
-        this._plt.fillStyle = color;
-        this._plt.fill();
-        this._plt.closePath();
-    }
-
     _drawPoints(arr, width=1, color='#000000', lineCap='round', lineJoin='round'){
         for(let point of arr){
             point = this._flipAxis(point);
@@ -114,24 +105,24 @@ export default class LinePlotComponent {
         const yAxisOuterBias = 0.85 * this._plt.canvas.height;
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 150;
-        const fontSize = ((minSide / 6 ) / 5) / this._pixelRatio + 'px';
-        const bigFontSize = ((minSide /6) / 3) / this._pixelRatio + 'px';
+        const fontSize = (minSide / 35) / this._pixelRatio + 'px';
+        const bigFontSize = (minSide / 25) / this._pixelRatio + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
-            this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.025 * minSide}, point.x, fontSize);
+            this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.05 * minSide}, point.x, fontSize);
             this._drawLine([{x:axisBias + (c+1) * step, y:axisBias},
                 {x:axisBias + (c+1) * step, y:yAxisOuterBias}], linesWidth, '#BFBFBF');
         })
 
         this._drawText({x:axisBias - 0.01 * minSide, y:axisBias + 0.025 * minSide},
-            this._trimNumber(this._yMinValue * 0.04), fontSize, 'right');
+            this._trimNumber(this._yMinValue), fontSize, 'right');
         this._drawText({x:axisBias - 0.01 * minSide, y:(yAxisOuterBias + axisBias + 0.025 * minSide) / 2},
             this._trimNumber((this._yMaxValue + this._yMinValue) / 2), fontSize, 'right');
         this._drawText({x:axisBias - 0.01 * minSide, y:yAxisOuterBias},
             this._trimNumber(this._yMaxValue), fontSize, 'right');
 
         this._drawText({x:axisBias, y:0.025 * minSide}, this._context.textX, bigFontSize, 'left');
-        this._drawText({x:0.025 * minSide, y:axisBias}, this._context.textY, bigFontSize, 'left', -1.57);
+        this._drawText({x:0.035 * minSide, y:axisBias}, this._context.textY, bigFontSize, 'left', -1.57);
     }
 
     _drawBackground(){
@@ -157,7 +148,6 @@ export default class LinePlotComponent {
     }
 
     _drawPlot(context){
-        console.log('draw plot')
         this._drawBackground();
         this._drawGrid(context.array[0].array);
         this._drawAxis();
