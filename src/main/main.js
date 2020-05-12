@@ -95,7 +95,7 @@ const createCafeController = new CreateCafeController(cafeListModel, userModel, 
 const staffListController = new StaffListController(staffListModel, staffListView);
 const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
 const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
-const landingController = new LandingController(landingModel, landingView, landingCafeListModel);
+const landingController = new LandingController(landingModel, userModel, landingView, landingCafeListModel);
 const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
 
 /** Страница регистрации */
