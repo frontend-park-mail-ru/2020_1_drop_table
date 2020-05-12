@@ -28,21 +28,17 @@ export default  class StatisticSerializer{
         let plotData = {};
         let cafes_staff = entriesPolyFill(data);
         for(let i = 0; i < cafes_staff.length;i++){ //Итерация по кафе владельца
-            if(options.cafesList.includes(cafes_staff[i][0])){ //Проверка по списку
+            let cafeName = cafes_staff[i][0];
+            if(options.cafesList.includes(cafeName)){ //Проверка по списку
                 let staff_actions = entriesPolyFill(cafes_staff[i][1]);
                 for(let j = 0; j < staff_actions.length;j++){ //Итерация по работникам кафе
                     if(options.staffList.includes(staff_actions[j][0])){ //Проверка по списку
                         let actions = staff_actions[j][1];
                         for(let k = 0; k < actions.length; k++){ // Итерация по действиям работника
                             let action = entriesPolyFill(actions[k])[0];
-                            if(plotData){
-                                if(plotData[action[0]]){
-                                    plotData[action[0]] += action[1];
-                                }else {
-                                    plotData[action[0]] = action[1];
-                                }
-                            } else {
-                                plotData = {};
+                            if(plotData[action[0]]){
+                                plotData[action[0]] += action[1];
+                            }else {
                                 plotData[action[0]] = action[1];
                             }
                         }
@@ -50,6 +46,7 @@ export default  class StatisticSerializer{
                 }
             }
         }
+        console.log('test filter', plotData)
         return plotData;
     }
 
@@ -101,7 +98,7 @@ export default  class StatisticSerializer{
     }
 
     _makeOnePlotContext(data){
-        console.log('test make one context')
+        console.log('test make one context', data)
         let plotData = {
             textX: 'Время',
             textY: 'Количество',
