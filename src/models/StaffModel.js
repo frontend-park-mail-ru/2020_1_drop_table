@@ -13,6 +13,7 @@ export default class StaffModel { // дописать потом
         this._Position = staff.Position;
         this._CafeId = staff.CafeId;
         this._Photo = staff.Photo? staff.Photo : '/images/userpic.png';
+        this._actions = [];
     }
 
     async update(){
@@ -119,9 +120,10 @@ export default class StaffModel { // дописать потом
         this._saveStaff();
     }
 
+
     /** Получение работника */
     async getStaff(){
-        await authAjax('GET', constants.PATH + `/api/v1/staff/${this._StaffId}`,
+        await authAjax('GET', constants.PATH_STAFF + `/api/v1/staff/${this._StaffId}`,
             null,
             (response) => {
                 if (response.errors === null) {
@@ -132,4 +134,6 @@ export default class StaffModel { // дописать потом
             }
         );
     }
+
+
 }

@@ -160,7 +160,7 @@ export default class UserModel {
 
     /** Получение информации о текущем пользователе. */
     async getOwner(){
-        await ajax(constants.PATH+'/api/v1/get_current_staff/',
+        await ajax(constants.PATH_STAFF+'/api/v1/get_current_staff/',
             'GET',
             {},
             (response) => {
@@ -177,7 +177,7 @@ export default class UserModel {
     async editOwner(photo = null){
         const formData = this._makeFormData(photo);
 
-        await ajaxForm(constants.PATH+'/api/v1/staff/' + this.id,
+        await ajaxForm(constants.PATH_STAFF+'/api/v1/staff/' + this.id,
             'PUT',
             formData,
             (response) => {
@@ -193,7 +193,7 @@ export default class UserModel {
 
     /** Регистрация пользователя. */
     async register() {
-        await ajax(constants.PATH + '/api/v1/staff',
+        await ajax(constants.PATH_STAFF + '/api/v1/staff',
             'POST',
             {'name': this.name,
                 'email': this.email,
@@ -213,7 +213,7 @@ export default class UserModel {
     /** Аунтификация пользователя. */
     async login() {
         await authAjax('POST',
-            constants.PATH + '/api/v1/staff/login',
+            constants.PATH_STAFF + '/api/v1/staff/login',
             {'email': this.email, 'password': this.password},
             (response) => {
                 if (response.errors === null){
@@ -227,7 +227,7 @@ export default class UserModel {
     /** Добавление работника */
     async addStaff(uuid,position) {
         const requestUrl = `/api/v1/add_staff?uuid=${uuid}&position=${position}` ;
-        await ajax(constants.PATH + requestUrl,
+        await ajax(constants.PATH_STAFF + requestUrl,
             'POST',
             {'name': this.name, 'email': this.email, 'password': this.password},
             (response) => {
@@ -242,7 +242,7 @@ export default class UserModel {
     /** Удаление работника */
     async fireStaff(id) {
         const requestUrl = `/api/v1/staff/delete_staff/${id}`;
-        await ajax(constants.PATH + requestUrl,
+        await ajax(constants.PATH_STAFF + requestUrl,
             'POST',
             null,
             (response) => {
@@ -259,7 +259,7 @@ export default class UserModel {
     async changeStaffPosition(id, position) {
 
         const requestUrl = `/api/v1/staff/update_position/${id}`;
-        await authAjax('POST',constants.PATH + requestUrl,
+        await authAjax('POST',constants.PATH_STAFF + requestUrl,
             {'position':position},
             (response) => {
                 if (response.errors === null){
@@ -276,7 +276,7 @@ export default class UserModel {
         const positionInput = document.
             getElementsByClassName('input-alert-window-container__window__field_input').item(0);
         if(positionInput.value) {
-            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+            await ajax(constants.PATH_STAFF + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
                 'GET',
                 {},
                 (response) => {

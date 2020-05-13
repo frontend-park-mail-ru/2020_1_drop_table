@@ -15,59 +15,6 @@ export default class StaffActionsComponent {
      */
     constructor(parent = document.getElementById('application')) {
         this._parent = parent;
-        this.context = {
-            dateStart: '01.05',
-            dateEnd: '03.05',
-            dateCells: {
-                '01.05': [
-                    {
-                        action:'Начислил 10 бонусов',
-                        time: '13:01'
-                    },
-                    {
-                        action:'Начислил 11 бонусов',
-                        time: '14:02'
-                    },
-                    {
-                        action:'Начислил 12 бонусов',
-                        time: '15:03'
-                    }
-                ],
-                '02.05': [
-                    {
-                        action:'Начислил 13 бонусов',
-                        time: '13:01'
-                    },
-                    {
-                        action:'Начислил 14 бонусов',
-                        time: '14:02'
-                    },
-                    {
-                        action:'Начислил 15 бонусов',
-                        time: '15:03'
-                    }
-                ],
-                '03.05': [
-                    {
-                        action:'Начислил 13 бонусов',
-                        time: '13:01'
-                    },
-                    {
-                        action:'Начислил 14 бонусов',
-                        time: '14:02'
-                    },
-                    {
-                        action:'Начислил 15 бонусов',
-                        time: '15:03'
-                    }
-                    ,
-                    {
-                        action:'Снял 15 бонусов',
-                        time: '16:03'
-                    }
-                ],
-            }
-        }
     }
 
     /**
@@ -89,6 +36,7 @@ export default class StaffActionsComponent {
     }
     renderDateCells(context){
         let container = this._parent.getElementsByClassName('staff-actions-container__actions').item(0);
+        container.innerHTML ='';
         const entriesPolyFill = (context) => Object.keys(context).map(key => [key, context[key]]);
         let dayCells = entriesPolyFill(context.dateCells);
         for(let i = 0; i < dayCells.length;i++){
@@ -101,8 +49,8 @@ export default class StaffActionsComponent {
     }
 
 
-    render() {
-        this._renderTemplate(this.context);
-        this.renderDateCells(this.context)
+    render(context) {
+        this._renderTemplate(context);
+        this.renderDateCells(context)
     }
 }
