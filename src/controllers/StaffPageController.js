@@ -1,6 +1,7 @@
 import {router} from '../main/main';
 import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 import NotificationComponent from "../components/Notification/Notification";
+import StatisticSerializer from '../Serializers/StatisticSerializer';
 
 /** контроллер кафе */
 export default class StaffPageController {
@@ -9,6 +10,7 @@ export default class StaffPageController {
         this._staffListModel = staffListModel;
         this._userModel = userModel;
         this._staffPageView = staffPageView;
+        this._statisticSerializer = new StatisticSerializer();
         this._id = null;
         this._lastAction = 0;
     }
@@ -17,6 +19,9 @@ export default class StaffPageController {
         try {
             await this._userModel.update();
             await this._staffListModel.update();
+            let dateStart;
+            let dateEnd;
+            await this._staffListModel.getAllStaffPlot(dateStart, dateEnd);//todo date
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -24,11 +29,9 @@ export default class StaffPageController {
 
 
     async _makeViewContext(id){
-        console.log('make view context');
         this._id = id;
         const staff = this._staffListModel.getStaffById(id);
         await this._staffListModel.getStat(id, 2, this._lastAction);
-        console.log('make view context2');
         let staffContext = {
             'staff': staff,
         };
@@ -42,6 +45,9 @@ export default class StaffPageController {
                     listener: () => {router._goTo('/profile')}
                 }
             }
+        };
+        staffContext['statistics']= {
+            plot: this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
         };
 
         return staffContext;
@@ -105,6 +111,7 @@ export default class StaffPageController {
      */
     async control(id){
         try {
+            this._id = id;
             await this.update();
             this._staffPageView.context = await this._makeViewContext(id);
             this._staffPageView.render();
