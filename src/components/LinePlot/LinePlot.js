@@ -106,7 +106,7 @@ export default class LinePlotComponent {
         const step = (xAxisOuterBias - axisBias) / array.length;
         const linesWidth = minSide / 150;
         const fontSize = (minSide / 35) + 'px';
-        const bigFontSize = (minSide / 25)  + 'px';
+        const bigFontSize = (minSide / 25) + 'px';
 
         (array.slice(1)).forEach((point, c)=>{
             this._drawText({x:axisBias + (c+1) * step, y:axisBias - 0.05 * minSide}, point.x, fontSize);
@@ -161,7 +161,6 @@ export default class LinePlotComponent {
             this._plt.canvas.height !== this._parent.clientHeight) {
             this._plt.canvas.width = this._parent.clientWidth;
             this._plt.canvas.height = this._parent.clientHeight;
-            this._pixelRatio = window.devicePixelRatio;
             this._drawPlot(this._context);
         }
     }

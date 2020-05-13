@@ -11,6 +11,7 @@ export default class LandingController {
     /**
      * Инициализация LandingController
      * @param {LandingModel} landingModel модель лэндинга
+     * @param {UserModel} userModel модель ользователя
      * @param {LandingView} landingView view лэндинга
      */
     constructor(landingModel, userModel, landingView, landingCafeListModel) {
@@ -18,6 +19,7 @@ export default class LandingController {
         this._userModel = userModel;
         this._landingView = landingView;
         this._landingCafeListModel = landingCafeListModel
+        this._map = null;
     }
 
     /**
@@ -94,6 +96,40 @@ export default class LandingController {
         }
     }
 
+    async _loadCafesToMap(){
+        let center = this._map.getCenter();
+        let bounds = this._map.getBounds();
+        let radius = 6378137 * Math.acos(Math.sin(bounds[0][0] * Math.PI / 180) *
+            Math.sin(bounds[1][0] * Math.PI / 180) + Math.cos(bounds[0][0] * Math.PI / 180) *
+            Math.cos(bounds[1][0] * Math.PI / 180) * Math.cos((bounds[0][1] - bounds[1][1]) * Math.PI / 180));
+
+        await this._landingModel.getNearestCafes(center[0], center[1], radius);
+
+        let myGeoObjects = [];
+        for (let i = 0; i < this._landingModel.cafes.length; i++) {
+            myGeoObjects[i] = new ymaps.GeoObject({
+                geometry: {
+                    type: 'Point',
+                    coordinates: this._landingModel.cafes[i].location.split(' '),
+                }
+            });
+        }
+
+        let myClusterer = new ymaps.Clusterer();
+        myClusterer.add(myGeoObjects);
+        this._map.geoObjects.add(myClusterer);
+    }
+
+    _mapInit(){
+        this._map = new ymaps.Map('map', {
+            center: [55.76, 37.64],
+            zoom: 7
+        });
+        this._loadCafesToMap();
+        this._map.events.add('boundschange', this._loadCafesToMap, this);
+    }
+
+
     _makeExceptionContext(){
         return {
             'offline': () => {
@@ -110,6 +146,7 @@ export default class LandingController {
             this._landingView.context = await this._makeViewContext();
             await this._landingView.render();
             this.addListeners();
+            ymaps.ready(this._mapInit, this);
         } catch (error) {
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
