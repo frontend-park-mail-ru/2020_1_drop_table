@@ -10,6 +10,7 @@ export default class StaffModel { // дописать потом
 
         this._StaffId = staff.StaffId;
         this._StaffName = staff.StaffName;
+        this._CafeName = staff.CafeName;
         this._Position = staff.Position;
         this._CafeId = staff.CafeId;
         this._Photo = staff.Photo? staff.Photo : '/images/userpic.png';

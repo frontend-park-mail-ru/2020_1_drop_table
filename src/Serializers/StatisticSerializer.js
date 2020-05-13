@@ -14,8 +14,6 @@ export default  class StatisticSerializer{
             plotData = this._filterDataAllPlots(data, options);
         }
         return this._makeContext(plotData, options)
-
-
     }
 
     /**
@@ -140,6 +138,34 @@ export default  class StatisticSerializer{
         return plotData
     }
 
+    serializeStaffPlot(data, staffName){
+        let plotData = [];
+        let cafes_staff = entriesPolyFill(data);
+        for(let i = 0; i < cafes_staff.length; i++){
+            let staff_actions = entriesPolyFill(cafes_staff[i]);
+            for(let j = 0; j < staff_actions.length; i++){
+                if(staff_actions[i][0] === staffName){
+                    let array = staff_actions[i][1];
+                    for(let k = 0; k < array.length; k++){
+                        plotData.push({x:array[i][0],y:array[i][1]})
+                    }
+                }
+            }
+        }
+        return this.makeStaffPlotContext(plotData);
+    }
+    makeStaffPlotContext(data){
+        let plotData = {
+            textX: 'Время',
+            textY: 'Количество',
+            array:[
+                {
+                    color:'#814ad0',
+                    array: data
+                }],
+        };
+        return plotData
+    }
 
 }
 const entriesPolyFill = (context) => Object.keys(context).map(key => [key, context[key]]);
@@ -163,3 +189,5 @@ const colors =[
     '#F9C87A',
     '#FF9686',
 ];
+
+

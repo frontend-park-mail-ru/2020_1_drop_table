@@ -16,6 +16,7 @@ export default class StaffListModel{
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
+        this._statistics = null;
     }
 
     async update(){
@@ -74,6 +75,7 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
+        console.log('staff list');
         await ajax(constants.PATH_STAFF + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
@@ -119,6 +121,50 @@ export default class StaffListModel{
             staff._actions = [];
         }
     }
+    fillAllStaffStatistics(context){
+        //let staff = this.getStaffById(id);
+        console.log('fill statistics');
+        this._statistics = {
+            'cafe1':{
+                'staff1':[
+                    {'01.01':1},
+                    {'02.01':2},
+                    {'03.01':2},
+                    {'04.01':1},
+                    {'05.01':2},
+                    {'06.01':2},
+
+                ],
+                'staff2':[
+                    {'01.01':2},
+                    {'02.01':3},
+                    {'03.01':2},
+                    {'04.01':4},
+                    {'05.01':2},
+                    {'06.01':2},
+                ],
+            },
+            'cafe2':{
+                'staff1':[
+                    {'01.01':1},
+                    {'02.01':2},
+                    {'03.01':3},
+                    {'04.01':1},
+                    {'05.01':5},
+                    {'06.01':2},
+                ],
+                'staff3':[
+                    {'01.01':4},
+                    {'02.01':2},
+                    {'03.01':1},
+                    {'04.01':1},
+                    {'05.01':2},
+                    {'06.01':2},
+                ],
+            },
+
+        }
+    }
 
     /** Получение последних действий  */
     async getStat(id,limit, since){
@@ -134,6 +180,22 @@ export default class StaffListModel{
                 }
             }
         );
+    }
+
+    /** Получение последних действий  */
+    async getAllStaffPlot(start, end){
+        this.fillAllStaffStatistics();
+        // console.log('get stat')
+        // await authAjax( 'POST',constants.PATH + `/api/v1/statistics/`,
+        //     {'staffID': Number(id), 'limit':start, 'since':end},
+        //     (response) => {
+        //         if (response.errors === null) {
+        //             this.fillStaffStatistics(id,response.data);
+        //         } else {
+        //             throw response.errors;
+        //         }
+        //     }
+        // );
     }
 
 
