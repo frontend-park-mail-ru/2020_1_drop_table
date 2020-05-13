@@ -118,15 +118,16 @@
   height: 40vw;
   min-height: 350px;
   min-width: 300px;
+  max-height: 600px;
 }
 @media(min-width: 620px) {
   .staff-page__statistics-container__graph-container{
-    width: 57.6vw;
+    width: 50%
   }
 }
 @media(max-width: 620px) {
   .staff-page__statistics-container__graph-container{
-    width: 90vw;
+    width: 90%;
   }
 }
 

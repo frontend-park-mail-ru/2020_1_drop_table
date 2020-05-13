@@ -15,5 +15,6 @@ export async function ajax(route, method, data, callback) {
     if (method !== 'GET' && method !== 'HEAD') {
         formData.append('jsonData',jsonData );
     }
+
     await ajaxForm(route, method, formData, callback);
 }

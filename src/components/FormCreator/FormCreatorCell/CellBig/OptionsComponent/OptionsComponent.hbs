@@ -6,8 +6,10 @@
     <div class="big-form-cell__answer-options__options__list">
         {{#each answerOptions}}
             <div class="big-form-cell__answer-options__options__list__cell" id="option-{{cell_id}}-{{option_id}}">
-                <input class="big-form-cell__answer-options__options__list__cell_input" type="text" value={{text}}>
-                <div class="big-form-cell__answer-options__options__list__cell__button"></div>
+                <input class="big-form-cell__answer-options__options__list__cell_input" type="text" placeholder={{text}}>
+                <div class="big-form-cell__answer-options__options__list__cell__button">
+                    <svg class="big-form-cell__answer-options__options__list__cell__button_svg" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg>
+                </div>
             </div>
         {{/each}}
     </div>
