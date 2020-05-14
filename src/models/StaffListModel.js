@@ -123,47 +123,9 @@ export default class StaffListModel{
     }
     fillAllStaffStatistics(context){
         //let staff = this.getStaffById(id);
-        console.log('fill statistics');
-        this._statistics = {
-            'cafe1':{
-                'staff1':[
-                    {'01.01':1},
-                    {'02.01':2},
-                    {'03.01':2},
-                    {'04.01':1},
-                    {'05.01':2},
-                    {'06.01':2},
+        console.log('fill statistics', context);
+        this._statistics = context
 
-                ],
-                'staff2':[
-                    {'01.01':2},
-                    {'02.01':3},
-                    {'03.01':2},
-                    {'04.01':4},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-            },
-            'cafe2':{
-                'staff1':[
-                    {'01.01':1},
-                    {'02.01':2},
-                    {'03.01':3},
-                    {'04.01':1},
-                    {'05.01':5},
-                    {'06.01':2},
-                ],
-                'staff3':[
-                    {'01.01':4},
-                    {'02.01':2},
-                    {'03.01':1},
-                    {'04.01':1},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-            },
-
-        }
     }
 
     /** Получение последних действий  */
@@ -184,18 +146,20 @@ export default class StaffListModel{
 
     /** Получение последних действий  */
     async getAllStaffPlot(start, end){
-        this.fillAllStaffStatistics();
-        // console.log('get stat')
-        // await authAjax( 'POST',constants.PATH + `/api/v1/statistics/`,
-        //     {'staffID': Number(id), 'limit':start, 'since':end},
-        //     (response) => {
-        //         if (response.errors === null) {
-        //             this.fillStaffStatistics(id,response.data);
-        //         } else {
-        //             throw response.errors;
-        //         }
-        //     }
-        // );
+        //this.fillAllStaffStatistics();
+        console.log('getPlot', `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`);
+       // http://localhost:8080/api/v1/statistics/get_graphs_data?type=day&since=2020-03-12 00:00:00.000000&to=2021-05-12 00:00:00.000000
+        await ajax( constants.PATH + `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`,'GET',
+            null,
+            (response) => {
+                if (response.errors === null) {
+                    console.log('response', response)
+                    this.fillAllStaffStatistics(response.data);
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
     }
 
 
