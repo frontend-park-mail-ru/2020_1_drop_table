@@ -16,6 +16,7 @@ export default class StaffListModel{
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
+        this._statistics = null;
     }
 
     async update(){
@@ -74,6 +75,7 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
+        console.log('staff list');
         await ajax(constants.PATH_STAFF + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
@@ -119,6 +121,12 @@ export default class StaffListModel{
             staff._actions = [];
         }
     }
+    fillAllStaffStatistics(context){
+        //let staff = this.getStaffById(id);
+        console.log('fill statistics', context);
+        this._statistics = context
+
+    }
 
     /** Получение последних действий  */
     async getStat(id,limit, since){
@@ -129,6 +137,24 @@ export default class StaffListModel{
 
                 if (response.errors === null) {
                     this.fillStaffActions(id,response.data);
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
+    }
+
+    /** Получение последних действий  */
+    async getAllStaffPlot(start, end){
+        //this.fillAllStaffStatistics();
+        console.log('getPlot', `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`);
+       // http://localhost:8080/api/v1/statistics/get_graphs_data?type=day&since=2020-03-12 00:00:00.000000&to=2021-05-12 00:00:00.000000
+        await ajax( constants.PATH + `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`,'GET',
+            null,
+            (response) => {
+                if (response.errors === null) {
+                    console.log('response', response)
+                    this.fillAllStaffStatistics(response.data);
                 } else {
                     throw response.errors;
                 }

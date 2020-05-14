@@ -2,126 +2,150 @@
 
 
 import StatisticSerializer from '../Serializers/StatisticSerializer';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 
 export default class StatisticsController{
 
 
-    constructor(statisticsView, statisticsModel) {
+    constructor(statisticsView, statisticsModel, staffListModel) {
         this._statisticsView = statisticsView;
         this._statisticsModel = statisticsModel;
+        this._staffListModel = staffListModel;
         this._statisticSerializer = new StatisticSerializer();
         this._options = {
             cafesList: ['cafe1','cafe2','cafe3'],
             staffList: ['staff1','staff2','staff3','staff4'],
             onePlot: false
-        }
-        this._data = {
-            'cafe1':{
-                'staff1':[
-                    {'01.01':1},
-                    {'02.01':2},
-                    {'03.01':2},
-                    {'04.01':1},
-                    {'05.01':2},
-                    {'06.01':2},
+        };
 
-                ],
-                'staff2':[
-                    {'01.01':2},
-                    {'02.01':3},
-                    {'03.01':2},
-                    {'04.01':4},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-            },
-            'cafe2':{
-                'staff1':[
-                    {'01.01':1},
-                    {'02.01':2},
-                    {'03.01':3},
-                    {'04.01':1},
-                    {'05.01':5},
-                    {'06.01':2},
-                ],
-                'staff3':[
-                    {'01.01':4},
-                    {'02.01':2},
-                    {'03.01':1},
-                    {'04.01':1},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-            },
-            'cafe3':{
-                'staff1':[
-                    {'01.01':2},
-                    {'02.01':1},
-                    {'03.01':1},
-                    {'04.01':3},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-                'staff3':[
-                    {'01.01':1},
-                    {'02.01':1},
-                    {'03.01':2},
-                    {'04.01':1},
-                    {'05.01':2},
-                    {'06.01':2},
-                ],
-            },
+
+        // this._data = {
+        //     'cafe1':{
+        //         'staff1':[
+        //             {'01.01':1},
+        //             {'02.01':2},
+        //             {'03.01':2},
+        //             {'04.01':1},
+        //             {'05.01':2},
+        //             {'06.01':2},
+        //
+        //         ],
+        //         'staff2':[
+        //             {'01.01':2},
+        //             {'02.01':3},
+        //             {'03.01':2},
+        //             {'04.01':4},
+        //             {'05.01':2},
+        //             {'06.01':2},
+        //         ],
+        //     },
+        //     'cafe2':{
+        //         'staff1':[
+        //             {'01.01':1},
+        //             {'02.01':2},
+        //             {'03.01':3},
+        //             {'04.01':1},
+        //             {'05.01':5},
+        //             {'06.01':2},
+        //         ],
+        //         'staff3':[
+        //             {'01.01':4},
+        //             {'02.01':2},
+        //             {'03.01':1},
+        //             {'04.01':1},
+        //             {'05.01':2},
+        //             {'06.01':2},
+        //         ],
+        //     },
+        //     'cafe3':{
+        //         'staff1':[
+        //             {'01.01':2},
+        //             {'02.01':1},
+        //             {'03.01':1},
+        //             {'04.01':3},
+        //             {'05.01':2},
+        //             {'06.01':2},
+        //         ],
+        //         'staff3':[
+        //             {'01.01':1},
+        //             {'02.01':1},
+        //             {'03.01':2},
+        //             {'04.01':1},
+        //             {'05.01':2},
+        //             {'06.01':2},
+        //         ],
+        //     },
+        // }
+    }
+    async update(){
+        try {
+            await this._staffListModel.update();
+            let startDate = this.getPrevDate();
+            let endDate = this.getCurrentDate();
+            console.log('date...', startDate, endDate)
+            await this._staffListModel.getAllStaffPlot(startDate, endDate);
+        } catch (exception) {
+
         }
     }
 
+    _makeMultiSelectsContext(){
+        let cafes = [];
+        let staff = [];
+        let res = {
+            cafes:[],
+            staff:[]
+        };
+        console.log('test212321', this._staffListModel._staffModelsList);
+        for(let i = 0; i < this._staffListModel._staffModelsList.length; i++){
+            let staffModel = this._staffListModel._staffModelsList[i];
+            if(!staff.includes(staffModel._StaffName)){
+                staff.push(staffModel._StaffName);
+                res.staff.push({label:staffModel._StaffName, value: staffModel._StaffName });
+            }
+            if(!cafes.includes(staffModel._CafeName)){
+                cafes.push(staffModel._CafeName);
+                res.cafes.push({label:staffModel._CafeName, value: staffModel._CafeId });
+            }
+        }
+        return res;
+    }
     _makeViewContext(){
         let context = {};
         //todo Хедер в зависимости от того зареган ли юзер
         context['header'] = {
             type: null,
         };
-
+        let msData = this._makeMultiSelectsContext();
         context['statistics']= {
             multiselects:{
                 cafes:{
-                    data:[
-                        {label: 'cafe1', value: 'cafe1'},
-                        {label: 'cafe2', value: 'cafe2'},
-                        {label: 'cafe3', value: 'cafe3'},
-                    ],
+                    data:msData.cafes,
                     options:{
                         title:'Кафе'
                     },
                     listener: (data)=>{
                         this._options.cafesList = data;
                         this._statisticsView._renderPlot(
-                            this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+                            this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
                         );
                     }
                 },
                 staff:
                     {
-                        data:[
-                            {label: 'staff1', value: 'staff1'},
-                            {label: 'staff2', value: 'staff2'},
-                            {label: 'staff3', value: 'staff3'},
-                            {label: 'staff4', value: 'staff4'},
-                            {label: 'staff5', value: 'staff5'},
-                            {label: 'staff5', value: 'staff6'},
-                        ],
+                        data:msData.staff,
                         options:{
                             title:'Работники'
                         },
                         listener: (data)=>{
-                            console.log('data',data)
                             this._options.staffList = data;
                             this._statisticsView._renderPlot(
-                                this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+                                this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
                             );
                         }
                     }
             },
-            plot: this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+            plot: this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
         };
 
         return context;
@@ -129,10 +153,10 @@ export default class StatisticsController{
     _addListeners(){
         let onePlotCheckbox = document.getElementsByClassName('container-checkbox_input').item(0);
         onePlotCheckbox.addEventListener('change',()=>{
-            console.log('change')
+
             this._options.onePlot = !this._options.onePlot;
             this._statisticsView._renderPlot(
-                this._statisticSerializer.serializeLinePlotData(this._data, this._options)
+                this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
             );
         })
     }
@@ -140,10 +164,41 @@ export default class StatisticsController{
 
     /** Запуск контроллера */
     async control(){
-
+        await this.update();
         let context = this._makeViewContext();
-        console.log('test cont', context);
         this._statisticsView.render(context);
         this._addListeners();
+    }
+    getCurrentDate(){
+        let date = new Date();
+        console.log('date curr', date);
+        //2021-05-12 00:00:00.000000
+        let res = `${date.getFullYear()}-
+        ${date.getMonth()}-
+        ${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
+        console.log('geg2', res)
+        return res
+    }
+    getPrevDate(){
+        let date = new Date();
+        console.log('date prev', date);
+        //2021-05-12 00:00:00.000000
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        console.log('date prev2', year, month, day);
+        if(day < 7){
+            if(month < 1){
+                day = 30 - day;
+            } else{
+                month--;
+                day = 30 - day;
+            }
+        } else{
+            day -= 7;
+        }
+        let res = `${year}-${month}-${day} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`
+        console.log('geg',res)
+        return res
     }
 }

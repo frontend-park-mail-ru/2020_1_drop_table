@@ -195,7 +195,7 @@ function doNotFound() {
 }
 function doStatistics(){
     const statisticsView = new StatisticsView(app);
-    const statisticsController = new StatisticsController(statisticsView);
+    const statisticsController = new StatisticsController(statisticsView, null, staffListModel);
     statisticsController.control();
 }
 

@@ -8,7 +8,7 @@
 import {router} from '../main/main';
 import {LoadingComponent} from '../components/Loading/Loading';
 
-export async function authAjax(method, route, body, callback, allowGet) {
+export async function authAjax(method, route, body, callback) {
     let reqBody;
     console.log('body',JSON.stringify(body));
     if(method !== 'GET'){
