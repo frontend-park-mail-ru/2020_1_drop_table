@@ -111,6 +111,11 @@ export default class LandingController {
                 geometry: {
                     type: 'Point',
                     coordinates: this._landingModel.cafes[i].location.split(' '),
+                },
+                properties: {
+                    hintContent: this._landingModel.cafes[i].name,
+                    balloonContentHeader: this._landingModel.cafes[i].name,
+                    balloonContentBody: this._landingModel.cafes[i].description
                 }
             });
         }
