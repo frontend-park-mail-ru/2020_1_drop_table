@@ -80,7 +80,10 @@ export default class StatisticsController{
     async update(){
         try {
             await this._staffListModel.update();
-            await this._staffListModel.getAllStaffPlot();
+            let startDate = this.getPrevDate();
+            let endDate = this.getCurrentDate();
+            console.log('date...', startDate, endDate)
+            await this._staffListModel.getAllStaffPlot(startDate, endDate);
         } catch (exception) {
 
         }
@@ -93,7 +96,7 @@ export default class StatisticsController{
             cafes:[],
             staff:[]
         };
-        console.log('test212321', this._staffListModel._staffModelsList)
+        console.log('test212321', this._staffListModel._staffModelsList);
         for(let i = 0; i < this._staffListModel._staffModelsList.length; i++){
             let staffModel = this._staffListModel._staffModelsList[i];
             if(!staff.includes(staffModel._StaffName)){
@@ -102,7 +105,7 @@ export default class StatisticsController{
             }
             if(!cafes.includes(staffModel._CafeName)){
                 cafes.push(staffModel._CafeName);
-                res.cafes.push({label:staffModel._CafeName, value: staffModel._CafeName });
+                res.cafes.push({label:staffModel._CafeName, value: staffModel._CafeId });
             }
         }
         return res;
@@ -165,5 +168,37 @@ export default class StatisticsController{
         let context = this._makeViewContext();
         this._statisticsView.render(context);
         this._addListeners();
+    }
+    getCurrentDate(){
+        let date = new Date();
+        console.log('date curr', date);
+        //2021-05-12 00:00:00.000000
+        let res = `${date.getFullYear()}-
+        ${date.getMonth()}-
+        ${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
+        console.log('geg2', res)
+        return res
+    }
+    getPrevDate(){
+        let date = new Date();
+        console.log('date prev', date);
+        //2021-05-12 00:00:00.000000
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        console.log('date prev2', year, month, day);
+        if(day < 7){
+            if(month < 1){
+                day = 30 - day;
+            } else{
+                month--;
+                day = 30 - day;
+            }
+        } else{
+            day -= 7;
+        }
+        let res = `${year}-${month}-${day} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`
+        console.log('geg',res)
+        return res
     }
 }
