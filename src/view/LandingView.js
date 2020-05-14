@@ -31,15 +31,11 @@ export default class LandingView extends BaseView {
         console.log(this._context.landingCafeListModel._cafeListJson);
         let cafes = this._context.landingCafeListModel._cafeListJson;
         (new LandingCafesContainerComponent(container)).render(
-            cafes.slice(
-                this._context.landingCafeListModel._currentId
-                ,this._context.landingCafeListModel._currentId += this._context.landingCafeListModel._step));
-
-
-
-        // let container = document.getElementsByClassName('landing-page__cafes').item(0);
-        // (new CafesContainerComponent(container)).render(this._context.cafeListModel._cafeModelsList);
-
+            cafes.slice(this._context.landingCafeListModel._currentId
+                ,this._context.landingCafeListModel._currentId +
+                this._context.landingCafeListModel._step
+            )
+        );
     }
 
     /** Отрисовка страницы лэндинга */

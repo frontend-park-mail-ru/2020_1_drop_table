@@ -151,7 +151,6 @@ class ComplicatedRequestManager{
     }
 }
 
-
 const plainRequestManager = new PlainRequestManager();
 const complicatedRequestManager = new ComplicatedRequestManager();
 

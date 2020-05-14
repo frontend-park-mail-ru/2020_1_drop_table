@@ -65,7 +65,7 @@ export default class LandingController {
     cafesBack(){
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         console.log('back1')
-        if(this._landingCafeListModel._currentId > this._landingCafeListModel._step) {
+        if(this._landingCafeListModel._currentId > 0) {
             console.log('back2')
             this._landingCafeListModel._currentId -= this._landingCafeListModel._step;
 
@@ -77,6 +77,7 @@ export default class LandingController {
     }
 
     async cafesForward(){
+        console.log(this._landingCafeListModel);
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         let cafes = this._landingCafeListModel._cafeListJson;
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step >= cafes.length ){
