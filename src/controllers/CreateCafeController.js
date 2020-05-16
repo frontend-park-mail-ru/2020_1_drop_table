@@ -199,6 +199,10 @@ export default class CreateCafeController{
                 'Название кафе слишком короткое',
                 form['name']
             ],
+            'pq: parse error - invalid geometry': [
+                'Адрес кафе некорректный',
+                form['address']
+            ],
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
