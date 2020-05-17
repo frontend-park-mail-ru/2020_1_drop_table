@@ -153,7 +153,9 @@ function doAddStaff(req) {
 
 /** Страница меню работника */
 function doStaffMenu(req) {
+    console.log('do staff menu');
     const uuid = req.param.uuid;
+    console.log('do staff menu uuid', uuid);
     const staffMenuView = new StaffMenuView(app, uuid);
     const staffMenuController = new StaffMenuController(staffMenuView, uuid);
     staffMenuController.control();

@@ -11,14 +11,20 @@ export class Cashback {
     }
 
     _renderTemplate(){
+        console.log('render templ', this._context, this.balance)
         this._el.innerHTML = CashbackTemplate({balance: this.balance});
     }
 
     _addListeners(){
+        console.log('add listeners');
         const entriesPolyFill = (context) => Object.keys(context).map(key => [key, context[key]]);
-        let events = entriesPolyFill(this._context);
+        let events = entriesPolyFill(this._context['events']);
+        console.log('context events', events)
         for(let i = 0; i < events.length; i++){
-            events[i]['object'].addEventListener('click', events[i]['listener'].bind(this))
+            console.log('test',events[i]);
+            let obj = this._el.getElementsByClassName(events[i][1]['object']).item(0);
+            console.log('test',obj);
+            obj.addEventListener('click', events[i][1]['listener'].bind(this))
         }
     }
 

@@ -43,6 +43,8 @@ export default class CardRedactorController {
         }
     }
 
+
+
     /** Запуск контроллера */
     async control(){
         try {
@@ -57,22 +59,9 @@ export default class CardRedactorController {
             this.addColorPickerListeners(this);
             this._addLoyaltyListeners();
             this._makeActiveLoyalty(0);
-
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
-
-            let bg = document.getElementById('card-strip');
-            let dd = document.getElementById('primary-field')
-            console.log('bugaga',bg)
-            dd.addEventListener("mouseover", function(){
-                console.log('bugaga1')
-                bg.style.background = "#c00";
-                this.addEventListener("mouseout", function(){
-                    console.log('bugaga1')
-                    bg.style.background = "c11";});
-            });
-
 
         } catch (error) {
             if(error.message !== 'unknown server error'){
@@ -317,12 +306,17 @@ export default class CardRedactorController {
                 fr.readAsDataURL(files[0]);
             }
         });
-        // stripInput.addEventListener('dblclick', function (e) {
-        //     avatarImage.src = fr.result;
-        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-        //     avatarCardImage.src = fr.result;
-        //     this._appleCard._icon = fr.result;
-        // });
+        console.log('set image icon 2' );
+
+        stripInput.addEventListener('mouseenter', function (e) {
+            console.log('mouseover')
+            e.target.style.color = "purple";
+
+            // avatarImage.src = fr.result;
+            // avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+            // avatarCardImage.src = fr.result;
+            // this._appleCard._icon = fr.result;
+        });
         // avatarImage.addEventListener('dblclick', function (e) {
         //     avatarImage.src = fr.result;
         //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера

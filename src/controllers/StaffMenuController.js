@@ -23,62 +23,64 @@ export default class StaffMenuController{
         this._customerData = null;
     }
     _makeViewContext(){
+        console.log('make view context');
         switch(this._customerData.type){
         case 'coffee_cup':
-            return{
-                Component: CoffeeCup,
-                events:[
-                    {
-                        object: document.getElementsByClassName('buttonFlex__plus').item(0),
-                        listener: this.coffeeCupPointPlus
-                    },
-                    {
-                        object: document.getElementsByClassName('buttonFlex__minus').item(0),
-                        listener: this.coffeeCupPointMinus
-                    },
-                ]
-            };
+            this._customerData.Component = CoffeeCup;
+            this._customerData.events = [
+                {
+                    object: 'buttonFlex__plus',
+                    listener: this.coffeeCupPointPlus
+                },
+                {
+                    object: 'buttonFlex__minus',
+                    listener: this.coffeeCupPointMinus
+                },
+            ]
+            break;
+
         case 'cashback':
-            return{
-                Component: Cashback,
-                events:[
-                    {
-                        object: document.getElementsByClassName('buttonFlex__plus').item(0),
-                        listener: this.cashbackSetPoints
-                    },
-                ]
-            };
+            this._customerData.Component = Cashback;
+            this._customerData.events = [
+                {
+                    object: 'buttonFlex__plus',
+                    listener: this.cashbackSetPoints
+                },
+            ]
+            break;
         case 'percents':
-            return{
-                Component: Discounts,
-                events:[
-                    {
-                        object: document.getElementsByClassName('buttonFlex__plus').item(0),
-                        listener: this.discountPurchase
-                    },
-                ]
-            };
+            this._customerData.Component = Discounts;
+            this._customerData.events = [
+                {
+                    object: 'buttonFlex__plus',
+                    listener: this.discountPurchase
+                },
+            ];
+            break;
+
         case 'coupon':
-            return{
-                //component: couponComponent,
-            };
+            break;
 
         }
     }
 
     /** Запуск контроллера */
     async control(){
+        console.log('do staff menu control');
         await this.getCustomerData();
+        this._makeViewContext();
+        console.log('do staff menu control', this._customerData)
         this._staffMenuView.render(this._customerData);
     }
 
     async getCustomerData(){
-        await authAjax('GET', `${constants.PATH}/api/v1/customers/${this._uuid}/customer/`, null, (response) => {
+        await authAjax('GET', `${constants.PATH}/api/v1/customers/${this._uuid}/customer/`, {}, (response) => {
             console.log('response data', response.data);
             if (response.errors === null) {
                 console.log('get customer', response.data);
                 this._customerData = response.data;
             } else {
+                console.log('error', response)
                 throw response.errors;
             }
         });

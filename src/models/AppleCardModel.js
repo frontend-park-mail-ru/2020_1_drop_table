@@ -16,16 +16,17 @@ export class AppleCardModel {
      * @param {int} cafeId идентификатор кафе
      */
     constructor(context) {
-        this._location = context.location;
-        this._latitude = this._location.split(' ')[0];
-        this._longitude = this._location.split(' ')[1];
+        console.log('constructor ', context)
+        this._location = null;
+        this._latitude = null;
+        this._longitude = null;
         this._cafeId = context.id;
         this._type = 'coffee_cup';
         this._loyalty_info = { };
         this._icon = null;
         this._strip = null;
-        this._organizationName = null;
-        this._description = null;
+        this._organizationName = context.name;
+        this._description = 'Описание';
         this._labelColor = null;
         this._logoText = null;
         this._foregroundColor = null;
@@ -43,22 +44,40 @@ export class AppleCardModel {
      "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
       "messageEncoding": "iso-8859-1"},
        "logoText": "Название",
-        "locations": [{"latitude": ${this._latitude}, "longitude": ${this._longitude} }],
          "storeCard": {
          "headerFields": [{"key": "_676325044", "label": "Карта", "value": "лояльности"}],
           "primaryFields": [{"key": "_768436380", "label": "область", "value": "Главная"}],
           "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
-           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "<<CustomerID>>",
+           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "Описание", "serialNumber": "<<CustomerID>>",
             "formatVersion": 1, "webServiceURL": "https://s-soboy.com/api", "teamIdentifier": "WSULUSUQ63",
              "backgroundColor": "rgb(255, 255, 255)", "foregroundColor": "rgb(0, 0, 0)",
-              "organizationName": "org", "passTypeIdentifier": "pass.ru.kartochka",
+              "organizationName": "Кафе", "passTypeIdentifier": "pass.ru.kartochka",
                "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"}`;
 
     }
 
     async update(type){
         await this.getCard(type);
+    }
+
+    get location() {
+        return this._location;
+    }
+    set location(value) {
+        this._location = value;
+    }
+    get latitude() {
+        return this._latitude;
+    }
+    set latitude(value) {
+        this._latitude = value;
+    }
+    get longitude() {
+        return this._longitude;
+    }
+    set longitude(value) {
+        this._longitude = value;
     }
 
     /**
@@ -233,7 +252,6 @@ export class AppleCardModel {
     getAsJson() {
         console.log('json test', this._storeCard['headerFields']);
         let json = {
-
             'formatVersion': 1,
             'passTypeIdentifier': 'pass.ru.kartochka',
             'serialNumber': '<<CustomerID>>',
@@ -241,16 +259,10 @@ export class AppleCardModel {
             'webServiceURL': 'https://s-soboy.com/api',
             'authenticationToken': 'vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc',
             'barcode': {
-                'message': `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
+                'message': `${constants.PATH}/points/<<CustomerID>>`,
                 'format': 'PKBarcodeFormatQR',
                 'messageEncoding': 'iso-8859-1'
             },
-            'locations': [
-                {
-                    'longitude': this._latitude,
-                    'latitude': this._longitude
-                },
-            ],
             'organizationName': this._organizationName,
             'description': this._description,
             'labelColor': this._labelColor,
@@ -271,6 +283,15 @@ export class AppleCardModel {
                 'auxiliaryFields': [],
             }
         };
+        if(this._location){
+            json['locations'] =  [
+                {
+                    'longitude': this._latitude,
+                    'latitude': this._longitude
+                },
+            ];
+            json['altiture'] = `Заходи в ${this._organizationName}!`
+        }
 
 
         this._storeCard['headerFields'].slice(1, this._storeCard['headerFields'].length).forEach(field => {
@@ -551,14 +572,16 @@ export class AppleCardModel {
      * @private
      */
     _fillCardData(context){
-        console.log('filldata', context.type, context.loyalty_info)
+        console.log('filldata', context)
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
         const design =  JSON.parse(jsonDesign);
-
+        if(context.location){
+            this._latitude = context.location.split(' ')[0];
+            this._longitude = context.location.split(' ')[1];
+            this._location = context.location;
+        }
         this._icon = context.icon;
         this._strip = context.strip;
-
-        this._organizationName = design.organizationName;
         this._description = design.description;
         this._labelColor = design.labelColor;
         this._logoText = design.logoText;

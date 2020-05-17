@@ -43,7 +43,8 @@
     flex-direction: column;
     &_img{
         width: 16%;
-        align-self: end;
+        align-self: flex-end;
+        max-width: 40px;
         margin-right: 28%;
         background-color: white;
         border-radius: 50%;

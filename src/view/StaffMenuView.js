@@ -16,8 +16,10 @@ export default class StaffMenuView extends BaseView {
 
     /** Отрисовка страницы с меню работника */
     render(context){
+        console.log('do staff menu render view');
         this._app.innerHTML = '';
         const staffMenuElement = document.createElement('div');
+        console.log('render with', context);
         (new context.Component(staffMenuElement, this._uuid, context)).render();
         this._app.appendChild(staffMenuElement);
     }
