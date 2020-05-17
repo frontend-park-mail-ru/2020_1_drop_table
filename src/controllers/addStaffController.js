@@ -163,6 +163,10 @@ export default class AddStaffController{
                 'Пользователь с такой почтой уже существует',
                 form['email']
             ],
+            'given item already existed': [
+                'Пользователь с такой почтой уже существует',
+                form['email']
+            ],
             'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'min\' tag': [
                 'Минимальная длинна пароля 8 символов',
                 form['password']
