@@ -19,9 +19,7 @@ export default class StaffPageController {
         try {
             await this._userModel.update();
             await this._staffListModel.update();
-            let dateStart;
-            let dateEnd;
-            await this._staffListModel.getAllStaffPlot(dateStart, dateEnd);//todo date
+            await this._staffListModel.getAllStaffPlot(this.getPrevDate(), this.getCurrentDate());//todo date
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -38,6 +36,7 @@ export default class StaffPageController {
 
         staffContext['header'] = {
             type: null,
+            isOwner: this._userModel._isOwner,
             avatar: {
                 photo: this._userModel.photo,
                 event: {
@@ -121,6 +120,35 @@ export default class StaffPageController {
                 throw(new Error(error.message));
             }
         }
+    }
+    getCurrentDate(){
+        let date = new Date();
+        let month = (date.getMonth()+1>9)?(date.getMonth()+1).toString():`0${date.getMonth()+1}`
+        let day = (date.getDate()>9)?(date.getDate()).toString():`0${date.getDate()+1}`
+        let res = `${date.getFullYear()}-${month}-${day}_00:00:00.000000`;
+        console.log('res',res)
+        return res
+    }
+    getPrevDate(){
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        if(day < 7){
+            if(month < 1){
+                day = 30 - day;
+            } else{
+                month--;
+                day = 30 - day;
+            }
+        } else{
+            day -= 7;
+        }
+        month = (month+1>9)?(month+1).toString():`0${month+1}`
+        day = (day>9)?day.toString():`0${day}`
+        let res = `${year}-${month}-${day}_00:00:00.000000`;
+        console.log('res',res)
+        return res
     }
 }
 

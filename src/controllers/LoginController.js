@@ -54,6 +54,7 @@ export default class LoginController{
         return {
             header: {
                 type: 'auth',
+                isOwner: this._userModel._isOwner,
             },
             login: {
                 topText:'Логин',

@@ -11,7 +11,12 @@
             border-color: themed('textColor');
         }
     }
+
+
+
+
     &__submit {
+        transition: background-color 1s ease;
         @include themify($themes){
             color: themed('buttonTextColor');
         }
@@ -19,11 +24,12 @@
             background-color: themed('mainColor');
         }
         &:active {
+            transition: background-color 0s ease;
             @include themify($themes){
                 color: themed('buttonTextColor');
             }
             @include themify($themes){
-                background: themed('mainColor');
+                background: themed('accentColor');
             }
 
         }

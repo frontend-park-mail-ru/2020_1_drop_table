@@ -62,6 +62,7 @@ export default class UserProfileController{
         return {
             header: {
                 type: 'profile',
+                isOwner: this._userModel._isOwner,
                 avatar: {
                     photo: null,
                     event: {

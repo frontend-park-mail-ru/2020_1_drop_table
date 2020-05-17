@@ -5,8 +5,13 @@
   &__form{
     width: 100%;
     display: flex;
+    justify-content: space-around;
+    &_span{
+      font-size: 2rem;
+      height: 95%;
+    }
     &__discount{
-      width: 30%;
+      width: 4rem;
       &_input{
         font-weight: bolder;
         font-size: 2rem;
@@ -18,11 +23,11 @@
 
     }
     &__type{
-      width: 40%;
+      width: auto;
     }
 
     &__price{
-      width: 30%;
+      width: 5rem;
       &_input{
         font-weight: bolder;
         font-size: 1.5rem;

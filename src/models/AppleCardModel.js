@@ -15,8 +15,11 @@ export class AppleCardModel {
      * Инициализация модели карточки
      * @param {int} cafeId идентификатор кафе
      */
-    constructor(cafeId) {
-        this._cafeId = cafeId;
+    constructor(context) {
+        this._location = context.location;
+        this._latitude = this._location.split(' ')[0];
+        this._longitude = this._location.split(' ')[1];
+        this._cafeId = context.id;
         this._type = 'coffee_cup';
         this._loyalty_info = { };
         this._icon = null;
@@ -40,16 +43,16 @@ export class AppleCardModel {
      "message": "db64999a-d280-4b5f-895c-038cf92c1ab2",
       "messageEncoding": "iso-8859-1"},
        "logoText": "Название",
-        "locations": [{"latitude": 37.6189722, "longitude": -122.3748889}, {"latitude": 37.33182, "longitude": -122.03118}],
+        "locations": [{"latitude": ${this._latitude}, "longitude": ${this._longitude} }],
          "storeCard": {
          "headerFields": [{"key": "_676325044", "label": "Карта", "value": "лояльности"}],
-          "primaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}],
+          "primaryFields": [{"key": "_768436380", "label": "область", "value": "Главная"}],
           "secondaryFields": [{"key": "_768436380", "label": "Добавьте", "value": "текст"}]
           },
-           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "ART",
-            "formatVersion": 1, "webServiceURL": "https://example.com/passes/", "teamIdentifier": "WSULUSUQ63",
-             "backgroundColor": "rgb(30, 118, 143)", "foregroundColor": "rgb(0, 0, 0)",
-              "organizationName": "org", "passTypeIdentifier": "pass.com.ssoboy",
+           "backFields": [], "labelColor": "rgb(0, 0, 0)", "description": "descr", "serialNumber": "<<CustomerID>>",
+            "formatVersion": 1, "webServiceURL": "https://s-soboy.com/api", "teamIdentifier": "WSULUSUQ63",
+             "backgroundColor": "rgb(255, 255, 255)", "foregroundColor": "rgb(0, 0, 0)",
+              "organizationName": "org", "passTypeIdentifier": "pass.ru.kartochka",
                "authenticationToken": "vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc"}`;
 
     }
@@ -232,10 +235,10 @@ export class AppleCardModel {
         let json = {
 
             'formatVersion': 1,
-            'passTypeIdentifier': 'pass.com.ssoboy',
-            'serialNumber': 'ART',
+            'passTypeIdentifier': 'pass.ru.kartochka',
+            'serialNumber': '<<CustomerID>>',
             'teamIdentifier': 'WSULUSUQ63',
-            'webServiceURL': 'https://example.com/passes/',
+            'webServiceURL': 'https://s-soboy.com/api',
             'authenticationToken': 'vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc',
             'barcode': {
                 'message': `${constants.CURRENT_PATH}/points/<<CustomerID>>`,
@@ -244,13 +247,9 @@ export class AppleCardModel {
             },
             'locations': [
                 {
-                    'longitude': -122.3748889,
-                    'latitude': 37.6189722
+                    'longitude': this._latitude,
+                    'latitude': this._longitude
                 },
-                {
-                    'longitude': -122.03118,
-                    'latitude': 37.33182
-                }
             ],
             'organizationName': this._organizationName,
             'description': this._description,
@@ -639,7 +638,6 @@ export class AppleCardModel {
      * @return {Promise<void>}
      */
     async editCard(images, loyalty, publish) {
-        console.log('test edit', loyalty.type)
         const formData = await this._makeFormData(images, loyalty);
         await ajaxForm(constants.PATH +
             `/api/v1/cafe/${this._cafeId}/apple_pass/${loyalty.type}?publish=${publish.toString()}`, //todo make await

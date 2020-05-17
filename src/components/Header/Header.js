@@ -34,6 +34,9 @@ export default class Header{
      * @private
      */
     _setProperties(context){
+        if(!context['isOwner']){
+            this._menuList = []
+        }
         if (context['type'] === 'auth') {
             this._hasAvatar = false;
             this._hasExit = false;
