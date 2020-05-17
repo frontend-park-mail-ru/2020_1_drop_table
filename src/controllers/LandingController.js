@@ -57,9 +57,16 @@ export default class LandingController {
     addListeners(){
         const buttonLeft = document.getElementsByClassName('landing-page__cafes__circle-left__circle').item(0);
         const buttonRight = document.getElementsByClassName('landing-page__cafes__circle-right__circle').item(0);
+        const search = document.getElementById('search');
 
         buttonLeft.addEventListener('click',this.cafesBack.bind(this));
         buttonRight.addEventListener('click',this.cafesForward.bind(this));
+        search.addEventListener('change', this._resetCafes.bind(this));
+    }
+
+    async _resetCafes(){
+        this._landingCafeListModel.clear();
+        await this.cafesForward();
     }
 
     cafesBack(){
@@ -72,26 +79,28 @@ export default class LandingController {
                 cafes.slice(this._landingCafeListModel._currentId,
                     this._landingCafeListModel._currentId + this._landingCafeListModel._step));
         }
+        console.log(this._landingCafeListModel._currentId);
     }
 
     async cafesForward(){
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
         let cafes = this._landingCafeListModel._cafeListJson;
+
         if(this._landingCafeListModel._currentId + this._landingCafeListModel._step >= cafes.length ){
-            try {
-                await this._landingCafeListModel.update();
-            } catch (exception) {
-                (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
-            }
+            const searchBy = document.getElementById('search').value;
+            await this._landingCafeListModel.update(searchBy);
+            cafes = this._landingCafeListModel._cafeListJson;
+        }
+
+        if(this._landingCafeListModel._currentId + this._landingCafeListModel._step < cafes.length){
+            this._landingCafeListModel._currentId += this._landingCafeListModel._step
         }
 
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,
             this._landingCafeListModel._currentId + this._landingCafeListModel._step));
 
-        if(this._landingCafeListModel._currentId + this._landingCafeListModel._step < cafes.length){
-            this._landingCafeListModel._currentId += this._landingCafeListModel._step
-        }
+        console.log(this._landingCafeListModel._currentId);
     }
 
     async _loadCafesToMap(){
@@ -151,6 +160,7 @@ export default class LandingController {
             this.addListeners();
             ymaps.ready(this._mapInit, this);
         } catch (error) {
+            console.log(error);
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
             }

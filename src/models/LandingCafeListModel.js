@@ -19,15 +19,13 @@ export default class LandingCafeListModel{
         this._stopUpdates = false;
     }
 
-    async update(){
-        await this.getAllCafes(this._cafeListJson.length, this._limit);
-        //this._currentId += this._limit;
+    async update(searchBy = null){
+        await this.getAllCafes(this._cafeListJson.length, this._limit, searchBy);
+    }
 
-        // if(this._cafeListJson[this._cafeListJson.length]){
-        //     this._currentId += this._limit;
-        // }
-
-
+    clear(){
+        this._cafeListJson = [];
+        this._currentId = -this._step;
     }
 
     /**
@@ -74,9 +72,13 @@ export default class LandingCafeListModel{
         return new CafeModel();
     }
 
+    async getAllCafes(since, limit, searchBy=null) {
+        let request = `/api/v1/cafe/get_all?since=${since}&limit=${limit}`;
+        request += searchBy ? `&searchBy=${searchBy}` : '';
 
-    async getAllCafes(since, limit) {
-        await ajax(constants.PATH + `/api/v1/cafe/get_all?since=${since}&limit=${limit}`,
+        console.log(request);
+
+        await ajax(constants.PATH + request,
             'GET',
             {},
             (response) => {
@@ -84,7 +86,6 @@ export default class LandingCafeListModel{
                     response.data.forEach((el)=>{
                         this._cafeListJson.push(el);
                     })
-                    //this._constructCafe();
                 }
 
                 if(response.errors !== null){
