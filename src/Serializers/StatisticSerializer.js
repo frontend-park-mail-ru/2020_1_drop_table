@@ -7,12 +7,16 @@ export default  class StatisticSerializer{
     // onePlot:bool
     // }
     serializeLinePlotData(data, options){
+        console.log('serialize line plot data')
         let plotData;
         if(options.onePlot){
+            console.log('serialize line plot data 1')
             plotData = this._filterDataOnePlot(data, options);
         } else{
+            console.log('serialize line plot data 2')
             plotData = this._filterDataAllPlots(data, options);
         }
+
         return this._makeContext(plotData, options)
     }
 
@@ -55,31 +59,37 @@ export default  class StatisticSerializer{
      */
     _filterDataAllPlots(data, options){
         let plotData = {};
-        let cafes_staff = entriesPolyFill(data);
-        for(let i = 0; i < cafes_staff.length;i++){ //Итерация по кафе владельца
-            let cafeName = cafes_staff[i][0];
-            if(options.cafesList.includes(cafeName)){ //Проверка по списку
-                let staff_actions = entriesPolyFill(cafes_staff[i][1]);
-                for(let j = 0; j < staff_actions.length;j++){ //Итерация по работникам кафе
-                    if(options.staffList.includes(staff_actions[j][0])){ //Проверка по списку
-                        let actions = staff_actions[j][1];
-                        for(let k = 0; k < actions.length; k++){ // Итерация по действиям работника
-                            let action = entriesPolyFill(actions[k])[0];
-                            if(plotData[cafeName]){
-                                if(plotData[cafeName][action[0]]){
-                                    plotData[cafeName][action[0]] += action[1];
-                                }else {
+        console.log('test line plot data', data)
+        if(data) {
+            let cafes_staff = entriesPolyFill(data);
+            for (let i = 0; i < cafes_staff.length; i++) { //Итерация по кафе владельца
+                let cafeName = cafes_staff[i][0];
+                if (options.cafesList.includes(cafeName)) { //Проверка по списку
+                    let staff_actions = entriesPolyFill(cafes_staff[i][1]);
+                    for (let j = 0; j < staff_actions.length; j++) { //Итерация по работникам кафе
+                        if (options.staffList.includes(staff_actions[j][0])) { //Проверка по списку
+                            let actions = staff_actions[j][1];
+                            for (let k = 0; k < actions.length; k++) { // Итерация по действиям работника
+                                let action = entriesPolyFill(actions[k])[0];
+                                if (plotData[cafeName]) {
+                                    if (plotData[cafeName][action[0]]) {
+                                        plotData[cafeName][action[0]] += action[1];
+                                    } else {
+                                        plotData[cafeName][action[0]] = action[1];
+                                    }
+                                } else {
+                                    plotData[cafeName] = {};
                                     plotData[cafeName][action[0]] = action[1];
                                 }
-                            } else {
-                                plotData[cafeName] = {};
-                                plotData[cafeName][action[0]] = action[1];
                             }
                         }
                     }
                 }
             }
+        } else{
+            plotData = null
         }
+        console.log('return line plot data', plotData)
         return plotData;
     }
 
@@ -89,7 +99,6 @@ export default  class StatisticSerializer{
         if(options.onePlot){
             return this._makeOnePlotContext(data);
         } else{
-
             return this._makeManyPlotContext(data);
         }
     }
@@ -101,39 +110,44 @@ export default  class StatisticSerializer{
             textY: 'Количество',
             array:[],
         };
-        let simpleData = entriesPolyFill(data);
         let points = [];
-        for(let i = 0; i < simpleData.length;i++){
-            points.push({x: simpleData[i][0], y: simpleData[i][1]});
+        if(data) {
+            let simpleData = entriesPolyFill(data);
+            for (let i = 0; i < simpleData.length; i++) {
+                points.push({x: simpleData[i][0], y: simpleData[i][1]});
+            }
         }
         plotData.array.push({
             color: colors[0],
             name:'Кафе',
             array: points,
         });
+
         return plotData
     }
 
     _makeManyPlotContext(data){
-        console.log('test make many context')
+        console.log('test make many context', data)
         let plotData = {
             textX: 'Время',
             textY: 'Количество',
             array:[],
         };
-        let simpleData = entriesPolyFill(data);
+        let points = [];
+        if(data) {
+            let simpleData = entriesPolyFill(data);
+            for (let i = 0; i < simpleData.length; i++) {
 
-        for(let i = 0; i < simpleData.length;i++){
-            let points = [];
-            let arr = entriesPolyFill(simpleData[i][1]);
-            for(let j = 0; j < arr.length; j++ ){
-                points.push({x: arr[j][0], y: arr[j][1]});
+                let arr = entriesPolyFill(simpleData[i][1]);
+                for (let j = 0; j < arr.length; j++) {
+                    points.push({x: arr[j][0], y: arr[j][1]});
+                }
+                plotData.array.push({
+                    color: colors[i],
+                    name: simpleData[i][0],
+                    array: points,
+                });
             }
-            plotData.array.push({
-                color: colors[i],
-                name:simpleData[i][0],
-                array: points,
-            });
         }
         return plotData
     }

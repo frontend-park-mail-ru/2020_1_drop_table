@@ -122,7 +122,6 @@ export default class StaffListModel{
         }
     }
     fillAllStaffStatistics(context){
-        //let staff = this.getStaffById(id);
         console.log('fill statistics', context);
         this._statistics = context
 
@@ -134,7 +133,6 @@ export default class StaffListModel{
         await authAjax( 'POST',constants.PATH + `/api/v1/statistics/get_worker_data`,
             {'staffID': Number(id), 'limit':limit, 'since':since},
             (response) => {
-
                 if (response.errors === null) {
                     this.fillStaffActions(id,response.data);
                 } else {
@@ -147,15 +145,17 @@ export default class StaffListModel{
     /** Получение последних действий  */
     async getAllStaffPlot(start, end){
         //this.fillAllStaffStatistics();
-        console.log('getPlot', `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`);
-       // http://localhost:8080/api/v1/statistics/get_graphs_data?type=day&since=2020-03-12 00:00:00.000000&to=2021-05-12 00:00:00.000000
-        await ajax( constants.PATH + `api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`,'GET',
-            null,
+        console.log('getPlot', `/api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`);
+        await authAjax( 'GET',constants.PATH + `/api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`,
+            {},
             (response) => {
+                console.log('response ', response);
                 if (response.errors === null) {
-                    console.log('response', response)
+                    console.log('response plot', response);
                     this.fillAllStaffStatistics(response.data);
                 } else {
+                    console.log('response error', response);
+                    this.fillAllStaffStatistics(this.emptyPlot);
                     throw response.errors;
                 }
             }

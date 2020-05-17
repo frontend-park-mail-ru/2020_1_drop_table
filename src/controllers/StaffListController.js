@@ -41,6 +41,7 @@ export default class StaffListController{
 
         staffListContext['header'] = {
             type: null,
+            isOwner:true,
             avatar: {
                 //await this._userModel.photo,
                 photo: null,

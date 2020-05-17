@@ -14,6 +14,23 @@
     margin-left: 0.5rem ;
 }
 
+.card-form__input-primary-field > .labelField_label{
+    order: 2
+}
+.card-form__input-primary-field > .valueField {
+    order: 1
+}
+.card-form__input-primary-field > .valueField_label{
+    order: 0
+}
+.card-form__input-primary-field > .labelField {
+    order: 3
+}
+
+ .card-form__input-primary-field > .field-button {
+     order: 4
+ }
+
 .HeaderFieldsContainer,
 .PrimaryFieldsContainer,
 .SecondaryFieldsContainer,

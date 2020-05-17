@@ -55,6 +55,7 @@ export default class RegisterController{
         return {
             header: {
                 type: 'auth',
+                isOwner: this._userModel._isOwner,
             },
             register: {
                 topText:'Регистрация',

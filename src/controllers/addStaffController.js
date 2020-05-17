@@ -37,6 +37,7 @@ export default class AddStaffController{
         return {
             header: {
                 type: 'auth',
+                isOwner: this._userModel._isOwner
             },
             register: {
                 topText:'Регистрация работника',
@@ -156,7 +157,7 @@ export default class AddStaffController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form = document.body){
         return {
             'pq: duplicate key value violates unique constraint "staff_email_key"': [
                 'Пользователь с такой почтой уже существует',
@@ -192,13 +193,14 @@ export default class AddStaffController{
     /** Запуск контроллера */
     async control(){
         try {
-            await this.update();
+            //await this.update();
             this._registerView.context = this._makeViewContext();
             this._registerView.render();
         } catch (error) {
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
             }
+            console.log(error)
         }
     }
 }

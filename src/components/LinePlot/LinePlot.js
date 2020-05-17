@@ -166,9 +166,26 @@ export default class LinePlotComponent {
     }
 
     render(context) {
+        console.log('render plot', context)
+        if(!context['array'].length){
+            context['array'] = [{
+                color:'#814ad0',
+                array: [
+                    {x:'январь', y:0},
+                    {x:'февраль', y:0},
+                    {x:'март', y:0},
+                    {x:'апрель', y:0},
+                    {x:'май', y:0},
+                    {x:'июнь', y:0},
+                    {x:'июль', y:0}
+                ]
+            },];
+        }
         this._context = context;
         this._getMaxMinFromContext(context);
+        console.log('test1', this._parent);
         this._parent.innerHTML = LinePlotTemplate();
+        console.log('test2');
         const canvas = this._parent.getElementsByClassName('linePlot').item(0);
         this._plt = canvas.getContext('2d');
         this._resize();

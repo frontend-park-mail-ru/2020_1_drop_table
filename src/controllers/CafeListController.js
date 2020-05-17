@@ -40,6 +40,7 @@ export default class CafeListController{
 
         cafeListContext['header'] = {
             type: null,
+            isOwner: this._userModel._isOwner,
             avatar: {
                 photo: this._userModel.photo,
                 event: {

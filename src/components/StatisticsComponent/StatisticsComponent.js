@@ -18,7 +18,8 @@ export default class StatisticsComponent {
     }
 
 
-    _renderTemplate(context){
+    _renderTemplate(){
+        console.log('render stat template')
         this._parent.innerHTML = StatisticsTemplate();
     }
 

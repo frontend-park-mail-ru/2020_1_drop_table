@@ -2,17 +2,16 @@
     <form class="discount-cell__form">
 
     <div class="discount-cell__form__discount">
-        <input id="discount-{{index}}-{{price}}-{{discount}}" class="discount-cell__form__discount_input" type="number" placeholder="%" value={{discount}}>
+        <input id="discount-{{index}}-{{price}}-{{discount}}" class="discount-cell__form__discount_input" type="number" placeholder="Скидка" maxlength="3" max="100" min="0" value={{discount}}>
     </div>
-
+        <span class="discount-cell__form_span">%</span>
     <div class="discount-cell__form__type">
-
 
     </div>
     <div class="discount-cell__form__price">
-        <input id="price-{{index}}-{{price}}-{{discount}}" class="discount-cell__form__price_input" type="number" placeholder="1000" value={{price}}>
+        <input id="price-{{index}}-{{price}}-{{discount}}" class="discount-cell__form__price_input" type="number" placeholder="Сумма" min="0" value={{price}}>
     </div>
-
+        <span class="discount-cell__form_span">₽</span>
     </form>
 
 </div>

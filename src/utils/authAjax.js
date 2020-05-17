@@ -40,6 +40,7 @@ export async function authAjax(method, route, body, callback) {
     try {
         const response = await fetch(req);
         if (response.ok) {
+            console.log('response ok')
             // loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
@@ -47,6 +48,7 @@ export async function authAjax(method, route, body, callback) {
             }
             responseJson = await response.json();
         } else {
+            console.log('response not ok')
             throw new Error('Response not ok');
         }
     } catch (exception) {

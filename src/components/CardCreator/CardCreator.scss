@@ -18,15 +18,14 @@
         }
     }
     &__image-picker{
-
         width: 100%;
         padding-bottom: 5%;
         justify-content: space-around;
         display: flex;
         flex-direction: column-reverse;
         filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-
         object-fit: cover;
+
 
         &_img{
             height: 120px;
@@ -66,12 +65,12 @@
         &__card-form {
             -webkit-flex: 1;
             flex: 1;
-
             background: none;
 
             &__buttons {
                 display: flex;
                 flex-wrap: wrap;
+                margin: 0 auto;
 
                 &__save {
                     margin: 10px auto;
@@ -94,7 +93,7 @@
 
         &__card-model {
             margin-top: 10%;
-
+            margin-left: 20px;
         }
     }
 }
@@ -176,5 +175,8 @@
     width: 100%;
     //overflow: hidden;
 }
+
+
+
 
 

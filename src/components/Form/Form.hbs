@@ -1,9 +1,6 @@
 {{#each formFields}}
     <div class="input-field">
-        <{{areaType}} class="input-field_input" {{inputOption}} type={{type}} id={{id}} value= "{{data}}" {{readOnly}}>
-        {{#if areaType}}
-            </{{areaType}}>
-        {{/if}}
+        <{{areaType}} class="input-field_input" {{inputOption}} type={{type}} id={{id}} value="{{data}}"{{readOnly}}>{{#if areaData }}{{areaData}}{{/if}}{{#if areaType }}</{{areaType}}>{{/if}}
         <label class="input-field_label" for={{id}}>{{labelData}}</label>
     </div>
 {{/each}}
@@ -13,4 +10,4 @@
             <a href="{{redirect.link}}" class="authorize__form-container__form__have-account_a">{{redirect.linkText}}</a>
         </div>
     {{/if}}
-<input class="input-field__submit" type="submit" value={{submitValue}}>
+<input ontouchstart="" class="input-field__submit" type="submit" value={{submitValue}}>

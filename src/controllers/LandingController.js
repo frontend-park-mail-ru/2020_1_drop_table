@@ -30,6 +30,7 @@ export default class LandingController {
         let context = {
             header: {
                 type: '',
+                isOwner: this._userModel._isOwner,
                 avatar: {
                     photo: null
                 }

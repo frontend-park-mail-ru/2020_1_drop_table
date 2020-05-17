@@ -37,6 +37,7 @@ export default class FormComponent {
         context.formFields.forEach((subContext)=>{
             if(!('areaType' in subContext)){
                 subContext.areaType = 'input';
+
             }
         })
     }
@@ -46,8 +47,10 @@ export default class FormComponent {
      * @param {obj} context некоторый контекст с информацией о форме
      */
     render(context) {
-        this._checkContext(context)
+        this._checkContext(context);
         this._parent.innerHTML = FormTemplate(context);
         this._addListener(context);
     }
+
 }
+

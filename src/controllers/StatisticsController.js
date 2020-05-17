@@ -82,10 +82,11 @@ export default class StatisticsController{
             await this._staffListModel.update();
             let startDate = this.getPrevDate();
             let endDate = this.getCurrentDate();
-            console.log('date...', startDate, endDate)
+            console.log('date...', startDate, endDate);
             await this._staffListModel.getAllStaffPlot(startDate, endDate);
+            console.log('date... after', )
         } catch (exception) {
-
+            console.log('ex', exception)
         }
     }
 
@@ -96,7 +97,6 @@ export default class StatisticsController{
             cafes:[],
             staff:[]
         };
-        console.log('test212321', this._staffListModel._staffModelsList);
         for(let i = 0; i < this._staffListModel._staffModelsList.length; i++){
             let staffModel = this._staffListModel._staffModelsList[i];
             if(!staff.includes(staffModel._StaffName)){
@@ -115,8 +115,11 @@ export default class StatisticsController{
         //todo Хедер в зависимости от того зареган ли юзер
         context['header'] = {
             type: null,
+            isOwner: true,
         };
         let msData = this._makeMultiSelectsContext();
+        let plotData = this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options);
+        //this._statisticsView._renderPlot(plotData);
         context['statistics']= {
             multiselects:{
                 cafes:{
@@ -126,9 +129,9 @@ export default class StatisticsController{
                     },
                     listener: (data)=>{
                         this._options.cafesList = data;
-                        this._statisticsView._renderPlot(
-                            this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
-                        );
+                        let plotData = this._statisticSerializer.serializeLinePlotData(
+                            this._staffListModel._statistics, this._options);
+                        this._statisticsView._renderPlot(plotData);
                     }
                 },
                 staff:
@@ -139,13 +142,13 @@ export default class StatisticsController{
                         },
                         listener: (data)=>{
                             this._options.staffList = data;
-                            this._statisticsView._renderPlot(
-                                this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
-                            );
+                            let plotData = this._statisticSerializer.serializeLinePlotData(
+                                this._staffListModel._statistics, this._options);
+                            this._statisticsView._renderPlot(plotData);
                         }
                     }
             },
-            plot: this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
+            plot: plotData
         };
 
         return context;
@@ -153,10 +156,11 @@ export default class StatisticsController{
     _addListeners(){
         let onePlotCheckbox = document.getElementsByClassName('container-checkbox_input').item(0);
         onePlotCheckbox.addEventListener('change',()=>{
-
             this._options.onePlot = !this._options.onePlot;
+            let plotData = this._statisticSerializer.serializeLinePlotData(
+                this._staffListModel._statistics, this._options);
             this._statisticsView._renderPlot(
-                this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
+                plotData
             );
         })
     }
@@ -164,29 +168,27 @@ export default class StatisticsController{
 
     /** Запуск контроллера */
     async control(){
+        console.log('in control')
         await this.update();
-        let context = this._makeViewContext();
+        let context =  await this._makeViewContext();
         this._statisticsView.render(context);
+        this._statisticsView._renderPlot(context['statistics'].plot);
         this._addListeners();
     }
+
     getCurrentDate(){
         let date = new Date();
-        console.log('date curr', date);
-        //2021-05-12 00:00:00.000000
-        let res = `${date.getFullYear()}-
-        ${date.getMonth()}-
-        ${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
-        console.log('geg2', res)
+        let month = (date.getMonth()+1>9)?(date.getMonth()+1).toString():`0${date.getMonth()+1}`
+        let day = (date.getDate()>9)?(date.getDate()).toString():`0${date.getDate()+1}`
+        let res = `${date.getFullYear()}-${month}-${day}_00:00:00.000000`;
+        console.log('res',res)
         return res
     }
     getPrevDate(){
         let date = new Date();
-        console.log('date prev', date);
-        //2021-05-12 00:00:00.000000
         let year = date.getFullYear();
         let month = date.getMonth();
         let day = date.getDate();
-        console.log('date prev2', year, month, day);
         if(day < 7){
             if(month < 1){
                 day = 30 - day;
@@ -197,8 +199,10 @@ export default class StatisticsController{
         } else{
             day -= 7;
         }
-        let res = `${year}-${month}-${day} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`
-        console.log('geg',res)
+        month = (month+1>9)?(month+1).toString():`0${month+1}`
+        day = (day>9)?day.toString():`0${day}`
+        let res = `${year}-${month}-${day}_00:00:00.000000`;
+        console.log('res',res)
         return res
     }
 }

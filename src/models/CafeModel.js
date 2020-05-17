@@ -16,6 +16,7 @@ export default class CafeModel {
         this._closeTime = null;
         this._ownerID = null;
         this._photo = null;
+        this._location = null;
         this.fillCafeData(context);
     }
 
@@ -101,6 +102,7 @@ export default class CafeModel {
             closeTime: this._closeTime,
             ownerID: this._ownerID,
             photo: this._photo,
+            location: this._location,
         }
     }
 
@@ -171,6 +173,7 @@ export default class CafeModel {
 
             this._ownerID = context['ownerID'];
             this._photo = context['photo'];
+            this._location = context['location'];
         }
     }
 

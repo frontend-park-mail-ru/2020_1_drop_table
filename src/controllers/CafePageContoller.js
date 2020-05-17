@@ -56,6 +56,7 @@ export default class CafePageController {
 
         cafeContext['header'] = {
             type: null,
+            isOwner: this._userModel._isOwner,
             avatar: {
                 photo: this._userModel.photo,
                 event: {

@@ -61,6 +61,19 @@ export default class CardRedactorController {
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+
+            let bg = document.getElementById('card-strip');
+            let dd = document.getElementById('primary-field')
+            console.log('bugaga',bg)
+            dd.addEventListener("mouseover", function(){
+                console.log('bugaga1')
+                bg.style.background = "#c00";
+                this.addEventListener("mouseout", function(){
+                    console.log('bugaga1')
+                    bg.style.background = "c11";});
+            });
+
+
         } catch (error) {
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
@@ -303,8 +316,19 @@ export default class CardRedactorController {
                 }.bind(this);
                 fr.readAsDataURL(files[0]);
             }
-
         });
+        // stripInput.addEventListener('dblclick', function (e) {
+        //     avatarImage.src = fr.result;
+        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+        //     avatarCardImage.src = fr.result;
+        //     this._appleCard._icon = fr.result;
+        // });
+        // avatarImage.addEventListener('dblclick', function (e) {
+        //     avatarImage.src = fr.result;
+        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+        //     avatarCardImage.src = fr.result;
+        //     this._appleCard._icon = fr.result;
+        // });
         avatarInput.addEventListener('change',(e)=>{
             const tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {

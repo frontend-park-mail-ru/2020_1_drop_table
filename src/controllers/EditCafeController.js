@@ -75,6 +75,7 @@ export default class EditCafeController{
         return {
             header:{
                 type: null,
+                isOwner: this._userModel._isOwner,
                 avatar: {
                     photo: this._userModel.photo,
                     event: {
@@ -127,6 +128,7 @@ export default class EditCafeController{
                             type: 'text',
                             id: 'description',
                             data: cafe.description,
+                            areaData:cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
                             areaType: 'textarea'
