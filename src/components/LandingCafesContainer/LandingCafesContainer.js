@@ -46,7 +46,7 @@ export class LandingCafesContainerComponent {
         let cafes = context.map(({photo = photo, name = name, id = id} = {}) => {
             return LandingCafeCard({cafeImageSrc: photo, name: this._cropName(name), id: id});
         });
-        this._parent.innerHTML = LandingCafeContainer({ cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
+        this._parent.innerHTML = LandingCafeContainer({cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
     }
 
     /** Отрисовка компоненты списка кафе */
