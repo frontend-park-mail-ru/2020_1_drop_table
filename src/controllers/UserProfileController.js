@@ -63,21 +63,13 @@ export default class UserProfileController{
             header: {
                 type: 'profile',
                 isOwner: this._userModel._isOwner,
-                avatar: {
-                    photo: null,
-                    event: {
-                        type: 'click',
-                        listener: () => {
-                            router._goTo('/profile');
-                        }
-                    }
-                },
                 exit: {
                     event: {
                         type: 'click',
-                        listener: () => {
+                        listener: async () => {
+                            console.log('clicke');
+                            await this._userModel.logout();
                             router._goTo('/login');
-
                         }
                     }
                 }
