@@ -38,6 +38,12 @@ export class AppleCardModel {
             'secondaryFields': [],
             'auxiliaryFields': [],
         };
+        if(context.location){
+            this._latitude = context.location.split(' ')[0];
+            this._longitude = context.location.split(' ')[1];
+            this._location = context.location;
+        }
+
 
         this._minDesign = `{
         "barcode": {"format": "PKBarcodeFormatQR",
@@ -286,11 +292,12 @@ export class AppleCardModel {
         if(this._location){
             json['locations'] =  [
                 {
-                    'longitude': this._latitude,
-                    'latitude': this._longitude
+                    'longitude': Number(this._latitude),
+                    'latitude': Number(this._longitude),
+                    'relevantText': `Заходи в ${this._organizationName}!`
                 },
             ];
-            json['altiture'] = `Заходи в ${this._organizationName}!`
+
         }
 
 

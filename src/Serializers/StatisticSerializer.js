@@ -1,23 +1,15 @@
 
 export default  class StatisticSerializer{
 
-    // options = {
-    // cafesList:[cafe1,cafe2],
-    // staffList:[staff1,staff2]
-    // onePlot:bool
-    // }
     serializeLinePlotData(data, options){
-        console.log('serialize line plot data')
         let plotData;
         if(options.onePlot){
-            console.log('serialize line plot data 1')
             plotData = this._filterDataOnePlot(data, options);
         } else{
-            console.log('serialize line plot data 2')
             plotData = this._filterDataAllPlots(data, options);
         }
-
-        return this._makeContext(plotData, options)
+        const res = this._makeContext(plotData, options);
+        return res;
     }
 
     /**
@@ -31,17 +23,17 @@ export default  class StatisticSerializer{
         let cafes_staff = entriesPolyFill(data);
         for(let i = 0; i < cafes_staff.length;i++){ //Итерация по кафе владельца
             let cafeName = cafes_staff[i][0];
-            if(options.cafesList.includes(cafeName)){ //Проверка по списку
+            if(options.cafesList.includes(Number(cafeName))){ //Проверка по списку
                 let staff_actions = entriesPolyFill(cafes_staff[i][1]);
                 for(let j = 0; j < staff_actions.length;j++){ //Итерация по работникам кафе
-                    if(options.staffList.includes(staff_actions[j][0])){ //Проверка по списку
+                    if(options.staffList.includes(Number(staff_actions[j][0]))){ //Проверка по списку
                         let actions = staff_actions[j][1];
                         for(let k = 0; k < actions.length; k++){ // Итерация по действиям работника
-                            let action = entriesPolyFill(actions[k])[0];
-                            if(plotData[action[0]]){
-                                plotData[action[0]] += action[1];
+                            let action = actions[k];
+                            if(plotData[action['Date']]){
+                                plotData[action['Date']] += action['NumOfUsage'];
                             }else {
-                                plotData[action[0]] = action[1];
+                                plotData[action['Date']] = action['NumOfUsage'];
                             }
                         }
                     }
@@ -59,7 +51,6 @@ export default  class StatisticSerializer{
      */
     _filterDataAllPlots(data, options){
         let plotData = {};
-        console.log('test line plot data', data)
         if(data) {
             let cafes_staff = entriesPolyFill(data);
             for (let i = 0; i < cafes_staff.length; i++) { //Итерация по кафе владельца
@@ -70,16 +61,16 @@ export default  class StatisticSerializer{
                         if (options.staffList.includes(staff_actions[j][0])) { //Проверка по списку
                             let actions = staff_actions[j][1];
                             for (let k = 0; k < actions.length; k++) { // Итерация по действиям работника
-                                let action = entriesPolyFill(actions[k])[0];
+                                let action = actions[k];
                                 if (plotData[cafeName]) {
-                                    if (plotData[cafeName][action[0]]) {
-                                        plotData[cafeName][action[0]] += action[1];
+                                    if (plotData[cafeName][action['Date']]) {
+                                        plotData[cafeName][action['Date']] += action['NumOfUsage'];
                                     } else {
-                                        plotData[cafeName][action[0]] = action[1];
+                                        plotData[cafeName][action['Date']] = action['NumOfUsage'];
                                     }
                                 } else {
                                     plotData[cafeName] = {};
-                                    plotData[cafeName][action[0]] = action[1];
+                                    plotData[cafeName][action['Date']] = action['NumOfUsage'];
                                 }
                             }
                         }
@@ -89,7 +80,6 @@ export default  class StatisticSerializer{
         } else{
             plotData = null
         }
-        console.log('return line plot data', plotData)
         return plotData;
     }
 
