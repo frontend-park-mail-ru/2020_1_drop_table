@@ -23,7 +23,7 @@ export default class AddStaffController{
 
     async update(){
         try{
-            //await this._userModel.update();
+            await this._userModel.update();
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -37,32 +37,58 @@ export default class AddStaffController{
         return {
             header: {
                 type: 'auth',
-                avatar: {
-                    photo: null
-                },
+                isOwner: this._userModel._isOwner
             },
             register: {
+                topText:'Регистрация работника',
                 form: {
+                    formFields: [
+                        {
+                            type: 'text',
+                            id: 'full-name',
+                            data: '',
+                            labelData: 'Имя',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'email',
+                            id: 'email',
+                            data: '',
+                            labelData: 'Почта',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'password',
+                            id: 'password',
+                            data: '',
+                            labelData: 'Пароль',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'password',
+                            id: 're-password',
+                            data: '',
+                            labelData: 'Подтвердите пароль',
+                            inputOption: 'required',
+                        },
+
+                    ],
+
+                    submitValue: 'Готово',
                     event: {
                         type: 'submit',
-                        listener: this._formListener.bind(this)
-                    }
+                        listener: this._submitListener.bind(this)
+                    },
                 },
-                login: {
-                    event: {
-                        type: 'click',
-                        listener: () => {router._goTo('/login');}
-                    }
-                }
             }
-        }
+        };
     }
 
     /** Event добавления работника */
-    async _formListener(e) {
+    async _submitListener(e) {
         e.preventDefault();
 
-        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
+        const form = document.getElementsByClassName('authorize__form-container__form').item(0);
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
@@ -131,8 +157,12 @@ export default class AddStaffController{
      * @param {Element} form вылидируемый элемент
      * @return {obj} созданный контекст
      */
-    _makeExceptionContext(form){
+    _makeExceptionContext(form = document.body){
         return {
+            'pq: duplicate key value violates unique constraint "staff_email_key"': [
+                'Пользователь с такой почтой уже существует',
+                form['email']
+            ],
             'given item already existed': [
                 'Пользователь с такой почтой уже существует',
                 form['email']
@@ -149,8 +179,16 @@ export default class AddStaffController{
                 'Некоректная почта',
                 form['email']
             ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'max\' tag': [
+                'Имя слишком длинное',
+                form['full-name']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'max\' tag': [
+                'Пароль слишком длинный',
+                form['password']
+            ],
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
@@ -158,8 +196,15 @@ export default class AddStaffController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._registerView.context = this._makeViewContext();
-        this._registerView.render();
+        try {
+            //await this.update();
+            this._registerView.context = this._makeViewContext();
+            this._registerView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+            console.log(error)
+        }
     }
 }

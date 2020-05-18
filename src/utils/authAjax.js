@@ -10,7 +10,7 @@ import {LoadingComponent} from '../components/Loading/Loading';
 
 export async function authAjax(method, route, body, callback) {
     let reqBody;
-
+    console.log('body',JSON.stringify(body));
     if(method !== 'GET'){
         reqBody = {
             method: method,
@@ -19,7 +19,8 @@ export async function authAjax(method, route, body, callback) {
             credentials: 'include',
         };
 
-    } else {
+    }
+    else {
         reqBody ={
             method: method,
             mode: 'cors',
@@ -31,25 +32,27 @@ export async function authAjax(method, route, body, callback) {
         reqBody.headers = {'X-CSRF-TOKEN': myCsrf};
         //req.headers.append( 'X-CSRF-TOKEN' ,myCsrf);
     }
-    const loading = new LoadingComponent();
-    loading.render();
+    // const loading = new LoadingComponent();
+    // loading.render();
 
     const req = new Request(route, reqBody);
     let responseJson = null;
     try {
         const response = await fetch(req);
         if (response.ok) {
-            loading.remove();
+            console.log('response ok')
+            // loading.remove();
             const csrf = response.headers.get('Csrf');
             if(csrf){
                 sessionStorage.setItem('Csrf', csrf);
             }
             responseJson = await response.json();
         } else {
+            console.log('response not ok')
             throw new Error('Response not ok');
         }
     } catch (exception) {
-        loading.remove();
+        // loading.remove();
         // router._goTo('/login');
         console.log('Ajax Error:', exception.message);
     }

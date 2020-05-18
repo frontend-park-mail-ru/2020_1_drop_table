@@ -75,6 +75,7 @@ export default class EditCafeController{
         return {
             header:{
                 type: null,
+                isOwner: this._userModel._isOwner,
                 avatar: {
                     photo: this._userModel.photo,
                     event: {
@@ -121,13 +122,16 @@ export default class EditCafeController{
                             data: cafe.closeTime,
                             labelData: 'Время закрытия',
                             inputOption: 'required',
+
                         },
                         {
                             type: 'text',
                             id: 'description',
                             data: cafe.description,
+                            areaData:cafe.description,
                             labelData: 'Описание',
                             inputOption: 'required',
+                            areaType: 'textarea'
                         },
                     ],
                     submitValue: 'Готово',
@@ -205,7 +209,7 @@ export default class EditCafeController{
                 form['name']
             ],
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
@@ -216,9 +220,15 @@ export default class EditCafeController{
      * @param {int} id идентификатор кафе
      */
     async control(id){
-        await this.update();
-        this._id = id;
-        this._createCafeView.context = this._makeViewContext(id);
-        this._createCafeView.render();
+        try {
+            await this.update();
+            this._id = id;
+            this._createCafeView.context = this._makeViewContext(id);
+            this._createCafeView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

@@ -1,0 +1,149 @@
+.statistics-component{
+  font-family: Montserrat, sans-serif;
+
+  &__head{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    &__one-plot{
+      display: flex;
+      flex-direction: column;
+      &_span{
+        font-size: 1.5rem;
+        font-weight: bolder;
+        margin: 8px 0 0 0;
+      }
+    }
+    &__interval-start{
+      margin: 10px;
+    }
+    &__interval-end{
+      margin: 10px;
+    }
+    &__selector-cafes{
+      margin: 10px;
+    }
+
+    &__selector-staff{
+      margin:10px;
+    }
+    &_button{
+
+      margin: 10px;
+      width: 250px;
+      height: 50px;
+      color: white;
+      background-color: #1C768F;
+      border: none;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+      font-size: 1rem;
+      transition: background-color 1s ease;
+      cursor: pointer;
+      &:hover{
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+      }
+      &:active{
+        background-color: #fa9917;
+        transition: background-color 0s ease;
+      }
+    }
+  }
+  &__graph-container{
+    margin: 10px auto;
+    height: 40vw;
+    min-width: 300px;
+    min-height: 350px;
+    overflow-x: scroll;
+    overflow-y: hidden;;
+    max-height: 600px;
+
+  &__with-scroll{
+    height: 100%;
+    width: 300%;
+  }
+
+  }
+}
+@media(min-width: 620px) {
+  .statistics-component__graph-container{
+    width: 75%;
+  }
+}
+@media(max-width: 620px) {
+  .statistics-component__graph-container{
+    width: 90%;
+  }
+}
+.interval{
+  display: flex;
+  flex-direction: column;
+  &_h1{
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+  &__start-end{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+#cbx {
+  opacity: 0;
+  position: absolute;
+}
+.elastic-cbx {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+.elastic-cbx svg {
+  fill: none;
+  pointer-events: none;
+}
+.elastic-cbx svg path {
+  stroke-width: 2;
+}
+.elastic-cbx svg path#cb {
+  stroke: #999fb7;
+}
+.elastic-cbx svg path#cm {
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: bottom center;
+}
+#cbx:checked + label #cb {
+  fill: #1e768f;
+  stroke: #1e7e98;
+  animation: elasticInput 0.3s ease forwards;
+}
+#cbx:checked + label #cm {
+  opacity: 1;
+  transform: scale(1);
+  transition: all 0.2s ease;
+  transition-delay: 0.05s;
+}
+@-moz-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@-webkit-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@-o-keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}
+@keyframes elasticInput {
+  50% {
+    d: path("M16 1H4C2.34315 1 1 2.34315 1 4V16.4397C1 17.8537 2.1463 19 3.56032 19C3.84873 19 4.13065 18.9275 4.38752 18.7963C5.38465 18.2872 8.09428 17 10 17C11.8138 17 14.3559 18.166 15.4565 18.7174C15.8169 18.898 16.2114 19 16.6145 19C17.932 19 19 17.932 19 16.6145V4C19 2.34315 17.6569 1 16 1Z");
+  }
+}

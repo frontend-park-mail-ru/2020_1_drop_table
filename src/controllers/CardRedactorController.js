@@ -8,10 +8,6 @@ import {LoyaltyDiscountComponent} from '../components/LoyaltySystems/Discount/Lo
 import {LoyaltyWalletComponent} from '../components/LoyaltySystems/Wallet/LoyaltyWalletComponent';
 import {LoyaltyCouponComponent} from '../components/LoyaltySystems/Coupon/LoyaltyCouponComponent';
 
-
-
-
-
 /** Контроллер редактирования карточки */
 export default class CardRedactorController {
 
@@ -25,18 +21,15 @@ export default class CardRedactorController {
         this._cardRedactorView = cardRedactorView;
         this._loyaltyInfo = {
             type: 'coffee_cup',
-            loyalty_info: {}
+            loyalty_info: {'coffee_cups': 5}
         };
         this._discounts = []
     }
 
     async changeType(){
         try{
-            console.log('change type1', this._loyaltyInfo.type);
             await this._appleCard.update(this._loyaltyInfo.type);
             this._appleCard._type = this._loyaltyInfo.type;
-
-            console.log('change type2', await this._appleCard._loyalty_info);
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -50,23 +43,31 @@ export default class CardRedactorController {
         }
     }
 
+
+
     /** Запуск контроллера */
     async control(){
-        await this.update();
+        try {
+            await this.update();
 
-        this._appleCard.context = this._makeContext();
-        this._cardRedactorView._appleCard = this._appleCard;
-        this._cardRedactorView.render();
-        this.addImageListeners();
-        this.addCardFieldsListeners();
-        this.addSavePublishListeners();
-        this.addColorPickerListeners(this);
+            this._appleCard.context = this._makeContext();
+            this._cardRedactorView._appleCard = this._appleCard;
+            this._cardRedactorView.render();
+            this.addImageListeners();
+            this.addCardFieldsListeners();
+            this.addSavePublishListeners();
+            this.addColorPickerListeners(this);
+            this._addLoyaltyListeners();
+            this._makeActiveLoyalty(0);
+            let cardRedactorBottom =
+                document.getElementsByClassName('card').item(0);
+            cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
 
-        this._addLoyaltyListeners();
-
-        let cardRedactorBottom =
-            document.getElementsByClassName('card').item(0);
-        cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
 
     }
 
@@ -171,10 +172,10 @@ export default class CardRedactorController {
         submitSave.addEventListener('click', this._editCardListener.bind(this));
 
         const submitPublish = document.getElementsByClassName('card-form__buttons__publish').item(0);
-        submitPublish.addEventListener('click', this._publishCarfListener.bind(this));
+        submitPublish.addEventListener('click', this._publishCardListener.bind(this));
     }
 
-    _publishCarfListener(e){
+    _publishCardListener(e){
         e.preventDefault();
         const iconInput = document.getElementById('uploadAvatar');
         let icon = iconInput.files[0];
@@ -198,7 +199,6 @@ export default class CardRedactorController {
             'strip.png': strip,
             'strip@2x.png': strip
         };
-        console.log('test',this._loyaltyInfo.type)
         if(this._loyaltyInfo.type === 'percents'){
             this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
         }
@@ -229,7 +229,7 @@ export default class CardRedactorController {
             'logo.png': icon, 'logo@2x.png': icon,
             'strip.png': strip, 'strip@2x.png': strip
         };
-        console.log('test',this._loyaltyInfo.type)
+        console.log('test',this._loyaltyInfo.type);
         if(this._loyaltyInfo.type === 'percents'){
             this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
         }
@@ -245,13 +245,14 @@ export default class CardRedactorController {
     /** Добавление полей карты */
     addCardField(e) {
         const parent = e.target.parentNode.parentNode;
-        this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
-        this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
-        this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
-
-        this.addCardFieldsListeners();
-        this.addColorPickerListeners(this);
-        this.addSavePublishListeners();
+        if(this._appleCard.allowPushField(getContextByClass(parent.getAttribute('class')))){
+            this._appleCard.pushField(getContextByClass(parent.getAttribute('class')));
+            this._cardRedactorView.cardFormComp.render(this._appleCard.getAsFormData());
+            this._cardRedactorView.cardAppleComp.render(this._appleCard.getAsFormData());
+            this.addCardFieldsListeners();
+            this.addColorPickerListeners(this);
+            this.addSavePublishListeners();
+        }
     }
 
     /** Удаление полей карты */
@@ -268,7 +269,7 @@ export default class CardRedactorController {
     _makeExceptionContext(){
         return {
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         }
@@ -277,10 +278,12 @@ export default class CardRedactorController {
     /** Добавление листенеров на изображения */
     addImageListeners(){
         const stripInput = document.getElementById('uploadStrip');
-        const stripImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img').item(0);
+        const stripImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img').item(0);
         const stripCardImage = document.getElementsByClassName('card__strip').item(0);
         const avatarInput = document.getElementById('uploadAvatar');
-        const avatarImage = document.getElementsByClassName('card-redactor-container__card-form__image-picker_img-avatar').item(0);
+        const avatarImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img-avatar').item(0);
         const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
 
         stripCardImage.style.backgroundImage =  this._appleCard._strip;
@@ -297,13 +300,29 @@ export default class CardRedactorController {
                 let fr = new FileReader();
                 fr.onload = function () {
                     stripImage.src = fr.result;
-                    stripCardImage.style.backgroundImage = `url(${fr.result})`
+                    stripCardImage.style.backgroundImage = `url(${fr.result})`;
                     this._appleCard._strip = `url(${fr.result})`;
                 }.bind(this);
                 fr.readAsDataURL(files[0]);
             }
-
         });
+        console.log('set image icon 2' );
+
+        stripInput.addEventListener('mouseenter', function (e) {
+            console.log('mouseover')
+            e.target.style.color = "purple";
+
+            // avatarImage.src = fr.result;
+            // avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+            // avatarCardImage.src = fr.result;
+            // this._appleCard._icon = fr.result;
+        });
+        // avatarImage.addEventListener('dblclick', function (e) {
+        //     avatarImage.src = fr.result;
+        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
+        //     avatarCardImage.src = fr.result;
+        //     this._appleCard._icon = fr.result;
+        // });
         avatarInput.addEventListener('change',(e)=>{
             const tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {
@@ -342,10 +361,10 @@ export default class CardRedactorController {
             this._loyaltyInfo.type = 'coffee_cup';
             await this.changeType();
             if(!await this._appleCard._loyalty_info){
-                this._loyaltyInfo.loyalty_info = {'cups_count': 5}
-                this._appleCard._loyalty_info = {cups_count: 5}
+                this._loyaltyInfo.loyalty_info = {'cups_count': 5};
+                this._appleCard._loyalty_info = {cups_count: 5};
             } else{
-                this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info)
+                this._appleCard._loyalty_info = JSON.parse(await this._appleCard._loyalty_info);
             }
             (new LoyaltyStampComponent(rect)).render( await this._appleCard._loyalty_info);
 
@@ -364,9 +383,9 @@ export default class CardRedactorController {
 
                 this._loyaltyInfo.loyalty_info = JSON.parse(await this._appleCard._loyalty_info);
                 this._appleCard._loyalty_info = this._loyaltyInfo.loyalty_info;
-                console.log('percents ok',this._appleCard._loyalty_info )
+                console.log('percents ok',this._appleCard._loyalty_info );
             }
-            console.log('percents render',this._appleCard._loyalty_info )
+            console.log('percents render',this._appleCard._loyalty_info );
             this._discounts = this.discountsFromObject(this._loyaltyInfo.loyalty_info);
             (new LoyaltyDiscountComponent(rect)).render(await this._discounts);
             this.addDiscountsListeners();
@@ -414,22 +433,27 @@ export default class CardRedactorController {
                 }
                 e.target.parentNode.className = 'loyalty-redactor__buttons__button-active';
                 this.renderLoyaltySystem(i);
-
-
             })
         }
-
-
-
+    }
+    _makeActiveLoyalty(i){
+        let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
+        let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
+        description.className = 'loyalty-redactor__description-active';
+        description.style.justifyContent = this.getJustifyContentBuIndex(i);
+        let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
+        for(let i = 0; i < buttonsActive.length; i++){
+            buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+        }
+        buttonsNormal.item(i).className = 'loyalty-redactor__buttons__button-active';
+        this.renderLoyaltySystem(i);
     }
     coffeeCupsListener(e){
-        console.log('coffeecups input', e.target.value)
         if(Number(e.target.value)){
             this._loyaltyInfo.loyalty_info = {'cups_count':Number(e.target.value)};
         }
     }
     cashbackPercentsInputListener(e){
-        console.log('cashback input',e.target.value)
         if(Number(e.target.value)){
             this._loyaltyInfo.loyalty_info = {'cashback':Number(e.target.value)};
         }
@@ -445,6 +469,7 @@ export default class CardRedactorController {
         for(let i = 0; i < priceInputs.length;i++){
             priceInputs.item(i).addEventListener('input', this.priceInputListener.bind(this))
         }
+
         let discountsInputs = document.getElementsByClassName('discount-cell__form__discount_input');
         for(let i = 0; i < discountsInputs.length;i++){
             discountsInputs.item(i).addEventListener('input', this.discountInputListener.bind(this))
@@ -453,14 +478,12 @@ export default class CardRedactorController {
 
     }
     discountInputListener(e){
-        console.log('cashback input',e.target.value)
         let id = Number(e.target.id.split('-')[1]);
         if(Number(e.target.value)){
             this._discounts[id].discount = e.target.value
         }
     }
     priceInputListener(e){
-        console.log('cashback input',e.target.value)
         let id = Number(e.target.id.split('-')[1]);
         if(Number(e.target.value)){
             this._discounts[id].price = e.target.value

@@ -1,22 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
 @import '../../scss/themes.scss';
 
-.card-redactor-container__card-form {
-    &__decorate-text {
-        &_h4 {
-            @include themify($themes){
-                color: themed('textColor');
-            }
-        }
-    }
-}
 
-.card-color-pickers-container_color-picker{
-        color: #000;
-        @include themify($themes){
-            background: themed('cafeCardColor');
+
+  .card-redactor-container__card-form {
+    &__decorate-text {
+      &_h4 {
+        @include themify($themes) {
+          color: themed('textColor');
         }
-}
+      }
+    }
+  }
+
+  .card-color-pickers-container_color-picker {
+    @include themify($themes) {
+      color: #000;
+      background: themed('cafeCardColor');
+    }
+
+  }
+  .card-form__buttons__save {
+    @include themify($themes) {
+      transition: background-color 1s ease;
+
+      &:active {
+        background-color: themed('clickedButton');
+        transition: background-color 0s ease;
+      }
+    }
+  }
+  .card-form__buttons__publish {
+    @include themify($themes) {
+      transition: background-color 1s ease;
+      &:active {
+        background-color: themed('clickedButton');
+        transition: background-color 0s ease;
+      }
+    }
+  }
+
+
+
 
 
 

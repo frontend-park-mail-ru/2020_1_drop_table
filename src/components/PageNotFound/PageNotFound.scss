@@ -1,0 +1,30 @@
+
+.page-not-found {
+  background-color: white;
+  color: #000000;
+  font-size: 100%;
+  line-height: 1.5;
+  font-family: Montserrat, sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  &__error-code{
+    display: flex;
+    justify-content: center;
+    &_span{
+      text-align: center;
+      font-size: 10rem;
+      font-weight: 100;
+    }
+  }
+  &__error-description{
+    display: flex;
+    justify-content: center;
+    &_span{
+      font-size: 2em;
+      text-align: center;
+      font-weight: 100;
+    }
+  }
+}
+

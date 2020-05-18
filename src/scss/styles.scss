@@ -8,6 +8,10 @@
 *{
     transition: background 0.5s ease;
 }
+#container{
+    max-width: 1440px;
+    margin: 0 auto;
+}
 #body{
     @include themify($themes){
         background: themed('backgroundColor');
@@ -25,3 +29,15 @@ input[type=text], input[type=submit], textarea{
 input[type=submit]{
     border: none;
 }
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+

@@ -71,6 +71,7 @@ export default class CreateCafeController{
         return {
             header:{
                 type: null,
+                isOwner: this._userModel._isOwner,
                 avatar: {
                     photo: this._userModel.photo,
                     event: {
@@ -123,6 +124,7 @@ export default class CreateCafeController{
                             data: ' ',
                             labelData: 'Описание',
                             inputOption: 'required',
+                            areaType: 'textarea'
                         },
                     ],
                     submitValue: 'Готово',
@@ -198,8 +200,12 @@ export default class CreateCafeController{
                 'Название кафе слишком короткое',
                 form['name']
             ],
+            'pq: parse error - invalid geometry': [
+                'Адрес кафе некорректный',
+                form['address']
+            ],
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
@@ -207,8 +213,14 @@ export default class CreateCafeController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._createCafeView.context = this._makeViewContext();
-        this._createCafeView.render();
+        try {
+            await this.update();
+            this._createCafeView.context = this._makeViewContext();
+            this._createCafeView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

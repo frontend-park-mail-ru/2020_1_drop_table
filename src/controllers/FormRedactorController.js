@@ -21,9 +21,14 @@ export default class FormRedactorController {
 
     /** Запуск контроллера */
     async control() {
-        await this.update();
-        await this.updateView();
-
+        try {
+            await this.update();
+            await this.updateView();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
     async updateView(){
         this._formRedactorView._formModel = this._formModel;
@@ -263,7 +268,7 @@ export default class FormRedactorController {
     _makeExceptionContext(){
         return {
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         }

@@ -5,6 +5,7 @@ import {constants} from '../utils/constants';
 import StaffModel from './StaffModel';
 import {AlertWindowComponent} from '../components/AlertWindow/AlertWindow';
 import {router} from '../main/main';
+import {authAjax} from '../utils/authAjax';
 
 
 /** Модель staff 3 рк */
@@ -15,6 +16,7 @@ export default class StaffListModel{
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
         this._constructStaff(staffListData);
+        this._statistics = null;
     }
 
     async update(){
@@ -73,7 +75,8 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        await ajax(constants.PATH + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
+        console.log('staff list');
+        await ajax(constants.PATH_STAFF + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
             (response) => {
@@ -92,7 +95,7 @@ export default class StaffListModel{
         const positionInput = document.
             getElementsByClassName('input-alert-window-container__window__field_input').item(0);
         if(positionInput.value) {
-            await ajax(constants.PATH + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
+            await ajax(constants.PATH_STAFF + `/api/v1/staff/generateQr/${this.cafeid}?position=${positionInput.value}`,
                 'GET',
                 {},
                 (response) => {
@@ -106,6 +109,56 @@ export default class StaffListModel{
                 }
             )
         }
+    }
+
+    fillStaffActions(id,context){
+        let staff = this.getStaffById(id);
+        if(context) {
+            for (let i = 0; i < context.length; i++) {
+                staff._actions.push(context[i]);
+            }
+        } else if(!staff._actions){
+            staff._actions = [];
+        }
+    }
+    fillAllStaffStatistics(context){
+        console.log('fill statistics', context);
+        this._statistics = context
+
+    }
+
+    /** Получение последних действий  */
+    async getStat(id,limit, since){
+        console.log('get stat')
+        await authAjax( 'POST',constants.PATH + `/api/v1/statistics/get_worker_data`,
+            {'staffID': Number(id), 'limit':limit, 'since':since},
+            (response) => {
+                if (response.errors === null) {
+                    this.fillStaffActions(id,response.data);
+                } else {
+                    throw response.errors;
+                }
+            }
+        );
+    }
+
+    /** Получение последних действий  */
+    async getAllStaffPlot(start, end, type){
+        //this.fillAllStaffStatistics();
+        await authAjax( 'GET',constants.PATH + `/api/v1/statistics/get_graphs_data?type=${type}&since=${start}&to=${end}`,
+            {},
+            (response) => {
+                console.log('response ', response);
+                if (response.errors === null) {
+                    console.log('response plot', response);
+                    this.fillAllStaffStatistics(response.data);
+                } else {
+                    console.log('response error', response);
+                    this.fillAllStaffStatistics(this.emptyPlot);
+                    throw response.errors;
+                }
+            }
+        );
     }
 
 

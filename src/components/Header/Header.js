@@ -34,6 +34,9 @@ export default class Header{
      * @private
      */
     _setProperties(context){
+        if(!context['isOwner']){
+            this._menuList = []
+        }
         if (context['type'] === 'auth') {
             this._hasAvatar = false;
             this._hasExit = false;
@@ -66,16 +69,32 @@ export default class Header{
      * @param {obj} context некоторый контекст с информацией о хэдере
      * @private
      */
-    _renderHeader(){
+    _renderHeader(context){
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
             hasLogin: this._hasLogin,
-            logoImageSrc: '/images/logo.png',
+            logoImageSrc: '/images/logo-light.png',
             menuList: this._menuList,
             avatarImageSrc: this._avatar
         };
         this._head.innerHTML = headerTemplate(headerData);
+
+        const img = this._head.getElementsByClassName('nav-header_img').item(0);
+        const theme = localStorage.getItem('theme');
+        if(theme === 'theme-dark'){
+            img.src = '/images/logo-dark.png';
+        } else{
+            img.src = '/images/logo-light.png';
+        }
+
+        this._parent.appendChild(this._head);
+
+        if(this._hasExit) {
+            let out = document.getElementById('exit-btn');
+            out.addEventListener(context['exit']['event']['type'],
+                context['exit']['event']['listener']);
+        }
 
     }
 
@@ -88,8 +107,7 @@ export default class Header{
         this._head = document.createElement('div');
         this._head.className = 'header';
         this._setProperties(context);
-        this._renderHeader();
-        this._parent.appendChild(this._head);
+        this._renderHeader(context);
     }
 }
 

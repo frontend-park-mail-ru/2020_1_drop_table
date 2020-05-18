@@ -41,7 +41,7 @@ export class FormModel {
     async saveSurvey() {
         let formData = await this._cells;
         let id = await this._cafeId;
-        await ajax( constants.PATH + `/api/v1/survey/set_survey_template/${id}`,'POST',
+        await ajax( constants.PATH_SURVEY + `/api/v1/survey/set_survey_template/${id}`,'POST',
             formData,
             (response) => {
                 if (response.errors === null) {
@@ -56,7 +56,7 @@ export class FormModel {
     async getSurvey() {
         let id = await this._cafeId;
         console.log('saveSurvey id',  this._cafeId);
-        await ajax( constants.PATH + `/api/v1/survey/get_survey_template/${id}`,'GET',
+        await ajax( constants.PATH_SURVEY + `/api/v1/survey/get_survey_template/${id}`,'GET',
             null,
             (response) => {
                 if (response.errors === null) {
@@ -71,7 +71,7 @@ export class FormModel {
     async submitSurvey() {
         let formData = await this._cells;
         let uuid = await this._uuid;
-        await ajax( constants.PATH + `/api/v1/survey/submit_survey/${uuid}`,'POST',
+        await ajax( constants.PATH_SURVEY + `/api/v1/survey/submit_survey/${uuid}`,'POST',
             formData,
             (response) => {
                 if (response.errors === null) {

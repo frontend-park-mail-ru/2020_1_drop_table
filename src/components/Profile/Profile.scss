@@ -1,4 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans:wght@300&display=swap');
+
+@media(max-width: 600px) {
+    h1{
+        font-size: 2.5rem;
+
+    }
+    .user-profile__header___decorate-container__text-field{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+}
+@media(min-width: 600px) {
+    h1{
+        font-size: 3.5rem;
+
+    }
+    .user-profile__header___decorate-container__text-field{
+        margin-left: 100px;
+    }
+
+}
+
 .user-profile{
     font-family: 'Montserrat',SansSerif;
     height: 100%;
@@ -9,25 +32,42 @@
 
 .user-profile__header{
     display: flex;
-    height: 25%;
-    justify-content: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .user-profile__header__logo-container{
-    float: left;
+    width: max-content;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    &_img{
+        width: 16%;
+        align-self: flex-end;
+        max-width: 40px;
+        margin-right: 28%;
+        background-color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: none;
+    }
 }
 
 .user-profile__header__logo-container_image-picker{
-    width: 100%;
+    height: 100%;
+    width: max-content;
     border-radius: 50%;
     cursor: pointer;
     text-align: center;
     display: flex;
     flex-direction: column;
+    margin: 5px auto -25% 0;
 }
 
 .user-profile__header__logo-container_image-picker_img{
     border-radius: 50%;
+    max-height: 150px;
+    max-width: 150px;
     height: 10vw;
     width: 10vw;
     min-width: 75px;
@@ -48,52 +88,101 @@
 }
 
 .user-profile__header__decorate-container{
-    width: 30%;
-    height: 100%;
-    font-weight: bold;
-    font-size: 4.5vw;
-    white-space: nowrap ;
 }
 
 .user-profile__header___decorate-container__text-field{
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
 
 }
 
-.user-profile__header___decorate-container__text-field_span{
+.user-profile__header___decorate-container__text-field_h1{
+    white-space: nowrap;
+    margin: 0;
 }
 
-.user-profile__header___decorate-container__strip{
-     width: 33vw;
-     height: 0.5rem;
-     padding-left: 10%;
+.user-profile__header___decorate-container__text-field__strip{
+     width: 100%;
+     height: 5px;
+    background-color: #1C768F;
  }
 
 
 
 .user-profile__form-container{
-    width: 60%;
+    width:100%;
+    height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin: 0 auto;
 
 }
 
 .user-profile__form-container__form-field{
-        min-width: 40%;
-        width: 50vh;
+    max-width:600px;
+    max-height:900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .input-field {
+        position: relative;
+        margin: 15px auto 0 auto;
+        display: flex;
+        width: 300px;
+
+        &_input {
+            border-radius: 0;
+            border: none;
+            border-bottom: solid 2px;
+            background: none;
+            font-size: 1rem;
+            margin: 15px auto;
+            width: 100%;
+        }
+
+        &_label {
+            position: absolute;
+            left: 0;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            pointer-events: none;
+            -webkit-transition: all 0.15s ease-out 0s;
+            transition: all 0.15s ease-out 0s;
+            font-size: 1rem;
+        }
+
+        &__submit {
+            -webkit-appearance: none;
+            font-size: 1rem;
+            margin: 0 auto;
+            background-color: #1e768f;
+            color: white;
+            font-weight: lighter;
+            border: none;
+            width: 250px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+
+            &:hover {
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
 
 }
 
 @media (max-width: 500px) {
-    .user-profile__header{
-        flex-direction: column-reverse;
-    }
+
 }
 
 .user-profile__header__utils{
     display: flex;
-    justify-content: flex-end;
-    width: 100%;
+    justify-self: flex-end;
+    margin-top: 5px;
 }
 
 .switch{
@@ -102,6 +191,7 @@
     width: 90px;
     height: 55px;
     margin-right:20px;
+    margin-left: auto;
 }
 .slider{
     position: absolute;

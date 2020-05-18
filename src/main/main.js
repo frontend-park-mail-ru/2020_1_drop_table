@@ -38,10 +38,16 @@ import StaffMenuView from '../view/StaffMenuView';
 import StaffMenuController from '../controllers/StaffMenuController';
 import StaffPageController from '../controllers/StaffPageController';
 
+import PageNotFoundController from '../controllers/PageNotFoundController';
+import PageNotFoundView from '../view/PageNotFoundView';
 
 import SurveyView from '../view/SurveyView';
 import SurveyController from '../controllers/SurveyController'
 import {FormModel} from '../models/FormModel'
+import StatisticsView from '../view/StatisticsView';
+import StatisticsController from '../controllers/StatisticsController';
+
+import TestPlotView from '../view/TestPlotView';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -53,20 +59,7 @@ if ('serviceWorker' in navigator) {
             console.log('Registration failed with ' + error);
         });
 }
-//
-// navigator.serviceWorker.addEventListener('message', event => {
-//     if(event.data.type === 'csrf'){
-//         sessionStorage.setItem('Csrf', event.data.Csrf);
-//     }
-// });
-//
-// navigator.serviceWorker.addEventListener('message', event => { //TODO
-//     console.log('data', event.data);
-//     if(event.data.type){
-//         console.log('REFRESH');
-//         location.reload();
-//     }
-// });
+
 
 const html = document.getElementsByTagName('html').item(0);
 const theme = localStorage.getItem('theme');
@@ -102,7 +95,7 @@ const createCafeController = new CreateCafeController(cafeListModel, userModel, 
 const staffListController = new StaffListController(staffListModel, staffListView);
 const cafePageController = new CafePageController(cafeListModel, userModel, cafePageView);
 const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
-const landingController = new LandingController(landingModel, landingView, landingCafeListModel);
+const landingController = new LandingController(landingModel, userModel, landingView, landingCafeListModel);
 const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
 
 /** Страница регистрации */
@@ -160,7 +153,9 @@ function doAddStaff(req) {
 
 /** Страница меню работника */
 function doStaffMenu(req) {
+    console.log('do staff menu');
     const uuid = req.param.uuid;
+    console.log('do staff menu uuid', uuid);
     const staffMenuView = new StaffMenuView(app, uuid);
     const staffMenuController = new StaffMenuController(staffMenuView, uuid);
     staffMenuController.control();
@@ -181,9 +176,37 @@ function doSurvey(req) {
     surveyController.control();
 }
 
+function doError(req) {
+
+    let code = req.param.code;
+    console.log('errcode',code)
+    if(!code){
+        code = 404;
+    }
+    console.log('doError', code)
+    const pageNotFoundView = new PageNotFoundView(app);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
+    pageNotFoundController.control();
+}
+
+function doNotFound() {
+    console.log('doNotFound')
+    const pageNotFoundView = new PageNotFoundView(app);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
+    pageNotFoundController.control();
+}
+function doStatistics(){
+    const statisticsView = new StatisticsView(app);
+    const statisticsController = new StatisticsController(statisticsView, null, staffListModel);
+    statisticsController.control();
+}
+
+function doStat(){
+    (new TestPlotView()).render();
+}
 
 /** Роуты роутера */
-router.get('/', dolog);
+router.get('/', doLanding);
 router.get('/landing', doLanding);
 
 router.get('/reg', doreg);
@@ -197,15 +220,22 @@ router.get('/editCafe/{id}', doEditCafe);
 
 router.get('/staff', doStaffPage);
 router.get('/staff/{id}', doStaffById);
+
 router.get('/addStaff', doAddStaff);
 
 router.get('/points/{uuid}', doStaffMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
+router.get('/error/{code}', doError);
 
-router.notFoundHandler(doLanding);
+router.get('/test', doStat);
+
+
+router.get('/statistics', doStatistics);
+
+
+router.notFoundHandler(doNotFound);
 
 router.init();
-
 

@@ -112,8 +112,8 @@ export class CardField{
                 valueID: uuid(),
 
                 fieldName: this._fieldType,
-                labelData: 'Надпись',
-                valueData: 'Подпись',
+                labelData: (this._fieldType === 'PrimaryField' )?'Подпись':'Надпись',
+                valueData: (this._fieldType === 'PrimaryField' )?'Надпись':'Подпись',
                 labelText: this._label,
                 valueText: this._value,
                 button: null,
@@ -121,12 +121,14 @@ export class CardField{
             };
         }
 
-        if( i < 1){
-            data.button = 'Добавить';
-            data.buttonsymbol = '+';
-        } else if (i >= 1){
-            data.button = 'Удалить';
-            data.buttonsymbol = '-';
+        if(data.fieldName !== 'HeaderField') {
+            if (i < 1) {
+                data.button = 'Добавить';
+                data.buttonsymbol = '+';
+            } else if (i >= 1) {
+                data.button = 'Удалить';
+                data.buttonsymbol = '-';
+            }
         }
         return data;
     }

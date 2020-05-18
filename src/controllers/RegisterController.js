@@ -1,36 +1,43 @@
 'use strict';
-
-import {router} from '../main/main';
-
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
-import NotificationComponent from '../components/Notification/Notification'
+import NotificationComponent from '../components/Notification/Notification';
+import {router} from "../main/main";
 
-/** контроллер регистрации */
+/** контроллер профиля */
 export default class RegisterController{
 
     /**
-     * Инициализация RegisterController
+     * Инициализация UserProfileController
      * @param {UserModel} userModel модель пользователя
-     * @param {RegisterView} registerView view для регистрации
+     * @param {UserProfileView} userProfileView view профиля
      */
-    constructor(userModel, registerView) {
+    constructor(userModel, registerView){
         this._userModel = userModel;
         this._registerView = registerView;
     }
 
-    /** Event регистрации */
-    async _formListener(e) {
-        e.preventDefault();
+    async update(){
+        try{
+            await this._userModel.update();
+            router._goTo('/myCafes')
+        } catch (exception) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
+        }
+    }
 
-        let form = document.getElementsByClassName('formContainer').item(0).firstElementChild;
+    /** Event изменения профиля */
+    async _submitListener(e) {
+        e.preventDefault();
+        const form = document.getElementsByClassName('authorize__form-container__form').item(0);
+
         const validateContext = this._makeValidateContext(form);
         const serverExceptionContext = this._makeExceptionContext(form);
 
-        if((new FormValidation(form)).validate(validateContext)){
+        if ((new FormValidation(form)).validate(validateContext)) {
+            this._userModel.name = form.elements['full-name'].value.toString();
             this._userModel.email = form.elements['email'].value.toString();
             this._userModel.password = form.elements['password'].value.toString();
-            this._userModel.name = form.elements['full-name'].value.toString();
 
             try {
                 await this._userModel.register();
@@ -41,34 +48,62 @@ export default class RegisterController{
     }
 
     /**
-     * Создание контекста для RegisterView
+     * Создание контекста для UserProfileView
      * @return {obj} созданный контекст
      */
-    _makeViewContext(){
+    _makeViewContext() {
         return {
             header: {
                 type: 'auth',
-                avatar: {
-                    photo: null
-                },
+                isOwner: this._userModel._isOwner,
             },
             register: {
+                topText:'Регистрация',
                 form: {
+                    formFields: [
+                        {
+                            type: 'text',
+                            id: 'full-name',
+                            data: '',
+                            labelData: 'Имя',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'email',
+                            id: 'email',
+                            data: '',
+                            labelData: 'Почта',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'password',
+                            id: 'password',
+                            data: '',
+                            labelData: 'Пароль',
+                            inputOption: 'required',
+                        },
+                        {
+                            type: 'password',
+                            id: 're-password',
+                            data: '',
+                            labelData: 'Подтвердите пароль',
+                            inputOption: 'required',
+                        },
+
+                    ],
+                    redirect: {
+                        textRedirect: 'Уже есть аккаунт?',
+                        link: '/login',
+                        linkText :'Войти',
+                    },
+                    submitValue: 'Готово',
                     event: {
                         type: 'submit',
-                        listener: this._formListener.bind(this)
-                    }
+                        listener: this._submitListener.bind(this)
+                    },
                 },
-                login: {
-                    event: {
-                        type: 'click',
-                        listener: () => {
-                            router._goTo('/login');
-                        }
-                    }
-                }
             }
-        }
+        };
     }
 
     /**
@@ -114,13 +149,13 @@ export default class RegisterController{
         ];
     }
 
-    /**
-     * Создание контекста для ServerExceptionHandler
-     * @param {Element} form вылидируемый элемент
-     * @return {obj} созданный контекст
-     */
-    _makeExceptionContext(form){
+
+    _makeExceptionContext(form = document.body){
         return {
+            'pq: duplicate key value violates unique constraint "staff_email_key"': [
+                'Пользователь с такой почтой уже существует',
+                form['email']
+            ],
             'given item already existed': [
                 'Пользователь с такой почтой уже существует',
                 form['email']
@@ -137,8 +172,17 @@ export default class RegisterController{
                 'Некоректная почта',
                 form['email']
             ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'max\' tag': [
+                'Имя слишком длинное',
+                form['full-name']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'max\' tag': [
+                'Пароль слишком длинный',
+                form['password']
+            ],
+            'no permission': ()=>{return [null, null]},
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
@@ -146,7 +190,15 @@ export default class RegisterController{
 
     /** Запуск контроллера */
     async control(){
-        this._registerView.context = this._makeViewContext();
-        this._registerView.render();
+        try {
+            await this.update();
+            this._registerView.context = this._makeViewContext();
+            this._registerView.render();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
+
 }

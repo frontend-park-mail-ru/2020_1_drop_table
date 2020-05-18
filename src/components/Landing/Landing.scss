@@ -1,3 +1,6 @@
+#map{
+    margin: 0 auto;
+}
 .landing-page{
     display: flex;
     flex-direction: column;
@@ -14,7 +17,6 @@
 
 .landing-page__form-and-cards{
     display: flex;
-    /*border: 1px solid black;*/
     height: 32rem;
 }
 
@@ -53,8 +55,9 @@
 }
 
 .landing-page__form-and-cards__form__form-field_input{
-    height: 3rem;
+    height: 2rem;
     width: 50%;
+    border: none;
 
 }
 .landing-page__form-and-cards__form__form-field_button{
@@ -63,6 +66,7 @@
     width: 20%;
     font-size: 1rem;
     background-color: #1e768f;
+    border: none;
 }
 
 .landing-page__form-and-cards__cards{
@@ -74,27 +78,28 @@
 }
 
 .landing-page__form-and-cards__cards__stacked-cards{
-    justify-content: center;
+    justify-content: flex-end;
     display: flex;
     height: 35%;
+    margin: 10px 0;
 }
 
 .landing-page__form-and-cards__cards__stacked-cards_img{
-    /*height: 55%;*/
+
 }
 #card1{
     position: absolute;
-    margin-left: 7rem;
+
     margin-top: 1rem;
 }
 #card2{
     position: absolute;
-    margin-left: 6rem;
+
     margin-top: 3rem;
 }
 #card3{
     position: absolute;
-    margin-left: 5rem;
+
     margin-top: 5rem;
 }
 
@@ -102,18 +107,15 @@
     .landing-page__form-and-cards{
         display: flex;
         flex-wrap: wrap;
-        /*border: 1px solid black;*/
         height: 55rem;
     }
     .landing-page__form-and-cards__form{
         width: 100%;
-        /*border: 1px solid black;*/
         height: 50%;
     }
 
     .landing-page__form-and-cards__cards{
         width: 100%;
-        /*border: 1px solid black;*/
         height: 50%;
     }
 
@@ -123,9 +125,9 @@
     }
 
     .landing-page__form-and-cards__form__form-field_input{
-        height: 3rem;
+        height: 2rem;
         width: 100%;
-
+        border: none;
 
     }
     .landing-page__form-and-cards__form__form-field_button{
@@ -134,11 +136,13 @@
         color: white;
         font-size: 1rem;
         height: 100%;
-
         background-color: #1e768f;
+        border: none;
+    }
+    .landing-page__form-and-cards__cards__stacked-cards{
+        justify-content: center;
     }
     .landing-page__form-and-cards__cards__stacked-cards_img{
-        /*height: 70%;*/
     }
 
 }
@@ -149,7 +153,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*border: 1px solid black;*/
     height: 30rem;
     background-color: #8dbbc7;
     color: white;
@@ -169,7 +172,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*border: 1px solid black;*/
     height: 30rem;
     background-color: #1e768f;
     color: white;
@@ -187,7 +189,7 @@
         margin: 0 auto;
     }
     .landing-page__description_span{
-        padding-top: 3rem;
+        padding-top: 2rem;
         font-family: Montserrat;
         font-size: 1.5rem;
         margin: 0 10%;
@@ -195,7 +197,7 @@
 
     .landing-page__description-footer_span{
         font-family: Montserrat;
-        font-size: 3rem;
+        font-size: 2rem;
         margin: 0 5%;
     }
 }
@@ -203,25 +205,21 @@
 
 .landing-page__phone-card{
     display: flex;
-    /*border: 1px solid black;*/
     height: 25rem;
 }
 
 .landing-page__phone-card__phone{
     display: flex;
     justify-content: space-around;
-    /*border: 1px solid black;*/
     width: 40%;
 }
 
 .landing-page__phone-card__phone__image-container{
     display: flex;
     flex-direction: column;
-    /*justify-content: space-around;*/
 }
 .landing-page__phone-card__phone__image-container_img{
     object-fit: contain;
-    /*margin-left: 50%;*/
     height: 90%;
 }
 
@@ -230,7 +228,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*border: 1px solid black;*/
     width: 60%;
 }
 
@@ -243,13 +240,11 @@
 
 .landing-page__phone-card__text__container_h4{
     font-family: Montserrat;
-    font-size: 2rem;
     margin-top: auto;
 }
 .landing-page__phone-card__text__container_span{
     font-family: Montserrat;
     font-size: 1rem;
-    height: 1rem;
     color: #333333;
 }
 
@@ -259,39 +254,28 @@
     .landing-page__phone-card{
         display: flex;
         flex-wrap: wrap;
-        /*border: 1px solid black;*/
         height: 55rem;
     }
 
     .landing-page__phone-card__phone{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
         height: 60%;
     }
     .landing-page__phone-card__phone__image-container_img{
         object-fit: contain;
-        margin-left: 0;
         height: 100%;
     }
 
     .landing-page__phone-card__text{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
         height: 40%;
-        padding-left: 5%;
     }
 }
 
-
-
-
-
-
 .landing-page__coupon-and-card{
     display: flex;
-    /*border: 1px solid black;*/
     height: 25rem;;
 }
 
@@ -299,7 +283,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*border: 1px solid black;*/
     width: 50%;
 }
 
@@ -338,7 +321,6 @@
 
 .landing-page__coupon-and-card-coupon{
     display: flex;
-    /*border: 1px solid black;*/
     width: 50%;
 }
 
@@ -346,11 +328,9 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /*justify-content: space-around;*/
 }
 .landing-page__coupon-and-card-coupon__image-container_img{
     object-fit: contain;
-    /*margin-left: 50%;*/
     height: 90%;
 }
 
@@ -369,19 +349,16 @@
     .landing-page__coupon-and-card{
         display: flex;
         flex-wrap: wrap;
-        /*border: 1px solid black;*/
         height: 25rem;
     }
 
     .landing-page__coupon-and-card__text{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
     }
 
     .landing-page__coupon-and-card-coupon{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
     }
 
@@ -392,14 +369,12 @@
 
     .landing-page__coupon-and-card-coupon__image-container_img{
         object-fit: contain;
-        margin-left: -22%;
         height: 55%;
     }
 
 
     .landing-page__coupon-and-card__text{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
         height: 40%;
         padding-left: 5%;
@@ -415,7 +390,6 @@
 
 .landing-page__phones-client{
     display: flex;
-    /*border: 1px solid black;*/
     height: 25rem;;
 }
 
@@ -423,7 +397,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*border: 1px solid black;*/
     width: 50%;
 }
 
@@ -449,18 +422,15 @@
 
 .landing-page__phones-client__phones{
     display: flex;
-    /*border: 1px solid black;*/
     width: 50%;
 }
 
 .landing-page__phones-client__phones__image-container{
     display: flex;
     flex-direction: column;
-    /*justify-content: space-around;*/
 }
 .landing-page__phones-client__phones__image-container_img{
     object-fit: contain;
-    /*margin-left: 50%;*/
     height: 90%;
 }
 
@@ -470,47 +440,33 @@
     .landing-page__phones-client{
         display: flex;
         flex-wrap: wrap;
-        /*border: 1px solid black;*/
         height: 25rem;
     }
 
-    /*.landing-page__phones-client__text{*/
-    /*    display: flex;*/
-    /*    border: 1px solid black;*/
-    /*    width: 100%;*/
-    /*}*/
-
     .landing-page__phones-client__phones{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
     }
 
     .landing-page__phones-client__phones__image-container{
-        height: 50%;
-        width:50%;
+
     }
 
     .landing-page__phones-client__phones__image-container_img{
         object-fit: contain;
-        margin-left: -22%;
-        height: 55%;
     }
 
 
     .landing-page__phones-client__text{
         display: flex;
-        /*border: 1px solid black;*/
         width: 100%;
         height: 40%;
-        padding-left: 5%;
     }
 
 }
 
 .landing-page__description-second{
     display: flex;
-    /*border: 1px solid black;*/
     height: 25rem;
     background-color: #1e768f;
 }
@@ -518,12 +474,10 @@
 .landing-page__card-instruments{
     display: flex;
     flex-direction: column;
-    /*border: 1px solid black;*/
 }
 .landing-page__card-instruments__text{
     display: flex;
     flex-direction: column;
-    /*border: 1px solid black;*/
     height: 360px;
     width: 100%;
 }
@@ -546,7 +500,7 @@
         margin: 0 auto;
     }
     .landing-page__card-instruments__text_span{
-        padding-top: 3rem;
+        padding-top: 2rem;
         font-family: Montserrat;
         font-size: 1.5rem;
         margin: 0 10%;
@@ -566,11 +520,9 @@
 .landing-page__card-instruments__cards__card{
     display: flex;
     flex-direction: column;
-
-    /*border: 1px solid black;*/
     height: 25rem;
     width: 25rem;
-    margin:2%;
+    margin:10px 0 ;
     padding: auto;
 
     background-color: white;
@@ -592,19 +544,20 @@
 .landing-page__card-instruments__cards__card__text{
     display: flex;
     flex-direction: column;
-    margin-left:5%;
 
 }
 .landing-page__card-instruments__cards__card__text_h4{
     font-family: Montserrat;
     font-size: 2rem;
     margin: 0 auto;
+    width: 90%;
 }
 
 .landing-page__card-instruments__cards__card__text_span{
     font-family: Montserrat;
     font-size: 1rem;
     margin: 0 auto;
+    width: 90%;
 }
 
 
@@ -617,7 +570,7 @@
     background-color: #8dbbc7;
 }
 .landing-page__description-footer_span{
-  font-size: 3rem;
+  font-size: 2rem;
     width:60%;
     margin: 0 25%;
 
@@ -630,8 +583,9 @@
 }
 
 .landing-page__description-footer__form-field_input{
-    height: 3rem;
+    height: 2rem;
     width: 50%;
+    border: none;
 }
 .landing-page__description-footer__form-field_button{
     font-family: Montserrat;
@@ -639,6 +593,7 @@
     width: 50%;
     font-size: 1rem;
     background-color: #1e768f;
+    border: none;
 }
 
 @media (max-width: 480px) {
@@ -652,10 +607,9 @@
     }
 
     .landing-page__description-footer__form-field_input{
-        height: 3rem;
+        height: 2rem;
         width: 100%;
-
-
+        border: none;
     }
     .landing-page__description-footer__form-field_button{
         font-family: Montserrat;
@@ -663,16 +617,13 @@
         color: white;
         font-size: 1rem;
         height: 100%;
-
         background-color: #1e768f;
+        border: none;
     }
 }
 
 .landing-page__footer{
-
-    /*border: 1px solid black;*/
     height: 6rem;
-
     background-color: black;
 }
 
@@ -718,13 +669,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: auto 0;;
+            margin: auto 10px;
         }
         &__circle-right{
             display: flex;
             flex-direction: column;
             justify-content: center;
-            margin: auto 0;
+            margin: auto 10px;
         }
     }
 
@@ -733,8 +684,6 @@
 
 
 .landing-page__cafes{
-
-
     &__container{
         height: 100%;
     }

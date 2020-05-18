@@ -100,6 +100,11 @@
         cursor: pointer;
         height: 50px;
         background-color: #1C768F;
+        transition: background-color 1s ease;
+        &:active {
+          background-color: #fa9917;
+          transition: background-color 0s ease;
+        }
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -138,10 +143,11 @@
             border-left: none;
             border-right: 2px solid black;
             border-bottom: 2px solid black;
-            width:20px;
-            background-color: white;
-            &:hover{
-              background-color: #B7202B;
+            width:40px;
+            cursor: pointer;
+            background-color: #EE6161;
+            &_svg{
+              margin: 25%;
             }
           }
         }
@@ -156,6 +162,9 @@
     margin-left: auto;
     background: #EE6161;
     border-radius:  0px 15px;
+    &_svg{
+      margin: 24%;
+    }
   }
   &__save{
     position: relative;
@@ -164,6 +173,9 @@
     margin-left: auto;
     background: #1C768F;
     border-radius:  15px 0px ;
+    &_svg{
+      margin: 24%;
+    }
   }
 }
 
@@ -193,6 +205,7 @@
       margin-top: 10px;
       //width:100%;
       font-size: 1.3rem;
+      overflow: scroll;
     }
   }
 

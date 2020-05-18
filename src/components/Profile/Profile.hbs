@@ -2,27 +2,12 @@
 
     <div class="user-profile__header">
 
-        <div class="user-profile__header__logo-container">
-
-            <label class="user-profile__header__logo-container_image-picker">
-                <img class="user-profile__header__logo-container_image-picker_img" id="image" src={{imgSrc}}>
-                <span class="user-profile__header__logo-container_image-picker_span">Выберите изображение</span>
-                <input class="user-profile__header__logo-container_image-picker_input" id="upload" type="file" accept="image/x-png,image/gif,image/jpeg, image/png">
-            </label>
-        </div>
 
         <div class="user-profile__header__decorate-container">
             <div class="user-profile__header___decorate-container__text-field">
-                <span class="user-profile__header___decorate-container__text-field_span">Мой профиль</span>
+                <h1 class="user-profile__header___decorate-container__text-field_h1">Мой профиль</h1>
+                <div class="user-profile__header___decorate-container__text-field__strip"></div>
             </div>
-            <div class="user-profile__header___decorate-container__strip"></div>
-        </div>
-
-        <div class="user-profile__header__utils">
-                <label class="switch">
-                    <input class="switchTheme" type="checkbox"/>
-                    <span class="slider round"></span>
-                </label>
         </div>
 
     </div>
@@ -30,9 +15,24 @@
 
 
     <div class="user-profile__form-container">
+        <div class="user-profile__header__logo-container">
+            <label class="user-profile__header__logo-container_image-picker">
+                <img class="user-profile__header__logo-container_image-picker_img" id="image" src={{imgSrc}}>
+
+                <input class="user-profile__header__logo-container_image-picker_input" id="upload" type="file" accept="image/x-png,image/gif,image/jpeg, image/png">
+            </label>
+            <img class="user-profile__header__logo-container_img" src="/images/edit.svg">
+        </div>
+
         <form class="user-profile__form-container__form-field">
         </form>
     </div>
 
+    <div class="user-profile__header__utils">
+        <label class="switch">
+            <input class="switchTheme" type="checkbox"/>
+            <span class="slider round"></span>
+        </label>
+    </div>
 
 </div>

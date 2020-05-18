@@ -48,7 +48,7 @@
 
     .cafe-with-staff-container__cafe-with-staff-container_span{
         font-family: Montserrat , SansSerif ;
-        font-size: 4rem;
+        font-size: 2.5rem;
         @include themify($themes){
             color: themed('textColor');
         }
@@ -77,8 +77,8 @@
 
 .cafe-staff-container__design{
     z-index: 0;
-    position: absolute;
-    height: 100%;
+    position: relative;
+    //height: 100%;
     width: 94.5%;
     display: flex;
     flex-direction: column;

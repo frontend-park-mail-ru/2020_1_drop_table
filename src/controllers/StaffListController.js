@@ -41,6 +41,7 @@ export default class StaffListController{
 
         staffListContext['header'] = {
             type: null,
+            isOwner:true,
             avatar: {
                 //await this._userModel.photo,
                 photo: null,
@@ -86,7 +87,7 @@ export default class StaffListController{
     _makeExceptionContext(){
         return {
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         }
@@ -94,9 +95,15 @@ export default class StaffListController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._staffListView.context = this._makeViewContext();
-        this._staffListView.render();
-        this._addListeners()
+        try {
+            await this.update();
+            this._staffListView.context = this._makeViewContext();
+            this._staffListView.render();
+            this._addListeners();
+        } catch (error) {
+            if(error.message !== 'unknown server error'){
+                throw(new Error(error.message));
+            }
+        }
     }
 }

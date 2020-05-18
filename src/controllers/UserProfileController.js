@@ -62,21 +62,14 @@ export default class UserProfileController{
         return {
             header: {
                 type: 'profile',
-                avatar: {
-                    photo: null,
-                    event: {
-                        type: 'click',
-                        listener: () => {
-                            router._goTo('/profile');
-                        }
-                    }
-                },
+                isOwner: this._userModel._isOwner,
                 exit: {
                     event: {
                         type: 'click',
-                        listener: () => {
+                        listener: async () => {
+                            console.log('clicke');
+                            await this._userModel.logout();
                             router._goTo('/login');
-
                         }
                     }
                 }
@@ -185,8 +178,16 @@ export default class UserProfileController{
                 'Некоректная почта',
                 form['email']
             ],
+            'Key: \'Staff.Name\' Error:Field validation for \'Name\' failed on the \'max\' tag': [
+                'Имя слишком длинное',
+                form['full-name']
+            ],
+            'Key: \'Staff.Password\' Error:Field validation for \'Password\' failed on the \'max\' tag': [
+                'Пароль слишком длинный',
+                form['password']
+            ],
             'offline': () => {
-                (new NotificationComponent('Похоже, что вы оффлайн.', 2000)).render();
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
             }
         };
@@ -194,9 +195,15 @@ export default class UserProfileController{
 
     /** Запуск контроллера */
     async control(){
-        await this.update();
-        this._userProfileView.context = this._makeViewContext();
-        this._userProfileView.render();
+        try {
+            await this.update();
+            this._userProfileView.context = this._makeViewContext();
+            this._userProfileView.render();
+        } catch (error) {
+            if (error.message !== 'unknown server error') {
+                throw(new Error(error.message));
+            }
+        }
     }
 
 }

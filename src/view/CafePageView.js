@@ -58,7 +58,8 @@ export default class CafePageView extends BaseView {
         let cardContainer = document.getElementsByClassName('card-creator-container').item(0);
         // let formContainer = document.getElementsByClassName('form-creator-container').item(0);
         if( cardContainer.innerHTML.toString().length <= 2 ) {
-            const appleCardModel = new AppleCardModel(this._context['cafe'].id);
+            console.log('apple click', this._context['cafe'])
+            const appleCardModel = new AppleCardModel(this._context['cafe']);
             const cardRedactorView = new CardRedactorView();
             const cardRedactorController = new CardRedactorController(appleCardModel, cardRedactorView);
             cardRedactorController.control();
