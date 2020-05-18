@@ -141,6 +141,7 @@ export default class LandingController {
     _makeExceptionContext(){
         return {
             'no permission': ()=>{
+                console.log('no permisions');
                 this._headerType = 'landing'
                 return [null, null]
             },
