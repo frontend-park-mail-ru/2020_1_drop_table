@@ -39,9 +39,12 @@ export class AppleCardModel {
             'auxiliaryFields': [],
         };
         if(context.location){
+
             this._latitude = context.location.split(' ')[0];
             this._longitude = context.location.split(' ')[1];
             this._location = context.location;
+            console.log('test1',  this._latitude,  this._longitude);
+
         }
 
 
@@ -279,7 +282,12 @@ export class AppleCardModel {
                 {
                     'key': 'survey',
                     'label': 'Опрос',
-                    'value': `${constants.CURRENT_PATH}/survey/${this._cafeId}/<<CustomerID>>`
+                    'value': `${constants.PATH}/survey/${this._cafeId}/<<CustomerID>>`
+                },
+                {
+                    'key': 'info',
+                    'label': 'Система лояльности',
+                    'value': `${constants.PATH}/points/info/<<CustomerID>>`
                 }
             ],
             'storeCard': {
@@ -290,10 +298,16 @@ export class AppleCardModel {
             }
         };
         if(this._location){
+            console.log('test 2');
             json['locations'] =  [
                 {
-                    'longitude': Number(this._latitude),
-                    'latitude': Number(this._longitude),
+                    'longitude':Number(this._latitude),
+                    'latitude':  Number(this._longitude),
+                    'relevantText': `Заходи в ${this._organizationName}!`
+                },
+                {
+                    'longitude':Number(this._longitude),
+                    'latitude': Number(this._latitude) ,
                     'relevantText': `Заходи в ${this._organizationName}!`
                 },
             ];
@@ -583,8 +597,8 @@ export class AppleCardModel {
         const jsonDesign =  (context.design !=='' )?context.design: this._minDesign;
         const design =  JSON.parse(jsonDesign);
         if(context.location){
-            this._latitude = context.location.split(' ')[0];
-            this._longitude = context.location.split(' ')[1];
+            this._latitude = context.location.split(' ')[1];
+            this._longitude = context.location.split(' ')[0];
             this._location = context.location;
         }
         this._icon = context.icon;

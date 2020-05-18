@@ -157,7 +157,14 @@ function doStaffMenu(req) {
     const uuid = req.param.uuid;
     console.log('do staff menu uuid', uuid);
     const staffMenuView = new StaffMenuView(app, uuid);
-    const staffMenuController = new StaffMenuController(staffMenuView, uuid);
+    const staffMenuController = new StaffMenuController(staffMenuView, uuid, false);
+    staffMenuController.control();
+}
+/** Страница меню работника */
+function doCustomerMenu(req) {
+    const uuid = req.param.uuid;
+    const staffMenuView = new StaffMenuView(app, uuid);
+    const staffMenuController = new StaffMenuController(staffMenuView, uuid, true);
     staffMenuController.control();
 }
 
@@ -224,6 +231,8 @@ router.get('/staff/{id}', doStaffById);
 router.get('/addStaff', doAddStaff);
 
 router.get('/points/{uuid}', doStaffMenu);
+
+router.get('/points/info/{uuid}', doCustomerMenu);
 
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
