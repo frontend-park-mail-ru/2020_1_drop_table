@@ -13,78 +13,21 @@ export default class StatisticsController{
         this._staffListModel = staffListModel;
         this._statisticSerializer = new StatisticSerializer();
         this._options = {
-            cafesList: ['cafe1','cafe2','cafe3'],
-            staffList: ['staff1','staff2','staff3','staff4'],
+            cafesList: [],
+            staffList: [],
             onePlot: false
         };
 
-
-        // this._data = {
-        //     'cafe1':{
-        //         'staff1':[
-        //             {'01.01':1},
-        //             {'02.01':2},
-        //             {'03.01':2},
-        //             {'04.01':1},
-        //             {'05.01':2},
-        //             {'06.01':2},
-        //
-        //         ],
-        //         'staff2':[
-        //             {'01.01':2},
-        //             {'02.01':3},
-        //             {'03.01':2},
-        //             {'04.01':4},
-        //             {'05.01':2},
-        //             {'06.01':2},
-        //         ],
-        //     },
-        //     'cafe2':{
-        //         'staff1':[
-        //             {'01.01':1},
-        //             {'02.01':2},
-        //             {'03.01':3},
-        //             {'04.01':1},
-        //             {'05.01':5},
-        //             {'06.01':2},
-        //         ],
-        //         'staff3':[
-        //             {'01.01':4},
-        //             {'02.01':2},
-        //             {'03.01':1},
-        //             {'04.01':1},
-        //             {'05.01':2},
-        //             {'06.01':2},
-        //         ],
-        //     },
-        //     'cafe3':{
-        //         'staff1':[
-        //             {'01.01':2},
-        //             {'02.01':1},
-        //             {'03.01':1},
-        //             {'04.01':3},
-        //             {'05.01':2},
-        //             {'06.01':2},
-        //         ],
-        //         'staff3':[
-        //             {'01.01':1},
-        //             {'02.01':1},
-        //             {'03.01':2},
-        //             {'04.01':1},
-        //             {'05.01':2},
-        //             {'06.01':2},
-        //         ],
-        //     },
-        // }
     }
     async update(){
         try {
             await this._staffListModel.update();
-            let startDate = this.getPrevDate();
-            let endDate = this.getCurrentDate();
-            console.log('date...', startDate, endDate);
-            await this._staffListModel.getAllStaffPlot(startDate, endDate);
-            console.log('date... after', )
+            let startDate = this.getPrevDate(false);
+            let endDate = this.getCurrentDate(false);
+            let type = 'day';
+            await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
+
+            console.log('date... after', this._staffListModel._statistics)
         } catch (exception) {
             console.log('ex', exception)
         }
@@ -101,11 +44,13 @@ export default class StatisticsController{
             let staffModel = this._staffListModel._staffModelsList[i];
             if(!staff.includes(staffModel._StaffName)){
                 staff.push(staffModel._StaffName);
-                res.staff.push({label:staffModel._StaffName, value: staffModel._StaffName });
+                res.staff.push({label:staffModel._StaffName, value: staffModel._StaffId  });
+                this._options.staffList.push(staffModel._StaffId );
             }
             if(!cafes.includes(staffModel._CafeName)){
                 cafes.push(staffModel._CafeName);
                 res.cafes.push({label:staffModel._CafeName, value: staffModel._CafeId });
+                this._options.cafesList.push(staffModel._CafeId)
             }
         }
         return res;
@@ -118,8 +63,11 @@ export default class StatisticsController{
             isOwner: true,
         };
         let msData = this._makeMultiSelectsContext();
+        console.log('test statistics', this._staffListModel._statistics)
+        console.log('test statistics opt', this._options)
         let plotData = this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options);
         //this._statisticsView._renderPlot(plotData);
+        console.log('test statistics AFTER SERIALIZE', this._staffListModel._statistics)
         context['statistics']= {
             multiselects:{
                 cafes:{
@@ -163,6 +111,41 @@ export default class StatisticsController{
                 plotData
             );
         })
+
+        let startContainer = document.getElementsByClassName('statistics-component__head__interval-start').item(0)
+        let startInput = startContainer.getElementsByClassName('date-input_input').item(0);
+        let endContainer = document.getElementsByClassName('statistics-component__head__interval-end').item(0)
+        let endInput = endContainer.getElementsByClassName('date-input_input').item(0);
+
+
+        startInput.value = this.getPrevDate(true);
+        endInput.value = this.getCurrentDate(true);
+
+        startInput.addEventListener('change',async (e)=>{
+            console.log('inputik start',this.getDateFromInput(startInput.value));
+            let type = 'day';
+            let startDate = this.getDateFromInput(startInput.value);
+            let endDate = this.getDateFromInput(endInput.value);
+            await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
+            this.updatePlot();
+        })
+
+        endInput.addEventListener('change',async (e)=>{
+            console.log('inputik end', this.getDateFromInput(endInput.value));
+            let type = 'day';
+            let startDate = this.getDateFromInput(startInput.value);
+            let endDate = this.getDateFromInput(endInput.value);
+            await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
+            this.updatePlot();
+        })
+    }
+
+
+
+    updatePlot(){
+        let plotData = this._statisticSerializer.serializeLinePlotData(
+            this._staffListModel._statistics, this._options);
+        this._statisticsView._renderPlot(plotData);
     }
 
 
@@ -176,15 +159,20 @@ export default class StatisticsController{
         this._addListeners();
     }
 
-    getCurrentDate(){
+
+    getCurrentDate(inputFormat){
         let date = new Date();
-        let month = (date.getMonth()+1>9)?(date.getMonth()+1).toString():`0${date.getMonth()+1}`
-        let day = (date.getDate()>9)?(date.getDate()).toString():`0${date.getDate()+1}`
-        let res = `${date.getFullYear()}-${month}-${day}_00:00:00.000000`;
-        console.log('res',res)
-        return res
+        let month = (date.getMonth() + 1 > 9) ? (date.getMonth() + 1).toString() : `0${date.getMonth() + 1}`
+        let day = (date.getDate() > 9) ? (date.getDate()).toString() : `0${date.getDate() + 1}`
+        if(!inputFormat) {
+            let res = `${date.getFullYear()}-${month}-${day}_00:00:00.000000`;
+            console.log('res', res)
+            return res
+        }
+        return `${month} / ${day} / ${date.getFullYear()}`
+
     }
-    getPrevDate(){
+    getPrevDate(inputFormat){
         let date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -201,8 +189,23 @@ export default class StatisticsController{
         }
         month = (month+1>9)?(month+1).toString():`0${month+1}`
         day = (day>9)?day.toString():`0${day}`
-        let res = `${year}-${month}-${day}_00:00:00.000000`;
-        console.log('res',res)
-        return res
+        if(!inputFormat){
+            let res = `${year}-${month}-${day}_00:00:00.000000`;
+            return res
+        }
+        return `${month} / ${day} / ${date.getFullYear()}`
+
+
+    }
+
+    getDateFromInput(date){
+        let arr = date.split('/');
+        console.log('input arr', arr, arr.length)
+        let curdate = new Date();
+        let year = curdate.getFullYear();
+        if(arr.length === 3 &&  Number(arr[2])<=Number(year)){
+            return `${Number(arr[0])}-${Number(arr[1])}-${Number(arr[2])}_00:00:00.000000`;
+        }
+        return this.getCurrentDate(false)//todo  не соображаю но ограничение есть
     }
 }

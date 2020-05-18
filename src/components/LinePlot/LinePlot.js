@@ -24,6 +24,7 @@ export default class LinePlotComponent {
         } else if(Math.trunc(number / 10)){
             return Math.trunc(number);
         }
+        console.log('NUMBER!!!', number)
         return number.toFixed(1);
     }
 
@@ -164,20 +165,34 @@ export default class LinePlotComponent {
             this._drawPlot(this._context);
         }
     }
-
+    validateData(context){
+        for(let i = 0 ; i < context['array'].length; i++){
+            console.log('kek',context['array'][i]['array'])
+            if(context['array'][i].array ){
+                console.log('has array',context['array'][i].array)
+                if(context['array'][i].array[0]){
+                    console.log('return true')
+                    return true
+                }
+            }
+        }
+        console.log('false')
+        return false
+    }
     render(context) {
-        console.log('render plot', context)
-        if(!context['array'].length){
+        console.log('render plot1111111111111', context)
+        if(!this.validateData(context)){
+            console.log('no data')
             context['array'] = [{
                 color:'#814ad0',
                 array: [
-                    {x:'январь', y:0},
-                    {x:'февраль', y:0},
-                    {x:'март', y:0},
-                    {x:'апрель', y:0},
-                    {x:'май', y:0},
-                    {x:'июнь', y:0},
-                    {x:'июль', y:0}
+                    {x:'', y:0},
+                    {x:'', y:0},
+                    {x:'', y:0},
+                    {x:'', y:0},
+                    {x:'', y:0},
+                    {x:'', y:0},
+                    {x:'', y:0}
                 ]
             },];
         }
