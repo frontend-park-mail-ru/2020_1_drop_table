@@ -210,6 +210,20 @@ export default class UserModel {
             });
     }
 
+    /** Деаунтификация пользователя. */
+    async logout() {
+        await authAjax('POST',
+            constants.PATH_STAFF + '/api/v1/staff/logout',
+            {},
+            (response) => {
+                if (response.errors === null){
+                    router._goTo('/login');
+                } else {
+                    throw response.errors;
+                }
+            });
+    }
+
     /** Аунтификация пользователя. */
     async login() {
         await authAjax('POST',

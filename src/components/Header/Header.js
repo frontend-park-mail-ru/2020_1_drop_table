@@ -69,7 +69,7 @@ export default class Header{
      * @param {obj} context некоторый контекст с информацией о хэдере
      * @private
      */
-    _renderHeader(){
+    _renderHeader(context){
         const headerData = {
             hasAvatar: this._hasAvatar,
             hasExit: this._hasExit,
@@ -88,6 +88,13 @@ export default class Header{
             img.src = '/images/logo-light.png';
         }
 
+        this._parent.appendChild(this._head);
+
+        if(this._hasExit) {
+            let out = document.getElementById('exit-btn');
+            out.addEventListener(context['exit']['event']['type'],
+                context['exit']['event']['listener']);
+        }
 
     }
 
@@ -100,8 +107,7 @@ export default class Header{
         this._head = document.createElement('div');
         this._head.className = 'header';
         this._setProperties(context);
-        this._renderHeader();
-        this._parent.appendChild(this._head);
+        this._renderHeader(context);
     }
 }
 
