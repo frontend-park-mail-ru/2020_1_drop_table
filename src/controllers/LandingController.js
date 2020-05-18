@@ -20,6 +20,7 @@ export default class LandingController {
         this._landingView = landingView;
         this._landingCafeListModel = landingCafeListModel
         this._map = null;
+        this._headerType = '';
     }
 
     /**
@@ -29,27 +30,21 @@ export default class LandingController {
     async _makeViewContext(){
         let context = {
             header: {
-                type: '',
-                isOwner: this._userModel._isOwner,
+                type: this._headerType,
+                isOwner: this._userModel.isOwner,
                 avatar: {
                     photo: null
                 }
             },
             landingCafeListModel: this._landingCafeListModel,
         };
-
-        try{
-            await this._userModel.getOwner();
-            return context;
-        } catch (error) {
-            context.header.type = 'landing';
-            return context;
-        }
+        return context;
     }
 
     async update(){
         try {
             await this._landingCafeListModel.update();
+            await this._userModel.getOwner();
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -145,6 +140,10 @@ export default class LandingController {
 
     _makeExceptionContext(){
         return {
+            'no permission': ()=>{
+                this._headerType = 'landing'
+                return [null, null]
+            },
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
