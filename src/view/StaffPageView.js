@@ -41,39 +41,10 @@ export default class StaffPageView extends BaseView {
         lastDate.item(1).textContent = contextActions.dateEnd.split('.')[1]
 
     }
-    _renderPlot(){
+    _renderPlot(plotData){
+        console.log('render plot1!!!!', plotData)
         let container = this._app.getElementsByClassName('staff-page__statistics-container__graph-container').item(0);
-        const context = {
-            textX: 'Время',
-            textY: 'Прибыль',
-            array:[
-                {
-                    color:'#814ad0',
-                    array: [
-                        {x:'январь', y:1},
-                        {x:'февраль', y:2},
-                        {x:'март', y:5},
-                        {x:'апрель', y:4},
-                        {x:'май', y:6},
-                        {x:'июнь', y:5},
-                        {x:'июль', y:3}
-                    ]
-                },
-                {
-                    color:'#f260ff',
-                    array: [
-                        {x:'январь', y:3},
-                        {x:'февраль', y:4},
-                        {x:'март', y:3},
-                        {x:'апрель', y:2.5},
-                        {x:'май', y:3},
-                        {x:'июнь', y:2.5},
-                        {x:'июль', y:4}
-                    ]
-                },
-            ]
-        };
-        (new LinePlot(container)).render(context);
+        (new LinePlot(container)).render(plotData);
     }
     render(){
         console.log('render')
@@ -81,7 +52,7 @@ export default class StaffPageView extends BaseView {
         this._renderHeader();
         this._renderTemplate();
         this._renderActions();
-        this._renderPlot();
+        //this._renderPlot();
     }
 
 }

@@ -143,10 +143,9 @@ export default class StaffListModel{
     }
 
     /** Получение последних действий  */
-    async getAllStaffPlot(start, end){
+    async getAllStaffPlot(start, end, type){
         //this.fillAllStaffStatistics();
-        console.log('getPlot', `/api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`);
-        await authAjax( 'GET',constants.PATH + `/api/v1/statistics/get_graphs_data?type=day&since=${start}&to=${end}`,
+        await authAjax( 'GET',constants.PATH + `/api/v1/statistics/get_graphs_data?type=${type}&since=${start}&to=${end}`,
             {},
             (response) => {
                 console.log('response ', response);

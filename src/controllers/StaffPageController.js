@@ -13,13 +13,19 @@ export default class StaffPageController {
         this._statisticSerializer = new StatisticSerializer();
         this._id = null;
         this._lastAction = 0;
+        this._options = {
+            cafesList: [],
+            staffList: [],
+            onePlot: true
+        };
+        this._limit = 10;
     }
 
     async update(){
         try {
             await this._userModel.update();
             await this._staffListModel.update();
-            await this._staffListModel.getAllStaffPlot(this.getPrevDate(), this.getCurrentDate());//todo date
+            console.log('after update', this._staffListModel._statistics)
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
@@ -29,11 +35,14 @@ export default class StaffPageController {
     async _makeViewContext(id){
         this._id = id;
         const staff = this._staffListModel.getStaffById(id);
-        await this._staffListModel.getStat(id, 2, this._lastAction);
+        await this._staffListModel.getStat(id, this._limit, this._lastAction);
+        let type = 'day';
+        await this._staffListModel.getAllStaffPlot(this.getPrevDate(), this.getCurrentDate(),type);//todo date
         let staffContext = {
             'staff': staff,
         };
-
+        this._options.cafesList.push(Number(staff._CafeId));
+        this._options.staffList.push(Number(staff._StaffId));
         staffContext['header'] = {
             type: null,
             isOwner: this._userModel._isOwner,
@@ -45,10 +54,12 @@ export default class StaffPageController {
                 }
             }
         };
+        console.log('stat12321',this._staffListModel._statistics)
+        let plotData = this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options);
         staffContext['statistics']= {
-            plot: this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options)
+            plot: plotData
         };
-
+        console.log('plotData!!!!', plotData)
         return staffContext;
     }
 
@@ -89,8 +100,8 @@ export default class StaffPageController {
         })
     }
     async addActions(){
-        await this._staffListModel.getStat(this._id, 2, this._lastAction);
-        this._lastAction +=2;
+        await this._staffListModel.getStat(this._id, this._limit, this._lastAction);
+        this._lastAction += this._limit;
         this._staffPageView._addActions();
         let scrollDiv = document.getElementsByClassName('staff-actions-container__actions').item(0);
         scrollDiv.scrollBottom = 0;
@@ -111,9 +122,14 @@ export default class StaffPageController {
     async control(id){
         try {
             this._id = id;
+            console.log('test staff', id)
             await this.update();
+            console.log('test staff update done')
             this._staffPageView.context = await this._makeViewContext(id);
+            console.log('test staff make view c done',this._staffPageView.context)
             this._staffPageView.render();
+            //let plotData = this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options);
+            this._staffPageView._renderPlot(this._staffPageView.context['statistics'].plot);
             this._addListeners(id);
         } catch (error) {
             if(error.message !== 'unknown server error'){
