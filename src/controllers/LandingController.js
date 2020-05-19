@@ -1,9 +1,8 @@
 'use strict';
 
-
 import {LandingCafesContainerComponent} from '../components/LandingCafesContainer/LandingCafesContainer';
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
-import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер лэндинга */
 export default class LandingController {
@@ -99,6 +98,28 @@ export default class LandingController {
         console.log(this._landingCafeListModel._currentId);
     }
 
+    _loadScript(url, callback){
+        let script = document.createElement('script')
+        script.type = 'text/javascript';
+
+        if (script.readyState){
+            script.onreadystatechange = function(){
+                if (script.readyState === 'loaded' ||
+                    script.readyState === 'complete'){
+                    script.onreadystatechange = null;
+                    callback();
+                }
+            };
+        } else {
+            script.onload = function(){
+                callback();
+            };
+        }
+
+        script.src = url;
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
     async _loadCafesToMap(){
         let center = this._map.getCenter();
         let bounds = this._map.getBounds();
@@ -154,11 +175,14 @@ export default class LandingController {
     /** Запуск контроллера */
     async control(){
         try {
+            this._loadScript('https://api-maps.yandex.ru/2.1/?apikey=42822888-b48e-4a87-81c8-cbd67770b60b&lang=ru_RU',
+                ()=>{ymaps.ready(this._mapInit, this)});
+
             await this.update();
             this._landingView.context = await this._makeViewContext();
             await this._landingView.render();
             this.addListeners();
-            ymaps.ready(this._mapInit, this);
+
         } catch (error) {
             console.log(error);
             if(error.message !== 'unknown server error'){
