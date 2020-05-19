@@ -34,6 +34,7 @@ export default class Header{
      * @private
      */
     _setProperties(context){
+        console.log(context['type']);
         if(!context['isOwner']){
             this._menuList = []
         }

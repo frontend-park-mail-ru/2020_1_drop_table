@@ -183,7 +183,6 @@ class Router {
         window.addEventListener('popstate', ()=>{
             this.init();
         });
-
         return this;
     }
 
