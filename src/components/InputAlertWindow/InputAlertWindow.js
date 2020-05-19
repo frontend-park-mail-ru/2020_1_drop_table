@@ -24,14 +24,14 @@ export class InputAlertWindowComponent {
      */
     _renderTemplate() {
         this._el.innerHTML += InputAlertWindow();
-        const background = document.getElementsByClassName('input-alert-window-container').item(0);
 
-        //const window = document.getElementsByClassName('input-alert-window-container__window')
+        const background = document.getElementsByClassName('input-alert-window-container').item(0);
         const app = document.getElementById('application');
         app.style.opacity = '50%';
         background.addEventListener('click', (e)=>{
             if(e.target === background) {
                 this._el.removeChild(background);
+                this._el.innerHTML = '';
                 app.style.opacity = '100%';
             }
         })

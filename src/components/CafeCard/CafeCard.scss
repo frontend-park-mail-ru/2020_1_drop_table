@@ -7,11 +7,14 @@
     position: relative;
     min-width: 260px;
     min-height: 130px;
-
     max-width: 390px;
     max-height: 195px;
     margin-bottom: 5rem;
     font-size: 1.5rem;
+
+    &:hover{
+      transform: scale(1.2);
+   }
 
   &__image-container{
     cursor: pointer;

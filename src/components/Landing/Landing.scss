@@ -24,10 +24,8 @@
 .landing-page__form-and-cards__form{
     width: 50%;
     /*border: 1px solid black;*/
-
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
 }
 
 .landing-page__form-and-cards__form__text{
@@ -155,7 +153,9 @@
     justify-content: center;
     height: 30rem;
     background-color: #8dbbc7;
+    text-align: center;
     color: white;
+
 }
 .landing-page__description_h4{
     font-family: Montserrat;
@@ -166,6 +166,7 @@
     font-family: Montserrat;
     font-size: 1.5rem;
     margin: 0 20%;
+
 }
 
 .landing-page__description-footer{
@@ -175,6 +176,7 @@
     height: 30rem;
     background-color: #1e768f;
     color: white;
+    text-align: center;
 }
 .landing-page__description-footer_span{
     font-family: Montserrat;
@@ -221,6 +223,7 @@
 .landing-page__phone-card__phone__image-container_img{
     object-fit: contain;
     height: 90%;
+    margin: auto;
 }
 
 
@@ -239,6 +242,7 @@
 }
 
 .landing-page__phone-card__text__container_h4{
+    font-size: 2rem;
     font-family: Montserrat;
     margin-top: auto;
 }
@@ -321,6 +325,7 @@
 
 .landing-page__coupon-and-card-coupon{
     display: flex;
+    justify-content: center;
     width: 50%;
 }
 
@@ -730,4 +735,16 @@
             }
         }
     }
+}
+.landing-page__search{
+    width: 400px;
+    border: 1px solid;
+    height: 50px;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: normal;
+}
+.landing-cafes-page_h4{
+    font-size: 2rem;
+    font-family: Montserrat;
 }

@@ -168,8 +168,8 @@ export default class CardRedactorController {
     //todo пофиксить, когда будут новые ручки с сервера
     /** Добавление листенеров для публикации */
     addSavePublishListeners(){
-        const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
-        submitSave.addEventListener('click', this._editCardListener.bind(this));
+        // const submitSave = document.getElementsByClassName('card-form__buttons__save').item(0);
+        // submitSave.addEventListener('click', this._editCardListener.bind(this));
 
         const submitPublish = document.getElementsByClassName('card-form__buttons__publish').item(0);
         submitPublish.addEventListener('click', this._publishCardListener.bind(this));
