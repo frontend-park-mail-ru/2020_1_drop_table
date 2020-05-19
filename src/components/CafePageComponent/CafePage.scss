@@ -8,6 +8,8 @@
         padding: 0 10% 10% 10%;
         justify-content: space-around;
 
+
+
         &__cafe-info {
             width: 52.5vw;
             height: 30vw;
@@ -27,6 +29,12 @@
                 -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
                 filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
 
+                transition: transform 0.25s ease-in-out;
+                &:hover{
+                    transform: scale(1.05);
+                }
+
+
                 &_img {
                     object-fit: cover;
                     height: 100%;
@@ -44,6 +52,12 @@
                 -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
                 filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
                 display: table-column;
+
+                transition: transform 0.25s ease-in-out;
+                &:hover{
+                    transform: scale(1.05);
+                }
+
 
                 &_h4 {
                     font-size: 2.5rem;
@@ -95,6 +109,12 @@
                 width: 43%;
                 display: flex;
                 align-items: center;
+
+                transition: transform 0.25s ease-in-out;
+                &:hover{
+                    transform: scale(1.05);
+                }
+
                 &_span {
                     margin: auto 5% auto 25%;
                     font-size: 2rem;
@@ -120,6 +140,12 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                transition: transform 0.25s ease-in-out;
+                &:hover{
+                    transform: scale(1.05);
+                }
+
 
 
                 &__time {
