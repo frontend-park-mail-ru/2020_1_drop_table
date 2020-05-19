@@ -102,15 +102,15 @@ export default class StatisticsController{
         return context;
     }
     _addListeners(){
-        let onePlotCheckbox = document.getElementsByClassName('container-checkbox_input').item(0);
-        onePlotCheckbox.addEventListener('change',()=>{
-            this._options.onePlot = !this._options.onePlot;
-            let plotData = this._statisticSerializer.serializeLinePlotData(
-                this._staffListModel._statistics, this._options);
-            this._statisticsView._renderPlot(
-                plotData
-            );
-        })
+        // let onePlotCheckbox = document.getElementsByClassName('container-checkbox_input').item(0);
+        // onePlotCheckbox.addEventListener('change',()=>{
+        //     this._options.onePlot = !this._options.onePlot;
+        //     let plotData = this._statisticSerializer.serializeLinePlotData(
+        //         this._staffListModel._statistics, this._options);
+        //     this._statisticsView._renderPlot(
+        //         plotData
+        //     );
+        // })
 
         let startContainer = document.getElementsByClassName('statistics-component__head__interval-start').item(0)
         let startInput = startContainer.getElementsByClassName('date-input_input').item(0);
@@ -188,7 +188,7 @@ export default class StatisticsController{
             day -= 7;
         }
         month = (month+1>9)?(month+1).toString():`0${month+1}`
-        day = (day>9)?day.toString():`0${day}`
+        day = (day>9)?day.toString():`0${day}`;
         if(!inputFormat){
             let res = `${year}-${month}-${day}_00:00:00.000000`;
             return res

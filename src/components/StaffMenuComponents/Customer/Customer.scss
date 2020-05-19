@@ -1,0 +1,56 @@
+.customer-info{
+  font-family: Montserrat;
+  &__header{
+    font-family: Montserrat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &_h4{
+      font-size: 2rem;
+      color: black;
+    }
+  }
+  &__cell{
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    &__container{
+      width:90%;
+      margin: 5px auto;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 15px 15px 15px 15px;
+      &_question{
+        margin: 0 auto;
+        color:black;
+      }
+      &_answer{
+        color:gray;
+        margin: 0 auto;
+      }
+    }
+
+    &__loyalty{
+      width:90%;
+      margin: 5px auto;
+      background-color: white;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 15px 15px 15px 15px;
+      display: flex;
+      flex-direction: column;
+      &_type{
+        margin: 0 auto;
+        color:black;
+      }
+      &_data{
+        color:gray;
+        margin: 0 auto;
+      }
+    }
+  }
+
+}

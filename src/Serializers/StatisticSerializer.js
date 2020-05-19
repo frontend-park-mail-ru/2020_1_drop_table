@@ -30,13 +30,11 @@ export default  class StatisticSerializer{
                         let actions = staff_actions[j][1];
                         for(let k = 0; k < actions.length; k++){ // Итерация по действиям работника
                             let action = actions[k];
-                            let date = Date.parse(plotData[action['Date']]) ?
-                                plotData[action['Date']].split('T')[0] : plotData[action['Date']];
-
-                            if(date){
-                                date += action['NumOfUsage'];
+                            let date = Date.parse(action['Date']) ? action['Date'].split('T')[0] : action['Date'];
+                            if(plotData[date]){
+                                plotData[date] += action['NumOfUsage'];
                             }else {
-                                date = action['NumOfUsage'];
+                                plotData[date] = action['NumOfUsage'];
                             }
                         }
                     }
@@ -65,19 +63,18 @@ export default  class StatisticSerializer{
                             let actions = staff_actions[j][1];
                             for (let k = 0; k < actions.length; k++) { // Итерация по действиям работника
                                 let action = actions[k];
-                                let date = Date.parse(plotData[cafeName][action['Date']]) ?
-                                    plotData[cafeName][action['Date']].split('T')[0] :
-                                    plotData[cafeName][action['Date']];
+
+                                let date = Date.parse(action['Date']) ? action['Date'].split('T')[0] : action['Date'];
 
                                 if (plotData[cafeName]) {
-                                    if (date) {
-                                        date += action['NumOfUsage'];
+                                    if (plotData[cafeName][date]) {
+                                        plotData[cafeName][date] += action['NumOfUsage'];
                                     } else {
-                                        date = action['NumOfUsage'];
+                                        plotData[cafeName][date] = action['NumOfUsage'];
                                     }
                                 } else {
                                     plotData[cafeName] = {};
-                                    date = action['NumOfUsage'];
+                                    plotData[cafeName][date] = action['NumOfUsage'];
                                 }
                             }
                         }

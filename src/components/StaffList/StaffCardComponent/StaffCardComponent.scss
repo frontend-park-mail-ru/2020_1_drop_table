@@ -6,6 +6,7 @@
     margin: 2% auto;
     padding: 2%;
     z-index: 1;
+    cursor: pointer;
 }
 
 .staff-card-container__user-image-container{
@@ -20,7 +21,7 @@
     overflow: hidden;
     border-radius: 50%;
     object-fit: cover;
-    margin-left: 10%;
+
 
 }
 .staff-card-container__user-image-container__image-square_img{

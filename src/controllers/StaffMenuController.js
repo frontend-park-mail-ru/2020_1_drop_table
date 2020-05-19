@@ -8,6 +8,8 @@ import {CoffeeCup} from '../components/StaffMenuComponents/CoffeeCup/CoffeeCup';
 import {Cashback} from '../components/StaffMenuComponents/Cashback/Cashback';
 import {Discounts} from '../components/StaffMenuComponents/Discounts/Discounts';
 
+import {Customer} from '../components/StaffMenuComponents/Customer/Customer';
+
 import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер меню работников */
@@ -17,49 +19,57 @@ export default class StaffMenuController{
      * Инициализация StaffMenuController
      * @param {StaffMenuView} staffMenuView view меню работников
      */
-    constructor(staffMenuView, uuid) {
+    constructor(staffMenuView, uuid, customerInfo) {
         this._staffMenuView = staffMenuView;
         this._uuid = uuid;
         this._customerData = null;
+        this._customerInfo = customerInfo;
     }
     _makeViewContext(){
         console.log('make view context');
-        switch(this._customerData.type){
-        case 'coffee_cup':
-            this._customerData.Component = CoffeeCup;
-            this._customerData.events = [
-                {
-                    object: 'buttonFlex__plus',
-                    listener: this.coffeeCupPointPlus
-                },
-                {
-                    object: 'buttonFlex__minus',
-                    listener: this.coffeeCupPointMinus
-                },
-            ]
-            break;
+        if(!this._customerInfo) {
+            switch (this._customerData.type) {
+            case 'coffee_cup':
+                this._customerData.Component = CoffeeCup;
+                this._customerData.events = [
+                    {
+                        object: 'buttonFlex__plus',
+                        listener: this.coffeeCupPointPlus
+                    },
+                    {
+                        object: 'buttonFlex__minus',
+                        listener: this.coffeeCupPointMinus
+                    },
+                ]
+                break;
 
-        case 'cashback':
-            this._customerData.Component = Cashback;
-            this._customerData.events = [
-                {
-                    object: 'buttonFlex__plus',
-                    listener: this.cashbackSetPoints
-                },
-            ]
-            break;
-        case 'percents':
-            this._customerData.Component = Discounts;
-            this._customerData.events = [
-                {
-                    object: 'buttonFlex__plus',
-                    listener: this.discountPurchase
-                },
-            ];
-            break;
+            case 'cashback':
+                this._customerData.Component = Cashback;
+                this._customerData.events = [
+                    {
+                        object: 'buttonFlex__plus',
+                        listener: this.cashbackSetPoints
+                    },
+                ]
+                break;
+            case 'percents':
+                this._customerData.Component = Discounts;
+                this._customerData.events = [
+                    {
+                        object: 'buttonFlex__plus',
+                        listener: this.discountPurchase
+                    },
+                ];
+                break;
 
-        case 'coupon':
-            break;
+            case 'coupon':
+                break;
+
+            }
+        } else {
+
+            this._customerData.Component = Customer;
+            this._customerData.events = null;
 
         }
     }
@@ -71,6 +81,8 @@ export default class StaffMenuController{
         this._makeViewContext();
         console.log('do staff menu control', this._customerData)
         this._staffMenuView.render(this._customerData);
+
+
     }
 
     async getCustomerData(){

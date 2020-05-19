@@ -1,0 +1,18 @@
+<div class="customer-info">
+    <div class="customer-info__header">
+        <h4 class="customer-info__header_h4">Информация</h4>
+    </div>
+    <div class="customer-info__cell">
+        {{#each surveyResult}}
+            <div class="customer-info__cell__container">
+                <span class="customer-info__cell__container_question">{{question}}</span>
+                <span class="customer-info__cell__container_answer">{{answer}}</span>
+            </div>
+        {{/each}}
+        <div class="customer-info__cell__loyalty">
+            <span class="customer-info__cell__loyalty_type">{{type}}</span>
+            <span class="customer-info__cell__loyalty_data">{{data}}</span>
+        </div>
+    </div>
+
+</div>

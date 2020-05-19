@@ -75,7 +75,27 @@
     text-align: center;
 
 }
+.new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  top: 0;
+  background: rgba(255,255,255,0);
+  max-height: calc(650px/2);
+  height: calc(85vw/2);
+  &_img{
+    background: white;
+    height: 50%;
+    width: 25%;
+    border-radius: 50%;
+    opacity: 0.8;
 
+  }
+}
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_img{
 
     max-height: calc(650px/2);

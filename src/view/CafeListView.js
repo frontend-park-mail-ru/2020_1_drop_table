@@ -27,7 +27,7 @@ export default class CafeListView extends BaseView{
         this._app.appendChild(cafesContainer);
 
         let buttonAddCafe = document.getElementsByClassName(
-            'cafes-page__add-cafe-field__add-button').item(0);
+            'cafes-page__all-cafes-container__add-button_img').item(0);
         buttonAddCafe.addEventListener('click',function () {
             router._goTo('/createCafe');
         }) // Need move to CafesContainerComponent

@@ -49,6 +49,7 @@
     .cafe-with-staff-container__cafe-with-staff-container_span{
         font-family: Montserrat , SansSerif ;
         font-size: 2.5rem;
+        cursor: default;
         @include themify($themes){
             color: themed('textColor');
         }
@@ -144,7 +145,9 @@
     background-image: url(/images/plus.svg);
     background-size: cover;
     background-position-y: center;
-
+    &_img{
+        cursor: pointer;
+    }
 }
 
 .staff-page__add-staff-field__add-button:hover{
@@ -186,14 +189,17 @@
     border-radius: 50%;
     height: 100px;
     width: 100px;
+    cursor: pointer;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.15));
 }
 .cafe-staff-container__add-staff-container__button:hover{
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    transform: scale(1.1);
 }
 .cafe-staff-container__add-staff-container__button_img{
     height: 100px;
     width: 100px;
+
 }
 
 
