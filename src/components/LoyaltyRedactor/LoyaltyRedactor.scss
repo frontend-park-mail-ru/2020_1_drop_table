@@ -6,6 +6,7 @@
       font-size: 2rem;
       font-weight: bold;
       margin: 1rem auto;
+      width: 100%;
     }
 
 
@@ -23,7 +24,8 @@
         max-width: 100px;
         max-height: 100px;
         box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
-        transition: height 0.1s linear 0s, border-radius 0s linear 0.1s;;
+        //transition: height 0.1s linear 0s, border-radius 0s linear 0.1s;;
+        cursor: pointer;
 
         img {
           border-radius: 50%;
@@ -31,6 +33,7 @@
           height: 20vw;
           max-width: 100px;
           max-height: 100px;
+          cursor: pointer;
         }
         &__bottom{
           height:available;
@@ -47,6 +50,7 @@
       }
 
         &__button-active {
+          cursor: pointer;
           background-color: white;
           box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
           border-radius: 15px 15px 0 0;
@@ -54,7 +58,7 @@
           height: 21vw;
           max-width: 100px;
           max-height: 115px;
-          transition: height 0.25s linear 0s, border-radius 0.25s linear 0.1s;
+          //transition: height 0.25s linear 0s, border-radius 0.25s linear 0.1s;
 
 
           img {
@@ -63,6 +67,7 @@
             height: 20vw;
             max-width: 100px;
             max-height: 100px;
+            cursor: pointer;
           }
           &__bottom{
             height:available;
@@ -93,7 +98,7 @@
           background-color: #42ff60;
           height: 10px;
           width: 10px;
-          transition: height 0.25s linear, width 0.25s linear;
+          //transition: height 0.25s linear, width 0.25s linear;
         }
 
       }
@@ -116,7 +121,7 @@
 
           max-height: 1000px;
           max-width: 500px;
-          transition: height 0.25s linear, width 0.25s linear;
+          //transition: height 0.25s linear, width 0.25s linear;
 
         }
       }

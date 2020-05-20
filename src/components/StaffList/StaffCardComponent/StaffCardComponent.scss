@@ -3,10 +3,14 @@
     display: flex;
     flex-direction: column;
     max-width: 300px;
+    min-width: 220px;
     margin: 2% auto;
-    padding: 2%;
     z-index: 1;
     cursor: pointer;
+    transition: transform 0.25s ease-in-out;
+    &:hover{
+        transform: scale(1.05);
+    }
 }
 
 .staff-card-container__user-image-container{
@@ -21,6 +25,7 @@
     overflow: hidden;
     border-radius: 50%;
     object-fit: cover;
+    margin: 0 auto;
 
 
 }
@@ -33,9 +38,11 @@
 
 .staff-card-container__name-container{
     display: flex;
-    margin-left: 10%;
     flex-direction: column;
+    margin-left:  auto;
+    margin-right:  auto;
     margin-bottom: 3rem;
+
 
 }
 
@@ -53,7 +60,7 @@
 .staff-card-container__position-container{
     font-family: 'Montserrat', SansSerif;
     display: flex;
-    margin-left: 10%;
+    margin: 0 auto;
 }
 
 .staff-card-container__position-container_span{

@@ -1,9 +1,11 @@
 <div class="apple-card-published-qr-container">
     <div class="apple-card-published-qr-container__QR-window">
         <h4 class="apple-card-published-qr-container__QR-window_h4" >{{text}}</h4>
+        <img class="apple-card-published-qr-container__QR-window_img" src="{{qrImage}}">
         {{#if cardLink}}
-        <span class="apple-card-published-qr-container__QR-window_a" >{{cardLink}}</span>
+            <span class="apple-card-published-qr-container__QR-window_a" >{{cardLink}}</span>
+
+            <button class="apple-card-published-qr-container__QR-window_button" type="submit" onclick="window.open('{{qrImage}}', '_blank')">Скачать QR-код</button>
         {{/if}}
-        <img download class="apple-card-published-qr-container__QR-window_img" src="{{qrImage}}">
     </div>
 </div>

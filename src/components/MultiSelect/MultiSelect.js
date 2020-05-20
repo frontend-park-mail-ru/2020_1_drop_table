@@ -204,6 +204,7 @@ let Motus = {};
                 }
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("class", "multiselect-checkbox");
+
                 label.appendChild(input);
                 input.setAttribute("value", data[i].value);
                 input.addEventListener("change", _selectItem);

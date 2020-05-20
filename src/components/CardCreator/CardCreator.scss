@@ -102,6 +102,11 @@
 .card-color-pickers-container{
     display: flex;
 
+    transition: transform 0.25s ease-in-out;
+    &:hover{
+        transform: scale(1.05);
+    }
+
     flex-direction: column;
     &_color-picker{
         display: flex;
