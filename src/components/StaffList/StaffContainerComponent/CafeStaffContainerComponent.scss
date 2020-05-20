@@ -80,7 +80,7 @@
     z-index: 0;
     position: relative;
     //height: 100%;
-    width: 94.5%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -98,12 +98,13 @@
 .cafe-staff-container__design__medium-strip{
     height: 0.3rem;
     width: 70%;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
 }
 .cafe-staff-container__design__short-strip{
     height: 0.2rem;
     width: 40%;
-    margin-bottom: 0.2rem;
+
+
 }
 
 
@@ -182,6 +183,11 @@
     z-index: 1;
     background-color: #DCDBDBCF;
     justify-content: center;
+
+    transition: transform 0.25s ease-in-out;
+    &:hover{
+        transform: scale(1.1);
+    }
 }
 .cafe-staff-container__add-staff-container__button{
     margin: 0 auto;
@@ -194,7 +200,6 @@
 }
 .cafe-staff-container__add-staff-container__button:hover{
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    transform: scale(1.1);
 }
 .cafe-staff-container__add-staff-container__button_img{
     height: 100px;

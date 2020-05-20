@@ -192,14 +192,14 @@ function doError(req) {
     }
     console.log('doError', code)
     const pageNotFoundView = new PageNotFoundView(app);
-    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, code, userModel);
     pageNotFoundController.control();
 }
 
 function doNotFound() {
     console.log('doNotFound')
     const pageNotFoundView = new PageNotFoundView(app);
-    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404);
+    const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404, userModel);
     pageNotFoundController.control();
 }
 function doStatistics(){

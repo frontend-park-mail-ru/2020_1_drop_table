@@ -8,6 +8,10 @@
   width:90%;
   margin: 20px auto;
   font-family: Montserrat, sans-serif;
+  //transition: transform 0.25s ease-in-out ;
+  //&:hover{
+  //  transform: scale(1.05);
+  //}
 
   &__question{
     display: flex;
@@ -162,6 +166,10 @@
     margin-left: auto;
     background: #EE6161;
     border-radius:  0px 15px;
+    //transition: transform 0.25s ease-in-out ;
+    //&:hover{
+    //  transform: scale(1.05);
+    //}
     &_svg{
       margin: 24%;
     }
@@ -173,6 +181,10 @@
     margin-left: auto;
     background: #1C768F;
     border-radius:  15px 0px ;
+    //transition: transform 0.25s ease-in-out ;
+    //&:hover{
+    //  transform: scale(1.05);
+    //}
     &_svg{
       margin: 24%;
     }

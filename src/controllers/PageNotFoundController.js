@@ -4,19 +4,21 @@
 export default class PageNotFoundController{
 
 
-    constructor(pageNotFoundView, errorCode) {
+    constructor(pageNotFoundView, errorCode, userModel) {
         this._errorCode = errorCode;
         this._pageNotFoundView = pageNotFoundView;
+        this._userModel = userModel;
     }
 
     _makeViewContext(){
         let context = {};
         //todo Хедер в зависимости от того зареган ли юзер
         context['header'] = {
-            type: 'profile',
+            type: null,
+            isOwner: this._userModel.isOwner,
 
         };
-        const code = Number(this._errorCode)
+        const code = Number(this._errorCode);
         switch (code) {
 
         case 404:
@@ -61,6 +63,7 @@ export default class PageNotFoundController{
 
     /** Запуск контроллера */
     async control(){
+        await this._userModel.update();
         let context = this._makeViewContext()
         console.log('control',context)
         this._pageNotFoundView.render(this._makeViewContext(context));

@@ -121,7 +121,7 @@ export class CardField{
             };
         }
 
-        if(data.fieldName !== 'HeaderField') {
+        if(data.fieldName !== 'HeaderField' && data.fieldName !== 'PrimaryField') {
             if (i < 1) {
                 data.button = 'Добавить';
                 data.buttonsymbol = '+';

@@ -9,9 +9,10 @@
   vertical-align: middle;
   font-family: Montserrat,sans-serif;
 }
+
 .multiselect-container > input {
-  -webkit-appearance: button-arrow-down;
-  appearance: button-arrow-down;
+  -webkit-appearance: checkbox;
+  appearance: checkbox;
 }
 .multiselect-label{
   font-weight: bold;
