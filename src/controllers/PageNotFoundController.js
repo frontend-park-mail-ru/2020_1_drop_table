@@ -1,6 +1,10 @@
 'use strict';
 
 
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification';
+import {router} from '../main/main';
+
 export default class PageNotFoundController{
 
 
@@ -8,6 +12,14 @@ export default class PageNotFoundController{
         this._errorCode = errorCode;
         this._pageNotFoundView = pageNotFoundView;
         this._userModel = userModel;
+    }
+
+    async update(){
+        try {
+            await this._userModel.update();
+        } catch (exceptions) {
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exceptions);
+        }
     }
 
     _makeViewContext(){
@@ -59,13 +71,28 @@ export default class PageNotFoundController{
         return context;
     }
 
-
+    _makeExceptionContext(){
+        return {
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
+                return [null, null]
+            },
+        };
+    }
 
     /** Запуск контроллера */
     async control(){
-        await this._userModel.update();
-        let context = this._makeViewContext()
-        console.log('control',context)
-        this._pageNotFoundView.render(this._makeViewContext(context));
+        try {
+            await this.update();
+            let context = this._makeViewContext()
+            console.log('control', context)
+            this._pageNotFoundView.render(this._makeViewContext(context));
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 }

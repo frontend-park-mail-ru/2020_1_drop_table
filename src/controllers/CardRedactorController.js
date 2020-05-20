@@ -7,6 +7,7 @@ import {LoyaltyStampComponent} from '../components/LoyaltySystems/Stamp/LoyaltyS
 import {LoyaltyDiscountComponent} from '../components/LoyaltySystems/Discount/LoyaltyDiscountComponent';
 import {LoyaltyWalletComponent} from '../components/LoyaltySystems/Wallet/LoyaltyWalletComponent';
 import {LoyaltyCouponComponent} from '../components/LoyaltySystems/Coupon/LoyaltyCouponComponent';
+import {router} from '../main/main';
 
 /** Контроллер редактирования карточки */
 export default class CardRedactorController {
@@ -35,6 +36,7 @@ export default class CardRedactorController {
         }
         this.control();
     }
+
     async update(){
         try{
             await this._appleCard.update(this._loyaltyInfo.type);
@@ -64,9 +66,7 @@ export default class CardRedactorController {
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
 
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
 
     }
@@ -271,7 +271,11 @@ export default class CardRedactorController {
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         }
     }
 

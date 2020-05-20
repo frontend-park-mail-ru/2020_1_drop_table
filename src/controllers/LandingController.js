@@ -3,6 +3,7 @@
 import {LandingCafesContainerComponent} from '../components/LandingCafesContainer/LandingCafesContainer';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import NotificationComponent from '../components/Notification/Notification';
+import {router} from '../main/main';
 
 /** контроллер лэндинга */
 export default class LandingController {
@@ -168,7 +169,7 @@ export default class LandingController {
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
         }
     }
 
@@ -184,10 +185,7 @@ export default class LandingController {
             this.addListeners();
 
         } catch (error) {
-            console.log(error);
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
 }

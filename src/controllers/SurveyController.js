@@ -2,6 +2,7 @@
 
 import ServerExceptionHandler from "../utils/ServerExceptionHandler";
 import NotificationComponent from "../components/Notification/Notification";
+import {router} from '../main/main';
 
 /** контроллер авторизации */
 export default class SurveyController {
@@ -116,7 +117,11 @@ export default class SurveyController {
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         }
     }
 
@@ -130,9 +135,7 @@ export default class SurveyController {
             this._surveyView.render();
             this._addListeners()
         } catch (error) {
-            if (error.message !== 'unknown server error') {
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
     async update(){

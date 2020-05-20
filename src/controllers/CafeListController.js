@@ -65,7 +65,11 @@ export default class CafeListController{
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         };
     }
 
@@ -76,9 +80,7 @@ export default class CafeListController{
             this._cafeListView.context = this._makeViewContext();
             this._cafeListView.render();
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
 }

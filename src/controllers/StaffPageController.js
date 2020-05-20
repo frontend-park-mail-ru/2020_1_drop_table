@@ -112,7 +112,11 @@ export default class StaffPageController {
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         }
     }
 
@@ -132,9 +136,7 @@ export default class StaffPageController {
             this._staffPageView._renderPlot(this._staffPageView.context['statistics'].plot);
             this._addListeners(id);
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error);
         }
     }
     getCurrentDate(){
