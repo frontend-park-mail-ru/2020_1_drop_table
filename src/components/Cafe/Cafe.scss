@@ -1,4 +1,3 @@
-//@import '../../scss/themes.scss';
 
 @media(max-width: 600px) {
   h1{
@@ -24,55 +23,55 @@
 
 
 .new-cafe-page__decorate-container {
-    font-family: 'Montserrat', arial;
+  font-family: 'Montserrat', arial;
+  display: flex;
+  justify-content: flex-start;
+  &__text-field {
     display: flex;
-    justify-content: flex-start;
-    &__text-field {
-      display: flex;
-      flex-direction: column;
-      justify-self: flex-start;
-      &_h1{
-        margin: 0;
-      }
-      &__strip{
-        height: 5px;
-        background-color: #1C768F;
-      }
+    flex-direction: column;
+    justify-self: flex-start;
+    &_h1{
+      margin: 0;
     }
+    &__strip{
+      height: 5px;
+      background-color: #1C768F;
+    }
+  }
 }
 
 
 .new-cafe-page__outer{
-    font-family: 'Montserrat', arial;
-    display: flex;
-    justify-content: space-around;
+  font-family: 'Montserrat', arial;
+  display: flex;
+  justify-content: space-around;
 
 }
 
 .new-cafe-page__outer__sub{
-    display: flex;
+  display: flex;
 }
 
 .new-cafe-page__outer__sub__image-container{
-    margin-top: 20px;
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+  margin-top: 20px;
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
 
 }
 
 .new-cafe-page__outer__sub__image-container__photo-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
 }
 
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker{
-    width: 100%;
-    border-radius: 5px;
-    display: block;
-    transition: border 300ms ease;
-    cursor: pointer;
-    text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  display: block;
+  transition: border 300ms ease;
+  cursor: pointer;
+  text-align: center;
 
 }
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus{
@@ -82,11 +81,12 @@
   justify-content: center;
   align-items: center;
   align-content: center;
-  width: 100%;
   top: 0;
   background: rgba(255,255,255,0);
   max-height: calc(650px/2);
   height: calc(85vw/2);
+  max-width: 650px;
+  width: 85vw;
   &_img{
     background: white;
     height: 50%;
@@ -94,24 +94,25 @@
     border-radius: 50%;
     opacity: 0.8;
 
-    transition: transform 0.25s ease-in-out;
-    &:hover{
-      transform: scale(1.1);
-    }
-
   }
+}
+_::-webkit-full-page-media, _:future, :root .new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus {
+  visibility: hidden;
+}
+_::-webkit-full-page-media, _:future, :root .new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus_img {
+  visibility: hidden;
 }
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_img{
 
-    max-height: calc(650px/2);
-    max-width: 650px;
+  max-height: calc(650px/2);
+  max-width: 650px;
 
-    width: 85vw;
-    height: calc(85vw/2);
+  width: 85vw;
+  height: calc(85vw/2);
 
-    display: block;
-    object-fit: cover;
-    margin: 0 auto;
+  display: block;
+  object-fit: cover;
+  margin: 0 auto;
 
 
 }
@@ -120,7 +121,7 @@
 }
 
 .new-cafe-page__outer__sub__image-container__photo-container__image-picker_input{
-    display: block;
+  display: block;
 }
 
 
@@ -196,24 +197,18 @@
 
 
 @media (max-width: 800px) {
-    .new-cafe-page__outer{
-        flex-direction: column;
-    }
+  .new-cafe-page__outer{
+    flex-direction: column;
+  }
 
 }
 input[type=file] {
-    outline: 0;
-    opacity: 0;
-    pointer-events: none;
-    user-select: none;
+  outline: 0;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+  -webkit-appearance: none;
 }
-
-
-
-
-
-

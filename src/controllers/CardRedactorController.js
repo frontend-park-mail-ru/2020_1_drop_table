@@ -59,6 +59,8 @@ export default class CardRedactorController {
             this.addColorPickerListeners(this);
             this._addLoyaltyListeners();
             this._makeActiveLoyalty(0);
+
+
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
@@ -115,29 +117,32 @@ export default class CardRedactorController {
 
 
         let backgroundColorInput = document.getElementsByClassName(
-            'card-color-pickers-container_color-picker__inputs_background_input').item(0);
-        backgroundColorInput.value = context._appleCard._backgroundColor;
+            'card-color-pickers-container_color-picker__inputs__background_input').item(0);
+
+        //backgroundColorInput.value = context._appleCard._backgroundColor;
         backgroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
             context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
         }, false);
 
-        let foregroundColorInput = document.getElementsByClassName(
-            'card-color-pickers-container_color-picker__inputs_foreground_input').item(0);
-        foregroundColorInput.value = context._appleCard._foregroundColor;
-        foregroundColorInput.addEventListener('input', function () {
-            let res = hexToRgb(this.value);
-            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
-            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
-        });
+        // let foregroundColorInput = document.getElementsByClassName(
+        //     'card-color-pickers-container_color-picker__inputs_foreground_input').item(0);
+        // foregroundColorInput.value = context._appleCard._foregroundColor;
+        // foregroundColorInput.addEventListener('input', function () {
+        //     let res = hexToRgb(this.value);
+        //     context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
+        //     context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
+        // });
         let labelColorInput = document.getElementsByClassName(
             'card-color-pickers-container_color-picker__inputs__label_input').item(0);
         labelColorInput.value = context._appleCard._label;
         labelColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
+            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
             context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
+            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         })
 
 
@@ -252,6 +257,10 @@ export default class CardRedactorController {
             this.addCardFieldsListeners();
             this.addColorPickerListeners(this);
             this.addSavePublishListeners();
+            if(this._appleCard._strip){
+                const stripCardImage = document.getElementsByClassName('card__strip').item(0);
+                stripCardImage.style.backgroundImage =  this._appleCard._strip;
+            }
         }
     }
 
@@ -264,6 +273,10 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+        if(this._appleCard._strip){
+            const stripCardImage = document.getElementsByClassName('card__strip').item(0);
+            stripCardImage.style.backgroundImage =  this._appleCard._strip;
+        }
     }
 
     _makeExceptionContext(){
@@ -308,21 +321,6 @@ export default class CardRedactorController {
         });
         console.log('set image icon 2' );
 
-        stripInput.addEventListener('mouseenter', function (e) {
-            console.log('mouseover')
-            e.target.style.color = "purple";
-
-            // avatarImage.src = fr.result;
-            // avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-            // avatarCardImage.src = fr.result;
-            // this._appleCard._icon = fr.result;
-        });
-        // avatarImage.addEventListener('dblclick', function (e) {
-        //     avatarImage.src = fr.result;
-        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-        //     avatarCardImage.src = fr.result;
-        //     this._appleCard._icon = fr.result;
-        // });
         avatarInput.addEventListener('change',(e)=>{
             const tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {

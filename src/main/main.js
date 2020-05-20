@@ -248,3 +248,11 @@ router.notFoundHandler(doNotFound);
 
 router.init();
 
+// window.onbeforeunload = function() {
+//     let message = "У вас есть несохраненные данные. Вы хотите покинуть страницу?";
+//     if (confirm(message)){
+//         return true
+//     }
+//     return false;
+// }
+
