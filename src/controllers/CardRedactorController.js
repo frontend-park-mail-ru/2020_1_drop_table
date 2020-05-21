@@ -55,20 +55,114 @@ export default class CardRedactorController {
             this._appleCard.context = this._makeContext();
             this._cardRedactorView._appleCard = this._appleCard;
             this._cardRedactorView.render();
-            this.addImageListeners();
-            this.addCardFieldsListeners();
-            this.addSavePublishListeners();
-            this.addColorPickerListeners(this);
-            this._addLoyaltyListeners();
-            this._makeActiveLoyalty(0);
+
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+
+
+
+            this._addHoverListeners();
+
+            this.addImageListeners();
+            console.log('test1')
+            this.addCardFieldsListeners();
+            console.log('test2')
+            this.addSavePublishListeners();
+            console.log('test3')
+            this.addColorPickerListeners(this);
+            console.log('test4')
+            this._addLoyaltyListeners();
+            console.log('test5')
+            this._makeActiveLoyalty(0);
+            console.log('test6')
+
 
         } catch (error) {
             console.log(error.message);
         }
 
+    }
+
+    _addHoverListeners(){
+        //card-redactor-container__card-form__image-picker_img
+        //card-redactor-container__card-form__image-picker_img-avatar
+        let stripListenerOver = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = '0 0 10px #9ecaed';
+        };
+        let stripListenerOut = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = null;
+        };
+
+        let stripImgListenerOver = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            if(!this._appleCard._strip){
+                cardStrip.style.backgroundImage = `url(/images/strip.png)`;
+            }
+            cardStrip.style.boxShadow = '0 0 10px #9ecaed';
+        };
+        let stripImgListenerOut = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = null;
+            if(!this._appleCard._strip){
+                cardStrip.style.backgroundImage = null;
+            }
+        };
+        let logoImgOver = ()=>{
+            let logoImg = document.getElementsByClassName('card__header_img').item(0);
+            if(this._appleCard._icon){
+                logoImg.style.boxShadow = '0 0 10px #9ecaed';
+            } else{
+                logoImg.src = '/images/cardlogo.png';
+                logoImg.style.display = 'flex';
+                logoImg.style.boxShadow = '0 0 10px #9ecaed';
+            }
+        };
+        let logoImgOut = ()=>{
+            let logoImg = document.getElementsByClassName('card__header_img').item(0);
+            if(this._appleCard._icon){
+                logoImg.style.boxShadow = null;
+            } else{
+                logoImg.src = '';
+                logoImg.style.display = 'none';
+                logoImg.style.boxShadow = null;
+            }
+        };
+
+        let logoImg = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img-avatar').item(0);
+
+        logoImg.addEventListener('mouseover', logoImgOver );
+        logoImg.addEventListener('mouseout', logoImgOut );
+        let headerFields = document.getElementsByClassName('HeaderFieldsContainer').item(0);
+        headerFields.addEventListener('mouseover',()=>{
+            let cardHeader = document.getElementsByClassName('card__header').item(0);
+            cardHeader.style.boxShadow = '0 0 10px #9ecaed';
+        });
+        headerFields.addEventListener('mouseout',()=>{
+            let cardHeader = document.getElementsByClassName('card__header').item(0);
+            cardHeader.style.boxShadow = null
+        });
+
+        let stripImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img').item(0);
+        let primaryFields = document.getElementsByClassName('PrimaryFieldsContainer').item(0);
+        primaryFields.addEventListener('mouseover',stripListenerOver);
+        primaryFields.addEventListener('mouseout',stripListenerOut);
+        stripImage.addEventListener('mouseover',stripImgListenerOver);
+        stripImage.addEventListener('mouseout',stripImgListenerOut);
+
+        let secondaryFields = document.getElementsByClassName('SecondaryFieldsContainer').item(0);
+        secondaryFields.addEventListener('mouseover',()=>{
+            let cardHeader = document.getElementsByClassName('card__header__fields').item(0);
+            cardHeader.style.boxShadow = '0 0 10px #9ecaed';
+        });
+        secondaryFields.addEventListener('mouseout',()=>{
+            let cardHeader = document.getElementsByClassName('card__header__fields').item(0);
+            cardHeader.style.boxShadow = null;
+        });
     }
 
     /**
@@ -115,29 +209,32 @@ export default class CardRedactorController {
 
 
         let backgroundColorInput = document.getElementsByClassName(
-            'card-color-pickers-container_color-picker__inputs_background_input').item(0);
-        backgroundColorInput.value = context._appleCard._backgroundColor;
+            'card-color-pickers-container_color-picker__inputs__background_input').item(0);
+
+        //backgroundColorInput.value = context._appleCard._backgroundColor;
         backgroundColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
             context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
         }, false);
 
-        let foregroundColorInput = document.getElementsByClassName(
-            'card-color-pickers-container_color-picker__inputs_foreground_input').item(0);
-        foregroundColorInput.value = context._appleCard._foregroundColor;
-        foregroundColorInput.addEventListener('input', function () {
-            let res = hexToRgb(this.value);
-            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
-            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
-        });
+        // let foregroundColorInput = document.getElementsByClassName(
+        //     'card-color-pickers-container_color-picker__inputs_foreground_input').item(0);
+        // foregroundColorInput.value = context._appleCard._foregroundColor;
+        // foregroundColorInput.addEventListener('input', function () {
+        //     let res = hexToRgb(this.value);
+        //     context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
+        //     context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
+        // });
         let labelColorInput = document.getElementsByClassName(
             'card-color-pickers-container_color-picker__inputs__label_input').item(0);
         labelColorInput.value = context._appleCard._label;
         labelColorInput.addEventListener('input', function () {
             let res = hexToRgb(this.value);
+            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
             context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
             context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
+            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
         })
 
 
@@ -252,6 +349,10 @@ export default class CardRedactorController {
             this.addCardFieldsListeners();
             this.addColorPickerListeners(this);
             this.addSavePublishListeners();
+            if(this._appleCard._strip){
+                const stripCardImage = document.getElementsByClassName('card__strip').item(0);
+                stripCardImage.style.backgroundImage =  this._appleCard._strip;
+            }
         }
     }
 
@@ -264,6 +365,10 @@ export default class CardRedactorController {
         this.addCardFieldsListeners();
         this.addSavePublishListeners();
         this.addColorPickerListeners(this);
+        if(this._appleCard._strip){
+            const stripCardImage = document.getElementsByClassName('card__strip').item(0);
+            stripCardImage.style.backgroundImage =  this._appleCard._strip;
+        }
     }
 
     _makeExceptionContext(){
@@ -312,21 +417,6 @@ export default class CardRedactorController {
         });
         console.log('set image icon 2' );
 
-        stripInput.addEventListener('mouseenter', function (e) {
-            console.log('mouseover')
-            e.target.style.color = "purple";
-
-            // avatarImage.src = fr.result;
-            // avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-            // avatarCardImage.src = fr.result;
-            // this._appleCard._icon = fr.result;
-        });
-        // avatarImage.addEventListener('dblclick', function (e) {
-        //     avatarImage.src = fr.result;
-        //     avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-        //     avatarCardImage.src = fr.result;
-        //     this._appleCard._icon = fr.result;
-        // });
         avatarInput.addEventListener('change',(e)=>{
             const tgt = e.target, files = tgt.files;
             if (FileReader && files && files.length) {
@@ -446,9 +536,12 @@ export default class CardRedactorController {
         description.className = 'loyalty-redactor__description-active';
         description.style.justifyContent = this.getJustifyContentBuIndex(i);
         let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
-        for(let i = 0; i < buttonsActive.length; i++){
-            buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+        if(buttonsActive.length) {
+            for (let i = 0; i < buttonsActive.length; i++) {
+                buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+            }
         }
+        console.log('test7',buttonsNormal)
         buttonsNormal.item(i).className = 'loyalty-redactor__buttons__button-active';
         this.renderLoyaltySystem(i);
     }

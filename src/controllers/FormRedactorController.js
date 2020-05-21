@@ -227,14 +227,17 @@ export default class FormRedactorController {
     addOption() {
         for (let i = 0; i < this._formModel._cells.length; i++) {
             if (this._formModel._cells[i].cell_id === this.cell_id) {
-                this._formModel._cells[i].answerOptions.push({
-                    cell_id: this.cell_id,
-                    option_id: this._formModel._cells[i].answerOptions.length,
-                    text: 'Вариант',
-                    checked : false,
-                });
+                if(this._formModel._cells[i].answerOptions.length < 5) {
+
+                    this._formModel._cells[i].answerOptions.push({
+                        cell_id: this.cell_id,
+                        option_id: this._formModel._cells[i].answerOptions.length,
+                        text: 'Вариант',
+                        checked: false,
+                    });
+                    this.updateView();
+                }
                 //todo render
-                this.updateView();
             }
         }
     }

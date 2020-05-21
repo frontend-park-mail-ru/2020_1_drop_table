@@ -26,13 +26,11 @@
                 height: 71%;
                 width: 68%;
                 position: absolute;
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-
-                transition: transform 0.25s ease-in-out;
-                &:hover{
-                    transform: scale(1.05);
-                }
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+                //transition: transform 0.25s ease-in-out;
+                //&:hover{
+                //    transform: scale(1.05);
+                //}
 
 
                 &_img {
@@ -49,14 +47,14 @@
                 right: 15%;
                 height: 55%;
                 width: 48%;
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-                display: table-column;
 
-                transition: transform 0.25s ease-in-out;
-                &:hover{
-                    transform: scale(1.05);
-                }
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+                display: table-column;
+                //
+                //transition: transform 0.25s ease-in-out;
+                //&:hover{
+                //    transform: scale(1.05);
+                //}
 
 
                 &_h4 {
@@ -110,10 +108,10 @@
                 display: flex;
                 align-items: center;
 
-                transition: transform 0.25s ease-in-out;
-                &:hover{
-                    transform: scale(1.05);
-                }
+                //transition: transform 0.25s ease-in-out;
+                //&:hover{
+                //    transform: scale(1.05);
+                //}
 
                 &_span {
                     margin: auto 5% auto 25%;
@@ -141,10 +139,10 @@
                 justify-content: center;
                 align-items: center;
 
-                transition: transform 0.25s ease-in-out;
-                &:hover{
-                    transform: scale(1.05);
-                }
+                //transition: transform 0.25s ease-in-out;
+                //&:hover{
+                //    transform: scale(1.05);
+                //}
 
 
 
@@ -155,7 +153,7 @@
                     flex-direction: column;
 
                     &__strip {
-                        height: 0.2rem;
+                        height: 2px;
                         width: 80%;
                         padding: 0 10% 0 10%;
                     }
@@ -199,14 +197,13 @@
                 position: absolute;
                 right: 5%;
                 bottom: -70px;
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.25));
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
                 opacity: 90%;
                 cursor: pointer;
 
 
                 &:hover {
-                    filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.45));
+                    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
                 }
 
                 &_span {
@@ -234,8 +231,7 @@
             flex-direction: column;
             &__image-container{
                 order: 0;
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
                 width: 100%;
                 &_img{
                     width: 100%;
@@ -244,8 +240,7 @@
             }
             &__description-container{
                 order: 4;
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 
                 &_h4{
                     font-size: 2rem;
@@ -330,15 +325,13 @@
 
                 width: 250px;
                 height: 50px;
-
-                -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-                filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
                 border-radius: 2%;
                 opacity: 90%;
                 cursor: pointer;
 
                 &:hover{
-                    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.45));
+                    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
                 }
                 &_span{
                     margin: 0 auto;
@@ -373,13 +366,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
+        cursor: pointer;
         &_h4 {
             cursor: pointer;
+            font-weight: normal;
         }
 
         &:hover {
-            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.45));
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.45);
         }
     }
 
@@ -392,13 +386,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-
+        cursor: pointer;
         &_h4 {
             cursor: pointer;
+            font-weight: normal;
         }
 
         &:hover {
-            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.45));
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
         }
     }
 }

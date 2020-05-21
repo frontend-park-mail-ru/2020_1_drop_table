@@ -3,8 +3,8 @@
     border-radius: 0.5rem;
     color: #000;
     background: #fff;
-    -webkit-filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+
     flex-shrink: 0;
     font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
     font-weight: normal;
@@ -21,6 +21,11 @@
 
     -webkit-transition: background-color 500ms linear;
     transition: background-color 500ms linear;
+
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;
 
     &__header{
         font-size: 1.5rem;
@@ -81,6 +86,7 @@
     &_span_label{
         margin-right: auto;
         font-size: 1rem;
+        height:  1rem ;
         cursor: default;
         white-space: nowrap;
 
@@ -88,6 +94,7 @@
     &_span_value{
         margin-right: auto;
         font-size:1.25rem;
+        height:  1.25rem ;
         cursor: default;
         white-space: nowrap;
     }
@@ -118,11 +125,13 @@
 
             &_spanValue{
                 font-size: 4.5rem;
+                height:  4.5rem ;
                 cursor: default;
                 white-space: nowrap;
             }
             &_spanLabel{
                 font-size: 1.5rem;
+                height:  1.5rem ;
                 cursor: default;
                 white-space: nowrap;
             }
@@ -143,7 +152,7 @@
     overflow: hidden;
     height: 10%;
     width: 100%;
-    padding-bottom: 28.5%;
+    margin-bottom: 28.5%;
     display: flex;
     justify-content: space-between;
 
@@ -154,12 +163,15 @@
 
             &_spanValue{
                 font-size: 4.5rem;
+                height:  4.5rem ;
                 margin-left: 1rem;
                 cursor: default;
                 white-space: nowrap;
             }
             &_spanLabel{
                 font-size: 1.5rem;
+                height:  1.5rem ;
+                margin-top: 0.5rem;
                 margin-left: 1rem;
                 cursor: default;
                 white-space: nowrap;
@@ -173,11 +185,14 @@
         margin: 0 1rem;
         &_spanLabel{
             font-size: 1rem;
+            height:  1rem ;
             cursor: default;
             white-space: nowrap;
         }
         &_spanValue{
             font-size: 1.5rem;
+            height:  1.5rem ;
+            margin-top: 0.5rem;
             cursor: default;
             white-space: nowrap;
 
@@ -190,12 +205,15 @@
 
         &_spanLabel{
             font-size: 0.9rem;
+            height:  0.9rem ;
             cursor: default;
             white-space: nowrap;
         }
 
         &_spanValue{
             font-size: 1.4rem;
+            height:  1.4rem ;
+            margin-top: 0.5rem;
             cursor: default;
             white-space: nowrap;
         }
@@ -234,6 +252,14 @@
     position: sticky;
     top: 5%;
     -webkit-appearance: none;
+
+    &_h4{
+        margin: 1rem auto;
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: Montserrat;
+        text-align: center;
+    }
 }
 
 .tooltip {
@@ -293,7 +319,7 @@
         cursor: pointer;
         border:none;
         &:hover{
-            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
         }
 
     }
@@ -307,7 +333,7 @@
         border:none;
 
         &:hover{
-            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.25));
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
         }
     }
 }

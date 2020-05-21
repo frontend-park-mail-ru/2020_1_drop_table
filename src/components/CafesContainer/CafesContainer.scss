@@ -29,8 +29,9 @@
             max-width: 390px;
             max-height: 195px;
             margin-bottom: 5rem;
+            transition: transform 0.25s ease-in-out;
             &:hover{
-                transform: scale(1.1);
+                transform: scale(1.05);
             }
 
             &_img{
