@@ -53,17 +53,28 @@ export default class CardRedactorController {
             this._appleCard.context = this._makeContext();
             this._cardRedactorView._appleCard = this._appleCard;
             this._cardRedactorView.render();
-            this.addImageListeners();
-            this.addCardFieldsListeners();
-            this.addSavePublishListeners();
-            this.addColorPickerListeners(this);
-            this._addLoyaltyListeners();
-            this._makeActiveLoyalty(0);
-
 
             let cardRedactorBottom =
                 document.getElementsByClassName('card').item(0);
             cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+
+
+
+            this._addHoverListeners();
+
+            this.addImageListeners();
+            console.log('test1')
+            this.addCardFieldsListeners();
+            console.log('test2')
+            this.addSavePublishListeners();
+            console.log('test3')
+            this.addColorPickerListeners(this);
+            console.log('test4')
+            this._addLoyaltyListeners();
+            console.log('test5')
+            this._makeActiveLoyalty(0);
+            console.log('test6')
+
 
         } catch (error) {
             if(error.message !== 'unknown server error'){
@@ -71,6 +82,87 @@ export default class CardRedactorController {
             }
         }
 
+    }
+
+    _addHoverListeners(){
+        //card-redactor-container__card-form__image-picker_img
+        //card-redactor-container__card-form__image-picker_img-avatar
+        let stripListenerOver = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = '0 0 10px #9ecaed';
+        };
+        let stripListenerOut = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = null;
+        };
+
+        let stripImgListenerOver = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            if(!this._appleCard._strip){
+                cardStrip.style.backgroundImage = `url(/images/strip.png)`;
+            }
+            cardStrip.style.boxShadow = '0 0 10px #9ecaed';
+        };
+        let stripImgListenerOut = ()=>{
+            let cardStrip = document.getElementsByClassName('card__strip').item(0);
+            cardStrip.style.boxShadow = null;
+            if(!this._appleCard._strip){
+                cardStrip.style.backgroundImage = null;
+            }
+        };
+        let logoImgOver = ()=>{
+            let logoImg = document.getElementsByClassName('card__header_img').item(0);
+            if(this._appleCard._icon){
+                logoImg.style.boxShadow = '0 0 10px #9ecaed';
+            } else{
+                logoImg.src = '/images/cardlogo.png';
+                logoImg.style.display = 'flex';
+                logoImg.style.boxShadow = '0 0 10px #9ecaed';
+            }
+        };
+        let logoImgOut = ()=>{
+            let logoImg = document.getElementsByClassName('card__header_img').item(0);
+            if(this._appleCard._icon){
+                logoImg.style.boxShadow = null;
+            } else{
+                logoImg.src = '';
+                logoImg.style.display = 'none';
+                logoImg.style.boxShadow = null;
+            }
+        };
+
+        let logoImg = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img-avatar').item(0);
+
+        logoImg.addEventListener('mouseover', logoImgOver );
+        logoImg.addEventListener('mouseout', logoImgOut );
+        let headerFields = document.getElementsByClassName('HeaderFieldsContainer').item(0);
+        headerFields.addEventListener('mouseover',()=>{
+            let cardHeader = document.getElementsByClassName('card__header').item(0);
+            cardHeader.style.boxShadow = '0 0 10px #9ecaed';
+        });
+        headerFields.addEventListener('mouseout',()=>{
+            let cardHeader = document.getElementsByClassName('card__header').item(0);
+            cardHeader.style.boxShadow = null
+        });
+
+        let stripImage = document.getElementsByClassName(
+            'card-redactor-container__card-form__image-picker_img').item(0);
+        let primaryFields = document.getElementsByClassName('PrimaryFieldsContainer').item(0);
+        primaryFields.addEventListener('mouseover',stripImgListenerOver);
+        primaryFields.addEventListener('mouseout',stripImgListenerOut);
+        stripImage.addEventListener('mouseover',stripListenerOver);
+        stripImage.addEventListener('mouseout',stripListenerOut);
+
+        let secondaryFields = document.getElementsByClassName('SecondaryFieldsContainer').item(0);
+        secondaryFields.addEventListener('mouseover',()=>{
+            let cardHeader = document.getElementsByClassName('card__header__fields').item(0);
+            cardHeader.style.boxShadow = '0 0 10px #9ecaed';
+        });
+        secondaryFields.addEventListener('mouseout',()=>{
+            let cardHeader = document.getElementsByClassName('card__header__fields').item(0);
+            cardHeader.style.boxShadow = null;
+        });
     }
 
     /**
@@ -440,9 +532,12 @@ export default class CardRedactorController {
         description.className = 'loyalty-redactor__description-active';
         description.style.justifyContent = this.getJustifyContentBuIndex(i);
         let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
-        for(let i = 0; i < buttonsActive.length; i++){
-            buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+        if(buttonsActive.length) {
+            for (let i = 0; i < buttonsActive.length; i++) {
+                buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
+            }
         }
+        console.log('test7',buttonsNormal)
         buttonsNormal.item(i).className = 'loyalty-redactor__buttons__button-active';
         this.renderLoyaltySystem(i);
     }
