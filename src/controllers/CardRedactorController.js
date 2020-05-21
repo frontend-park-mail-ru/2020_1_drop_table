@@ -149,10 +149,10 @@ export default class CardRedactorController {
         let stripImage = document.getElementsByClassName(
             'card-redactor-container__card-form__image-picker_img').item(0);
         let primaryFields = document.getElementsByClassName('PrimaryFieldsContainer').item(0);
-        primaryFields.addEventListener('mouseover',stripImgListenerOver);
-        primaryFields.addEventListener('mouseout',stripImgListenerOut);
-        stripImage.addEventListener('mouseover',stripListenerOver);
-        stripImage.addEventListener('mouseout',stripListenerOut);
+        primaryFields.addEventListener('mouseover',stripListenerOver);
+        primaryFields.addEventListener('mouseout',stripListenerOut);
+        stripImage.addEventListener('mouseover',stripImgListenerOver);
+        stripImage.addEventListener('mouseout',stripImgListenerOut);
 
         let secondaryFields = document.getElementsByClassName('SecondaryFieldsContainer').item(0);
         secondaryFields.addEventListener('mouseover',()=>{
