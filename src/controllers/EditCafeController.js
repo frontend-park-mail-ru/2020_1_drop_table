@@ -211,7 +211,11 @@ export default class EditCafeController{
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         };
     }
 
@@ -226,9 +230,7 @@ export default class EditCafeController{
             this._createCafeView.context = this._makeViewContext(id);
             this._createCafeView.render();
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
 }

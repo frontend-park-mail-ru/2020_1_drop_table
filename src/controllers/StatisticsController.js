@@ -3,6 +3,8 @@
 
 import StatisticSerializer from '../Serializers/StatisticSerializer';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification';
+import {router} from '../main/main';
 
 export default class StatisticsController{
 
@@ -29,7 +31,7 @@ export default class StatisticsController{
 
             console.log('date... after', this._staffListModel._statistics)
         } catch (exception) {
-            console.log('ex', exception)
+            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
     }
 
@@ -151,12 +153,16 @@ export default class StatisticsController{
 
     /** Запуск контроллера */
     async control(){
-        console.log('in control')
-        await this.update();
-        let context =  await this._makeViewContext();
-        this._statisticsView.render(context);
-        this._statisticsView._renderPlot(context['statistics'].plot);
-        this._addListeners();
+        try{
+            console.log('in control')
+            await this.update();
+            let context =  await this._makeViewContext();
+            this._statisticsView.render(context);
+            this._statisticsView._renderPlot(context['statistics'].plot);
+            this._addListeners();
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
 
@@ -196,6 +202,19 @@ export default class StatisticsController{
         return `${month} / ${day} / ${date.getFullYear()}`
 
 
+    }
+
+    _makeExceptionContext(){
+        return {
+            'offline': () => {
+                (new NotificationComponent('Похоже, что вы оффлайн.')).render();
+                return [null, null]
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
+        }
     }
 
     getDateFromInput(date){

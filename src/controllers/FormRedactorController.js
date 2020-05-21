@@ -2,6 +2,7 @@
 
 import NotificationComponent from "../components/Notification/Notification";
 import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import {router} from '../main/main';
 
 /** Контроллер редактирования карточки */
 export default class FormRedactorController {
@@ -25,9 +26,7 @@ export default class FormRedactorController {
             await this.update();
             await this.updateView();
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
     async updateView(){
@@ -273,7 +272,11 @@ export default class FormRedactorController {
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
-            }
+            },
+            'no permission': () => {
+                router._goTo('/login');
+                throw new Error('no permission');
+            },
         }
     }
 }

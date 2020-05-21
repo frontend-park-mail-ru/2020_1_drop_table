@@ -146,9 +146,7 @@ export default class LoginController{
             this._loginView.context = this._makeViewContext();
             this._loginView.render();
         } catch (error) {
-            if(error.message !== 'unknown server error'){
-                throw(new Error(error.message));
-            }
+            console.log(error.message);
         }
     }
 }
