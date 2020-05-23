@@ -34,7 +34,7 @@ export default class CardRedactorController {
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
-        this.control();
+        this.control(true);
     }
 
     async update(){
@@ -48,33 +48,32 @@ export default class CardRedactorController {
 
 
     /** Запуск контроллера */
-    async control(){
+    async control(test){
         try {
-            await this.update();
+            if(!test) {
+                await this.update();
+            }
 
-            this._appleCard.context = this._makeContext();
+            this._appleCard.context =  this._makeContext();
             this._cardRedactorView._appleCard = this._appleCard;
+
+
             this._cardRedactorView.render();
-
-            let cardRedactorBottom =
-                document.getElementsByClassName('card').item(0);
-            cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
-
-
 
             this._addHoverListeners();
 
             this.addImageListeners();
-            console.log('test1')
             this.addCardFieldsListeners();
-            console.log('test2')
             this.addSavePublishListeners();
-            console.log('test3')
-            this.addColorPickerListeners(this);
-            console.log('test4')
+            this.addColorPickerListeners();
             this._addLoyaltyListeners();
-            console.log('test5')
-            this._makeActiveLoyalty(0);
+            if(!test){
+                console.log('make active loyalty!!!!!!')
+                let cardRedactorBottom =
+                    document.getElementsByClassName('loyalty-redactor_h4').item(0);
+                cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
+                this._makeActiveLoyalty(0);
+            }
             console.log('test6')
 
 
@@ -195,7 +194,7 @@ export default class CardRedactorController {
      * Добавление лисенеров для color pickers
      * @param {obj} context контекст необходимый для создания color pickers
      */
-    addColorPickerListeners(context) {
+    addColorPickerListeners() {
 
         function hexToRgb(hex) {
 
@@ -206,36 +205,54 @@ export default class CardRedactorController {
                 b: parseInt(result[3], 16)
             } : null;
         }
+        function getHexRGBColor(color)
+        {
+            console.log('1Background', color)
+            color = color.replace(/\s/g,'');
+            let aRGB = color.match(/^rgb\((\d{1,3}[%]?),(\d{1,3}[%]?),(\d{1,3}[%]?)\)$/i);
+            if(aRGB) {
+                color = '';
+                for (let i = 1; i <= 3; i++) {
+                    color += Math.round(
+                        (aRGB[i][aRGB[i].length - 1] == "%" ? 2.55 : 1) * parseInt(aRGB[i])).toString(16)
+                        .replace(/^(.)$/, '0$1');
+                }
+            }
+            else {
+                color = color.replace(/^#?([\da-f])([\da-f])([\da-f])$/i, '$1$1$2$2$3$3');
+            }
+            console.log('2Background', color)
+            return `#${color}`;
+        }
+
 
 
         let backgroundColorInput = document.getElementsByClassName(
             'card-color-pickers-container_color-picker__inputs__background_input').item(0);
+        backgroundColorInput.value = getHexRGBColor(this._appleCard.backgroundColor);
+
 
         //backgroundColorInput.value = context._appleCard._backgroundColor;
         backgroundColorInput.addEventListener('input', function () {
-            let res = hexToRgb(this.value);
-            context._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
-            context._cardRedactorView.cardAppleComp._renderBackgroundColor(context._appleCard._backgroundColor);
-        }, false);
+            let backgroundColorInput = document.getElementsByClassName(
+                'card-color-pickers-container_color-picker__inputs__background_input').item(0);
+            let res = hexToRgb(backgroundColorInput.value);
+            this._appleCard._backgroundColor = `rgb(${res.r},${res.g},${res.b})`;
+            this._cardRedactorView.cardAppleComp._renderBackgroundColor(this._appleCard._backgroundColor);
+        }.bind(this), false);
 
-        // let foregroundColorInput = document.getElementsByClassName(
-        //     'card-color-pickers-container_color-picker__inputs_foreground_input').item(0);
-        // foregroundColorInput.value = context._appleCard._foregroundColor;
-        // foregroundColorInput.addEventListener('input', function () {
-        //     let res = hexToRgb(this.value);
-        //     context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
-        //     context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
-        // });
         let labelColorInput = document.getElementsByClassName(
             'card-color-pickers-container_color-picker__inputs__label_input').item(0);
-        labelColorInput.value = context._appleCard._label;
+        labelColorInput.value = getHexRGBColor(this._appleCard.labelColor);
         labelColorInput.addEventListener('input', function () {
-            let res = hexToRgb(this.value);
-            context._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
-            context._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
-            context._cardRedactorView.cardAppleComp._renderLabelColor(context._appleCard._labelColor);
-            context._cardRedactorView.cardAppleComp._renderForegroundColor(context._appleCard._foregroundColor);
-        })
+            let labelColorInput = document.getElementsByClassName(
+                'card-color-pickers-container_color-picker__inputs__label_input').item(0);
+            let res = hexToRgb(labelColorInput.value);
+            this._appleCard._foregroundColor = `rgb(${res.r},${res.g},${res.b})`;
+            this._appleCard._labelColor = `rgb(${res.r},${res.g},${res.b})`;
+            this._cardRedactorView.cardAppleComp._renderLabelColor(this._appleCard._labelColor);
+            this._cardRedactorView.cardAppleComp._renderForegroundColor(this._appleCard._foregroundColor);
+        }.bind(this))
 
 
     }
@@ -386,6 +403,7 @@ export default class CardRedactorController {
 
     /** Добавление листенеров на изображения */
     addImageListeners(){
+        console.log('ADD IMAGES!!!!!!')
         const stripInput = document.getElementById('uploadStrip');
         const stripImage = document.getElementsByClassName(
             'card-redactor-container__card-form__image-picker_img').item(0);
@@ -394,12 +412,30 @@ export default class CardRedactorController {
         const avatarImage = document.getElementsByClassName(
             'card-redactor-container__card-form__image-picker_img-avatar').item(0);
         const avatarCardImage = document.getElementsByClassName('card__header_img').item(0);
-
-        stripCardImage.style.backgroundImage =  this._appleCard._strip;
+        if(this._appleCard._strip) {
+            let src = this._appleCard._strip.toString();
+            if(src.includes('https')){
+                stripImage.src = `${src}&time=${Math.random() * 500}`;
+                stripCardImage.style.backgroundImage = `url(${src}&time=${Math.random() * 500})`;
+            } else{
+                stripImage.src = `${src}`;
+                stripCardImage.style.backgroundImage = `url(${src})`;
+            }
+        } else{
+            stripImage.src = `/images/strip.png`;
+        }
         if(this._appleCard._icon){
-            avatarImage.src = this._appleCard._icon;
             avatarCardImage.style.display = 'flex'; //todo пофиксить, когда будут новые ручки с сервера
-            avatarCardImage.src = this._appleCard._icon;
+            let src = this._appleCard._icon.toString();
+            if(src.includes('https')){
+                avatarImage.src =`${src}&time=${Math.random()*500}`;
+                avatarCardImage.src = `${src}&time=${Math.random()*500}`;
+            } else{
+                avatarImage.src =`${src}`;
+                avatarCardImage.src = `${src}`;
+            }
+        } else{
+            avatarImage.src =`/images/cardlogo.png`;
         }
         console.log('set image icon', this._appleCard._icon );
 
@@ -410,7 +446,7 @@ export default class CardRedactorController {
                 fr.onload = function () {
                     stripImage.src = fr.result;
                     stripCardImage.style.backgroundImage = `url(${fr.result})`;
-                    this._appleCard._strip = `url(${fr.result})`;
+                    this._appleCard._strip = `${fr.result}`;
                 }.bind(this);
                 fr.readAsDataURL(files[0]);
             }
