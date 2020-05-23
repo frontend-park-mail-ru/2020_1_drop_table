@@ -24,13 +24,9 @@ export default class StatisticsComponent {
     }
 
     _renderDateInputs(){
-        let startInputDate = this._parent.
-            getElementsByClassName('statistics-component__head__interval-start').item(0);
-        let endInputDate = this._parent.
-            getElementsByClassName('statistics-component__head__interval-end').item(0);
-
-        (new DateInputComponent(startInputDate)).render({text: ''});
-        (new DateInputComponent(endInputDate)).render({text: ''});
+        let form = this._parent.
+            getElementsByClassName('interval__start-end').item(0);
+        (new DateInputComponent(form)).render();
     }
     _renderSelectors(context){
         let selectorCafes = this._parent.
