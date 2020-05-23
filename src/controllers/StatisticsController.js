@@ -5,6 +5,7 @@ import StatisticSerializer from '../Serializers/StatisticSerializer';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import NotificationComponent from '../components/Notification/Notification';
 import {router} from '../main/main';
+import FormValidation from '../utils/FormValidation';
 
 export default class StatisticsController{
 
@@ -124,21 +125,29 @@ export default class StatisticsController{
         endInput.value = this.getCurrentDate(true);
 
         startInput.addEventListener('change',async (e)=>{
-            console.log('inputik start',this.getDateFromInput(startInput.value));
-            let type = 'day';
-            let startDate = this.getDateFromInput(startInput.value);
-            let endDate = this.getDateFromInput(endInput.value);
-            await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
-            this.updatePlot();
+            let form = document.getElementById('form');
+            let validateContext = this._makeValidateContext(form);
+            if ((new FormValidation(form)).validate(validateContext)){
+                console.log('inputik start',this.getDateFromInput(startInput.value));
+                let type = 'day';
+                let startDate = this.getDateFromInput(startInput.value);
+                let endDate = this.getDateFromInput(endInput.value);
+                await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
+                this.updatePlot();
+            }
         })
 
         endInput.addEventListener('change',async (e)=>{
-            console.log('inputik end', this.getDateFromInput(endInput.value));
-            let type = 'day';
-            let startDate = this.getDateFromInput(startInput.value);
-            let endDate = this.getDateFromInput(endInput.value);
-            await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
-            this.updatePlot();
+            let form = document.getElementById('form');
+            let validateContext = this._makeValidateContext(form);
+            if ((new FormValidation(form)).validate(validateContext)) {
+                console.log('inputik end', this.getDateFromInput(endInput.value));
+                let type = 'day';
+                let startDate = this.getDateFromInput(startInput.value);
+                let endDate = this.getDateFromInput(endInput.value);
+                await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
+                this.updatePlot();
+            }
         })
     }
 
@@ -175,7 +184,7 @@ export default class StatisticsController{
             console.log('res', res)
             return res
         }
-        return `${month} / ${day} / ${date.getFullYear()}`
+        return `${date.getFullYear()}-${month}-${day}`
 
     }
     getPrevDate(inputFormat){
@@ -199,7 +208,7 @@ export default class StatisticsController{
             let res = `${year}-${month}-${day}_00:00:00.000000`;
             return res
         }
-        return `${month} / ${day} / ${date.getFullYear()}`
+        return `${date.getFullYear()}-${month}-${day}`
 
 
     }
@@ -217,8 +226,31 @@ export default class StatisticsController{
         }
     }
 
+    _makeValidateContext(form){
+        return [
+            {
+                element: form.elements['first-date'],
+                validate: () => {
+                    const dateRegex = new RegExp('/((0[1-9]|[12]\\d|3[01])-(0[1-9]|1[0-2])-[12]\\d{3})/');
+                    if(dateRegex.test(form.elements['first-date'].value.toString())){
+                        return 'Некорректный формат даты';
+                    }
+                }
+            },
+            {
+                element: form.elements['second-date'],
+                validate: () => {
+                    const dateRegex = new RegExp('/((0[1-9]|[12]\\d|3[01])-(0[1-9]|1[0-2])-[12]\\d{3})/');
+                    if(dateRegex.test(form.elements['second-date'].value.toString())){
+                        return 'Некорректный формат даты';
+                    }
+                }
+            }
+        ];
+    }
+
     getDateFromInput(date){
-        let arr = date.split('/');
+        let arr = date.split('-');
         console.log('input arr', arr, arr.length)
         let curdate = new Date();
         let year = curdate.getFullYear();
