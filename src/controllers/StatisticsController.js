@@ -176,8 +176,8 @@ export default class StatisticsController{
             return res
         }
         return `${month} / ${day} / ${date.getFullYear()}`
-
     }
+
     getPrevDate(inputFormat){
         let date = new Date();
         let year = date.getFullYear();

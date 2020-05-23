@@ -53,11 +53,11 @@ export default class LandingController {
     addListeners(){
         const buttonLeft = document.getElementsByClassName('landing-page__cafes__circle-left__circle').item(0);
         const buttonRight = document.getElementsByClassName('landing-page__cafes__circle-right__circle').item(0);
-        const search = document.getElementById('search');
+        const searchButton = document.getElementById('searchButton');
 
         buttonLeft.addEventListener('click',this.cafesBack.bind(this));
         buttonRight.addEventListener('click',this.cafesForward.bind(this));
-        search.addEventListener('change', this._resetCafes.bind(this));
+        searchButton.addEventListener('onclick', this._resetCafes.bind(this));
     }
 
     async _resetCafes(){
