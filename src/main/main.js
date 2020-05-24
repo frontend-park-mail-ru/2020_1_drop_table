@@ -48,6 +48,9 @@ import StatisticsView from '../view/StatisticsView';
 import StatisticsController from '../controllers/StatisticsController';
 
 import TestPlotView from '../view/TestPlotView';
+import CafePreView from '../view/CafePreView';
+import CafePreviewController from '../controllers/CafePreviewController';
+import CafePreviewModel from '../models/CafePreviewModel';
 
 /** Регистрация сервис воркера */
 if ('serviceWorker' in navigator) {
@@ -208,8 +211,15 @@ function doStatistics(){
     statisticsController.control();
 }
 
-function doStat(){
-    (new TestPlotView()).render();
+
+function doCafePreview(req){
+    let id = req.param.id;
+    console.log('cafePreview ', id)
+    const cafePreView = new CafePreView(app);
+    const cafePreviewModel = new CafePreviewModel();
+    const cafePreviewController = new CafePreviewController(userModel,cafePreView,cafePreviewModel );
+    cafePreviewController.control(id)
+
 }
 
 /** Роуты роутера */
@@ -238,10 +248,11 @@ router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
 router.get('/error/{code}', doError);
 
-router.get('/test', doStat);
 
 
 router.get('/statistics', doStatistics);
+
+router.get('/cafe/preview/{id}', doCafePreview);
 
 
 router.notFoundHandler(doNotFound);

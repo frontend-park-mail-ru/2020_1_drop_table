@@ -57,7 +57,7 @@ export default class LandingController {
 
         buttonLeft.addEventListener('click',this.cafesBack.bind(this));
         buttonRight.addEventListener('click',this.cafesForward.bind(this));
-        searchButton.addEventListener('onclick', this._resetCafes.bind(this));
+        searchButton.addEventListener('click', this._resetCafes.bind(this));
     }
 
     async _resetCafes(){

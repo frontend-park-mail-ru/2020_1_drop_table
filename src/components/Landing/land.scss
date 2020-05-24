@@ -103,7 +103,7 @@
     //background: #f39c12;
 }
 .landing__space{
-    height: 500px;
+    height: 200px;
     width: 100%;
 }
 
@@ -179,7 +179,7 @@
     }
 
     &__circle-left{
-
+        cursor: pointer;
         &__circle{
             height: 100px;
             width: 100px;
@@ -201,6 +201,7 @@
 
     }
     &__circle-right{
+        cursor: pointer;
         &__circle{
             height: 100px;
             width: 100px;
@@ -221,14 +222,45 @@
         }
     }
 }
-.landing-page__search{
-    width: 300px;
-    border: 1px solid;
-    height: 50px;
-    margin: 0 auto;
-    font-size: 1rem;
+
+.landing__partners_container{
+    font-family: Montserrat;
     font-weight: normal;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 5px auto;
+    .landing-page__search{
+        height: 50px;
+        width: 300px;
+        border: 1px solid;
+        margin: 0 auto;
+        font-size: 1rem;
+        font-weight: normal;
+    }
+    #searchButton{
+        height: 50px;
+        font-family: Montserrat;
+        font-size: 1rem;
+        color: white;
+        width: 100px;
+        border: none;
+        margin: 2px;
+        background-color: #1C768F;
+        transition: background-color 1s ease;
+        cursor: pointer;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+        &:hover{
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+        }
+        &:active{
+            background-color: #f39c12;
+            transition: background-color 0s ease;
+        }
+    }
 }
+
+
 .landing-cafes-page_h4{
     font-size: 2rem;
     font-family: Montserrat;
@@ -237,3 +269,6 @@
     display: flex;
     justify-content: space-around;
 }
+
+
+

@@ -49,8 +49,32 @@ export class LandingCafesContainerComponent {
         this._parent.innerHTML = LandingCafeContainer({cafes:cafes}); //TODO норм шаблоны и лисенеры на кафе
     }
 
+    _addListeners(context){
+        for(let i = 0; i < context.length; i++){
+            let card = this._parent.getElementsByClassName('landing-cafe-card-container').item(i);
+            let cardImage = this._parent.getElementsByClassName('landing-cafe-card-container__image-container').item(i);
+            let cardName = this._parent.getElementsByClassName('landing-cafe-card-container__name-container').item(i);
+            if(cardImage && cardName) {
+
+                cardImage.addEventListener('click', function () {
+                    const cardIdStr = card.getAttribute('id');
+                    const cardId = cardIdStr.slice(1, cardIdStr.length);
+                    router._goTo(`/cafe/preview/${cardId}`);
+                });
+                cardName.addEventListener('click', function () {
+                    const cardIdStr = card.getAttribute('id');
+                    const cardId = cardIdStr.slice(1, cardIdStr.length);
+                    router._goTo(`/cafe/preview/${cardId}`)
+
+                });
+            }
+        }
+
+    }
+
     /** Отрисовка компоненты списка кафе */
     render(context) {
         this._renderTemplate(context);
+        this._addListeners(context)
     }
 }
