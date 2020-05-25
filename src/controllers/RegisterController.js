@@ -133,8 +133,8 @@ export default class RegisterController{
             {
                 element: form.elements['password'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 8){
-                        return 'Пароль слишком короткий';
+                    if(form.elements['password'].value.toString().length < 6){
+                        return 'Пароль слишком короткий, минимальная длина пароля 6 символов.';
                     }
                 }
             },
