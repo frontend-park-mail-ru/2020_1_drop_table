@@ -1,7 +1,7 @@
 import {router} from '../main/main';
 import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
-import NotificationComponent from "../components/Notification/Notification";
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from '../components/Notification/Notification';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 /** контроллер кафе */
 export default class CafePageController {
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import NotificationComponent from "../components/Notification/Notification";
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from '../components/Notification/Notification';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import {router} from '../main/main';
 
 /** Контроллер редактирования карточки */

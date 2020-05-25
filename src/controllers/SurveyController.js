@@ -1,7 +1,7 @@
 'use strict';
 
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
-import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification';
 import {router} from '../main/main';
 
 /** контроллер авторизации */
