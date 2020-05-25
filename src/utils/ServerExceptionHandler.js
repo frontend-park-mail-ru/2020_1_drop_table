@@ -31,7 +31,6 @@ export default class ServerExceptionHandler extends BaseErrorHandler{
                 this._addError(element, message);
             }
         } else {
-            console.log('error', error.code)
             router._goTo(`/error/${error.code}`);
             throw new Error('unknown server error');
         }

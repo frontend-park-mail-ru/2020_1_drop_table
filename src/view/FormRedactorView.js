@@ -23,7 +23,6 @@ export default class FormRedactorView extends BaseView{
     }
 
     renderCell(cellContext, type){
-        console.log('render cell');
         this.formCreator._renderCell(cellContext, type);
     }
 

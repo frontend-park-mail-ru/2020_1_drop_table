@@ -57,7 +57,7 @@ export default class LandingController {
 
         buttonLeft.addEventListener('click',this.cafesBack.bind(this));
         buttonRight.addEventListener('click',this.cafesForward.bind(this));
-        searchButton.addEventListener('onclick', this._resetCafes.bind(this));
+        searchButton.addEventListener('click', this._resetCafes.bind(this));
     }
 
     async _resetCafes(){
@@ -75,7 +75,6 @@ export default class LandingController {
                 cafes.slice(this._landingCafeListModel._currentId,
                     this._landingCafeListModel._currentId + this._landingCafeListModel._step));
         }
-        console.log(this._landingCafeListModel._currentId);
     }
 
     async cafesForward(){
@@ -95,8 +94,6 @@ export default class LandingController {
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,
             this._landingCafeListModel._currentId + this._landingCafeListModel._step));
-
-        console.log(this._landingCafeListModel._currentId);
     }
 
     _loadScript(url, callback){

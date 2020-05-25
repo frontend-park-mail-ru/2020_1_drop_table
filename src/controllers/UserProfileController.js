@@ -67,7 +67,6 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: async () => {
-                            console.log('clicke');
                             await this._userModel.logout();
                             router._goTo('/login');
                         }

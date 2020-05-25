@@ -88,8 +88,6 @@ export default  class StatisticSerializer{
     }
 
     _makeContext(data, options){
-        console.log('test make context')
-
         if(options.onePlot){
             return this._makeOnePlotContext(data);
         } else{
@@ -98,7 +96,6 @@ export default  class StatisticSerializer{
     }
 
     _makeOnePlotContext(data){
-        console.log('test make one context', data)
         let plotData = {
             textX: 'Время',
             textY: 'Количество',
@@ -121,7 +118,6 @@ export default  class StatisticSerializer{
     }
 
     _makeManyPlotContext(data){
-        console.log('test make many context', data)
         let plotData = {
             textX: 'Время',
             textY: 'Количество',

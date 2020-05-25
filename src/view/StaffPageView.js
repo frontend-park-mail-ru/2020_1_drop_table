@@ -42,12 +42,10 @@ export default class StaffPageView extends BaseView {
 
     }
     _renderPlot(plotData){
-        console.log('render plot1!!!!', plotData)
         let container = this._app.getElementsByClassName('staff-page__statistics-container__graph-container').item(0);
         (new LinePlot(container)).render(plotData);
     }
     render(){
-        console.log('render')
         this._app.innerHTML = '';
         this._renderHeader();
         this._renderTemplate();

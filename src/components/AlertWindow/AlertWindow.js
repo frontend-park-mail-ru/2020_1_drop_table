@@ -28,7 +28,6 @@ export class AlertWindowComponent {
         const app = document.getElementById('application');
         app.style.opacity = '50%';
         this._el.addEventListener('click', (e)=>{
-            console.log('click on ', e.target)
             if(e.target === background) {
                 this._el.removeChild(background);
                 this._el.innerHTML = '';
