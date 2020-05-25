@@ -137,7 +137,7 @@ export default class AddStaffController{
                 element: form.elements['password'],
                 validate: () => {
                     if(form.elements['password'].value.toString().length < 8){
-                        return 'Пароль слишком короткий';
+                        return 'Пароль слишком короткий. Необходимо минимум 8 символов ';
                     }
                 }
             },

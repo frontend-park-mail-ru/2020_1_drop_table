@@ -63,14 +63,14 @@ export default class LoginController{
                         {
                             type: 'email',
                             id: 'email',
-                            data: this._userModel.email,
+                            data: '',
                             labelData: 'Почта',
                             inputOption: 'required',
                         },
                         {
                             type: 'password',
                             id: 'password',
-                            data: this._userModel.password,
+                            data: '',
                             labelData: 'Пароль',
 
                             inputOption: 'required',
@@ -103,8 +103,8 @@ export default class LoginController{
             {
                 element: form.elements['password'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 4){
-                        return 'Пароль слишком короткий';
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий. Необходимо минимум 8 символов';
                     }
                 }
             },

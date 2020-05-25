@@ -36,7 +36,7 @@ export default class Header{
     _setProperties(context){
         console.log(context['type']);
         if(!context['isOwner']){
-            this._menuList = []
+            this._menuList = [{href: '', text: ''}]
         }
         if (context['type'] === 'auth') {
             this._hasAvatar = false;
