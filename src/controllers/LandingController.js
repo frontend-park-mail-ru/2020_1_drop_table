@@ -75,7 +75,6 @@ export default class LandingController {
                 cafes.slice(this._landingCafeListModel._currentId,
                     this._landingCafeListModel._currentId + this._landingCafeListModel._step));
         }
-        console.log(this._landingCafeListModel._currentId);
     }
 
     async cafesForward(){
@@ -95,8 +94,6 @@ export default class LandingController {
         (new LandingCafesContainerComponent(container)).render(cafes.slice(
             this._landingCafeListModel._currentId,
             this._landingCafeListModel._currentId + this._landingCafeListModel._step));
-
-        console.log(this._landingCafeListModel._currentId);
     }
 
     _loadScript(url, callback){

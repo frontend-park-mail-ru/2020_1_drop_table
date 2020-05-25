@@ -9,7 +9,6 @@ export default class CafePreviewModel {
 
     /** Инициализация модели */
     constructor(context) {
-        console.log('constr cafe preview')
         this._id = null;
         this._address = null;
         this._description = null;

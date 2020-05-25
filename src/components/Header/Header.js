@@ -47,8 +47,10 @@ export default class Header{
         } else if (context['type'] === 'landing'){
             this._hasAvatar = false;
             this._hasExit = false;
-            this._hasLogin = true;
+            this._hasLogin = false;
             this._menuList = [];
+            this._menuList.push({href: '/login', text: 'Войти'})
+
 
         } else if (context['type'] === 'profile') {
             this._hasAvatar = false;
@@ -62,7 +64,8 @@ export default class Header{
             this._hasExit = false;
         } else {
             this._head = document.createElement('div');
-            this._hasAvatar = true;
+            this._hasAvatar = false;
+            this._menuList.push({href: '/profile', text: 'Профиль'})
             this._hasLogin = false;
             this._hasExit = false;
         }

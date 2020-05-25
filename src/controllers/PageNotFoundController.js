@@ -89,7 +89,6 @@ export default class PageNotFoundController{
         try {
             await this.update();
             let context = this._makeViewContext()
-            console.log('control', context)
             this._pageNotFoundView.render(this._makeViewContext(context));
         } catch (error) {
             console.log(error.message);

@@ -59,7 +59,6 @@ export default class StaffListModel{
 
     _constructStaff(staffListData){ //todo создавать сотрудников
         for (let [key, value] of Object.entries(staffListData)) {
-            console.log('test1', value)
             if(value) {
                 value.forEach((staffVal) => {
                     const staff = new StaffModel(staffVal);
@@ -75,7 +74,6 @@ export default class StaffListModel{
 
     /** получение списка работников */
     async staffList() { //!!!
-        console.log('staff list');
         await ajax(constants.PATH_STAFF + `/api/v1/staff/get_staff_list/${this._userModel.id}`,
             'GET',
             {},
@@ -115,14 +113,15 @@ export default class StaffListModel{
         let staff = this.getStaffById(id);
         if(context) {
             for (let i = 0; i < context.length; i++) {
-                staff._actions.push(context[i]);
+                if(!staff._actions.includes(context[i])) {
+                    staff._actions.push(context[i]);
+                }
             }
         } else if(!staff._actions){
             staff._actions = [];
         }
     }
     fillAllStaffStatistics(context){
-        console.log('fill statistics', context);
         this._statistics = context
 
     }
@@ -148,12 +147,9 @@ export default class StaffListModel{
         await authAjax( 'GET',constants.PATH + `/api/v1/statistics/get_graphs_data?type=${type}&since=${start}&to=${end}`,
             {},
             (response) => {
-                console.log('response ', response);
                 if (response.errors === null) {
-                    console.log('response plot', response);
                     this.fillAllStaffStatistics(response.data);
                 } else {
-                    console.log('response error', response);
                     this.fillAllStaffStatistics(this.emptyPlot);
                     throw response.errors;
                 }

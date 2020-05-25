@@ -204,7 +204,6 @@ export default class AddStaffController{
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
             }
-            console.log(error)
         }
     }
 }

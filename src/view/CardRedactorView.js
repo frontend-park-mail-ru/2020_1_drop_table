@@ -20,15 +20,10 @@ export default class CardRedactorView extends BaseView{
         super(app);
         this._context = null;
         this._appleCard = null;
-
-
         let container = document.getElementsByClassName('card-creator-container').item(0);
         container.innerHTML = CardCreator();
-
         let loyaltyContainer = document.getElementsByClassName('loyalty-redactor-container').item(0);
-        console.log(loyaltyContainer);
         (new LoyaltyRedactorComponent(loyaltyContainer)).render();
-
         let left = document.getElementsByClassName('card-redactor-container__card-form').item(0);
         let right = document.getElementsByClassName('card-redactor-container__card-model').item(0);
         this.cardFormComp = new CardFormComponent(left);

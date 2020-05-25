@@ -102,7 +102,7 @@ export default class StaffMenuController{
 
     coffeeCupPointPlus() {
         authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
-            {'coffee_cups':Number(this.points + 1)}, (response) => {
+            {'coffee_cups':Number(this.points + 1), 'cups_count': Number(this.stack)}, (response) => {
                 if (response.errors === null) {
                     (new NotificationComponent('Успешно')).render();
                     this.loadCoffeeCups()
@@ -114,7 +114,7 @@ export default class StaffMenuController{
     }
     coffeeCupPointMinus() {
         authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
-            {'coffee_cups':Number(this.points - 1)}, (response) => {
+            {'coffee_cups':Number(this.points - 1), 'cups_count': this.stack}, (response) => {
                 if (response.errors === null) {
                     (new NotificationComponent('Успешно')).render();
                     this.loadCoffeeCups()
@@ -126,7 +126,7 @@ export default class StaffMenuController{
     }
     coffeeCupPointMinusStack() {
         authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
-            {'coffee_cups':Number(this.points - this.stack)}, (response) => {
+            {'coffee_cups':Number(this.points - this.stack), 'cups_count': this.stack}, (response) => {
                 if (response.errors === null) {
                     (new NotificationComponent('Успешно')).render();
                     this.loadCoffeeCups()
@@ -143,6 +143,7 @@ export default class StaffMenuController{
             null, (response) => {
                 if (response.errors === null) {
                     this.points = Number(JSON.parse(response.data).coffee_cups);
+                    this.stack = Number(JSON.parse(response.data).cups_count);
                     document.getElementById('label').innerHTML = '☕️'.repeat(
                         this.points  % this.stack);
                     let e = document.getElementById('stacks');
@@ -154,7 +155,7 @@ export default class StaffMenuController{
                     for (let i = 0; i < Math.floor(this.points / this.stack); i++) {
                         let btn = document.createElement('button');
                         let t = document.createTextNode('☕️');
-                        btn.addEventListener('click', this.coffeeCupPointMinusStack);
+                        btn.addEventListener('click', this.coffeeCupPointMinusStack.bind(this));
                         btn.appendChild(t);
                         btn.className = 'stackCoffeeButton';
                         document.getElementById('stacks').appendChild(btn);
@@ -175,7 +176,7 @@ export default class StaffMenuController{
                     (new NotificationComponent('Успешно')).render();
                 } else {
                     console.log(response.errors);
-                    (new NotificationComponent('Ошибка')).render();
+                    (new NotificationComponent('Ошибка',response.errors.message.toString())).render();
                     throw response.errors;
                 }
             });
@@ -190,7 +191,7 @@ export default class StaffMenuController{
                     (new NotificationComponent('Успешно')).render();
                 } else {
                     console.log(response.errors);
-                    (new NotificationComponent('Ошибка')).render();
+                    (new NotificationComponent('Ошибка ',response.errors.message.toString())).render();
                     throw response.errors;
                 }
             });

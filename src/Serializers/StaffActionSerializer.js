@@ -1,10 +1,8 @@
 export default  class StaffActionSerializer {
 
     serializeData(data) {
-        console.log('data', data)
         if (!data.length) {
             let date = new Date();
-            console.log('date', date.getUTCDay());
             let context = {
                 dateStart: `${date.getDate()}.${date.getMonth()}`,
                 dateEnd: `${date.getDate()}.${date.getMonth()}`,
@@ -19,7 +17,6 @@ export default  class StaffActionSerializer {
             return context
         }
         else{
-            console.log('not empty', data);
             let dateStart = new Date(data[0].time);
             let dateEnd = new Date(data[data.length-1].time);
             let context = {
@@ -42,11 +39,8 @@ export default  class StaffActionSerializer {
                         });
 
             }
-            console.log('context', context)
             return context
         }
-
-        // let timeFirst = data[0].time;
     }
     serializeAction(jsonData){
         let data =  entriesPolyFill(JSON.parse(jsonData));

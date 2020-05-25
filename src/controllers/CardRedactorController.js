@@ -68,13 +68,11 @@ export default class CardRedactorController {
             this.addColorPickerListeners();
             this._addLoyaltyListeners();
             if(!test){
-                console.log('make active loyalty!!!!!!')
                 let cardRedactorBottom =
                     document.getElementsByClassName('loyalty-redactor_h4').item(0);
                 cardRedactorBottom.scrollIntoView({block: 'start', behavior: 'smooth'});
                 this._makeActiveLoyalty(0);
             }
-            console.log('test6')
 
 
         } catch (error) {
@@ -207,7 +205,6 @@ export default class CardRedactorController {
         }
         function getHexRGBColor(color)
         {
-            console.log('1Background', color)
             color = color.replace(/\s/g,'');
             let aRGB = color.match(/^rgb\((\d{1,3}[%]?),(\d{1,3}[%]?),(\d{1,3}[%]?)\)$/i);
             if(aRGB) {
@@ -221,7 +218,6 @@ export default class CardRedactorController {
             else {
                 color = color.replace(/^#?([\da-f])([\da-f])([\da-f])$/i, '$1$1$2$2$3$3');
             }
-            console.log('2Background', color)
             return `#${color}`;
         }
 
@@ -302,7 +298,6 @@ export default class CardRedactorController {
         }
         if(icon === null){
             icon = this._appleCard._icon;
-            console.log('взял из карты icon', icon)
         }
 
         const images ={
@@ -343,7 +338,6 @@ export default class CardRedactorController {
             'logo.png': icon, 'logo@2x.png': icon,
             'strip.png': strip, 'strip@2x.png': strip
         };
-        console.log('test',this._loyaltyInfo.type);
         if(this._loyaltyInfo.type === 'percents'){
             this._loyaltyInfo.loyalty_info = this.objectFromDiscounts(this._discounts);
         }

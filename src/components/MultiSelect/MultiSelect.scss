@@ -101,3 +101,9 @@
   border-bottom: 1px solid #b7b7b7;
   padding: 5px;
 }
+
+.multiselect-checkbox{
+  -moz-appearance: checkbox !important;
+  -webkit-appearance: checkbox !important;
+
+}

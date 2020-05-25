@@ -243,20 +243,31 @@
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 
                 &_h4{
+                    margin: 0 10px;
                     font-size: 2rem;
                     font-weight: bold;
                     cursor: default;
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
                 }
                 &__align-div{
                     white-space: normal;
                     word-break: break-word;
-
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
                     &__relative-div{
+                        margin: 0 10px;
                         &_p{
+
                             text-decoration: none;
                             width: 100%;
                             overflow-y: scroll;
                             cursor: default;
+                            &::-webkit-scrollbar {
+                                display: none;
+                            }
                         }
                     }
 
@@ -268,6 +279,7 @@
                 display: flex;
                 align-items: center;
                 &_span{
+                    margin: 0 10px;
                     font-size: 2rem;
                     font-weight: bold;
                     cursor: default;

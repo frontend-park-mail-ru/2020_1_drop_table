@@ -1,5 +1,8 @@
 import './Cashback.scss';
 import CashbackTemplate from './Cashback.hbs';
+import {authAjax} from '../../../utils/authAjax';
+import {constants} from '../../../utils/constants';
+import NotificationComponent from '../../Notification/Notification';
 
 export class Cashback {
 
@@ -32,6 +35,19 @@ export class Cashback {
     {
         this._renderTemplate();
         this._addListeners();
+    }
+    cashbackSetPoints() {
+        let purchaseInput = this._el.getElementsByClassName('main__input-field_input').item(0)
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
+            {'points_count':Number(purchaseInput.value)}, (response) => {
+                if (response.errors === null) {
+                    (new NotificationComponent('Успешно')).render();
+                } else {
+                    console.log(response.errors);
+                    (new NotificationComponent('Ошибка')).render();
+                    throw response.errors;
+                }
+            });
     }
 }
 

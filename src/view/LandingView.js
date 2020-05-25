@@ -28,7 +28,6 @@ export default class LandingView extends BaseView {
     }
     _renderCafes(){
         let container = document.getElementsByClassName('landing-page__cafes__container').item(0);
-        console.log(this._context.landingCafeListModel._cafeListJson);
         let cafes = this._context.landingCafeListModel._cafeListJson;
         (new LandingCafesContainerComponent(container)).render(
             cafes.slice(this._context.landingCafeListModel._currentId
