@@ -6,7 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
-import NotificationComponent from "../components/Notification/Notification";
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -63,15 +63,6 @@ export default class UserProfileController{
             header: {
                 type: 'profile',
                 isOwner: this._userModel._isOwner,
-                exit: {
-                    event: {
-                        type: 'click',
-                        listener: async () => {
-                            await this._userModel.logout();
-                            router._goTo('/login');
-                        }
-                    }
-                }
             },
             profile: {
                 imgSrc: this._userModel.photo ? this._userModel.photo : '/images/userpic.png',

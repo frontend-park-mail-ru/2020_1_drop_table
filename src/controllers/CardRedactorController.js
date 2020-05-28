@@ -211,7 +211,7 @@ export default class CardRedactorController {
                 color = '';
                 for (let i = 1; i <= 3; i++) {
                     color += Math.round(
-                        (aRGB[i][aRGB[i].length - 1] == "%" ? 2.55 : 1) * parseInt(aRGB[i])).toString(16)
+                        (aRGB[i][aRGB[i].length - 1] == '%' ? 2.55 : 1) * parseInt(aRGB[i])).toString(16)
                         .replace(/^(.)$/, '0$1');
                 }
             }

@@ -2,7 +2,7 @@
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import NotificationComponent from '../components/Notification/Notification';
-import {router} from "../main/main";
+import {router} from '../main/main';
 
 /** контроллер профиля */
 export default class LoginController{
