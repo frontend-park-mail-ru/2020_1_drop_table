@@ -11,6 +11,10 @@ export default class CafeListModel{
 
     /** Инициализация модели */
     constructor() {
+        this.clear();
+    }
+
+    clear(){
         this._cafeModelsList = [];
         this._cafeListJson = [];
     }

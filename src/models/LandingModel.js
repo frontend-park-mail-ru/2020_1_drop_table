@@ -6,6 +6,10 @@ import {constants} from '../utils/constants';
 /** Модель лендинга (пока статическая) */
 export default class LandingModel { // Пока пустой и статичный
     constructor() {
+        this.clear();
+    }
+
+    clear(){
         this.cafes = [];
     }
 

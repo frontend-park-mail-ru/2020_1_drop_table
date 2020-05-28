@@ -12,6 +12,10 @@ import {authAjax} from '../utils/authAjax';
 export default class StaffListModel{
 
     constructor(userModel) {
+        this.clear(userModel);
+    }
+
+    clear(userModel){
         this._userModel = userModel;
         this._staffModelsList = [];
         const staffListData = this._loadStaffList();
