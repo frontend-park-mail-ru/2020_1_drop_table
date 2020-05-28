@@ -71,11 +71,11 @@ html.className = theme ? theme : 'theme-light';
 let app = document.getElementById('application');
 export const router = new Router();
 
-let userModel = new UserModel();
-let staffListModel = new StaffListModel(userModel);
-let cafeListModel = new CafeListModel();
-let landingCafeListModel = new LandingCafeListModel();
-let landingModel = new LandingModel();
+const userModel = new UserModel();
+const staffListModel = new StaffListModel(userModel);
+const cafeListModel = new CafeListModel();
+const landingCafeListModel = new LandingCafeListModel();
+const landingModel = new LandingModel();
 
 
 const staffListView = new StaffListView();
@@ -208,16 +208,11 @@ function doNotFound() {
 
 async function doLogout() {
     await userModel.logout();
-    console.log('logout');
-    userModel = new UserModel();
-    staffListModel = new StaffListModel(userModel);
-    cafeListModel = new CafeListModel();
-    landingCafeListModel = new LandingCafeListModel();
-    landingModel = new LandingModel();
-
-    sessionStorage.clear();
-    localStorage.clear();
-
+    userModel.clear();
+    staffListModel.clear(userModel);
+    cafeListModel.clear();
+    landingCafeListModel.clear();
+    landingModel.clear();
     router._goTo('/login');
 }
 

@@ -11,6 +11,10 @@ export default class LandingCafeListModel{
 
     /** Инициализация модели */
     constructor() {
+        this.clear();
+    }
+
+    clear(){
         this._cafeModelsList = [];
         this._cafeListJson = [];
         this._currentId = 0;

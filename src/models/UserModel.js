@@ -11,6 +11,10 @@ export default class UserModel {
 
     /** Инициализация модели */
     constructor() {
+        this.clear();
+    }
+
+    clear(){
         this._editedAt = null;
         this._email = null;
         this._id = null;

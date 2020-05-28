@@ -217,6 +217,9 @@ export default class StatisticsController{
 
     _makeExceptionContext(){
         return {
+            'cant found statistics data with this input': () => {
+                return [null, null]
+            },
             'offline': () => {
                 (new NotificationComponent('Похоже, что вы оффлайн.')).render();
                 return [null, null]
