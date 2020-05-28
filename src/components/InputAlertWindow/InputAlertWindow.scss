@@ -33,11 +33,11 @@
             font-family: Montserrat, sans-serif;
             &_input{
                 height: 50%;
-                width: 100%;
                 border: 2px solid black;
                 font-size: 2rem;
                 margin-bottom: 10px;
                 overflow: scroll;
+                padding-left: 5px;
 
             }
             &__button{

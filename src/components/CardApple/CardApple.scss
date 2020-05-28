@@ -326,7 +326,7 @@
     -webkit-appearance: none;
 
     &_h4{
-        margin: 1rem auto;
+        margin: 40px auto 30px auto;
         font-size: 2rem;
         font-weight: bold;
         font-family: Montserrat;
@@ -338,7 +338,9 @@
     //position: relative;
     //    //display: inline-block;
     margin: 0 auto;
-    width: 100%;
+    max-width: 400px;
+    width:28vw;
+    min-width: 306px;
 }
 
 .tooltip .tooltiptext {
@@ -379,9 +381,13 @@
 .card-form__buttons{
     display: flex;
     flex-wrap: wrap;
-    max-width: 400px;
-    margin: 0 auto;
+
+
     -webkit-appearance: none;
+    margin: 0 auto;
+    max-width: 400px;
+    width:28vw;
+    min-width: 306px;
     &__save{
         opacity: 75%;
         margin: 10px auto;

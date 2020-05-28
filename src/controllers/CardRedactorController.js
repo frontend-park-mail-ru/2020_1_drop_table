@@ -550,7 +550,7 @@ export default class CardRedactorController {
         for(let i = 0; i< buttonsNormal.length; i++){
             buttonsNormal.item(i).addEventListener('click',(e)=>{
                 description.className = 'loyalty-redactor__description-active';
-                description.style.justifyContent = this.getJustifyContentBuIndex(i);
+                // description.style.justifyContent = this.getJustifyContentBuIndex(i);
                 let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
                 for(let i = 0; i < buttonsActive.length; i++){
                     buttonsActive.item(i).className = 'loyalty-redactor__buttons__button-normal';
@@ -564,7 +564,7 @@ export default class CardRedactorController {
         let buttonsNormal = document.getElementsByClassName('loyalty-redactor__buttons__button-normal');
         let description = document.getElementsByClassName('loyalty-redactor__description-normal').item(0);
         description.className = 'loyalty-redactor__description-active';
-        description.style.justifyContent = this.getJustifyContentBuIndex(i);
+        // description.style.justifyContent = this.getJustifyContentBuIndex(i);
         let buttonsActive = document.getElementsByClassName('loyalty-redactor__buttons__button-active');
         if(buttonsActive.length) {
             for (let i = 0; i < buttonsActive.length; i++) {

@@ -202,7 +202,9 @@ export default class UserModel {
                 'Position': 'Владелец'
             },
             (response) => {
+
                 if (response.errors === null){
+                    this.password = '';
                     router._goTo('/myCafes');
                 } else {
                     throw response.errors;
@@ -231,6 +233,7 @@ export default class UserModel {
             {'email': this.email, 'password': this.password},
             (response) => {
                 if (response.errors === null){
+                    this.password = '';
                     router._goTo('/profile');
                 } else {
                     throw response.errors;

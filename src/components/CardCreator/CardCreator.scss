@@ -4,21 +4,27 @@
     font-family: 'Montserrat',SansSerif;
     display: flex;
     flex-direction: column;
+    width: 100%;
+
+}
+.loyalty-redactor_h4{
+margin: 40px auto 30px auto;
 }
 
 .card-redactor-container__card-form {
     &__decorate-text {
         display: flex;
         justify-content: space-around;
+        width: 70%;
         &_h4 {
             font-family: 'Montserrat', arial;
             font-size: 2rem;
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 40px auto 30px auto;
         }
     }
     &__image-picker{
-        width: 100%;
+        max-width: 500px;
         margin-bottom: 5%;
         justify-content: space-around;
         display: flex;
@@ -131,10 +137,8 @@
         flex-direction: column;
         padding-bottom: 0.5rem;
         border-radius: 0.5rem;
-
-
+        max-width: 500px;
         box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
-        width: -moz-available;
         &_span{
             font-size: 1rem;
             justify-self: center;
@@ -151,36 +155,57 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
+                width: 40%;
+                margin-top: 20px;
+                margin-bottom: 30px;
                 &_span{
                     text-align: center;
-                    margin: 0 auto;
+                    margin: 0 auto 10px auto;
+                    font-weight: bolder;
                 }
                 &_input{
+                    width: 100%;
                     margin: 0 auto;
+                    border: rgb(220,220,220);
+                    height: 30px;
                 }
             }
             &_foreground{
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
+                width: 40%;
+                margin-top: 20px;
+                margin-bottom: 30px;
                 &_span{
-                    margin: 0 auto;
+                    font-weight: bolder;
+                    margin: 0 auto 10px auto;
+                    text-align: center;
                 }
                 &_input{
+                    width: 100%;
                     margin: 0 auto;
+                    border: rgb(220,220,220);
+                    height: 30px;
                 }
               }
             &__label{
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
-
+                margin-top: 20px;
+                margin-bottom: 30px;
+                width: 40%;
                 &_span{
                     text-align: center;
-                    margin: 0 auto;
+                    margin: 0 auto 10px auto;
+                    font-weight: bolder;
                 }
                 &_input{
+                    width: 100%;
                     margin: 0 auto;
+                    border: rgb(220,220,220);
+                    height: 30px;
                 }
 
             }

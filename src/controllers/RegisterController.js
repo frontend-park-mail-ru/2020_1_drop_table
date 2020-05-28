@@ -78,7 +78,7 @@ export default class RegisterController{
                         {
                             type: 'password',
                             id: 'password',
-                            data: '',
+                            data: this._userModel.password,
                             labelData: 'Пароль',
                             inputOption: 'required',
                         },
@@ -116,7 +116,7 @@ export default class RegisterController{
             {
                 element: form.elements['full-name'],
                 validate: () => {
-                    if(form.elements['full-name'].value.toString().length < 4){
+                    if(form.elements['full-name'].value.toString().length < 1){
                         return 'Имя слишком короткое';
                     }
                 }
@@ -133,8 +133,8 @@ export default class RegisterController{
             {
                 element: form.elements['password'],
                 validate: () => {
-                    if(form.elements['password'].value.toString().length < 6){
-                        return 'Пароль слишком короткий, минимальная длина пароля 6 символов.';
+                    if(form.elements['password'].value.toString().length < 8){
+                        return 'Пароль слишком короткий.Необходимо минимум 8 символов';
                     }
                 }
             },

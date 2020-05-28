@@ -36,7 +36,7 @@ export default class Header{
     _setProperties(context){
         console.log(context['type']);
         if(!context['isOwner']){
-            this._menuList = []
+            this._menuList = [{href: '', text: ''}]
         }
         if (context['type'] === 'auth') {
             this._hasAvatar = false;
@@ -62,6 +62,7 @@ export default class Header{
             this._hasAvatar = false;
             this._hasLogin = false;
             this._hasExit = false;
+            this._menuList.push({href: '/login', text: 'Войти'})
         } else {
             this._head = document.createElement('div');
             this._hasAvatar = false;

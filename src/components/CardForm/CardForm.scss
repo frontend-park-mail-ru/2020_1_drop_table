@@ -7,11 +7,11 @@
 .card-form__input-auxiliary-field{
     display: flex;
     flex-direction: column;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    margin-right: 0.5rem ;
-    margin-left: 0.5rem ;
+    //margin-bottom: 0.5rem;
+    //padding-bottom: 0.5rem;
+    //border-radius: 0.5rem;
+    //margin-right: 0.5rem ;
+    //margin-left: 0.5rem ;
 }
 
 .card-form__input-primary-field > .labelField_label{
@@ -32,12 +32,34 @@
  }
 
 .HeaderFieldsContainer,
+.PrimaryFieldsContainer{
+    padding-bottom: 10px;
+}
+
+
+@media(max-width: 820px) {
+    .HeaderFieldsContainer,
+    .PrimaryFieldsContainer,
+    .SecondaryFieldsContainer,
+    .AuxiliaryFieldsContainer{
+        max-width: 100%;
+    }
+}
+@media(min-width: 820px) {
+    .HeaderFieldsContainer,
+    .PrimaryFieldsContainer,
+    .SecondaryFieldsContainer,
+    .AuxiliaryFieldsContainer{
+        max-width: 500px;
+    }
+
+}
+.HeaderFieldsContainer,
 .PrimaryFieldsContainer,
 .SecondaryFieldsContainer,
 .AuxiliaryFieldsContainer{
     display:flex;
     flex-direction: column;
-    max-width: 100%;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
 
@@ -45,6 +67,7 @@
 
     transition: transform 0.25s ease-in-out;
 }
+
 
 
 .HeaderFieldsContainer, .PrimaryFieldsContainer{

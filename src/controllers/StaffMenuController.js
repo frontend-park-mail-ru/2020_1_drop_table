@@ -173,6 +173,7 @@ export default class StaffMenuController{
         authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
             {'new_purchases':Number(purchaseInput.value)}, (response) => {
                 if (response.errors === null) {
+                    window.location.reload(true);
                     (new NotificationComponent('Успешно')).render();
                 } else {
                     console.log(response.errors);
@@ -188,6 +189,7 @@ export default class StaffMenuController{
         authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
             {'points_count':Number(purchaseInput.value)}, (response) => {
                 if (response.errors === null) {
+                    window.location.reload(true);
                     (new NotificationComponent('Успешно')).render();
                 } else {
                     console.log(response.errors);

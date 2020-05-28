@@ -3,19 +3,18 @@
 {{#if labelData}}
     <label class="labelField_label" for={{labelID}}>{{labelData}}</label>
 
-    <input class="labelField" maxlength="10" {{inputOption}} type="{{type}}" id="{{labelID}}" placeholder= {{labelText}} >
+    <input class="labelField" maxlength="10" {{inputOption}} type="{{type}}" id="{{labelID}}" value= {{labelText}} >
 
 {{/if}}
 
 {{#if valueData}}
     <label class="valueField_label" for={{valueID}}>{{valueData}}</label>
 
-    <input class="valueField" maxlength="10" {{inputOption}} type="{{type}}" id="{{valueID}}" placeholder= {{valueText}}>
+    <input class="valueField" maxlength="10" {{inputOption}} type="{{type}}" id="{{valueID}}" value= {{valueText}}>
 {{/if}}
 
 {{#if button}}
     <button class="field-button">
-        <i>{{buttonsymbol}}</i>
         <span class="button-text">{{button}}</span>
     </button>
 {{/if}}

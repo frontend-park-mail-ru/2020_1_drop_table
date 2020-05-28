@@ -154,7 +154,7 @@ export default class EditCafeController{
             {
                 element: form.elements['name'],
                 validate: () => {
-                    if(form.elements['name'].value.toString().length < 2){
+                    if(form.elements['name'].value.toString().length < 1){
                         return 'Название кафе слишком короткое';
                     }
                 }
@@ -163,15 +163,15 @@ export default class EditCafeController{
             {
                 element: form.elements['address'],
                 validate: () => {
-                    if(form.elements['address'].value.toString().length < 6){
-                        return 'Адрес кафе слишком короткий';
+                    if(form.elements['address'].value.toString().length < 1){
+                        return 'Адрес кафе слишком короткий ';
                     }
                 }
             },
             {
                 element: form.elements['description'],
                 validate: () => {
-                    if(form.elements['description'].value.toString().length < 6){
+                    if(form.elements['description'].value.toString().length < 3){
                         return 'Описание кафе слишком короткое';
                     }
                 }
