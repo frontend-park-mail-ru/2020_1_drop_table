@@ -254,21 +254,21 @@
     flex-wrap: wrap;
     margin: 5px auto;
     .landing-page__search{
-        height: 50px;
+        height: 40px;
         width: 300px;
-        border: 1px solid;
+        border: 1px #1C768F solid;
         margin: 0 auto;
         padding-left: 5px;
         font-size: 1rem;
         font-weight: normal;
     }
     #searchButton{
-        height: 54px;
+        height: 44px;
         font-family: Montserrat;
         font-size: 1rem;
         color: white;
         width: 100px;
-        border: none;
+        border: 1px #1C768F solid;
         background-color: #1C768F;
         transition: background-color 1s ease;
         cursor: pointer;

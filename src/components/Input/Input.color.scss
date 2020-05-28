@@ -1,7 +1,7 @@
 @import '../../scss/themes.scss';
 .labelField , .valueField{
     @include themify($themes){
-        border-color: themed('textColor');
+
     }
 }
 .field-button {

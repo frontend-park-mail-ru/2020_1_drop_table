@@ -18,7 +18,8 @@
     flex-direction: column;
 
       &_h4{
-        margin-left:20px;
+        margin-left:30px;
+        margin-bottom: 15px;
         font-size: 2rem;
         color: black;
 
@@ -27,14 +28,16 @@
       border: 2px solid black;
       width: auto;
       font-size: 2rem;
-      margin:0 20px;
+      margin:0 30px;
+      padding-left: 5px;
     }
   }
   &__answer-type{
     display: flex;
     flex-direction: column;
     &_h4{
-      margin-left:20px;
+      margin-left:30px;
+      margin-bottom: 15px;
       font-size: 2rem;
       color: black;
     }
@@ -42,11 +45,12 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      margin-left: 15px;
+      margin-left: 30px;
       &__type{
         cursor: pointer;
         //width: 10vw;
         height: 50px;
+        padding: 0 20px;
         background-color: rgba(28, 118, 143, 0.55);
         display: flex;
         flex-direction: column;
@@ -58,6 +62,7 @@
         }
         &-active{
           cursor: pointer;
+          padding: 0 10px;
           //width: 10vw;
           height: 50px;
           background-color:#1C768F;
@@ -92,7 +97,8 @@
     display: flex;
     flex-direction: column;
     &_h4{
-      margin-left:20px;
+      margin-left:30px;
+      margin-bottom: 15px;
       font-size: 2rem;
       color: black;
     }
@@ -100,11 +106,14 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
+      margin: 0 30px;
       &_add-button{
         cursor: pointer;
         height: 50px;
+        padding: 0 10px;
         background-color: #1C768F;
         transition: background-color 1s ease;
+        margin: 10px 0;
         &:active {
           background-color: #fa9917;
           transition: background-color 0s ease;
@@ -112,7 +121,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        margin: 10px;
         box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.15);
         &:hover{
           box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
@@ -132,7 +140,7 @@
 
         &__cell{
           display: flex;
-          margin: 10px 20px;
+          margin: 10px 10px;
           height: 50px;
           &_input{
             border-top: 2px solid black;
@@ -141,6 +149,7 @@
             border-bottom: 2px solid black;
             min-width: 75px;
             font-size: 1rem;
+            padding-left: 5px;
           }
           &__button{
             border-top: 2px solid black;
@@ -218,6 +227,7 @@
       //width:100%;
       font-size: 1.3rem;
       overflow: scroll;
+      padding-left: 5px;
     }
   }
 
