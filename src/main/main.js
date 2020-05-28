@@ -71,11 +71,11 @@ html.className = theme ? theme : 'theme-light';
 let app = document.getElementById('application');
 export const router = new Router();
 
-const userModel = new UserModel();
-const staffListModel = new StaffListModel(userModel);
-const cafeListModel = new CafeListModel();
-const landingCafeListModel = new LandingCafeListModel();
-const landingModel = new LandingModel();
+let userModel = new UserModel();
+let staffListModel = new StaffListModel(userModel);
+let cafeListModel = new CafeListModel();
+let landingCafeListModel = new LandingCafeListModel();
+let landingModel = new LandingModel();
 
 
 const staffListView = new StaffListView();
@@ -205,6 +205,19 @@ function doNotFound() {
     const pageNotFoundController = new PageNotFoundController(pageNotFoundView, 404, userModel);
     pageNotFoundController.control();
 }
+
+async function doLogout() {
+    await this.userModel.logout();
+
+    userModel = new UserModel();
+    staffListModel = new StaffListModel(userModel);
+    cafeListModel = new CafeListModel();
+    landingCafeListModel = new LandingCafeListModel();
+    landingModel = new LandingModel();
+
+    router._goTo('/login');
+}
+
 function doStatistics(){
     const statisticsView = new StatisticsView(app);
     const statisticsController = new StatisticsController(statisticsView, null, staffListModel);
@@ -247,7 +260,7 @@ router.get('/points/info/{uuid}', doCustomerMenu);
 router.get('/survey/{cafeId}/{uuid}', doSurvey);
 
 router.get('/error/{code}', doError);
-
+router.get('/logout', doLogout);
 
 
 router.get('/statistics', doStatistics);
