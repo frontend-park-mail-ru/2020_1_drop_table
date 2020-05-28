@@ -208,13 +208,11 @@ function doNotFound() {
 
 async function doLogout() {
     await userModel.logout();
-
     userModel.clear();
     staffListModel.clear(userModel);
     cafeListModel.clear();
     landingCafeListModel.clear();
     landingModel.clear();
-
     router._goTo('/login');
 }
 
