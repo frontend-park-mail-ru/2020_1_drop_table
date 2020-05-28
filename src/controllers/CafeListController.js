@@ -1,8 +1,8 @@
 'use strict';
 
 import {router} from '../main/main';
-import NotificationComponent from "../components/Notification/Notification";
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
+import NotificationComponent from '../components/Notification/Notification';
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 
 /** контроллер списка кафе */
 export default class CafeListController{

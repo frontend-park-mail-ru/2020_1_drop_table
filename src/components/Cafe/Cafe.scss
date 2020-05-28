@@ -26,6 +26,7 @@
   font-family: 'Montserrat', arial;
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 10px;
   &__text-field {
     display: flex;
     flex-direction: column;
@@ -211,4 +212,7 @@ input[type=file] {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+textarea{
+  height: max-content;
 }

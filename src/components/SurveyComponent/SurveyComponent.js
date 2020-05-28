@@ -13,7 +13,6 @@ export class SurveyComponent {
      * @param {int} id идентификатор кафе
      */
     constructor(el) {
-        console.log('constr survey', el)
         this._el = el;
     }
 
@@ -32,7 +31,6 @@ export class SurveyComponent {
 
     /** Отрисоака */
     render(context) {
-        console.log('render 1', context)
         this._renderTemplate(context);
 
     }

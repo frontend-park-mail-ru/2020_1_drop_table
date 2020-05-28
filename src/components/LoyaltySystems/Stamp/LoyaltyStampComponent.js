@@ -26,7 +26,6 @@ export class LoyaltyStampComponent {
      * @private
      */
     _renderTemplate(context) {
-        console.log('context stamp', context, context.cups_count);
         let stamps = context.cups_count;
         this._el.innerHTML = LoyaltyStamp({text: this._text, stamps:stamps });
     }

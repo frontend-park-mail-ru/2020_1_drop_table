@@ -1,9 +1,8 @@
 import {router} from '../main/main';
-import {InputAlertWindowComponent} from '../components/InputAlertWindow/InputAlertWindow';
 import NotificationComponent from '../components/Notification/Notification';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 /** контроллер кафе */
-export default class CafePageController {
+export default class CafePreviewController {
 
     /**
      * Инициализация CafePageController
@@ -11,64 +10,38 @@ export default class CafePageController {
      * @param {UserModel} userModel модель пользователя
      * @param {CafePageView} cafePageView view кафе
      */
-    constructor(cafeListModel, userModel, cafePageView){
-        this._cafeListModel = cafeListModel;
-        this._userModel = userModel;
-        this._cafePageView = cafePageView;
+    constructor(userModel,cafePreView, cafePreviewModel){
 
+        this._userModel = userModel;
+        this._cafePreView = cafePreView;
+        this._cafePreviewModel = cafePreviewModel;
         this._id = null;
     }
 
     async update(){
         try {
             await this._userModel.update();
-            await this._cafeListModel.update();
         } catch (exception) {
             (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
         }
-    }
-
-    /** Event добавление работника */
-    addStaffButtonClick(){
-        try {
-            (new InputAlertWindowComponent(this._userModel.addStaffQR, this._id)).render();
-        } catch (exception) {
-            (new ServerExceptionHandler(document.body, this._makeExceptionContext())).handle(exception);
-        }
-    }
-
-    /** Event редактирование кафе */
-    editCafeButtonClick(){
-        router._goTo(`/editCafe/${this._id}`);
     }
 
     /**
-     * Создание контекста для CafePageView
+     * Создание контекста для CafePreview
      * @param {int} id идентификатор кафе
      * @return {obj} созданный контекст
      */
-    _makeViewContext(id){
+    async _makeViewContext(id){
         this._id = id;
-        const cafe = this._cafeListModel.getCafeById(id);
+        await this._cafePreviewModel.getCafePreview(id);
         let cafeContext = {
-            'cafe': cafe.context
+            'cafe': this._cafePreviewModel.context
         };
 
         cafeContext['header'] = {
-            type: null,
-            isOwner: this._userModel._isOwner,
-            avatar: {
-                photo: this._userModel.photo,
-                event: {
-                    type: 'click',
-                    listener: () => {router._goTo('/profile')}
-                }
-            }
+            type: 'preview',
+            isOwner: false,
         };
-
-        cafeContext['add-staff-button'] = this.addStaffButtonClick.bind(this);
-
-        cafeContext['cafe-page__cafe-info__edit-button'] = this.editCafeButtonClick.bind(this);
 
         return cafeContext;
     }
@@ -90,10 +63,11 @@ export default class CafePageController {
      * @param {int} id идентификатор кафе
      */
     async control(id){
+        console.log('control cafe preview')
         try {
-            await this.update();
-            this._cafePageView.context = this._makeViewContext(id);
-            this._cafePageView.render();
+            //await this.update();
+            this._cafePreView.context =  await this._makeViewContext(id);
+            this._cafePreView.render();
         } catch (error) {
             console.log(error.message);
         }

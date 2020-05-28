@@ -30,41 +30,41 @@ export default class ProfileComponent {
             context['event']['listener']
         );
 
-        const switcher = this._parent.getElementsByClassName('switchTheme').item(0);
-        const app = document.getElementsByTagName('html').item(0);
-
-        if(app.className.toString() === 'theme-dark'){
-            switcher.checked = false;
-            localStorage.setItem('theme', 'theme-dark');
-
-        } else if(app.className.toString() === 'theme-light'){
-            switcher.checked = true;
-            localStorage.setItem('theme', 'theme-light');
-        }
-
-        const switchTheme = this._parent.getElementsByClassName('switch').item(0);
-        switchTheme.addEventListener('click', function (e){
-            e.preventDefault();
-            if(app.className.toString() === 'theme-dark'){
-                app.className = 'theme-light';
-                localStorage.setItem('theme', 'theme-light');
-                switcher.checked = true;
-
-            } else if(app.className.toString() === 'theme-light'){
-                app.className = 'theme-dark';
-                localStorage.setItem('theme', 'theme-dark');
-                switcher.checked = false;
-            }
-
-            const img = document.getElementsByClassName('nav-header_img').item(0);
-            const theme = localStorage.getItem('theme');
-            if(theme === 'theme-dark'){
-                img.src = '/images/logo-dark.png';
-            } else{
-                img.src = '/images/logo-light.png';
-            }
-
-        })
+        // const switcher = this._parent.getElementsByClassName('switchTheme').item(0);
+        // const app = document.getElementsByTagName('html').item(0);
+        //
+        // if(app.className.toString() === 'theme-dark'){
+        //     switcher.checked = false;
+        //     localStorage.setItem('theme', 'theme-dark');
+        //
+        // } else if(app.className.toString() === 'theme-light'){
+        //     switcher.checked = true;
+        //     localStorage.setItem('theme', 'theme-light');
+        // }
+        //
+        // const switchTheme = this._parent.getElementsByClassName('switch').item(0);
+        // switchTheme.addEventListener('click', function (e){
+        //     e.preventDefault();
+        //     if(app.className.toString() === 'theme-dark'){
+        //         app.className = 'theme-light';
+        //         localStorage.setItem('theme', 'theme-light');
+        //         switcher.checked = true;
+        //
+        //     } else if(app.className.toString() === 'theme-light'){
+        //         app.className = 'theme-dark';
+        //         localStorage.setItem('theme', 'theme-dark');
+        //         switcher.checked = false;
+        //     }
+        //
+        //     const img = document.getElementsByClassName('nav-header_img').item(0);
+        //     const theme = localStorage.getItem('theme');
+        //     if(theme === 'theme-dark'){
+        //         img.src = '/images/logo-dark.png';
+        //     } else{
+        //         img.src = '/images/logo-light.png';
+        //     }
+        //
+        // })
     }
 
     /**

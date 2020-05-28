@@ -37,7 +37,7 @@ export default class PageNotFoundController{
             context['error']={
                 code: code,
                 description:`
-                404 ошибка краткое описание или чето еще
+                404 
                 `
             };
             break;
@@ -45,7 +45,7 @@ export default class PageNotFoundController{
             context['error']={
                 code: code,
                 description:`
-                405 ошибка краткое описание или чето еще
+                405 
                 `
             };
             break;
@@ -54,7 +54,7 @@ export default class PageNotFoundController{
             context['error']={
                 code: code,
                 description:`
-                406 ошибка краткое описание или чето еще
+                406 ошибка 
                 `
             };
             break;
@@ -62,7 +62,7 @@ export default class PageNotFoundController{
             context['error']={
                 code: code,
                 description:`
-                Что-то новенькое 
+                Что-то пошло не так.
                 `
             };
             break;
@@ -89,7 +89,6 @@ export default class PageNotFoundController{
         try {
             await this.update();
             let context = this._makeViewContext()
-            console.log('control', context)
             this._pageNotFoundView.render(this._makeViewContext(context));
         } catch (error) {
             console.log(error.message);

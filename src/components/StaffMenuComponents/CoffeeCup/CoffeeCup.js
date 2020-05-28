@@ -18,20 +18,14 @@ export class CoffeeCup {
 
 
     _renderTemplate(){
-        console.log('add tmpl');
-        console.log('aa', this._context);
         this._el.innerHTML = CoffeeCupTemplate();
     }
 
     _addListeners(){
-        console.log('add listeners');
         const entriesPolyFill = (context) => Object.keys(context).map(key => [key, context[key]]);
         let events = entriesPolyFill(this._context['events']);
-        console.log('context events', events)
         for(let i = 0; i < events.length; i++){
-            console.log('test',events[i]);
             let obj = this._el.getElementsByClassName(events[i][1]['object']).item(0);
-            console.log('test',obj);
             obj.addEventListener('click', events[i][1]['listener'].bind(this))
         }
         this.loadCoffeeCups();
@@ -42,6 +36,7 @@ export class CoffeeCup {
             null, (response) => {
                 if (response.errors === null) {
                     this.points = Number(JSON.parse(response.data).coffee_cups);
+                    this.stack = Number(JSON.parse(response.data).cups_count);
                     document.getElementById('label').innerHTML = '☕️'.repeat(this.points  % this.stack);
                     let e = document.getElementById('stacks');
                     let child = e.lastElementChild;
@@ -52,11 +47,23 @@ export class CoffeeCup {
                     for (let i = 0; i < Math.floor(this.points / this.stack); i++) {
                         let btn = document.createElement('button');
                         let t = document.createTextNode('☕️');
-                        btn.addEventListener('click', this.coffeeCupPointMinusStack);
+                        btn.addEventListener('click', this.coffeeCupPointMinusStack.bind(this));
                         btn.appendChild(t);
                         btn.className = 'stackCoffeeButton';
                         document.getElementById('stacks').appendChild(btn);
                     }
+                } else {
+                    (new NotificationComponent('Ошибка')).render();
+                    throw response.errors;
+                }
+            });
+    }
+    coffeeCupPointMinusStack() {
+        authAjax('PUT',`${constants.PATH}/api/v1/customers/${this.token}/`,
+            {'coffee_cups':Number(this.points - this.stack), 'cups_count': this.stack}, (response) => {
+                if (response.errors === null) {
+                    (new NotificationComponent('Успешно')).render();
+                    this.loadCoffeeCups()
                 } else {
                     (new NotificationComponent('Ошибка')).render();
                     throw response.errors;

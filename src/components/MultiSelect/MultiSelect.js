@@ -40,14 +40,14 @@ let Motus = {};
         labels.title = (options && options.title) ? options.title : 'Поле';
 
         //define the elements
-        let container = document.createElement("div");
-        let multiselectLabel = document.createElement("div");
-        let dataContainer = document.createElement("div");
-        let button = document.createElement("button");
-        let searchField = document.createElement("input");
+        let container = document.createElement('div');
+        let multiselectLabel = document.createElement('div');
+        let dataContainer = document.createElement('div');
+        let button = document.createElement('button');
+        let searchField = document.createElement('input');
         let clearSelection = document.createElement('span');
-        let carret = document.createElement("b");
-        let list = document.createElement("ul");
+        let carret = document.createElement('b');
+        let list = document.createElement('ul');
 
         //set the ids
         let timestamp = Math.round(new Date().getTime() * Math.random());
@@ -69,35 +69,35 @@ let Motus = {};
         }
 
         let _selectionText = function(element) {
-            let text = "";
-            let selection = element.querySelectorAll("input:checked");
+            let text = '';
+            let selection = element.querySelectorAll('input:checked');
             if (selection.length === 0) {
                 text = labels.emptyText;
             } else if (selection.length > 3) {
-                text = selection.length + " " +labels.selectedText;
+                text = selection.length + ' ' +labels.selectedText;
             } else {
                 let arr = [];
                 for (let i = 0; i < selection.length; i++) {
                     arr.push(selection[i].parentNode.textContent);
                 }
-                text = arr.join(",");
+                text = arr.join(',');
             }
             return text;
         };
 
         let _openList = function(e) {
-            list.style.display = "block";
+            list.style.display = 'block';
             e.srcElement.children[0].focus();
         };
 
         let _selectItem = function(e) {
             let text = _selectionText(container);
             container
-                .getElementsByTagName("button")[0]
-                .children[0].setAttribute("placeholder", text);
+                .getElementsByTagName('button')[0]
+                .children[0].setAttribute('placeholder', text);
 
             if(selectCb){
-                let selectionElements = container.querySelectorAll("input:checked");
+                let selectionElements = container.querySelectorAll('input:checked');
                 let selection = [];
                 for(let i=0; i < selectionElements.length; i++){
                     selection.push(selectionElements[i].value);
@@ -108,31 +108,31 @@ let Motus = {};
         };
 
         let _clearSearch = function() {
-            let elements = container.getElementsByTagName("li");
+            let elements = container.getElementsByTagName('li');
             for (let i = 0; i < elements.length; i++) {
-                elements[i].style.display = "";
+                elements[i].style.display = '';
             }
         };
 
         let _performSearch = function(e) {
             if(e.which != 13 && e.which != 38 && e.which != 40){
-                let active = list.getElementsByClassName("multiselect-label--active");
+                let active = list.getElementsByClassName('multiselect-label--active');
                 if( active.length > 0 ){
-                    active[0].classList.remove("multiselect-label--active");
+                    active[0].classList.remove('multiselect-label--active');
                 }
                 let first = true;
                 let filter = e.srcElement.value.toUpperCase();
-                let elements = container.getElementsByTagName("li");
+                let elements = container.getElementsByTagName('li');
                 for (let i = 0; i < elements.length; i++) {
-                    let cb = elements[i].getElementsByTagName("label")[0].textContent;
+                    let cb = elements[i].getElementsByTagName('label')[0].textContent;
                     if (cb.toUpperCase().indexOf(filter) !== -1) {
                         if(first){
                             first = false;
-                            elements[i].children[0].children[0].classList.add("multiselect-label--active");
+                            elements[i].children[0].children[0].classList.add('multiselect-label--active');
                         }
-                        elements[i].style.display = "";
+                        elements[i].style.display = '';
                     } else {
-                        elements[i].style.display = "none";
+                        elements[i].style.display = 'none';
                     }
                 }
             }
@@ -158,56 +158,56 @@ let Motus = {};
             e.stopPropagation();
         };
 
-        container.classList.add("multiselect-container");
-        multiselectLabel.classList.add("multiselect-label");
+        container.classList.add('multiselect-container');
+        multiselectLabel.classList.add('multiselect-label');
         multiselectLabel.innerHTML = labels.title;
-        dataContainer.classList.add("multiselect-data-container");
-        button.classList.add("multiselect-button");
+        dataContainer.classList.add('multiselect-data-container');
+        button.classList.add('multiselect-button');
 
-        searchField.setAttribute("type", "text");
-        searchField.setAttribute("placeholder", labels.emptyText);
-        searchField.classList.add("multiselect-text");
-        searchField.addEventListener("keyup", _performSearch);
+        searchField.setAttribute('type', 'text');
+        searchField.setAttribute('placeholder', labels.emptyText);
+        searchField.classList.add('multiselect-text');
+        searchField.addEventListener('keyup', _performSearch);
 
         clearSelection.classList.add('multiselect-clear');
         clearSelection.innerHTML = 'X';
-        clearSelection.addEventListener("click", _fnClearSelection);
+        clearSelection.addEventListener('click', _fnClearSelection);
 
-        carret.classList.add("carret");
+        carret.classList.add('carret');
 
         button.appendChild(searchField);
         button.appendChild(clearSelection);
         button.appendChild(carret);
 
-        button.addEventListener("click", _openList);
+        button.addEventListener('click', _openList);
 
-        list.classList.add("multiselect-list");
+        list.classList.add('multiselect-list');
 
         for (let i = -1; i < data.length; i++) {
-            let item = document.createElement("li");
-            let a = document.createElement("a");
-            let label = document.createElement("label");
-            let input = document.createElement("input");
+            let item = document.createElement('li');
+            let a = document.createElement('a');
+            let label = document.createElement('label');
+            let input = document.createElement('input');
 
-            a.setAttribute("tabindex", "0");
+            a.setAttribute('tabindex', '0');
 
-            label.classList.add("multiselect-item-label");
+            label.classList.add('multiselect-item-label');
 
             if(i == -1){
-                a.addEventListener("click", _fnSelectAll);
-                label.appendChild(document.createTextNode("Выбрать все"));
+                a.addEventListener('click', _fnSelectAll);
+                label.appendChild(document.createTextNode('Выбрать все'));
                 label.classList.add('multiselect-item-label--select-all');
             }
             else{
                 if (i == 0) {
-                    label.classList.add("multiselect-item-label--active");
+                    label.classList.add('multiselect-item-label--active');
                 }
-                input.setAttribute("type", "checkbox");
-                input.setAttribute("class", "multiselect-checkbox");
+                input.setAttribute('type', 'checkbox');
+                input.setAttribute('class', 'multiselect-checkbox');
 
                 label.appendChild(input);
-                input.setAttribute("value", data[i].value);
-                input.addEventListener("change", _selectItem);
+                input.setAttribute('value', data[i].value);
+                input.addEventListener('change', _selectItem);
                 label.appendChild(document.createTextNode(data[i].label));
             }
             a.appendChild(label);
@@ -222,20 +222,20 @@ let Motus = {};
         element.appendChild(container);
 
         //Change to the specific window
-        document.addEventListener("click", function(e) {
+        document.addEventListener('click', function(e) {
             if ( !_fnIsChild(e.target, container) ) {
-                list.style.display = "none";
-                searchField.value = "";
+                list.style.display = 'none';
+                searchField.value = '';
                 _clearSearch();
             }
         });
 
-        document.addEventListener("keyup", function(e) {
+        document.addEventListener('keyup', function(e) {
             if(list.style.display == 'block'){
                 //mouse down
                 if (e.which === 40) {
                     let active = list.getElementsByClassName(
-                        "multiselect-label--active"
+                        'multiselect-label--active'
                     )[0];
                     let next = active.parentNode.parentNode.nextSibling;
                     //Find the next visible element
@@ -243,10 +243,10 @@ let Motus = {};
                         next = next.nextSibling;
                     }
                     if (next) {
-                        active.classList.remove("multiselect-label--active");
+                        active.classList.remove('multiselect-label--active');
                         next
-                            .getElementsByClassName("multiselect-label")[0]
-                            .classList.add("multiselect-label--active");
+                            .getElementsByClassName('multiselect-label')[0]
+                            .classList.add('multiselect-label--active');
                         next.children[0].focus();
                         searchField.focus();
                         e.preventDefault();
@@ -254,7 +254,7 @@ let Motus = {};
                 } else if (e.which === 38) {
                     //mouse up
                     let active = list.getElementsByClassName(
-                        "multiselect-label--active"
+                        'multiselect-label--active'
                     )[0];
                     let prev = active.parentNode.parentNode.previousSibling;
                     //Find the previous visible element
@@ -262,17 +262,17 @@ let Motus = {};
                         prev = prev.previousSibling;
                     }
                     if (prev) {
-                        active.classList.remove("multiselect-label--active");
+                        active.classList.remove('multiselect-label--active');
                         prev
-                            .getElementsByClassName("multiselect-label")[0]
-                            .classList.add("multiselect-label--active");
+                            .getElementsByClassName('multiselect-label')[0]
+                            .classList.add('multiselect-label--active');
                         prev.children[0].focus();
                         searchField.focus();
                         e.preventDefault();
                     }
                 } else if (e.which === 13) {
                     // enter
-                    list.getElementsByClassName("multiselect-label--active")[0].click();
+                    list.getElementsByClassName('multiselect-label--active')[0].click();
                     e.preventDefault();
                 }
             }

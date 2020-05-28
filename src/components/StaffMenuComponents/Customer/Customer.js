@@ -4,7 +4,6 @@ import CustomerInfo from './Customer.hbs';
 export class Customer {
 
     constructor(el = document.getElementById('application'), uuid, context) {
-        console.log('context customer ', context)
         this._el = el;
         this.points = 0;
         this.token = uuid;
@@ -16,9 +15,7 @@ export class Customer {
 
 
     _renderTemplate(){
-        console.log('aa', this._context);
         let context = this.makeTmlContext(this._context);
-        console.log('finalContext', context)
         this._el.innerHTML = CustomerInfo(context);
     }
 
@@ -51,12 +48,10 @@ export class Customer {
             context.surveyResult = [];
 
             for(let i = 0; i < surveyData.length; i++){
-                console.log( surveyData[i]);
                 let answer = '';
                 if(!surveyData[i].listType){
                     answer = surveyData[i].text;
                 }else{
-                    console.log('test123',surveyData[i].answerOptions);
                     for(let j = 0; j < surveyData[i].answerOptions.length; j++){
                         if(surveyData[i].answerOptions[j].checked){
                             answer+=`${surveyData[i].answerOptions[j].text}\n`;

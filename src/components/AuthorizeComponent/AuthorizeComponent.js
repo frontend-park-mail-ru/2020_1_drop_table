@@ -51,7 +51,6 @@ export default class AuthorizeComponent {
     render(context) {
         this.renderTemplate(context);
         this._addListener(context);
-        console.log(context['form']);
         this.renderForm(context['form']);
     }
 }

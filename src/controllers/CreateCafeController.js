@@ -6,7 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
-import NotificationComponent from "../components/Notification/Notification";
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер создания кафе */
 export default class CreateCafeController{

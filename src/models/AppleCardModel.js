@@ -300,11 +300,11 @@ export class AppleCardModel {
         if(this._location){
             console.log('test 2');
             json['locations'] =  [
-                {
-                    'longitude':Number(this._latitude),
-                    'latitude':  Number(this._longitude),
-                    'relevantText': `Заходи в ${this._organizationName}!`
-                },
+                // {
+                //     'longitude':Number(this._latitude),
+                //     'latitude':  Number(this._longitude),
+                //     'relevantText': `Заходи в ${this._organizationName}!`
+                // },
                 {
                     'longitude':Number(this._longitude),
                     'latitude': Number(this._latitude) ,
@@ -661,11 +661,13 @@ export class AppleCardModel {
         formData.append('jsonData', JSON.stringify(data));
         formData.append('type',JSON.stringify(loyalty.type));
         formData.append('loyalty_info',JSON.stringify(loyalty.loyalty_info))
-        if (images['icon.png'] && images['strip.png']) {
+        if (images['icon.png']) {
             formData.append('icon.png',(images['icon.png'])?images['icon.png']:this._icon) ;
             formData.append('icon@2x.png',(images['icon@2x.png'])?images['icon@2x.png']:this._icon);
             formData.append('logo.png',(images['logo.png'])?images['logo.png']:this._icon );
             formData.append('logo@2x.png',(images['logo@2x.png'])?images['logo@2x.png']:this._icon);
+        }
+        if(images['strip.png']){
             formData.append('strip.png',(images['strip.png'])?images['strip.png']:this._strip  );
             formData.append('strip@2x.png',(images['strip@2x.png'])?images['strip@2x.png']:this._strip);
         }

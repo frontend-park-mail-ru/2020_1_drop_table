@@ -1,0 +1,61 @@
+<div class="cafe-page">
+
+    <div class="cafe-page__cafe-info">
+
+        <div class="cafe-page__cafe-info__image-container">
+            <img class="cafe-page__cafe-info__image-container_img" src="{{photo}}"/>
+        </div>
+
+        <div class="cafe-page__cafe-info__description-container">
+            <h4 class="cafe-page__cafe-info__description-container_h4" >О месте</h4>
+            <div class="cafe-page__cafe-info__description-container__align-div">
+                <div class="cafe-page__cafe-info__description-container__align-div__relative-div">
+                    <p class="cafe-page__cafe-info__description-container__align-div__relative-div__address_p">{{address}}</p>
+                    <p class="cafe-page__cafe-info__description-container__align-div__relative-div_p">{{description}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="cafe-page__cafe-info__name-container">
+            <span class="cafe-page__cafe-info__name-container_span">{{name}}</span>
+        </div>
+
+        <div class="cafe-page__cafe-info__time-container">
+            <div class="cafe-page__cafe-info__time-container__time">
+                <span class="cafe-page__cafe-info__time-container__time_span">{{openTime}}</span>
+                <div class="cafe-page__cafe-info__time-container__time__strip"></div>
+                <span class="cafe-page__cafe-info__time-container__time_span">{{closeTime}}</span>
+            </div>
+        </div>
+
+        <div class="cafe-page__cafe-info__address-container">
+            <span class="cafe-page__cafe-info__address-container_span" ></span>
+        </div>
+    </div>
+
+</div>
+<div class="apple-passes">
+    {{#if percents}}
+        <div class="apple-passes__pass-card">
+            <span class="apple-passes__pass-card_span">Процентная скидка</span>
+            <img class="apple-passes__pass-card_img" src = '/images/addToWallet.svg' onclick="window.open('{{percents.publishedPassURL}}')">
+        </div>
+    {{/if}}
+
+    {{#if cashback}}
+        <div class="apple-passes__pass-card">
+            <span class="apple-passes__pass-card_span">Кешбек</span>
+            <img class="apple-passes__pass-card_img" src = '/images/addToWallet.svg' onclick="window.open('{{cashback.publishedPassURL}}')">
+        </div>
+
+    {{/if}}
+
+    {{#if coffeeCup}}
+        <div class="apple-passes__pass-card">
+            <span class="apple-passes__pass-card_span">Карточка с печатями</span>
+            <img class="apple-passes__pass-card_img" src = '/images/addToWallet.svg' onclick="window.open('{{coffeeCup.publishedPassURL}}')">
+        </div>
+
+    {{/if}}
+</div>

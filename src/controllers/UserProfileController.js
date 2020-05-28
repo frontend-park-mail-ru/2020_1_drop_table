@@ -6,7 +6,7 @@ import {router} from '../main/main';
 
 import FormValidation from '../utils/FormValidation';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
-import NotificationComponent from "../components/Notification/Notification";
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер профиля */
 export default class UserProfileController{
@@ -67,7 +67,6 @@ export default class UserProfileController{
                     event: {
                         type: 'click',
                         listener: async () => {
-                            console.log('clicke');
                             await this._userModel.logout();
                             router._goTo('/login');
                         }

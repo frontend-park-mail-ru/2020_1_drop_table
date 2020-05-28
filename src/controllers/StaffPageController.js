@@ -1,6 +1,6 @@
 import {router} from '../main/main';
-import ServerExceptionHandler from "../utils/ServerExceptionHandler";
-import NotificationComponent from "../components/Notification/Notification";
+import ServerExceptionHandler from '../utils/ServerExceptionHandler';
+import NotificationComponent from '../components/Notification/Notification';
 import StatisticSerializer from '../Serializers/StatisticSerializer';
 
 /** контроллер кафе */
@@ -67,7 +67,6 @@ export default class StaffPageController {
         this.userModel.fireStaff(this.id);
     }
     changeStaffPosition(){
-        console.log('test change staff', this.input.value.toString())
         this.userModel.changeStaffPosition(this.id, this.input.value)
     }
 
@@ -100,8 +99,8 @@ export default class StaffPageController {
         })
     }
     async addActions(){
-        await this._staffListModel.getStat(this._id, this._limit, this._lastAction);
         this._lastAction += this._limit;
+        await this._staffListModel.getStat(this._id, this._limit, this._lastAction);
         this._staffPageView._addActions();
         let scrollDiv = document.getElementsByClassName('staff-actions-container__actions').item(0);
         scrollDiv.scrollBottom = 0;
@@ -126,11 +125,8 @@ export default class StaffPageController {
     async control(id){
         try {
             this._id = id;
-            console.log('test staff', id)
             await this.update();
-            console.log('test staff update done')
             this._staffPageView.context = await this._makeViewContext(id);
-            console.log('test staff make view c done',this._staffPageView.context)
             this._staffPageView.render();
             //let plotData = this._statisticSerializer.serializeLinePlotData(this._staffListModel._statistics, this._options);
             this._staffPageView._renderPlot(this._staffPageView.context['statistics'].plot);
@@ -144,7 +140,6 @@ export default class StaffPageController {
         let month = (date.getMonth()+1>9)?(date.getMonth()+1).toString():`0${date.getMonth()+1}`
         let day = (date.getDate()>9)?(date.getDate()).toString():`0${date.getDate()+1}`
         let res = `${date.getFullYear()}-${month}-${day}_00:00:00.000000`;
-        console.log('res',res)
         return res
     }
     getPrevDate(){
@@ -165,7 +160,6 @@ export default class StaffPageController {
         month = (month+1>9)?(month+1).toString():`0${month+1}`
         day = (day>9)?day.toString():`0${day}`
         let res = `${year}-${month}-${day}_00:00:00.000000`;
-        console.log('res',res)
         return res
     }
 }

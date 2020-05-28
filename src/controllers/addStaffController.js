@@ -3,7 +3,7 @@
 import {router} from '../main/main';
 import ServerExceptionHandler from '../utils/ServerExceptionHandler';
 import FormValidation from '../utils/FormValidation';
-import NotificationComponent from "../components/Notification/Notification";
+import NotificationComponent from '../components/Notification/Notification';
 
 /** контроллер добавления работника */
 export default class AddStaffController{
@@ -204,7 +204,6 @@ export default class AddStaffController{
             if(error.message !== 'unknown server error'){
                 throw(new Error(error.message));
             }
-            console.log(error)
         }
     }
 }

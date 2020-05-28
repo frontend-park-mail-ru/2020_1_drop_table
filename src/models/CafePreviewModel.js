@@ -2,9 +2,10 @@
 
 import {constants} from '../utils/constants';
 import {authAjax} from '../utils/authAjax';
+import {ajax} from '../utils/ajax';
 
 /** Класс модели кафе */
-export default class CafeModel {
+export default class CafePreviewModel {
 
     /** Инициализация модели */
     constructor(context) {
@@ -20,8 +21,8 @@ export default class CafeModel {
         this.fillCafeData(context);
     }
 
-    async update(){
-        await this.getCafe();
+    async update(id){
+        await this.getCafePreview(id);
     }
 
     /**
@@ -103,6 +104,7 @@ export default class CafeModel {
             ownerID: this._ownerID,
             photo: this._photo,
             location: this._location,
+            passInfo: this._passInfo,
         }
     }
 
@@ -159,61 +161,38 @@ export default class CafeModel {
      * @param {obj} context
      */
     fillCafeData(context){
+        console.log('fill cafe preview')
         if(context) {
             this._address = context['address'];
             this._description = context['description'];
             this._id = context['id'];
             this._name = context['name'];
-
-            const openTime = new Date(context['openTime']); //TODO Нужно разобраться как правильно переносить на новую строку
-            this._openTime = `${('0' + openTime.getUTCHours()).slice(-2)}:${('0' + openTime.getUTCMinutes()).slice(-2)}`;
-
+            const openTime = new Date(context['openTime']);
+            this._openTime =
+                `${('0' + openTime.getUTCHours()).slice(-2)}:${('0' + openTime.getUTCMinutes()).slice(-2)}`;
             const closeTime = new Date(context['closeTime']);
-            this._closeTime = `${('0' + closeTime.getUTCHours()).slice(-2)}:${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
-
-            this._ownerID = context['ownerID'];
+            this._closeTime =
+                `${('0' + closeTime.getUTCHours()).slice(-2)}:${('0' + closeTime.getUTCMinutes()).slice(-2)}`;
             this._photo = context['photo'];
             this._location = context['location'];
+            this._passInfo = context['passInfo']
         }
     }
 
-    /**
-     * Возвращает formData из полей cafeModel
-     * @param {obj|null} photo
-     * @return {FormData} formData
-     */
-    async getFormData(photo){
-        let formData = new FormData();
-        let data = {
-            'name': this.name,
-            'CafeName': this.name,
-            'address': this.address,
-            'description': this.description,
-            'openTime': '0001-01-01T'+this.openTime+':00Z',
-            'closeTime': '0001-01-01T'+this.closeTime+':00Z',
-        };
 
-        if (photo) {
-            formData.append('photo', photo);
-        } else {
-            data['photo'] = this.photo;
-        }
-
-        formData.append('jsonData', JSON.stringify(data));
-        return formData;
-    }
-
-    /** Получение информации о кафе по его id */
-    async getCafe(){
-        await authAjax('GET', constants.PATH + `/api/v1/cafe/${this.id}`,
-            null,
+    async getCafePreview(id){
+        console.log('get cafe preview')
+        await ajax(constants.PATH + `/api/v1/cafe/with_pass/${id}`,
+            'GET',
+            {},
             (response) => {
-                if(response.errors === null){
+                if(response.errors === null && response.data){
                     this.fillCafeData(response.data);
-                } else {
+                }
+                if(response.errors !== null){
                     throw response.errors;
                 }
             }
-        );
+        )
     }
 }
