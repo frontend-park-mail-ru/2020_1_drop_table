@@ -207,7 +207,7 @@ function doNotFound() {
 }
 
 async function doLogout() {
-    await this.userModel.logout();
+    await userModel.logout();
 
     userModel = new UserModel();
     staffListModel = new StaffListModel(userModel);
