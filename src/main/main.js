@@ -207,13 +207,16 @@ function doNotFound() {
 }
 
 async function doLogout() {
-    await this.userModel.logout();
-
+    await userModel.logout();
+    console.log('logout');
     userModel = new UserModel();
     staffListModel = new StaffListModel(userModel);
     cafeListModel = new CafeListModel();
     landingCafeListModel = new LandingCafeListModel();
     landingModel = new LandingModel();
+
+    sessionStorage.clear();
+    localStorage.clear();
 
     router._goTo('/login');
 }

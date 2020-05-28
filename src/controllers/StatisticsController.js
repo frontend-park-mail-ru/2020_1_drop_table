@@ -135,7 +135,7 @@ export default class StatisticsController{
                 await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
                 this.updatePlot();
             }
-        })
+        });
 
         endInput.addEventListener('change',async (e)=>{
             let form = document.getElementById('form');
@@ -148,7 +148,7 @@ export default class StatisticsController{
                 await this._staffListModel.getAllStaffPlot(startDate, endDate, type);
                 this.updatePlot();
             }
-        })
+        });
     }
 
 
@@ -163,11 +163,13 @@ export default class StatisticsController{
     /** Запуск контроллера */
     async control(){
         try{
-            console.log('in control')
+            console.log('in control');
             await this.update();
             let context =  await this._makeViewContext();
             this._statisticsView.render(context);
+            console.log('render stat');
             this._statisticsView._renderPlot(context['statistics'].plot);
+            console.log('render plot');
             this._addListeners();
         } catch (error) {
             console.log(error.message);

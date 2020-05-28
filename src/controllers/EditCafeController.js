@@ -87,7 +87,7 @@ export default class EditCafeController{
                 }
             },
             cafe: {
-                cafeName: 'Редактор',
+                cafeName: 'Редактирование',
                 imgSrc: cafe.photo,
                 event: {
                     type: 'change',

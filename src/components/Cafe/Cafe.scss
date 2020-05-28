@@ -96,6 +96,11 @@
     opacity: 0.8;
 
   }
+  transition: transform 0.25s ease-in-out;
+  &:hover{
+    transform: scale(0.05);
+
+  }
 }
 _::-webkit-full-page-media, _:future, :root .new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus {
   visibility: hidden;
