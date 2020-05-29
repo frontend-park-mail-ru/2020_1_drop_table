@@ -37,7 +37,7 @@ npm install
 
 Повторять пока не заработает
 
-
+![til](https://media.giphy.com/media/xUOxf70cUE2LSCmODm/giphy.gif)
 ## Авторы
 
 * **Александр Аверкиев** - *Фулстек* - [Elderly-AI](https://github.com/Elderly-AI)
