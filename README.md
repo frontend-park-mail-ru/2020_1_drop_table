@@ -17,6 +17,8 @@ https://drive.google.com/drive/folders/1uLfM20KWp0rbGzO87QJjaCbLZt4fqxJq?usp=sha
 
 Действуйте на свой страх и риск! Обратного пути из мира систем лояльности нет и не будет.
 
+![til](https://media.giphy.com/media/3o6fIVzH8l5cXm6ZYQ/giphy.gif)
+
 ### Как это делается
 
 Клац-клац-клац по клавиатуре
