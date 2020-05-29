@@ -16,24 +16,23 @@
 }
 .landing__main_h4{
     font-size: 3rem;
-    margin: 0 auto;
+    margin: 10px 5px;
 }
 .landing__main_p{
     font-size: 1rem;
-    margin: 0 auto;
+    margin: 5px;
     width: 90%;
 }
 
 .landing__info{
     display: flex;
     flex-wrap: wrap;
-    height: 500px;
     width: 100%;
 
 }
 .landing__info__logic{
+    max-height: 500px;
     width: 40%;
-    height: 50%;
     margin: 100px 5%;
 
     display: flex;
@@ -48,11 +47,11 @@
 .landing__info__logic_h4{
 
     font-size: 1.5rem;
-    margin: 10px auto;
+    margin: 10px 5px;
 }
 .landing__info__logic_p{
     font-size: 1rem;
-    margin: 0 auto;
+    margin: 5px;
     width: 90%;
 }
 
@@ -71,11 +70,10 @@
 
 .landing__info__design{
 
-    height: 100%;
+    max-height: 500px;
     display: flex;
     justify-content: center;
     &_img{
-        height: 100%;
         width:90%;
         margin: 0 auto;
         object-fit: contain;
@@ -94,21 +92,19 @@
     flex-direction: column;
     justify-content: center;
     height: 300px;
-    width: 90%;
+    width: 100%;
     margin: 35px auto;
     text-align: center;
-
-    background: white;
-    border-radius: 5px;
-    box-shadow: 2px 2px 15px 2px rgba(0, 0, 0, 0.2);
+    background: black;
+    color: white;
 }
 .landing__description_h4{
     font-size: 1.5rem;
-    margin: 0 auto;
+    margin: 10px 5px;
 }
 .landing__description_p{
     font-size: 1rem;
-    margin: 0 auto;
+    margin: 5px;
 }
 
 
@@ -125,8 +121,6 @@
     //background: #f39c12;
 }
 .landing__space{
-    height: 260px;
-    width: 100%;
 }
 
 
@@ -135,17 +129,19 @@
     flex-direction: column;
     justify-content: center;
     height: 300px;
-    width: 90%;
-    margin: 0 auto;
+    width: 100%;
     text-align: center;
+    background: black;
+    color: white;
+    //box-shadow: 2px 2px 15px 2px rgba(0,0,0,0.2);
 }
 .landing__footer_h4{
     font-size: 1.5rem;
-    margin: 0 auto;
+    margin: 10px 5px;
 }
 .landing__footer_p {
     font-size: 1rem;
-    margin: 0 auto;
+    margin: 5px;
 }
 
 //.landing__info__design__cards{
@@ -209,16 +205,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
             border-radius: 50%;
             z-index: 2;
+            transition: transform 0.25s ease-in-out;
+            &_img{
+                height: 50%;
+            }
             &:hover{
-                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+                transform: scale(1.05);
             }
-            svg{
-                z-index: 3;
-                margin: 0 auto;
-            }
+
         }
 
 
@@ -231,31 +227,36 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
             border-radius: 50%;
             z-index: 2;
-            &:hover{
-                box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            &_img{
+                height: 50%;
             }
-            svg{
-                z-index: 3;
-                margin: 0 auto;
-                transform: rotate(180deg);
+            transition: transform 0.25s ease-in-out;
+            &:hover{
+                transform: scale(1.05);
             }
         }
     }
 }
+.cafes-buttons__strip{
+    background: #8f8f8f;
+    opacity: 50%;
+    height: 5px;
+    border-radius: 5px;
+    width: 30%;
+    margin: auto 0;
+}
+
 
 .landing__partners_container{
     font-family: Montserrat;
     font-weight: normal;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    margin: 5px auto;
+    margin: 20px auto 10px auto;
     .landing-page__search{
         height: 40px;
-        width: 300px;
         border: 1px #1C768F solid;
         margin: 0 auto;
         padding-left: 5px;
@@ -267,7 +268,7 @@
         font-family: Montserrat;
         font-size: 1rem;
         color: white;
-        width: 100px;
+
         border: 1px #1C768F solid;
         background-color: #1C768F;
         transition: background-color 1s ease;
@@ -290,7 +291,23 @@
 }
 .cafes-buttons{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+}
+@media(max-width: 450px) {
+    .landing-page__search{
+        width: 225px;
+    }
+    #searchButton{
+        width: 75px;
+    }
+}
+@media(min-width: 450px) {
+    .landing-page__search{
+        width: 300px;
+    }
+    #searchButton{
+        width: 100px;
+    }
 }
 
 

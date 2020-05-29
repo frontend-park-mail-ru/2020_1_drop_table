@@ -90,6 +90,8 @@ const landingView = new LandingView(app);
 const addStaffView = new RegisterView(app, 'Регистрация работника');
 const staffPageView = new StaffPageView();
 
+const statisticsView = new StatisticsView(app);
+
 const registerController = new RegisterController(userModel, registerView);
 const loginController = new LoginController(userModel, loginView);
 const cafeListController = new CafeListController(cafeListModel, userModel, cafeListView);
@@ -100,6 +102,8 @@ const cafePageController = new CafePageController(cafeListModel, userModel, cafe
 const editCafeController = new EditCafeController(cafeListModel, userModel, editCafeView);
 const landingController = new LandingController(landingModel, userModel, landingView, landingCafeListModel);
 const staffPageController = new StaffPageController(staffListModel, userModel, staffPageView);
+
+const statisticsController = new StatisticsController(statisticsView, null, staffListModel);
 
 /** Страница регистрации */
 function doreg(){
@@ -213,13 +217,14 @@ async function doLogout() {
     cafeListModel.clear();
     landingCafeListModel.clear();
     landingModel.clear();
+
     router._goTo('/login');
 }
 
 function doStatistics(){
-    const statisticsView = new StatisticsView(app);
-    const statisticsController = new StatisticsController(statisticsView, null, staffListModel);
+
     statisticsController.control();
+
 }
 
 

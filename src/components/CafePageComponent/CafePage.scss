@@ -223,8 +223,6 @@
         font-family: 'Montserrat',SansSerif;
         display: flex;
         flex-direction: column;
-
-
         width: 100%;
         &__cafe-info{
             width: 90%;
@@ -241,6 +239,7 @@
                 }
             }
             &__description-container{
+                margin: 10px auto;
                 order: 4;
                 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
 
@@ -255,6 +254,7 @@
                     }
                 }
                 &__align-div{
+                    margin: 10px auto;
                     white-space: normal;
                     word-break: break-word;
                     &::-webkit-scrollbar {
@@ -280,6 +280,7 @@
             }
 
             &__name-container{
+                margin: 10px auto;
                 order: 1;
                 display: flex;
                 align-items: center;
@@ -300,6 +301,7 @@
                 }
             }
             &__time-container{
+                margin: 10px auto;
                 order: 3;
                 display: flex;
                 justify-content: center;
@@ -386,13 +388,14 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
         &_h4 {
             cursor: pointer;
             font-weight: normal;
         }
 
         &:hover {
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.45);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
         }
     }
 
@@ -410,7 +413,7 @@
             cursor: pointer;
             font-weight: normal;
         }
-
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
         &:hover {
             box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
         }

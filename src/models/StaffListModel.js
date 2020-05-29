@@ -18,8 +18,8 @@ export default class StaffListModel{
     clear(userModel){
         this._userModel = userModel;
         this._staffModelsList = [];
-        const staffListData = this._loadStaffList();
-        this._constructStaff(staffListData);
+        // const staffListData = this._loadStaffList();
+        // this._constructStaff(staffListData);
         this._statistics = null;
     }
 

@@ -17,6 +17,7 @@
   }
   .new-cafe-page__decorate-container__text-field{
     margin-left: 100px;
+    margin-bottom: 20px;
   }
 
 }
@@ -46,8 +47,19 @@
   font-family: 'Montserrat', arial;
   display: flex;
   justify-content: space-around;
-
+  width: 95%;
 }
+@media(min-width: 600px) {
+  .new-cafe-page__outer{
+    margin: 0 auto;
+  }
+}
+@media(max-width: 600px) {
+  .new-cafe-page__outer{
+    margin: 0;
+  }
+}
+
 
 .new-cafe-page__outer__sub{
   display: flex;
@@ -94,13 +106,12 @@
     width: 25%;
     border-radius: 50%;
     opacity: 0.8;
-
+    transition: transform 0.25s ease-in-out;
+    &:hover{
+      transform: scale(1.05);
+    }
   }
-  transition: transform 0.25s ease-in-out;
-  &:hover{
-    transform: scale(0.05);
 
-  }
 }
 _::-webkit-full-page-media, _:future, :root .new-cafe-page__outer__sub__image-container__photo-container__image-picker__plus {
   visibility: hidden;
@@ -200,9 +211,13 @@ _::-webkit-full-page-media, _:future, :root .new-cafe-page__outer__sub__image-co
 
 
 }
+textarea{
+  font-family: Montserrat;
+  font-weight: normal;
+}
 
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .new-cafe-page__outer{
     flex-direction: column;
   }

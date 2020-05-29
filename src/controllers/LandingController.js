@@ -61,7 +61,7 @@ export default class LandingController {
     }
 
     async _resetCafes(){
-        this._landingCafeListModel.clear();
+        this._landingCafeListModel.clearMe();
         await this.cafesForward();
     }
 

@@ -27,7 +27,7 @@ export default class LandingCafeListModel{
         await this.getAllCafes(this._cafeListJson.length, this._limit, searchBy);
     }
 
-    clear(){
+    clearMe(){
         this._cafeListJson = [];
         this._currentId = -this._step;
     }

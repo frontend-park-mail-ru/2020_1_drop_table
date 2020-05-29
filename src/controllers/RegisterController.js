@@ -78,7 +78,7 @@ export default class RegisterController{
                         {
                             type: 'password',
                             id: 'password',
-                            data: this._userModel.password,
+                            data: '',
                             labelData: 'Пароль',
                             inputOption: 'required',
                         },

@@ -43,6 +43,7 @@ export default class StatisticsController{
             cafes:[],
             staff:[]
         };
+        console.log('yyyyyyyyyy1',this._staffListModel)
         for(let i = 0; i < this._staffListModel._staffModelsList.length; i++){
             let staffModel = this._staffListModel._staffModelsList[i];
             if(!staff.includes(staffModel._StaffName)){

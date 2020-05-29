@@ -1,8 +1,12 @@
 <div class="cafes-page">
 <div class="cafes-page__all-cafes-container">
 
+
     {{#each cafes}}
         {{{this}}}
+    {{else}}
+        <span class="cafes-page__all-cafes-container_span" >У вас еще нет добавленных заведений?</span>
+        <span class="cafes-page__all-cafes-container_span2" >Добавьте свое первое заведение!</span>
     {{/each}}
     <div class="cafes-page__all-cafes-container__add-button">
         <img class="cafes-page__all-cafes-container__add-button_img" src="images/plus.svg" >

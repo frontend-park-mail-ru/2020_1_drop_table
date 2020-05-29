@@ -98,7 +98,7 @@ export default  class StatisticSerializer{
     _makeOnePlotContext(data){
         let plotData = {
             textX: 'Время',
-            textY: 'Количество',
+            textY: 'Количество операций',
             array:[],
         };
         let points = [];
@@ -120,7 +120,7 @@ export default  class StatisticSerializer{
     _makeManyPlotContext(data){
         let plotData = {
             textX: 'Время',
-            textY: 'Количество',
+            textY: 'Количество операций',
             array:[],
         };
         let points = [];
@@ -161,7 +161,7 @@ export default  class StatisticSerializer{
     makeStaffPlotContext(data){
         let plotData = {
             textX: 'Время',
-            textY: 'Количество',
+            textY: 'Количество операций',
             array:[
                 {
                     color:'#814ad0',

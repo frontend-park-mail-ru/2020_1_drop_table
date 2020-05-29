@@ -28,7 +28,7 @@ margin: 40px auto 30px auto;
         margin-bottom: 5%;
         justify-content: space-around;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         object-fit: cover;
 
 
@@ -68,6 +68,7 @@ margin: 40px auto 30px auto;
 
     .card-redactor-container__card-form__image-picker {
         flex-direction: unset;
+        justify-content: space-between;
     }
 
     .card-redactor-container {

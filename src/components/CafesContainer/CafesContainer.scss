@@ -11,6 +11,18 @@
         flex-wrap: wrap;
         justify-content: space-around;
         min-height: 60vh;
+        &_span{
+            font-size: 2rem;
+            margin: 40px auto 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+        &_span2{
+            font-size: 1.3rem;
+            margin: 10px auto 60px auto;
+            width: 100%;
+            text-align: center;
+        }
         &_h4{
             font-size: 2rem;
             margin: 0 auto;

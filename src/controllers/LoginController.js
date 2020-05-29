@@ -57,7 +57,7 @@ export default class LoginController{
                 isOwner: this._userModel._isOwner,
             },
             login: {
-                topText:'Логин',
+                topText:'Авторизация',
                 form: {
                     formFields: [
                         {
